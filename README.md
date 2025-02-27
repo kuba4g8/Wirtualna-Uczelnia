@@ -20,7 +20,7 @@ Aby sprawdzic dostepne branche na projekcie odpalamy git basha w miejscu gdzie z
 Wpisujemy "git branch -a". Nastepnie "git checkout -b (nazwa brancha na jaki sie przelaczamy)". Chyba powinno dzialac.
 
 Jak przestajecie pracowac nad apk PROSZE nie zapomnijcie zpushowac swojej wersji do githuba, ktos inny moze bedzie chcial
-cos zrobic a zrobicie to samo 2 razy xdxdxd. Tak dla przypomnienia:
+cos zrobic, a zrobicie to samo 2 razy xdxdxd. Tak dla przypomnienia:
 git add .
 git commit -m "(Nazwa waszej zmiany czy cos idk, tak sie zapisze potem na stronie. TUTAJ BEZ PRZEKLENSTW)"
 git push origin (nazwa brancha np. Front-End)
