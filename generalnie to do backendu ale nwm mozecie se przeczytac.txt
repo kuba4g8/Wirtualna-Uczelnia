@@ -1,0 +1,6 @@
+Hejka!
+
+Generalnie macie tutaj przykladowy program w jakim stylu fajnie by bylo jakbyscie pisali swoje programy.
+Dzielimy wszystko najlepiej na klasy (ktore maja jedno zastosowanie), a klasy na pod metody (funkcje).
+Nie wpierdalajmy wszystkiego do jednego pliku prosze bo bede mial 1000 razy wiecej roboty potem.
+Plik main w swojej finalnej formie pragnalbym zeby nie mial wiecej niz powiedzmy 150-200 linijek kodu.
