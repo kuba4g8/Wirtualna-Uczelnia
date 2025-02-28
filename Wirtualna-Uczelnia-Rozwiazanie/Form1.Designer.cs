@@ -62,7 +62,7 @@
             // lblLogin
             // 
             lblLogin.AutoSize = true;
-            lblLogin.Location = new Point(240, 15);
+            lblLogin.Location = new Point(264, 15);
             lblLogin.Name = "lblLogin";
             lblLogin.Size = new Size(56, 20);
             lblLogin.TabIndex = 3;
@@ -81,7 +81,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(359, 170);
+            ClientSize = new Size(345, 166);
             Controls.Add(lblPass);
             Controls.Add(lblLogin);
             Controls.Add(txtPassword);
