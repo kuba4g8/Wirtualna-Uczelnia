@@ -14,6 +14,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Wirtualna_Uczelnia
-build_property.ProjectDir = C:\.INFORMATYCZNE SPRAWY\projekty\Wirtualna-Uczelnia\Wirtualna-Uczelnia-Rozwiazanie\
+build_property.ProjectDir = C:\.INFORMATYCZNE SPRAWY\projekty\.Wirtualna-Uczelnia\Wirtualna-Uczelnia-Rozwiazanie\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

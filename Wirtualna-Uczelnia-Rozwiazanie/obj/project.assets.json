@@ -1614,11 +1614,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\.INFORMATYCZNE SPRAWY\\projekty\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\Wirtualna-Uczelnia.csproj",
+      "projectUniqueName": "C:\\.INFORMATYCZNE SPRAWY\\projekty\\.Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\Wirtualna-Uczelnia.csproj",
       "projectName": "Wirtualna-Uczelnia",
-      "projectPath": "C:\\.INFORMATYCZNE SPRAWY\\projekty\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\Wirtualna-Uczelnia.csproj",
+      "projectPath": "C:\\.INFORMATYCZNE SPRAWY\\projekty\\.Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\Wirtualna-Uczelnia.csproj",
       "packagesPath": "C:\\Users\\chujdupacipa\\.nuget\\packages\\",
-      "outputPath": "C:\\.INFORMATYCZNE SPRAWY\\projekty\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\obj\\",
+      "outputPath": "C:\\.INFORMATYCZNE SPRAWY\\projekty\\.Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

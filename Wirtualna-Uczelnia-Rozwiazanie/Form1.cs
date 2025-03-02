@@ -11,17 +11,19 @@ namespace Wirtualna_Uczelnia
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            //wszystko do wyjebania stad, po prostu testowalem czy dziala lol
+            LoggedUser user = new LoggedUser();
+            
+            loginMenager loginMenager = new loginMenager();
 
-            sqlMenager sql = new sqlMenager();
-            List<logowanie> tempList = new List<logowanie>();
-
-            tempList = sql.loadDataToList<logowanie>("SELECT * FROM `logowanie`");
-
-            foreach (var user in tempList)
+            user = loginMenager.tryLogin(email: txtLogin.Text, haslo: txtPassword.Text);
+            //nie zalogowano
+            if (user == null )
             {
-                MessageBox.Show($"ID: {user.loginID}, Imiê: {user.email}, Nazwisko: {user.haslo}");
+                MessageBox.Show("Blad logowania!\nZ³y email lub has³o.");
+                return;
             }
+
+            MessageBox.Show($"ID uzytkownika: {user.loginID}, admin: {user.isAdmin}");
         }
     }
 }

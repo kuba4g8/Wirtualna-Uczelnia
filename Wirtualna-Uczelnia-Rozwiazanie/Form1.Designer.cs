@@ -62,7 +62,7 @@
             // lblLogin
             // 
             lblLogin.AutoSize = true;
-            lblLogin.Location = new Point(264, 15);
+            lblLogin.Location = new Point(240, 19);
             lblLogin.Name = "lblLogin";
             lblLogin.Size = new Size(56, 20);
             lblLogin.TabIndex = 3;

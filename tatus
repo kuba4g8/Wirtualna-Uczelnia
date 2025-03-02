@@ -1,0 +1,60 @@
+[33mcommit 7226f0d9b5437b7b6d5a482aa71eed9bf1cd2667[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mBack-End[m[33m, [m[1;31morigin/Back-End[m[33m)[m
+Author: kuba4g8 <kuba.holdys@gmail.com>
+Date:   Sun Mar 2 15:26:49 2025 +0100
+
+    Logowanie dzialajace
+
+[33mcommit 24f9a4c3f039cf926c41221a6dc2f9b339cc7a1b[m
+Author: kuba4g8 <kuba.holdys@gmail.com>
+Date:   Fri Feb 28 17:44:36 2025 +0100
+
+    SqlMenagerWstepny
+
+[33mcommit 171e2f9c0f9417ca4b19f826a2459deebf599645[m
+Merge: b8f74d7 da45878
+Author: kuba4g8 <kuba.holdys@gmail.com>
+Date:   Fri Feb 28 16:07:15 2025 +0100
+
+    Merge branch 'main' into Back-End
+
+[33mcommit da45878d9d6e96ada481ec6403f7e6e5c456bfa8[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Author: kuba4g8 <kuba.holdys@gmail.com>
+Date:   Fri Feb 28 11:31:58 2025 +0100
+
+    Pliki TEMP
+
+[33mcommit b8f74d72e576b18e0d960338c62834c32fa662de[m
+Author: kuba4g8 <kuba.holdys@gmail.com>
+Date:   Fri Feb 28 11:21:34 2025 +0100
+
+    Rozwiazanie
+
+[33mcommit bad070a93ce73b23159be4ea0838b13e0a0206f3[m
+Author: kuba4g8 <kuba.holdys@gmail.com>
+Date:   Thu Feb 27 19:53:40 2025 +0100
+
+    Baza danych
+
+[33mcommit 266e5b67691cfc2cd98d9e7fcd1844fdcdb03f97[m
+Author: kuba4g8 <kuba.holdys@gmail.com>
+Date:   Thu Feb 27 17:49:06 2025 +0100
+
+    Caly Program
+
+[33mcommit ca6129c35b321076d7c00a1759ea0f7f8ab9661f[m
+Author: kuba4g8 <kuba.holdys@gmail.com>
+Date:   Thu Feb 27 17:24:15 2025 +0100
+
+    Przykladowy Kod
+
+[33mcommit b859d85f207c5170d309bbe9cd20d893d1f4ff7c[m
+Author: kuba4g8 <kuba.holdys@gmail.com>
+Date:   Wed Feb 26 19:10:28 2025 +0100
+
+    ReadME
+
+[33mcommit 119e2bf38ffdc7fa469cd44b5b2f66cabbc37e65[m
+Author: kuba4g8 <151554436+kuba4g8@users.noreply.github.com>
+Date:   Wed Feb 26 18:17:27 2025 +0100
+
+    Initial commit

@@ -10,7 +10,7 @@ namespace Wirtualna_Uczelnia
 {
     public class sqlMenager
     {
-        MySqlConnection _conn; // obiekt klasy umozliwiajacy laczenie sie z baza danych.
+        private MySqlConnection _conn; // obiekt klasy umozliwiajacy laczenie sie z baza danych.
 
         // info do poleczenia do DataBase
         private protected readonly string connIP = "127.0.0.1";
@@ -120,14 +120,5 @@ namespace Wirtualna_Uczelnia
         {
             return $"DATA SOURCE={connIP};INITIAL CATALOG={dataBaseName};USER ID={username};PWD={PWD}";
         }
-    }
-
-    public class logowanie
-    {
-        public int loginID { get; set; }
-        public string email { get; set; }
-        public string haslo { get; set; }
-        public bool isTeacher { get; set; }
-        public bool isAdmin { get; set; }
     }
 }
