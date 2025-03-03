@@ -10,7 +10,7 @@ namespace Wirtualna_Uczelnia
     {
         private sqlMenager sqlMenager;
         private LoggedUser? user;
-
+        private SecMenager secLogin;
 
         public loginMenager()
         {
@@ -21,12 +21,26 @@ namespace Wirtualna_Uczelnia
         {
 
             loginMenager loginMenager = new loginMenager();
+            secLogin = new SecMenager();
+
+            //Jeśli logowanie zablokowane włączy się od razu przed logowaniem
+            if (secLogin.IsLockedOut())
+            {
+                MessageBox.Show("Logowanie jest zablokowane. Spróbuj ponownie później.");
+                return false;
+            }
 
             user = returnLoggedUser(email, haslo);
             //nie zalogowano
             if (user == null)
             {
-                MessageBox.Show("Nie Zalogowano");
+                //Sprawdzanie ilosci nieudanych logowań
+                secLogin.RegisterFailedAttempt();
+                int remainingAttempts = 3 - GetFailedAttempts();
+
+                MessageBox.Show(remainingAttempts > 0
+                    ? $"Nieprawidłowe dane. Pozostało prób: {remainingAttempts}"
+                    : "Zbyt wiele prób. Konto zablokowane.");
                 return false;
             }
                 
@@ -39,7 +53,7 @@ namespace Wirtualna_Uczelnia
             {
                 // odpalic forme dla teachera
             }
-            else
+            else 
             {
                 // odpalic forme dla studenta
             }
@@ -66,6 +80,10 @@ namespace Wirtualna_Uczelnia
             }
 
             return null;
+        }
+        private int GetFailedAttempts()
+        {
+            return new SecMenager().GetRegistryValue("Attempts", 0);
         }
     }
     //obiekt przetrzymujace dane do logowania
