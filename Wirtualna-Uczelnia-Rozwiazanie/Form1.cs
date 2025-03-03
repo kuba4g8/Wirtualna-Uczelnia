@@ -21,10 +21,28 @@ namespace Wirtualna_Uczelnia
         //Odpalenie logowania jeœli kliknie siê enter po wpisaniu, loginu lub has³a
         private void KeyUp(object sender, KeyEventArgs e)
         {
-            if ((e.KeyCode == Keys.Enter) || (e.KeyCode == Keys.Return))
+            if (txtLogin.Text.Length == 0)
             {
-                loginMenager.tryLogin(txtLogin.Text, txtPassword.Text);
+                if ((e.KeyCode == Keys.Enter) || (e.KeyCode == Keys.Return))
+                {
+                    txtLogin.Focus();
+                }
             }
+            else if (txtPassword.Text.Length == 0)
+            {
+                if ((e.KeyCode == Keys.Enter) || (e.KeyCode == Keys.Return))
+                {
+                    txtPassword.Focus();
+                }
+            }
+            else
+            {
+                if ((e.KeyCode == Keys.Enter) || (e.KeyCode == Keys.Return))
+                {
+                    loginMenager.tryLogin(txtLogin.Text, txtPassword.Text);
+                }
+            }
+                
         }
     }
 }

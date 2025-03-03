@@ -25,7 +25,11 @@ namespace Wirtualna_Uczelnia
             user = returnLoggedUser(email, haslo);
             //nie zalogowano
             if (user == null)
+            {
+                MessageBox.Show("Nie Zalogowano");
                 return false;
+            }
+                
 
             if (user.isAdmin)
             {

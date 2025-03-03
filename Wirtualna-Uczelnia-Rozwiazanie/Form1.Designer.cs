@@ -41,6 +41,7 @@
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(222, 29);
             btnLogin.TabIndex = 0;
+            btnLogin.TabStop = false;
             btnLogin.Text = "zaloguj";
             btnLogin.UseVisualStyleBackColor = true;
             btnLogin.Click += login_Click;
