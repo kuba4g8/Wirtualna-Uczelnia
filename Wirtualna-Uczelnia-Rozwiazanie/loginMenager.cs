@@ -19,12 +19,11 @@ namespace Wirtualna_Uczelnia
 
         public bool tryLogin(string email, string haslo)
         {
-
+           
             loginMenager loginMenager = new loginMenager();
             secLogin = new SecMenager();
-
             //Jeśli logowanie zablokowane włączy się od razu przed logowaniem
-            if (secLogin.IsLockedOut(out int minutesLeft))
+            if (secLogin.IsLockedOut(out int minutesLeft) && secLogin.debugMode == false)
             {
                 MessageBox.Show($"Twoje konto jest zablokowane. Spróbuj ponownie za {minutesLeft} minut.");
                 return false;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,13 +10,13 @@ namespace Wirtualna_Uczelnia
 {
     internal class SecMenager
     {
-
+        //Tryb debugowania (wyłącza zabezpieczenia) - true, włączony - false, wyłączony
+        public bool debugMode = true;
         //path do rejestru
         private const string RegistryKeyPath = @"SOFTWARE\Wirtualna-Uczelnia\SecMenager";
         private const int MaxAttempts = 3;
         private const int InitialLockoutMinutes = 5;
         private const int MaxLockoutMinutes = 60;
-
 
         public SecMenager() 
         {

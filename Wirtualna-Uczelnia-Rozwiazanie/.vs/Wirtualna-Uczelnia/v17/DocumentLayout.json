@@ -3,36 +3,36 @@
   "WorkspaceRootPath": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|c:\\users\\kaczo\\wirtualna-uczelnia\\wirtualna-uczelnia-rozwiazanie\\loginmenager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|solutionrelative:loginmenager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|c:\\users\\kaczo\\wirtualna-uczelnia\\wirtualna-uczelnia-rozwiazanie\\secmenager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|solutionrelative:secmenager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|c:\\users\\kaczo\\wirtualna-uczelnia\\wirtualna-uczelnia-rozwiazanie\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|c:\\users\\kaczo\\wirtualna-uczelnia\\wirtualna-uczelnia-rozwiazanie\\loginmenager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|solutionrelative:loginmenager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|c:\\users\\kaczo\\wirtualna-uczelnia\\wirtualna-uczelnia-rozwiazanie\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|solutionrelative:form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|c:\\users\\kaczo\\wirtualna-uczelnia\\wirtualna-uczelnia-rozwiazanie\\sqlmenager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|solutionrelative:sqlmenager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|c:\\users\\kaczo\\wirtualna-uczelnia\\wirtualna-uczelnia-rozwiazanie\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|c:\\users\\kaczo\\wirtualna-uczelnia\\wirtualna-uczelnia-rozwiazanie\\sqlmenager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|solutionrelative:sqlmenager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|c:\\users\\kaczo\\wirtualna-uczelnia\\wirtualna-uczelnia-rozwiazanie\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|c:\\users\\kaczo\\wirtualna-uczelnia\\wirtualna-uczelnia-rozwiazanie\\jsonmenager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|solutionrelative:jsonmenager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,11 +42,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 6,
               "Title": "jsonMenager.cs",
               "DocumentMoniker": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\jsonMenager.cs",
               "RelativeDocumentMoniker": "jsonMenager.cs",
@@ -55,7 +55,8 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-28T15:56:33.113Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Bookmark",
@@ -63,33 +64,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "SecMenager.cs",
               "DocumentMoniker": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\SecMenager.cs",
               "RelativeDocumentMoniker": "SecMenager.cs",
-              "ToolTip": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\SecMenager.cs",
-              "RelativeToolTip": "SecMenager.cs",
-              "ViewState": "AgIAAEMAAAAAAAAAAAAkwEcAAAARAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\SecMenager.cs*",
+              "RelativeToolTip": "SecMenager.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAoAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-03T15:44:32.44Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "Form1.Designer.cs",
               "DocumentMoniker": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\Form1.Designer.cs",
               "RelativeDocumentMoniker": "Form1.Designer.cs",
               "ToolTip": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\Form1.Designer.cs",
               "RelativeToolTip": "Form1.Designer.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAvwBwAAAAVAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-03T10:30:40.069Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -102,13 +103,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "loginMenager.cs",
               "DocumentMoniker": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\loginMenager.cs",
               "RelativeDocumentMoniker": "loginMenager.cs",
               "ToolTip": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\loginMenager.cs",
               "RelativeToolTip": "loginMenager.cs",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAiwEAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABMAAAAAAAAAAAAQwBkAAABYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-02T14:02:07.14Z",
               "EditorCaption": ""
@@ -121,35 +122,34 @@
               "RelativeDocumentMoniker": "sqlMenager.cs",
               "ToolTip": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\sqlMenager.cs",
               "RelativeToolTip": "sqlMenager.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAASAAAAAAAAAA==",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAvwB8AAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-28T07:29:44.579Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "Form1.cs",
               "DocumentMoniker": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
               "ToolTip": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\Form1.cs",
               "RelativeToolTip": "Form1.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAQwAsAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-28T07:28:35.166Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "Form1.cs [Projekt]",
               "DocumentMoniker": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
               "ToolTip": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\Form1.cs [Projekt]",
               "RelativeToolTip": "Form1.cs [Projekt]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-28T07:26:25.235Z",
-              "EditorCaption": " [Projekt]"
+              "WhenOpened": "2025-02-28T07:26:25.235Z"
             }
           ]
         }
