@@ -1,6 +1,8 @@
 # Wirtualna-Uczelnia
 Repozytorium glowne wirtualnej uczelni
 
+ZA KAZDYM RAZEM JAK ZACZYNACIE PRACE TO UZYWACIE: git pull origin (nazwa brancha)
+
 Siemanko, osobo która to czyta wiedz jestem dumny.
 A jak ktos tego nie czyta to CIE DORWE!
 
