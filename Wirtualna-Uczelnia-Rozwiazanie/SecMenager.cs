@@ -9,6 +9,8 @@ namespace Wirtualna_Uczelnia
 {
     internal class SecMenager
     {
+
+        //path do rejestru
         private const string RegistryKeyPath = @"SOFTWARE\Wirtualna-Uczelnia\SecMenager";
         private const int MaxAttempts = 3;
         private const int LockoutMinutes = 5;
@@ -18,6 +20,7 @@ namespace Wirtualna_Uczelnia
             EnsureRegistryKeyExists();
         }
 
+        //sprawdzenie czy rejestr istnieje, jeśli nie tworzy nowy.
         private void EnsureRegistryKeyExists()
         {
             using (RegistryKey key = Registry.CurrentUser.OpenSubKey(RegistryKeyPath, true))
@@ -33,7 +36,7 @@ namespace Wirtualna_Uczelnia
             }
         }
 
-
+        //System dodawania nieudanych prób, a po przekroczeniu ilości zapisuje czas do kiedy jest zablokowane konto do rejestru
         public void RegisterFailedAttempt()
         {
             int attempts = GetRegistryValue("Attempts", 0);
@@ -46,7 +49,8 @@ namespace Wirtualna_Uczelnia
 
             SetRegistryValue("Attempts", attempts);
         }
-
+        
+        //Check czy konto jest zablokowane
         public bool IsLockedOut()
         {
             int attempts = GetRegistryValue("Attempts", 0);
@@ -66,6 +70,7 @@ namespace Wirtualna_Uczelnia
             SetRegistryValue("LockoutTime", "");
         }
 
+        //ustawianie wartości w rejestrze
         private void SetRegistryValue(string name, object value)
         {
             using (RegistryKey key = Registry.CurrentUser.CreateSubKey(RegistryKeyPath))
@@ -74,6 +79,7 @@ namespace Wirtualna_Uczelnia
             }
         }
 
+        //czytanie wartości z rejestru
         public T GetRegistryValue<T>(string name, T defaultValue)
         {
             using (RegistryKey key = Registry.CurrentUser.OpenSubKey(RegistryKeyPath))

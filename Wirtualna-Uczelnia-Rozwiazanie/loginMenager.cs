@@ -85,6 +85,31 @@ namespace Wirtualna_Uczelnia
         {
             return new SecMenager().GetRegistryValue("Attempts", 0);
         }
+
+        public void HandleKeyUp(TextBox txtLogin, TextBox txtPassword, KeyEventArgs e)
+        {
+            if (txtLogin.Text.Length == 0)
+            {
+                if ((e.KeyCode == Keys.Enter) || (e.KeyCode == Keys.Return))
+                {
+                    txtLogin.Focus();
+                }
+            }
+            else if (txtPassword.Text.Length == 0)
+            {
+                if ((e.KeyCode == Keys.Enter) || (e.KeyCode == Keys.Return))
+                {
+                    txtPassword.Focus();
+                }
+            }
+            else
+            {
+                if ((e.KeyCode == Keys.Enter) || (e.KeyCode == Keys.Return))
+                {
+                    tryLogin(txtLogin.Text, txtPassword.Text);
+                }
+            }
+        }
     }
     //obiekt przetrzymujace dane do logowania
     public class LoggedUser

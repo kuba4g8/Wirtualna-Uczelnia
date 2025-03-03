@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|c:\\users\\kaczo\\wirtualna-uczelnia\\wirtualna-uczelnia-rozwiazanie\\secmenager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|solutionrelative:secmenager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|c:\\users\\kaczo\\wirtualna-uczelnia\\wirtualna-uczelnia-rozwiazanie\\loginmenager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|solutionrelative:loginmenager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|c:\\users\\kaczo\\wirtualna-uczelnia\\wirtualna-uczelnia-rozwiazanie\\secmenager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|solutionrelative:secmenager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|c:\\users\\kaczo\\wirtualna-uczelnia\\wirtualna-uczelnia-rozwiazanie\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -42,7 +42,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
@@ -63,13 +63,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "SecMenager.cs",
               "DocumentMoniker": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\SecMenager.cs",
               "RelativeDocumentMoniker": "SecMenager.cs",
               "ToolTip": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\SecMenager.cs",
               "RelativeToolTip": "SecMenager.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAAwAgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-03T15:44:32.44Z",
               "EditorCaption": ""
@@ -102,13 +102,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "loginMenager.cs",
               "DocumentMoniker": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\loginMenager.cs",
               "RelativeDocumentMoniker": "loginMenager.cs",
               "ToolTip": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\loginMenager.cs",
               "RelativeToolTip": "loginMenager.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAowBUAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABUAAAAAAAAAAADwvxUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-02T14:02:07.14Z",
               "EditorCaption": ""

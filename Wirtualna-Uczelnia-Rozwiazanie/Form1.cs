@@ -11,6 +11,7 @@ namespace Wirtualna_Uczelnia
             InitializeComponent();
 
             loginMenager = new loginMenager();
+
         }
         //Odpalenie zalogowania po klikniêciu przycisku zaloguj
         private void login_Click(object sender, EventArgs e)
@@ -21,28 +22,7 @@ namespace Wirtualna_Uczelnia
         //Odpalenie logowania jeœli kliknie siê enter po wpisaniu, loginu lub has³a
         private void KeyUp(object sender, KeyEventArgs e)
         {
-            if (txtLogin.Text.Length == 0)
-            {
-                if ((e.KeyCode == Keys.Enter) || (e.KeyCode == Keys.Return))
-                {
-                    txtLogin.Focus();
-                }
-            }
-            else if (txtPassword.Text.Length == 0)
-            {
-                if ((e.KeyCode == Keys.Enter) || (e.KeyCode == Keys.Return))
-                {
-                    txtPassword.Focus();
-                }
-            }
-            else
-            {
-                if ((e.KeyCode == Keys.Enter) || (e.KeyCode == Keys.Return))
-                {
-                    loginMenager.tryLogin(txtLogin.Text, txtPassword.Text);
-                }
-            }
-                
+            loginMenager.HandleKeyUp(txtLogin, txtPassword, e);
         }
     }
 }
