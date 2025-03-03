@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Wirtualna-Uczelnia")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b1e5a50ba8936da5f907f944e74a9cb5ed9b335e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+51062465f36edac20bf45c2a1b84d2d77d7fb494")]
 [assembly: System.Reflection.AssemblyProductAttribute("Wirtualna-Uczelnia")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Wirtualna-Uczelnia")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

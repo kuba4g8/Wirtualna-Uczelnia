@@ -13,8 +13,10 @@ namespace Wirtualna_Uczelnia
         //path do rejestru
         private const string RegistryKeyPath = @"SOFTWARE\Wirtualna-Uczelnia\SecMenager";
         private const int MaxAttempts = 3;
-        private const int LockoutMinutes = 5;
-        
+        private const int InitialLockoutMinutes = 5;
+        private const int MaxLockoutMinutes = 60;
+
+
         public SecMenager() 
         {
             EnsureRegistryKeyExists();
@@ -31,6 +33,7 @@ namespace Wirtualna_Uczelnia
                     {
                         newKey.SetValue("Attempts", 0);
                         newKey.SetValue("LockoutTime", "");
+                        newKey.SetValue("LockoutDuration", InitialLockoutMinutes);
                     }
                 }
             }
@@ -44,23 +47,32 @@ namespace Wirtualna_Uczelnia
 
             if (attempts >= MaxAttempts)
             {
-                SetRegistryValue("LockoutTime", DateTime.Now.AddMinutes(LockoutMinutes).ToString());
+                int lastLockoutDuration = GetRegistryValue("LockoutDuration", InitialLockoutMinutes);
+                int newLockoutDuration = Math.Min(lastLockoutDuration * 2, MaxLockoutMinutes);
+
+                SetRegistryValue("LockoutTime", DateTime.Now.AddMinutes(newLockoutDuration).ToString());
+                SetRegistryValue("LockoutDuration", newLockoutDuration);
             }
 
             SetRegistryValue("Attempts", attempts);
         }
         
         //Check czy konto jest zablokowane
-        public bool IsLockedOut()
+        public bool IsLockedOut(out int minutesLeft)
         {
             int attempts = GetRegistryValue("Attempts", 0);
             string lockoutTimeStr = GetRegistryValue("LockoutTime", "");
 
             if (attempts >= MaxAttempts && DateTime.TryParse(lockoutTimeStr, out DateTime lockoutTime))
             {
-                return lockoutTime > DateTime.Now;
+                if (lockoutTime > DateTime.Now)
+                {
+                    minutesLeft = (int)(lockoutTime - DateTime.Now).TotalMinutes;
+                    return true;
+                }
             }
 
+            minutesLeft = 0;
             return false;
         }
 
@@ -68,6 +80,7 @@ namespace Wirtualna_Uczelnia
         {
             SetRegistryValue("Attempts", 0);
             SetRegistryValue("LockoutTime", "");
+            SetRegistryValue("LockoutDuration", InitialLockoutMinutes);
         }
 
         //ustawianie wartości w rejestrze

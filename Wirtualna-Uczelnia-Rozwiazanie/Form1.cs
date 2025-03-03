@@ -19,7 +19,7 @@ namespace Wirtualna_Uczelnia
             loginMenager.tryLogin(txtLogin.Text, txtPassword.Text);
         }
 
-        //Odpalenie logowania jeœli kliknie siê enter po wpisaniu, loginu lub has³a
+        //Odpalenie logowania jeœli kliknie siê enter po wpisaniu loginu i has³a
         private void KeyUp(object sender, KeyEventArgs e)
         {
             loginMenager.HandleKeyUp(txtLogin, txtPassword, e);

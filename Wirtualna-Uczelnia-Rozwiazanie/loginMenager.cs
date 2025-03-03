@@ -24,9 +24,9 @@ namespace Wirtualna_Uczelnia
             secLogin = new SecMenager();
 
             //Jeśli logowanie zablokowane włączy się od razu przed logowaniem
-            if (secLogin.IsLockedOut())
+            if (secLogin.IsLockedOut(out int minutesLeft))
             {
-                MessageBox.Show("Logowanie jest zablokowane. Spróbuj ponownie później.");
+                MessageBox.Show($"Twoje konto jest zablokowane. Spróbuj ponownie za {minutesLeft} minut.");
                 return false;
             }
 
@@ -58,8 +58,9 @@ namespace Wirtualna_Uczelnia
                 // odpalic forme dla studenta
             }
 
+            //Zresetowanie licznika błędynch prób
+            secLogin.ResetLockout();
             MessageBox.Show("Zalogowano");
-
             return true;
 
         }
@@ -81,13 +82,16 @@ namespace Wirtualna_Uczelnia
 
             return null;
         }
+        //Sprawdzanie ile jest błędnych prób logowania
         private int GetFailedAttempts()
         {
             return new SecMenager().GetRegistryValue("Attempts", 0);
         }
 
+        //Funkcja używania entera podczas logowania
         public void HandleKeyUp(TextBox txtLogin, TextBox txtPassword, KeyEventArgs e)
         {
+            //Jesli nie ma wpisanego loginu, enter przeniesie nas na okienko loginu
             if (txtLogin.Text.Length == 0)
             {
                 if ((e.KeyCode == Keys.Enter) || (e.KeyCode == Keys.Return))
@@ -95,6 +99,7 @@ namespace Wirtualna_Uczelnia
                     txtLogin.Focus();
                 }
             }
+            //To samo co powyzej tylko do hasla
             else if (txtPassword.Text.Length == 0)
             {
                 if ((e.KeyCode == Keys.Enter) || (e.KeyCode == Keys.Return))
@@ -102,6 +107,7 @@ namespace Wirtualna_Uczelnia
                     txtPassword.Focus();
                 }
             }
+            //Jesli oba pola są zapełnione enter bedzie działać jak przycisk zaloguj
             else
             {
                 if ((e.KeyCode == Keys.Enter) || (e.KeyCode == Keys.Return))

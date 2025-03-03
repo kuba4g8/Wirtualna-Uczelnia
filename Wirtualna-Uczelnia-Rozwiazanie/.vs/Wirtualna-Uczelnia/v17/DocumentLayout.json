@@ -7,6 +7,10 @@
       "RelativeMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|solutionrelative:loginmenager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|c:\\users\\kaczo\\wirtualna-uczelnia\\wirtualna-uczelnia-rozwiazanie\\secmenager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|solutionrelative:secmenager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|c:\\users\\kaczo\\wirtualna-uczelnia\\wirtualna-uczelnia-rozwiazanie\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -21,10 +25,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|c:\\users\\kaczo\\wirtualna-uczelnia\\wirtualna-uczelnia-rozwiazanie\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|c:\\users\\kaczo\\wirtualna-uczelnia\\wirtualna-uczelnia-rozwiazanie\\secmenager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|solutionrelative:secmenager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
@@ -63,20 +63,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 1,
               "Title": "SecMenager.cs",
               "DocumentMoniker": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\SecMenager.cs",
               "RelativeDocumentMoniker": "SecMenager.cs",
               "ToolTip": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\SecMenager.cs",
               "RelativeToolTip": "SecMenager.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAAwAgAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAEMAAAAAAAAAAAAkwEcAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-03T15:44:32.44Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Form1.Designer.cs",
               "DocumentMoniker": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\Form1.Designer.cs",
               "RelativeDocumentMoniker": "Form1.Designer.cs",
@@ -89,7 +89,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -106,16 +106,16 @@
               "Title": "loginMenager.cs",
               "DocumentMoniker": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\loginMenager.cs",
               "RelativeDocumentMoniker": "loginMenager.cs",
-              "ToolTip": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\loginMenager.cs*",
-              "RelativeToolTip": "loginMenager.cs*",
-              "ViewState": "AgIAAFkAAAAAAAAAAAAiwGgAAAAQAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\loginMenager.cs",
+              "RelativeToolTip": "loginMenager.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAiwEAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-02T14:02:07.14Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "sqlMenager.cs",
               "DocumentMoniker": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\sqlMenager.cs",
               "RelativeDocumentMoniker": "sqlMenager.cs",
@@ -128,13 +128,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Form1.cs",
               "DocumentMoniker": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
-              "ToolTip": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\Form1.cs*",
-              "RelativeToolTip": "Form1.cs*",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAUwBgAAAA/AAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\Form1.cs",
+              "RelativeToolTip": "Form1.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAQwAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-28T07:28:35.166Z",
               "EditorCaption": ""
@@ -145,8 +145,8 @@
               "Title": "Form1.cs [Projekt]",
               "DocumentMoniker": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
-              "ToolTip": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\Form1.cs [Projekt]*",
-              "RelativeToolTip": "Form1.cs [Projekt]*",
+              "ToolTip": "C:\\Users\\kaczo\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\Form1.cs [Projekt]",
+              "RelativeToolTip": "Form1.cs [Projekt]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-28T07:26:25.235Z",
               "EditorCaption": " [Projekt]"
