@@ -9,7 +9,7 @@ namespace Wirtualna_Uczelnia
     public class loginMenager
     {
         private sqlMenager sqlMenager;
-        private LoggedUser? user;
+        private TempLoggedUser? user;
         private SecMenager secLogin;
 
         public loginMenager()
@@ -19,11 +19,12 @@ namespace Wirtualna_Uczelnia
 
         public bool tryLogin(string email, string haslo)
         {
-           
+
             loginMenager loginMenager = new loginMenager();
             secLogin = new SecMenager();
+
             //Jeśli logowanie zablokowane włączy się od razu przed logowaniem
-            if (secLogin.IsLockedOut(out int minutesLeft) && secLogin.debugMode == false)
+            if (secLogin.IsLockedOut(out int minutesLeft))
             {
                 MessageBox.Show($"Twoje konto jest zablokowane. Spróbuj ponownie za {minutesLeft} minut.");
                 return false;
@@ -65,11 +66,11 @@ namespace Wirtualna_Uczelnia
         }
 
         //loggedUser? -> oznacza ze obiekt moze byc null!
-        private LoggedUser? returnLoggedUser(string email, string haslo)
+        private TempLoggedUser? returnLoggedUser(string email, string haslo)
         {
-            List<LoggedUser> usersList = new List<LoggedUser>(); //lista wszystkich uzytkownikow z bazy danych
+            List<TempLoggedUser> usersList = new List<TempLoggedUser>(); //lista wszystkich uzytkownikow z bazy danych
 
-            usersList = sqlMenager.loadDataToList<LoggedUser>("SELECT * FROM `logowanie`");
+            usersList = sqlMenager.loadDataToList<TempLoggedUser>("SELECT * FROM `logowanie`");
 
             foreach (var user in usersList)
             {
@@ -115,14 +116,38 @@ namespace Wirtualna_Uczelnia
                 }
             }
         }
+        //obiekt przetrzymujace dane do logowania -> do usuniecia po zalogowaniu
+        public class TempLoggedUser
+        {
+            public int loginID { get; set; }
+            public string email { get; set; }
+            public string haslo { get; set; }
+            public bool isTeacher { get; set; }
+            public bool isAdmin { get; set; }
+        }
     }
-    //obiekt przetrzymujace dane do logowania
-    public class LoggedUser
+
+    public abstract class Osoba
     {
-        public int loginID { get; set; }
-        public string email { get; set; }
-        public string haslo { get; set; }
-        public bool isTeacher { get; set; }
-        public bool isAdmin { get; set; }
+        public int Id { get; set; }
+        public string Imie { get; set; }
+        public string Nazwisko { get; set; }
     }
+
+    public class Student : Osoba
+    {
+        public string NrIndeksu { get; set; }
+        public int Semestr { get; set; }
+        public string Wydzial { get; set; }
+        public string Kierunek { get; set; }
+    }
+
+    public class Pracownik : Osoba
+    {
+        public string Stanowisko { get; set; }
+        public string StopienNaukowy { get; set; }
+        public bool IsAdmin { get; set; }
+        public bool IsTeacher { get; set; }
+    }
+
 }

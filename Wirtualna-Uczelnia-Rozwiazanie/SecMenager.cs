@@ -14,7 +14,7 @@ namespace Wirtualna_Uczelnia
         public bool debugMode = true;
         //path do rejestru
         private const string RegistryKeyPath = @"SOFTWARE\Wirtualna-Uczelnia\SecMenager";
-        private const int MaxAttempts = 3;
+        private const int MaxAttempts = 5;
         private const int InitialLockoutMinutes = 5;
         private const int MaxLockoutMinutes = 60;
 
