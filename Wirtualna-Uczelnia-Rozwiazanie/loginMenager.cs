@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,19 +10,28 @@ namespace Wirtualna_Uczelnia
     public class loginMenager
     {
         private sqlMenager sqlMenager;
-        private TempLoggedUser? user;
         private SecMenager secLogin;
 
-        public loginMenager()
+        //trzymanie informacji personalnych itd.
+        private Student studentData;
+        private Pracownik teacherData;
+        private bool isTeacher;
+        //trzymanie informacji personalnych itd.
+
+        private bool debugMode;
+
+        public loginMenager(bool debugMode = false)
         {
             sqlMenager = new sqlMenager();
+            secLogin = new SecMenager();
+
+            this.debugMode = debugMode;
         }
 
         public bool tryLogin(string email, string haslo)
         {
 
-            loginMenager loginMenager = new loginMenager();
-            secLogin = new SecMenager();
+            TempLoggedUser tempLoggedUser = new TempLoggedUser(); //obiekt do trzymania hasla itd.
 
             //Jeśli logowanie zablokowane włączy się od razu przed logowaniem
             if (secLogin.IsLockedOut(out int minutesLeft))
@@ -30,9 +40,9 @@ namespace Wirtualna_Uczelnia
                 return false;
             }
 
-            user = returnLoggedUser(email, haslo);
+            tempLoggedUser = returnLoggedUser(email, haslo);
             //nie zalogowano
-            if (user == null)
+            if (tempLoggedUser == null)
             {
                 //Sprawdzanie ilosci nieudanych logowań
                 secLogin.RegisterFailedAttempt();
@@ -43,20 +53,37 @@ namespace Wirtualna_Uczelnia
                     : "Zbyt wiele prób. Konto zablokowane.");
                 return false;
             }
-                
+            string querry; //command querry (zapytanie) -> zostanie wyslane do sql
 
-            if (user.isAdmin)
+            //ify sprawdzaja kto jest adminem kto jest nauczycielem itd.
+            int userID = tempLoggedUser.userID;
+
+            if (tempLoggedUser.isAdmin) // UZYTKOWNIK TO ADMIN || przetrzymywane w tabelii admin
             {
+                querry = "SELECT * FROM pracownicy WHERE userID = @userID";
+                teacherData = returnUserData<Pracownik>(querry, userID);
+                isTeacher = true;
+                teacherData.isAdmin = true;
                 // odpalic forme dla admina
             }
-            else if (user.isTeacher)
+            else if (tempLoggedUser.isTeacher) // UZYTKOWNIK TO NAUCZYCIEL
             {
+                querry = "SELECT * FROM pracownicy WHERE userID = @userID";
+                teacherData = returnUserData<Pracownik>(querry, userID);
+                isTeacher = true;
+                teacherData.isAdmin = false;
                 // odpalic forme dla teachera
             }
-            else 
+            else // UZYTKOWNIK TO STUDENT
             {
+                querry = "SELECT * FROM studenci WHERE userID = @userID";
+                studentData = returnUserData<Student>(querry, userID);
+                isTeacher = false;
+                teacherData.isAdmin = false;
                 // odpalic forme dla studenta
             }
+            //ify sprawdzaja kto jest adminem kto jest nauczycielem itd.
+            ShowDebugInfo();
 
             //Zresetowanie licznika błędynch prób
             secLogin.ResetLockout();
@@ -65,12 +92,61 @@ namespace Wirtualna_Uczelnia
 
         }
 
+        // zwraca userObj ktory jest zaleznie od podanego T -> czyli obiektu ktory podajesz
+        public T returnUserData<T>(string querry, int userID) where T : Osoba, new()
+        {
+            MySqlCommand dataCommand = new MySqlCommand(querry);
+            dataCommand.Parameters.AddWithValue("@userID", userID);
+
+            var userObj = sqlMenager.loadDataToList<T>(dataCommand);
+            return userObj.FirstOrDefault();
+        }
+
+        public void ShowDebugInfo()
+        {
+            if (!debugMode)
+                return;
+
+
+            if (studentData != null)
+            {
+                string studentInfo = $"[DEBUG] Student:\n" +
+                                     $"ID: {studentData.userID}\n" +
+                                     $"Imię: {studentData.imie}\n" +
+                                     $"Nazwisko: {studentData.nazwisko}\n" +
+                                     $"Nr Indeksu: {studentData.nr_indeksu}\n" +
+                                     $"Semestr: {studentData.semestr}\n" +
+                                     $"Wydział: {studentData.wydzial}\n" +
+                                     $"Kierunek: {studentData.kierunek}";
+
+                MessageBox.Show(studentInfo, "Debug - Student", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else if (teacherData  != null)
+            {
+                string teacherInfo = $"[DEBUG] Pracownik:\n" +
+                                 $"ID: {teacherData.userID.ToString()}\n" +
+                                 $"Imię: {teacherData.imie}\n" +
+                                 $"Nazwisko: {teacherData.nazwisko}\n" +
+                                 $"Stanowisko: {teacherData.stanowisko}\n" +
+                                 $"Stopień naukowy: {teacherData.stopien_naukowy}\n" +
+                                 $"Admin: {teacherData.isAdmin}";
+
+                MessageBox.Show(teacherInfo, "Debug - Pracownik", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Cos sie zjebalo konkretnie");
+            }
+        }
+
         //loggedUser? -> oznacza ze obiekt moze byc null!
         private TempLoggedUser? returnLoggedUser(string email, string haslo)
         {
             List<TempLoggedUser> usersList = new List<TempLoggedUser>(); //lista wszystkich uzytkownikow z bazy danych
 
-            usersList = sqlMenager.loadDataToList<TempLoggedUser>("SELECT * FROM `logowanie`");
+            MySqlCommand loginCommand = new MySqlCommand("SELECT * FROM `logowanie`");
+
+            usersList = sqlMenager.loadDataToList<TempLoggedUser>(loginCommand);
 
             foreach (var user in usersList)
             {
@@ -117,9 +193,9 @@ namespace Wirtualna_Uczelnia
             }
         }
         //obiekt przetrzymujace dane do logowania -> do usuniecia po zalogowaniu
-        public class TempLoggedUser
+        private class TempLoggedUser
         {
-            public int loginID { get; set; }
+            public int userID { get; set; }
             public string email { get; set; }
             public string haslo { get; set; }
             public bool isTeacher { get; set; }
@@ -129,25 +205,24 @@ namespace Wirtualna_Uczelnia
 
     public abstract class Osoba
     {
-        public int Id { get; set; }
-        public string Imie { get; set; }
-        public string Nazwisko { get; set; }
+        public int userID { get; set; }
+        public string imie { get; set; }
+        public string nazwisko { get; set; }
+        public bool isAdmin { get; set; }
     }
 
     public class Student : Osoba
     {
-        public string NrIndeksu { get; set; }
-        public int Semestr { get; set; }
-        public string Wydzial { get; set; }
-        public string Kierunek { get; set; }
+        public string nr_indeksu { get; set; }
+        public int semestr { get; set; }
+        public string wydzial { get; set; }
+        public string kierunek { get; set; }
     }
 
     public class Pracownik : Osoba
     {
-        public string Stanowisko { get; set; }
-        public string StopienNaukowy { get; set; }
-        public bool IsAdmin { get; set; }
-        public bool IsTeacher { get; set; }
+        public string stanowisko { get; set; }
+        public string stopien_naukowy { get; set; }
     }
 
 }

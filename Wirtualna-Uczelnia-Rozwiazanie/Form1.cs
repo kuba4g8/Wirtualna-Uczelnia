@@ -10,7 +10,7 @@ namespace Wirtualna_Uczelnia
         {
             InitializeComponent();
 
-            loginMenager = new loginMenager();
+            loginMenager = new loginMenager(debugMode: true);
 
         }
         //Odpalenie zalogowania po klikniêciu przycisku zaloguj
