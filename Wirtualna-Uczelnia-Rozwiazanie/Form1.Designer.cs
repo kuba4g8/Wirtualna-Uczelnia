@@ -41,9 +41,11 @@
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(222, 29);
             btnLogin.TabIndex = 0;
-            btnLogin.Text = "zzaloguj";
+            btnLogin.TabStop = false;
+            btnLogin.Text = "zaloguj";
             btnLogin.UseVisualStyleBackColor = true;
-            btnLogin.Click += btnLogin_Click;
+            btnLogin.Click += login_Click;
+            btnLogin.KeyUp += KeyUp;
             // 
             // txtLogin
             // 
@@ -51,37 +53,42 @@
             txtLogin.Name = "txtLogin";
             txtLogin.Size = new Size(222, 27);
             txtLogin.TabIndex = 1;
+            txtLogin.Text = "admin@uczelnia.pl";
+            txtLogin.KeyUp += KeyUp;
             // 
             // txtPassword
             // 
             txtPassword.Location = new Point(12, 67);
             txtPassword.Name = "txtPassword";
+            txtPassword.PasswordChar = '*';
             txtPassword.Size = new Size(222, 27);
             txtPassword.TabIndex = 2;
+            txtPassword.Text = "admin123";
+            txtPassword.KeyUp += KeyUp;
             // 
             // lblLogin
             // 
             lblLogin.AutoSize = true;
-            lblLogin.Location = new Point(240, 15);
+            lblLogin.Location = new Point(240, 19);
             lblLogin.Name = "lblLogin";
             lblLogin.Size = new Size(56, 20);
             lblLogin.TabIndex = 3;
-            lblLogin.Text = "- Login";
+            lblLogin.Text = "- Email";
             // 
             // lblPass
             // 
             lblPass.AutoSize = true;
             lblPass.Location = new Point(240, 70);
             lblPass.Name = "lblPass";
-            lblPass.Size = new Size(80, 20);
+            lblPass.Size = new Size(57, 20);
             lblPass.TabIndex = 4;
-            lblPass.Text = "- Password";
+            lblPass.Text = "- Hasło";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(359, 170);
+            ClientSize = new Size(345, 166);
             Controls.Add(lblPass);
             Controls.Add(lblLogin);
             Controls.Add(txtPassword);

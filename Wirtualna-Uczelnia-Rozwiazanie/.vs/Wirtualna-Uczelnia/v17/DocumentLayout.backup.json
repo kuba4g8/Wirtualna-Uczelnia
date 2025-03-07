@@ -1,18 +1,30 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\.INFORMATYCZNE SPRAWY\\projekty\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia\\",
+  "WorkspaceRootPath": "C:\\.INFORMATYCZNE SPRAWY\\projekty\\.Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|c:\\.informatyczne sprawy\\projekty\\wirtualna-uczelnia\\wirtualna-uczelnia\\sqlmenager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|c:\\.informatyczne sprawy\\projekty\\.wirtualna-uczelnia\\wirtualna-uczelnia-rozwiazanie\\loginmenager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|solutionrelative:loginmenager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|c:\\.informatyczne sprawy\\projekty\\.wirtualna-uczelnia\\wirtualna-uczelnia-rozwiazanie\\sqlmenager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|solutionrelative:sqlmenager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|c:\\.informatyczne sprawy\\projekty\\wirtualna-uczelnia\\wirtualna-uczelnia\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|C:\\.INFORMATYCZNE SPRAWY\\projekty\\.Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|c:\\.informatyczne sprawy\\projekty\\.wirtualna-uczelnia\\wirtualna-uczelnia-rozwiazanie\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|c:\\.informatyczne sprawy\\projekty\\wirtualna-uczelnia\\wirtualna-uczelnia\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|c:\\.informatyczne sprawy\\projekty\\.wirtualna-uczelnia\\wirtualna-uczelnia-rozwiazanie\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|c:\\.informatyczne sprawy\\projekty\\.wirtualna-uczelnia\\wirtualna-uczelnia-rozwiazanie\\secmenager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F3A4AD87-6796-473A-8AD9-D0B2988568CC}|Wirtualna-Uczelnia.csproj|solutionrelative:secmenager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,30 +34,69 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "SecMenager.cs",
+              "DocumentMoniker": "C:\\.INFORMATYCZNE SPRAWY\\projekty\\.Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\SecMenager.cs",
+              "RelativeDocumentMoniker": "SecMenager.cs",
+              "ToolTip": "C:\\.INFORMATYCZNE SPRAWY\\projekty\\.Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\SecMenager.cs",
+              "RelativeToolTip": "SecMenager.cs",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAowBAAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-03T18:38:42.112Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\.INFORMATYCZNE SPRAWY\\projekty\\.Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\.INFORMATYCZNE SPRAWY\\projekty\\.Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-03T08:19:59.904Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "loginMenager.cs",
+              "DocumentMoniker": "C:\\.INFORMATYCZNE SPRAWY\\projekty\\.Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\loginMenager.cs",
+              "RelativeDocumentMoniker": "loginMenager.cs",
+              "ToolTip": "C:\\.INFORMATYCZNE SPRAWY\\projekty\\.Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\loginMenager.cs",
+              "RelativeToolTip": "loginMenager.cs",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAqwFEAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-02T14:02:07.14Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "sqlMenager.cs",
-              "DocumentMoniker": "C:\\.INFORMATYCZNE SPRAWY\\projekty\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia\\sqlMenager.cs",
+              "DocumentMoniker": "C:\\.INFORMATYCZNE SPRAWY\\projekty\\.Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\sqlMenager.cs",
               "RelativeDocumentMoniker": "sqlMenager.cs",
-              "ToolTip": "C:\\.INFORMATYCZNE SPRAWY\\projekty\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia\\sqlMenager.cs*",
-              "RelativeToolTip": "sqlMenager.cs*",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAKAAAAAAAAAA==",
+              "ToolTip": "C:\\.INFORMATYCZNE SPRAWY\\projekty\\.Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\sqlMenager.cs",
+              "RelativeToolTip": "sqlMenager.cs",
+              "ViewState": "AgIAADoAAAAAAAAAAAAWwFAAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-28T07:29:44.579Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "Form1.cs",
-              "DocumentMoniker": "C:\\.INFORMATYCZNE SPRAWY\\projekty\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia\\Form1.cs",
+              "DocumentMoniker": "C:\\.INFORMATYCZNE SPRAWY\\projekty\\.Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
-              "ToolTip": "C:\\.INFORMATYCZNE SPRAWY\\projekty\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia\\Form1.cs*",
-              "RelativeToolTip": "Form1.cs*",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "ToolTip": "C:\\.INFORMATYCZNE SPRAWY\\projekty\\.Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\Form1.cs",
+              "RelativeToolTip": "Form1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-28T07:28:35.166Z",
               "EditorCaption": ""
@@ -54,10 +105,10 @@
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "Form1.cs [Projekt]",
-              "DocumentMoniker": "C:\\.INFORMATYCZNE SPRAWY\\projekty\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia\\Form1.cs",
+              "DocumentMoniker": "C:\\.INFORMATYCZNE SPRAWY\\projekty\\.Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
-              "ToolTip": "C:\\.INFORMATYCZNE SPRAWY\\projekty\\Wirtualna-Uczelnia\\Wirtualna-Uczelnia\\Form1.cs [Projekt]*",
-              "RelativeToolTip": "Form1.cs [Projekt]*",
+              "ToolTip": "C:\\.INFORMATYCZNE SPRAWY\\projekty\\.Wirtualna-Uczelnia\\Wirtualna-Uczelnia-Rozwiazanie\\Form1.cs [Projekt]",
+              "RelativeToolTip": "Form1.cs [Projekt]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-28T07:26:25.235Z",
               "EditorCaption": " [Projekt]"
