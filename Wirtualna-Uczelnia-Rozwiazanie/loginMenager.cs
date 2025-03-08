@@ -90,7 +90,7 @@ namespace Wirtualna_Uczelnia
                 querry = "SELECT * FROM studenci WHERE userID = @userID";
                 studentData = returnUserData<Student>(querry, userID);
                 isTeacher = false;
-                teacherData.isAdmin = false;
+                studentData.isAdmin = false;
                 // odpalic forme dla studenta
             }
             //ify sprawdzaja kto jest adminem kto jest nauczycielem itd.
@@ -203,15 +203,16 @@ namespace Wirtualna_Uczelnia
                 }
             }
         }
-        //obiekt przetrzymujace dane do logowania -> do usuniecia po zalogowaniu
-        private class TempLoggedUser
-        {
-            public int userID { get; set; }
-            public string email { get; set; }
-            public string haslo { get; set; }
-            public bool isTeacher { get; set; }
-            public bool isAdmin { get; set; }
-        }
+        
+    }
+    //obiekt przetrzymujace dane do logowania -> do usuniecia po zalogowaniu
+    public class TempLoggedUser
+    {
+        public int userID { get; set; }
+        public string email { get; set; }
+        public string haslo { get; set; }
+        public bool isTeacher { get; set; }
+        public bool isAdmin { get; set; }
     }
 
     public abstract class Osoba

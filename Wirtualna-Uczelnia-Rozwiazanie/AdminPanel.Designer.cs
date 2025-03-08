@@ -84,8 +84,8 @@ namespace Wirtualna_Uczelnia
             lblFieldOfStudy = new Label();
             txtFieldOfStudy = new TextBox();
             btnRegister = new Button();
-            listStudenci = new CheckedListBox();
-            listNauczyciele = new CheckedListBox();
+            listStudenci = new ListBox();
+            listPracownicy = new ListBox();
             lblTeachers = new Label();
             lblStudenci = new Label();
             SuspendLayout();
@@ -105,24 +105,26 @@ namespace Wirtualna_Uczelnia
             txtUserId.Location = new Point(160, 31);
             txtUserId.Margin = new Padding(4, 5, 4, 5);
             txtUserId.Name = "txtUserId";
-            txtUserId.Size = new Size(132, 27);
+            txtUserId.Size = new Size(109, 27);
             txtUserId.TabIndex = 1;
+            txtUserId.Text = "123";
             // 
             // btnLoadUser
             // 
-            btnLoadUser.Location = new Point(320, 31);
+            btnLoadUser.Font = new Font("Segoe UI", 14F);
+            btnLoadUser.Location = new Point(277, 31);
             btnLoadUser.Margin = new Padding(4, 5, 4, 5);
             btnLoadUser.Name = "btnLoadUser";
-            btnLoadUser.Size = new Size(107, 35);
+            btnLoadUser.Size = new Size(150, 35);
             btnLoadUser.TabIndex = 2;
-            btnLoadUser.Text = "Wczytaj";
+            btnLoadUser.Text = "Clear";
             btnLoadUser.UseVisualStyleBackColor = true;
             btnLoadUser.Click += btnLoadUser_Click;
             // 
             // lblEmail
             // 
             lblEmail.AutoSize = true;
-            lblEmail.Location = new Point(27, 92);
+            lblEmail.Location = new Point(27, 153);
             lblEmail.Margin = new Padding(4, 0, 4, 0);
             lblEmail.Name = "lblEmail";
             lblEmail.Size = new Size(49, 20);
@@ -131,7 +133,7 @@ namespace Wirtualna_Uczelnia
             // 
             // txtEmail
             // 
-            txtEmail.Location = new Point(160, 92);
+            txtEmail.Location = new Point(160, 153);
             txtEmail.Margin = new Padding(4, 5, 4, 5);
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(265, 27);
@@ -140,7 +142,7 @@ namespace Wirtualna_Uczelnia
             // lblPassword
             // 
             lblPassword.AutoSize = true;
-            lblPassword.Location = new Point(27, 154);
+            lblPassword.Location = new Point(27, 215);
             lblPassword.Margin = new Padding(4, 0, 4, 0);
             lblPassword.Name = "lblPassword";
             lblPassword.Size = new Size(50, 20);
@@ -149,7 +151,7 @@ namespace Wirtualna_Uczelnia
             // 
             // txtPassword
             // 
-            txtPassword.Location = new Point(160, 154);
+            txtPassword.Location = new Point(160, 215);
             txtPassword.Margin = new Padding(4, 5, 4, 5);
             txtPassword.Name = "txtPassword";
             txtPassword.PasswordChar = '*';
@@ -159,7 +161,7 @@ namespace Wirtualna_Uczelnia
             // lblFirstName
             // 
             lblFirstName.AutoSize = true;
-            lblFirstName.Location = new Point(27, 215);
+            lblFirstName.Location = new Point(27, 276);
             lblFirstName.Margin = new Padding(4, 0, 4, 0);
             lblFirstName.Name = "lblFirstName";
             lblFirstName.Size = new Size(41, 20);
@@ -168,7 +170,7 @@ namespace Wirtualna_Uczelnia
             // 
             // txtFirstName
             // 
-            txtFirstName.Location = new Point(160, 215);
+            txtFirstName.Location = new Point(160, 276);
             txtFirstName.Margin = new Padding(4, 5, 4, 5);
             txtFirstName.Name = "txtFirstName";
             txtFirstName.Size = new Size(265, 27);
@@ -177,7 +179,7 @@ namespace Wirtualna_Uczelnia
             // lblLastName
             // 
             lblLastName.AutoSize = true;
-            lblLastName.Location = new Point(27, 277);
+            lblLastName.Location = new Point(27, 338);
             lblLastName.Margin = new Padding(4, 0, 4, 0);
             lblLastName.Name = "lblLastName";
             lblLastName.Size = new Size(75, 20);
@@ -186,7 +188,7 @@ namespace Wirtualna_Uczelnia
             // 
             // txtLastName
             // 
-            txtLastName.Location = new Point(160, 277);
+            txtLastName.Location = new Point(160, 338);
             txtLastName.Margin = new Padding(4, 5, 4, 5);
             txtLastName.Name = "txtLastName";
             txtLastName.Size = new Size(265, 27);
@@ -195,7 +197,7 @@ namespace Wirtualna_Uczelnia
             // lblAccountType
             // 
             lblAccountType.AutoSize = true;
-            lblAccountType.Location = new Point(27, 338);
+            lblAccountType.Location = new Point(27, 97);
             lblAccountType.Margin = new Padding(4, 0, 4, 0);
             lblAccountType.Name = "lblAccountType";
             lblAccountType.Size = new Size(76, 20);
@@ -207,7 +209,7 @@ namespace Wirtualna_Uczelnia
             cmbAccountType.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbAccountType.FormattingEnabled = true;
             cmbAccountType.Items.AddRange(new object[] { "Nauczyciel", "Student" });
-            cmbAccountType.Location = new Point(160, 338);
+            cmbAccountType.Location = new Point(160, 97);
             cmbAccountType.Margin = new Padding(4, 5, 4, 5);
             cmbAccountType.Name = "cmbAccountType";
             cmbAccountType.Size = new Size(265, 28);
@@ -344,17 +346,19 @@ namespace Wirtualna_Uczelnia
             listStudenci.Items.AddRange(new object[] { "asd", "asd", "asd", "asd", "asd", "asdd", "asd", "asd", "as", "assd", "asd", "assd", "assd", "asd", "asd", "asd", "asd", "asd", "asd", "asd", "asd", "asd", "assd" });
             listStudenci.Location = new Point(432, 36);
             listStudenci.Name = "listStudenci";
-            listStudenci.Size = new Size(227, 312);
+            listStudenci.Size = new Size(371, 304);
             listStudenci.TabIndex = 26;
+            listStudenci.SelectedIndexChanged += listBoxStudenciItemChanged;
             // 
-            // listNauczyciele
+            // listPracownicy
             // 
-            listNauczyciele.FormattingEnabled = true;
-            listNauczyciele.Items.AddRange(new object[] { "asd", "asd", "asd", "asd", "asd", "asdd", "asd", "asd", "as", "assd", "asd", "assd", "assd", "asd", "asd", "asd", "asd", "asd", "asd", "asd", "asd", "asd", "assd" });
-            listNauczyciele.Location = new Point(432, 380);
-            listNauczyciele.Name = "listNauczyciele";
-            listNauczyciele.Size = new Size(227, 312);
-            listNauczyciele.TabIndex = 27;
+            listPracownicy.FormattingEnabled = true;
+            listPracownicy.Items.AddRange(new object[] { "asd", "asd", "asd", "asd", "asd", "asdd", "asd", "asd", "as", "assd", "asd", "assd", "assd", "asd", "asd", "asd", "asd", "asd", "asd", "asd", "asd", "asd", "assd" });
+            listPracownicy.Location = new Point(432, 380);
+            listPracownicy.Name = "listPracownicy";
+            listPracownicy.Size = new Size(371, 304);
+            listPracownicy.TabIndex = 27;
+            listPracownicy.SelectedIndexChanged += listBoxItemPracownicyChanged;
             // 
             // lblTeachers
             // 
@@ -380,10 +384,10 @@ namespace Wirtualna_Uczelnia
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(671, 723);
+            ClientSize = new Size(853, 723);
             Controls.Add(lblStudenci);
             Controls.Add(lblTeachers);
-            Controls.Add(listNauczyciele);
+            Controls.Add(listPracownicy);
             Controls.Add(listStudenci);
             Controls.Add(lblUserId);
             Controls.Add(txtUserId);
@@ -455,13 +459,10 @@ namespace Wirtualna_Uczelnia
         }
 
         // Obsługa zdarzenia wczytywania użytkownika
-        private void btnLoadUser_Click(object sender, EventArgs e)
-        {
 
-        }
 
-        private CheckedListBox listStudenci;
-        private CheckedListBox listNauczyciele;
+        private ListBox listStudenci;
+        private ListBox listPracownicy;
         private Label lblTeachers;
         private Label lblStudenci;
     }
