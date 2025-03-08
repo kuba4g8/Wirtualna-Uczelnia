@@ -1,6 +1,6 @@
 ﻿namespace Wirtualna_Uczelnia
 {
-    partial class Form1
+    partial class LoginForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -84,7 +84,7 @@
             lblPass.TabIndex = 4;
             lblPass.Text = "- Hasło";
             // 
-            // Form1
+            // LoginForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -94,7 +94,7 @@
             Controls.Add(txtPassword);
             Controls.Add(txtLogin);
             Controls.Add(btnLogin);
-            Name = "Form1";
+            Name = "LoginForm";
             Text = "Form1";
             ResumeLayout(false);
             PerformLayout();

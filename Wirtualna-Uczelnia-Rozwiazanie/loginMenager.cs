@@ -20,11 +20,15 @@ namespace Wirtualna_Uczelnia
 
         private bool debugMode;
 
-        public loginMenager(bool debugMode = false)
+        //forma logowania
+        LoginForm loginForm;
+
+        public loginMenager(LoginForm loginForm ,bool debugMode = false)
         {
             sqlMenager = new sqlMenager();
             secLogin = new SecMenager();
 
+            this.loginForm = loginForm;
             this.debugMode = debugMode;
         }
 
@@ -64,6 +68,13 @@ namespace Wirtualna_Uczelnia
                 teacherData = returnUserData<Pracownik>(querry, userID);
                 isTeacher = true;
                 teacherData.isAdmin = true;
+
+
+                AdminPanel adminPanel = new AdminPanel();
+
+                adminPanel.Show();
+                loginForm.Hide();
+                
                 // odpalic forme dla admina
             }
             else if (tempLoggedUser.isTeacher) // UZYTKOWNIK TO NAUCZYCIEL
