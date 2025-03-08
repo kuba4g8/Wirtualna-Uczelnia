@@ -20,11 +20,15 @@ namespace Wirtualna_Uczelnia
 
         private bool debugMode;
 
-        public loginMenager(bool debugMode = false)
+        //forma logowania
+        LoginForm loginForm;
+
+        public loginMenager(LoginForm loginForm ,bool debugMode = false)
         {
             sqlMenager = new sqlMenager();
             secLogin = new SecMenager();
 
+            this.loginForm = loginForm;
             this.debugMode = debugMode;
         }
 
@@ -64,6 +68,13 @@ namespace Wirtualna_Uczelnia
                 teacherData = returnUserData<Pracownik>(querry, userID);
                 isTeacher = true;
                 teacherData.isAdmin = true;
+
+
+                AdminPanel adminPanel = new AdminPanel();
+
+                adminPanel.Show();
+                loginForm.Hide();
+                
                 // odpalic forme dla admina
             }
             else if (tempLoggedUser.isTeacher) // UZYTKOWNIK TO NAUCZYCIEL
@@ -79,7 +90,7 @@ namespace Wirtualna_Uczelnia
                 querry = "SELECT * FROM studenci WHERE userID = @userID";
                 studentData = returnUserData<Student>(querry, userID);
                 isTeacher = false;
-                teacherData.isAdmin = false;
+                studentData.isAdmin = false;
                 // odpalic forme dla studenta
             }
             //ify sprawdzaja kto jest adminem kto jest nauczycielem itd.
@@ -192,15 +203,16 @@ namespace Wirtualna_Uczelnia
                 }
             }
         }
-        //obiekt przetrzymujace dane do logowania -> do usuniecia po zalogowaniu
-        private class TempLoggedUser
-        {
-            public int userID { get; set; }
-            public string email { get; set; }
-            public string haslo { get; set; }
-            public bool isTeacher { get; set; }
-            public bool isAdmin { get; set; }
-        }
+        
+    }
+    //obiekt przetrzymujace dane do logowania -> do usuniecia po zalogowaniu
+    public class TempLoggedUser
+    {
+        public int userID { get; set; }
+        public string email { get; set; }
+        public string haslo { get; set; }
+        public bool isTeacher { get; set; }
+        public bool isAdmin { get; set; }
     }
 
     public abstract class Osoba
