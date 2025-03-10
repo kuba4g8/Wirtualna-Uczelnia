@@ -6,11 +6,12 @@ namespace Wirtualna_Uczelnia
     {
 
         loginMenager loginMenager;
+        bool debugMode = true;
         public LoginForm()
         {
             InitializeComponent();
 
-            loginMenager = new loginMenager(this, debugMode: true);
+            loginMenager = new loginMenager(this, debugMode);
 
         }
         //Odpalenie zalogowania po klikniêciu przycisku zaloguj

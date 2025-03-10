@@ -12,7 +12,7 @@ namespace Wirtualna_Uczelnia
         // Deklaracje kontrolek
         private Label lblUserId;
         private TextBox txtUserId;
-        private Button btnLoadUser;
+        private Button btnClear;
         private Label lblEmail;
         private TextBox txtEmail;
         private Label lblPassword;
@@ -32,9 +32,9 @@ namespace Wirtualna_Uczelnia
         private Label lblSemester;
         private TextBox txtSemester;
         private Label lblFaculty;
-        private TextBox txtFaculty;
+        private TextBox txtWydzial;
         private Label lblFieldOfStudy;
-        private TextBox txtFieldOfStudy;
+        private TextBox txtKierunek;
         private Button btnRegister;
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Wirtualna_Uczelnia
         {
             lblUserId = new Label();
             txtUserId = new TextBox();
-            btnLoadUser = new Button();
+            btnClear = new Button();
             lblEmail = new Label();
             txtEmail = new TextBox();
             lblPassword = new Label();
@@ -80,9 +80,9 @@ namespace Wirtualna_Uczelnia
             lblSemester = new Label();
             txtSemester = new TextBox();
             lblFaculty = new Label();
-            txtFaculty = new TextBox();
+            txtWydzial = new TextBox();
             lblFieldOfStudy = new Label();
-            txtFieldOfStudy = new TextBox();
+            txtKierunek = new TextBox();
             btnRegister = new Button();
             listStudenci = new ListBox();
             listPracownicy = new ListBox();
@@ -102,6 +102,7 @@ namespace Wirtualna_Uczelnia
             // 
             // txtUserId
             // 
+            txtUserId.Enabled = false;
             txtUserId.Location = new Point(160, 31);
             txtUserId.Margin = new Padding(4, 5, 4, 5);
             txtUserId.Name = "txtUserId";
@@ -109,17 +110,17 @@ namespace Wirtualna_Uczelnia
             txtUserId.TabIndex = 1;
             txtUserId.Text = "123";
             // 
-            // btnLoadUser
+            // btnClear
             // 
-            btnLoadUser.Font = new Font("Segoe UI", 14F);
-            btnLoadUser.Location = new Point(277, 31);
-            btnLoadUser.Margin = new Padding(4, 5, 4, 5);
-            btnLoadUser.Name = "btnLoadUser";
-            btnLoadUser.Size = new Size(150, 35);
-            btnLoadUser.TabIndex = 2;
-            btnLoadUser.Text = "Clear";
-            btnLoadUser.UseVisualStyleBackColor = true;
-            btnLoadUser.Click += btnLoadUser_Click;
+            btnClear.Font = new Font("Segoe UI", 8F);
+            btnClear.Location = new Point(277, 31);
+            btnClear.Margin = new Padding(4, 5, 4, 5);
+            btnClear.Name = "btnClear";
+            btnClear.Size = new Size(150, 35);
+            btnClear.TabIndex = 2;
+            btnClear.Text = "Dodaj uzytkownika";
+            btnClear.UseVisualStyleBackColor = true;
+            btnClear.Click += btnClear_Click;
             // 
             // lblEmail
             // 
@@ -154,7 +155,6 @@ namespace Wirtualna_Uczelnia
             txtPassword.Location = new Point(160, 215);
             txtPassword.Margin = new Padding(4, 5, 4, 5);
             txtPassword.Name = "txtPassword";
-            txtPassword.PasswordChar = '*';
             txtPassword.Size = new Size(265, 27);
             txtPassword.TabIndex = 6;
             // 
@@ -302,14 +302,14 @@ namespace Wirtualna_Uczelnia
             lblFaculty.TabIndex = 21;
             lblFaculty.Text = "Wydział:";
             // 
-            // txtFaculty
+            // txtWydzial
             // 
-            txtFaculty.Location = new Point(160, 523);
-            txtFaculty.Margin = new Padding(4, 5, 4, 5);
-            txtFaculty.Name = "txtFaculty";
-            txtFaculty.Size = new Size(265, 27);
-            txtFaculty.TabIndex = 22;
-            txtFaculty.Visible = false;
+            txtWydzial.Location = new Point(160, 523);
+            txtWydzial.Margin = new Padding(4, 5, 4, 5);
+            txtWydzial.Name = "txtWydzial";
+            txtWydzial.Size = new Size(265, 27);
+            txtWydzial.TabIndex = 22;
+            txtWydzial.Visible = false;
             // 
             // lblFieldOfStudy
             // 
@@ -321,14 +321,14 @@ namespace Wirtualna_Uczelnia
             lblFieldOfStudy.TabIndex = 23;
             lblFieldOfStudy.Text = "Kierunek:";
             // 
-            // txtFieldOfStudy
+            // txtKierunek
             // 
-            txtFieldOfStudy.Location = new Point(160, 585);
-            txtFieldOfStudy.Margin = new Padding(4, 5, 4, 5);
-            txtFieldOfStudy.Name = "txtFieldOfStudy";
-            txtFieldOfStudy.Size = new Size(265, 27);
-            txtFieldOfStudy.TabIndex = 24;
-            txtFieldOfStudy.Visible = false;
+            txtKierunek.Location = new Point(160, 585);
+            txtKierunek.Margin = new Padding(4, 5, 4, 5);
+            txtKierunek.Name = "txtKierunek";
+            txtKierunek.Size = new Size(265, 27);
+            txtKierunek.TabIndex = 24;
+            txtKierunek.Visible = false;
             // 
             // btnRegister
             // 
@@ -339,6 +339,7 @@ namespace Wirtualna_Uczelnia
             btnRegister.TabIndex = 25;
             btnRegister.Text = "Zarejestruj/Aktualizuj";
             btnRegister.UseVisualStyleBackColor = true;
+            btnRegister.Click += btnRegister_Click;
             // 
             // listStudenci
             // 
@@ -391,7 +392,7 @@ namespace Wirtualna_Uczelnia
             Controls.Add(listStudenci);
             Controls.Add(lblUserId);
             Controls.Add(txtUserId);
-            Controls.Add(btnLoadUser);
+            Controls.Add(btnClear);
             Controls.Add(lblEmail);
             Controls.Add(txtEmail);
             Controls.Add(lblPassword);
@@ -411,9 +412,9 @@ namespace Wirtualna_Uczelnia
             Controls.Add(lblSemester);
             Controls.Add(txtSemester);
             Controls.Add(lblFaculty);
-            Controls.Add(txtFaculty);
+            Controls.Add(txtWydzial);
             Controls.Add(lblFieldOfStudy);
-            Controls.Add(txtFieldOfStudy);
+            Controls.Add(txtKierunek);
             Controls.Add(btnRegister);
             Margin = new Padding(4, 5, 4, 5);
             Name = "AdminPanel";
@@ -453,9 +454,9 @@ namespace Wirtualna_Uczelnia
             lblSemester.Visible = isStudent;
             txtSemester.Visible = isStudent;
             lblFaculty.Visible = isStudent;
-            txtFaculty.Visible = isStudent;
+            txtWydzial.Visible = isStudent;
             lblFieldOfStudy.Visible = isStudent;
-            txtFieldOfStudy.Visible = isStudent;
+            txtKierunek.Visible = isStudent;
         }
 
         // Obsługa zdarzenia wczytywania użytkownika

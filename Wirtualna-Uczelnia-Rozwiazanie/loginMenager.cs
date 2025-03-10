@@ -26,7 +26,7 @@ namespace Wirtualna_Uczelnia
         public loginMenager(LoginForm loginForm ,bool debugMode = false)
         {
             sqlMenager = new sqlMenager();
-            secLogin = new SecMenager();
+            secLogin = new SecMenager(debugMode);
 
             this.loginForm = loginForm;
             this.debugMode = debugMode;
@@ -70,10 +70,11 @@ namespace Wirtualna_Uczelnia
                 teacherData.isAdmin = true;
 
 
-                AdminPanel adminPanel = new AdminPanel();
+                AdminPanel adminPanel = new AdminPanel(teacherData);
 
                 adminPanel.Show();
                 loginForm.Hide();
+                return true; //do usuenia potem jak beda inne formy!!!/////
                 
                 // odpalic forme dla admina
             }
@@ -98,12 +99,20 @@ namespace Wirtualna_Uczelnia
 
             //Zresetowanie licznika błędynch prób
             secLogin.ResetLockout();
-            MessageBox.Show("Zalogowano");
+            //MessageBox.Show("Zalogowano");
             return true;
 
         }
 
         // zwraca userObj ktory jest zaleznie od podanego T -> czyli obiektu ktory podajesz
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="querry"></param>
+        /// <param name="userID"></param>
+        /// <returns></returns>
         public T returnUserData<T>(string querry, int userID) where T : Osoba, new()
         {
             MySqlCommand dataCommand = new MySqlCommand(querry);
@@ -172,7 +181,7 @@ namespace Wirtualna_Uczelnia
         //Sprawdzanie ile jest błędnych prób logowania
         private int GetFailedAttempts()
         {
-            return new SecMenager().GetRegistryValue("Attempts", 0);
+            return new SecMenager(true).GetRegistryValue("Attempts", 0);
         }
 
         //Funkcja używania entera podczas logowania
@@ -234,7 +243,7 @@ namespace Wirtualna_Uczelnia
     public class Pracownik : Osoba
     {
         public string stanowisko { get; set; }
-        public string stopien_naukowy { get; set; }
+        public string stopien_naukowy { get; set; } // moze byc null
     }
 
 }
