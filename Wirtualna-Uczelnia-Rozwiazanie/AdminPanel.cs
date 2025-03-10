@@ -13,68 +13,207 @@ namespace Wirtualna_Uczelnia
 {
     public partial class AdminPanel : Form
     {
+        internal Student editingStudent;
+        internal Pracownik editingPracownik;
+        internal TempLoggedUser editingLoginInfo;
+
+        private bool editMode = false;
+
         AdminMenager adminMenager;
+        Pracownik loggedUser; // dane aktualnie zalogowanego uzytkownika
 
-        private bool isEditingData = false;
-
-        public AdminPanel()
+        public AdminPanel(Pracownik loggedUser)
         {
             InitializeComponent();
-            adminMenager = new AdminMenager(listPracownicy, listStudenci);
+            this.loggedUser = loggedUser;
+
+            adminMenager = new AdminMenager(loggedUser, listPracownicy, listStudenci);
+
+            updateVisualData();
         }
 
-        private void btnLoadUser_Click(object sender, EventArgs e)
+        //funkcja updatuje visualne sprawy textboxow itd
+        private void updateVisualData()
         {
-            if (txtUserId.Text == "")
+            if (!editMode) // wykona sie jezeli editMode = false
             {
-                btnLoadUser.Text = "";
+                btnRegister.Text = "REGISTER";
+
+                listPracownicy.SelectedIndex = -1;
+                listStudenci.SelectedIndex = -1;
+
+                cmbAccountType.SelectedIndex = -1;
+                cmbAccountType.Enabled = true;
+
+                txtUserId.Text = "";
+                txtEmail.Text = "";
+                txtPassword.Text = "";
+                txtFirstName.Text = "";
+                txtLastName.Text = "";
+                txtPosition.Text = "";
+                txtAcademicDegree.Text = "";
+
+                txtStudentId.Text = "";
+                txtSemester.Text = "";
+                txtWydzial.Text = "";
+                txtKierunek.Text = "";
+
+                return;
             }
+
+            btnRegister.Text = "UPDATE";
+            // wykona sie jezeli jestesmy w EDITMODE
+            txtUserId.Text = editingLoginInfo.userID.ToString();
+            txtEmail.Text = editingLoginInfo.email;
+            txtPassword.Text = editingLoginInfo.haslo;
+
+            cmbAccountType.Enabled = false;
+
+            if (editingPracownik != null) // wpisujemy dane pracownika
+            {
+                cmbAccountType.SelectedIndex = 0;
+
+                txtFirstName.Text = editingPracownik.imie;
+                txtLastName.Text = editingPracownik.nazwisko;
+
+                txtPosition.Text = editingPracownik.stanowisko;
+                txtAcademicDegree.Text = editingPracownik.stopien_naukowy;
+            }
+            else if (editingStudent != null) // wpisujemy dane studenta
+            {
+                cmbAccountType.SelectedIndex = 1;
+
+                txtFirstName.Text = editingStudent.imie;
+                txtLastName.Text = editingStudent.nazwisko;
+
+                txtStudentId.Text = editingStudent.nr_indeksu;
+                txtSemester.Text = editingStudent.semestr.ToString();
+                txtWydzial.Text = editingStudent.wydzial;
+                txtKierunek.Text = editingStudent.kierunek;
+            }
+
+
+            editMode = true;
         }
-        //dataobj - obiekt przetrzymujacy wlasciwosci Student lub Pracownik
-        private int returnUserID(ListBox operationList)
+
+        //comboBox 0 - nauczyciel, 1 - student
+        private bool checkIfAllTextBoxesAreNull()
         {
-            return int.Parse(operationList.Items[operationList.SelectedIndex].ToString().Split(':')[0]);
+            if (cmbAccountType.SelectedIndex == 0) // Sprawdzamy pola dla nauczyciela
+            {
+                if (txtFirstName.Text != "" &&
+                    txtLastName.Text != "" &&
+                    txtPosition.Text != "" &&
+                    txtAcademicDegree.Text != "")
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else if (cmbAccountType.SelectedIndex == 1) // Sprawdzamy pola dla studenta
+            {
+                if (txtFirstName.Text != "" &&
+                    txtLastName.Text != "" &&
+                    txtStudentId.Text != "" &&
+                    txtSemester.Text != "" &&
+                    txtWydzial.Text != "" &&
+                    txtKierunek.Text != "")
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return false;
         }
 
-
+        //funckja wywolujaca sie gdy INDEX sie zmieni, sam lub przez kod ---> STUDENCI
         private void listBoxStudenciItemChanged(object sender, EventArgs e)
         {
             if (listStudenci.SelectedIndex == -1)
                 return;
             listPracownicy.SelectedIndex = -1;
+            editingPracownik = null;
 
-            int userID = returnUserID(listStudenci);
-            txtUserId.Text = userID.ToString();
+            editingStudent = adminMenager.findUserData<Student>(listStudenci.SelectedIndex, false);
+            if (editingStudent == null)
+            {
+                MessageBox.Show("Nie udalo sie pobrac danych uzytkownika");
+                listStudenci.SelectedIndex = -1;
+                return;
+            }
 
+            editingLoginInfo = adminMenager.returnLoginData("SELECT * FROM logowanie WHERE userID = @userID", editingStudent.userID).FirstOrDefault();
 
+            editMode = true;
+            updateVisualData();
             //updateVisualText(listStudenci.SelectedItem.ToString()[0]);
         }
 
+        //funckja wywolujaca sie gdy INDEX sie zmieni, sam lub przez kod ---> PRACOWNICY
         private void listBoxItemPracownicyChanged(object sender, EventArgs e)
         {
             if (listPracownicy.SelectedIndex == -1)
                 return;
             listStudenci.SelectedIndex = -1;
+            editingStudent = null;
 
-            int userID = returnUserID(listPracownicy);
-            txtUserId.Text = userID.ToString();
+
+            editingPracownik = adminMenager.findUserData<Pracownik>(listPracownicy.SelectedIndex, true);
+            if (editingPracownik == null)
+            {
+                MessageBox.Show("Nie udalo sie pobrac danych uzytkownika");
+                listPracownicy.SelectedIndex = -1;
+                return;
+            }
+            editingLoginInfo = adminMenager.returnLoginData("SELECT * FROM logowanie WHERE userID = @userID", editingPracownik.userID).FirstOrDefault();
+
+            editMode = true;
+            updateVisualData();
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            editMode = false;
+            updateVisualData();
+        }
+
+        private void btnRegister_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(checkIfAllTextBoxesAreNull().ToString());
+
+            //zrob kiedys jak ci sie bedzie chcialo lol LYSY TO DO CB ZAPOMNIALEM NAPISAC NA POCZATKU.
+            //zrobic checki czy int to int aby nie wyjebalo nigdzie bledu, w numerze indeksu aby tylko inta dalo sie wpisac itd analogicznie
+            //i napisz funkcje userRegister ktora zaleznie od wyboru konta do rejestracji przypisze wlasciwosci obiektu Pracownicy, Studenci. A za kazdym razem temLogowanie
         }
     }
 
     class AdminMenager
     {
+        Pracownik loggedUser; //dane aktualnie zalogowanego uzytkownika;
+
         //obiekty list boxow do ktorych wpisujemy dane
         ListBox listStudenci;
         ListBox listPracownicy;
 
+        private Student editingStudent;
+        private Pracownik editingPracownik;
 
-        private sqlMenager sqlMenager;
-        public List<Student> studenci = new List<Student>();
-        public List<Pracownik> pracownicy = new List<Pracownik>();
-        public List<TempLoggedUser> loginInfoData = new List<TempLoggedUser>();
+        private sqlMenager sqlMenager; // klasa laczenia do sql
 
-        public AdminMenager(ListBox listPracownicy, ListBox listStudenci)
+        public List<Student> studenci = new List<Student>(); // lista wszystkich studentow pobranych z bazy danych
+        public List<Pracownik> pracownicy = new List<Pracownik>(); // lista wszystkich pracownikow pobranych z bazy danych
+        public List<TempLoggedUser> loginInfoData = new List<TempLoggedUser>(); // lista informacji o danych logowania uzytkownikow
+
+        public AdminMenager(Pracownik loggedUser, ListBox listPracownicy, ListBox listStudenci)
         {
+            this.loggedUser = loggedUser;
             sqlMenager = new sqlMenager();
             this.listPracownicy = listPracownicy;
             this.listStudenci = listStudenci;
@@ -82,10 +221,16 @@ namespace Wirtualna_Uczelnia
             loadToListBoxes();
         }
 
-        private class IsTeacherHolder
+        public T findUserData<T>(int clickedID, bool isTeacher) where T : Osoba
         {
-            public int userID { get; set; }
-            public bool isTeacher { get; set; }
+            if (isTeacher)
+            {
+                return pracownicy[clickedID] as T;
+            }
+            else
+            {
+                return studenci[clickedID] as T;
+            }
         }
 
         //funkcja laduje dane z listy studenci i pracownicy do list boxow
@@ -105,8 +250,6 @@ namespace Wirtualna_Uczelnia
             {
                 listStudenci.Items.Add($"{studenci[i].userID}: {studenci[i].imie} , {studenci[i].nazwisko}");
             }
-
-            MessageBox.Show("Koniec!");
         }
 
         //funkcja dodaje tylko do listy zaleznie od tego czy jest to nauczyciel czy student do wybranej listy. Widac ze ze mnie humanista to chujowy
@@ -116,7 +259,7 @@ namespace Wirtualna_Uczelnia
             {
                 studenci = returnStudents();
                 pracownicy = returnPracownicy();
-                loginInfoData = returnLoginData();
+                loginInfoData = returnLoginData("SELECT * FROM logowanie");
             }
             catch (Exception ex)
             {
@@ -124,9 +267,12 @@ namespace Wirtualna_Uczelnia
             }
         }
 
-        private List<TempLoggedUser> returnLoginData()
+        public List<TempLoggedUser> returnLoginData(string querryCommand, int userID = -1)
         {
-            var sqlCommand = new MySqlCommand("SELECT * FROM logowanie");
+            var sqlCommand = new MySqlCommand(querryCommand);
+
+            if (userID != -1)
+                sqlCommand.Parameters.AddWithValue("@userID", userID);
 
             var loggedData = sqlMenager.loadDataToList<TempLoggedUser>(sqlCommand);
             return loggedData;

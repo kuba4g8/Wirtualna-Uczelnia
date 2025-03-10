@@ -70,10 +70,11 @@ namespace Wirtualna_Uczelnia
                 teacherData.isAdmin = true;
 
 
-                AdminPanel adminPanel = new AdminPanel();
+                AdminPanel adminPanel = new AdminPanel(teacherData);
 
                 adminPanel.Show();
                 loginForm.Hide();
+                return true; //do usuenia potem jak beda inne formy!!!/////
                 
                 // odpalic forme dla admina
             }
@@ -234,7 +235,7 @@ namespace Wirtualna_Uczelnia
     public class Pracownik : Osoba
     {
         public string stanowisko { get; set; }
-        public string stopien_naukowy { get; set; }
+        public string stopien_naukowy { get; set; } // moze byc null
     }
 
 }
