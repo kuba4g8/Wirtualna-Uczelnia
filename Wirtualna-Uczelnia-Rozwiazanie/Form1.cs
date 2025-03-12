@@ -2,15 +2,15 @@ using System.Diagnostics;
 
 namespace Wirtualna_Uczelnia
 {
-    public partial class Form1 : Form
+    public partial class LoginForm : Form
     {
 
         loginMenager loginMenager;
-        public Form1()
+        public LoginForm()
         {
             InitializeComponent();
 
-            loginMenager = new loginMenager(debugMode: true);
+            loginMenager = new loginMenager(this, debugMode: true);
 
         }
         //Odpalenie zalogowania po klikniêciu przycisku zaloguj
