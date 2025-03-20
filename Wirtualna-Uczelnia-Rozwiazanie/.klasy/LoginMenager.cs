@@ -23,19 +23,19 @@ namespace Wirtualna_Uczelnia
         //forma logowania
         public LoginMenager(bool debugMode = false)
         {
+            this.debugMode = debugMode;
             sqlMenager = new sqlMenager();
             secLogin = new SecMenager(debugMode);
 
-            this.debugMode = debugMode;
         }
-
+        
         public bool tryLogin(string email, string haslo)
         {
 
             TempLoggedUser tempLoggedUser = new TempLoggedUser(); //obiekt do trzymania hasla itd.
 
             //Jeśli logowanie zablokowane włączy się od razu przed logowaniem
-            if (secLogin.IsLockedOut(out int minutesLeft))
+            if (secLogin.IsLockedOut(out int minutesLeft) && debugMode==false)
             {
                 MessageBox.Show($"Twoje konto jest zablokowane. Spróbuj ponownie za {minutesLeft} minut.");
                 return false;
@@ -177,7 +177,7 @@ namespace Wirtualna_Uczelnia
         //Sprawdzanie ile jest błędnych prób logowania
         private int GetFailedAttempts()
         {
-            return new SecMenager(true).GetRegistryValue("Attempts", 0);
+            return secLogin.GetRegistryValue("Attempts", 0);
         }
 
         //Funkcja używania entera podczas logowania
