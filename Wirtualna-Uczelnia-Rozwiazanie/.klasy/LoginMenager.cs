@@ -158,20 +158,16 @@ namespace Wirtualna_Uczelnia
         //loggedUser? -> oznacza ze obiekt moze byc null!
         private TempLoggedUser? returnLoggedUser(string email, string haslo)
         {
-            List<TempLoggedUser> usersList = new List<TempLoggedUser>(); //lista wszystkich uzytkownikow z bazy danych
+            List<TempLoggedUser> FetchUser = new List<TempLoggedUser>(); //lista wszystkich uzytkownikow z bazy danych TODO: ZMIENIĆ Z LISTY NA POJEDYŃCZĄ ZMIENNĄ
 
-            MySqlCommand loginCommand = new MySqlCommand("SELECT * FROM `logowanie`");
+            MySqlCommand loginCommand = new MySqlCommand("SELECT * FROM `logowanie` WHERE email = '" + email + "' AND haslo = '" + haslo + "'"); //pewnie fatalnie napisane, ale ta komenda szuka konkretnie maila i hasło, jeżeli jest błędne to nic nie znajdzie I wyszukiwana jest jedna zmienna
 
-            usersList = sqlMenager.loadDataToList<TempLoggedUser>(loginCommand);
+            FetchUser = sqlMenager.loadDataToList<TempLoggedUser>(loginCommand); //trzeba zrobić komendę na ładowanie pojedyńczego ENTRY
 
-            foreach (var user in usersList)
-            {
-                if (user.email == email && user.haslo == haslo)
+            if (FetchUser[0].email == email && FetchUser[0].haslo == haslo)
                 {
-                    return user; //zalogowano
+                    return FetchUser[0]; //zalogowano
                 }
-            }
-
             return null;
         }
         //Sprawdzanie ile jest błędnych prób logowania
