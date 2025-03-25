@@ -164,7 +164,7 @@ namespace Wirtualna_Uczelnia
 
             FetchUser = sqlMenager.loadDataToList<TempLoggedUser>(loginCommand); //trzeba zrobić komendę na ładowanie pojedyńczego ENTRY
 
-            if (FetchUser[0].email == email && FetchUser[0].haslo == haslo)
+            if (FetchUser[0].email == email.ToLower() && FetchUser[0].haslo == haslo)
                 {
                     return FetchUser[0]; //zalogowano
                 }
