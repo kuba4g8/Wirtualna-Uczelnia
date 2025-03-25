@@ -158,16 +158,19 @@ namespace Wirtualna_Uczelnia
         //loggedUser? -> oznacza ze obiekt moze byc null!
         private TempLoggedUser? returnLoggedUser(string email, string haslo)
         {
-            List<TempLoggedUser> FetchUser = new List<TempLoggedUser>(); //lista wszystkich uzytkownikow z bazy danych TODO: ZMIENIĆ Z LISTY NA POJEDYŃCZĄ ZMIENNĄ
+            TempLoggedUser FetchUser = new TempLoggedUser(); //lista wszystkich uzytkownikow z bazy danych TODO: ZMIENIĆ Z LISTY NA POJEDYŃCZĄ ZMIENNĄ
 
-            MySqlCommand loginCommand = new MySqlCommand("SELECT * FROM `logowanie` WHERE email = '" + email + "' AND haslo = '" + haslo + "'"); //pewnie fatalnie napisane, ale ta komenda szuka konkretnie maila i hasło, jeżeli jest błędne to nic nie znajdzie I wyszukiwana jest jedna zmienna
+            MySqlCommand loginCommand = new MySqlCommand("SELECT * FROM `logowanie` WHERE email = @email AND haslo = @haslo"); //pewnie fatalnie napisane, ale ta komenda szuka konkretnie maila i hasło, jeżeli jest błędne to nic nie znajdzie I wyszukiwana jest jedna zmienna
 
-            FetchUser = sqlMenager.loadDataToList<TempLoggedUser>(loginCommand); //trzeba zrobić komendę na ładowanie pojedyńczego ENTRY
+            loginCommand.Parameters.AddWithValue("@email", email); //dodanie parametrow z wartoscia (sql injection wsm jest ciezej zrobic)
+            loginCommand.Parameters.AddWithValue("@haslo", haslo);
 
-            if (FetchUser[0].email == email.ToLower() && FetchUser[0].haslo == haslo)
-                {
-                    return FetchUser[0]; //zalogowano
-                }
+            FetchUser = sqlMenager.loadDataToList<TempLoggedUser>(loginCommand).First(); //komenda na ladowanie pojedynczego entry
+
+            if (FetchUser.email == email.ToLower() && FetchUser.haslo == haslo)
+            {
+                return FetchUser; //zalogowano
+            }
             return null;
         }
         //Sprawdzanie ile jest błędnych prób logowania
@@ -221,7 +224,7 @@ namespace Wirtualna_Uczelnia
         public int userID { get; set; }
         public string imie { get; set; }
         public string nazwisko { get; set; }
-        public bool isAdmin { get; set; }
+        public bool isAdmin { get; set; } // TODO must have wywalic wszystkie zaleznosci od isAdmin w klasie Student i Pracownik, bo nie ma takiej kolumny w bazie dnaych i wywala program w klasie sqlMenager
     }
 
     public class Student : Osoba
