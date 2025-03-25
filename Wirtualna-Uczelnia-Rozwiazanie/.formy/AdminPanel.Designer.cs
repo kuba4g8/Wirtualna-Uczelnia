@@ -88,6 +88,7 @@ namespace Wirtualna_Uczelnia
             listPracownicy = new ListBox();
             lblTeachers = new Label();
             lblStudenci = new Label();
+            btnLogout = new Button();
             SuspendLayout();
             // 
             // lblUserId
@@ -381,11 +382,22 @@ namespace Wirtualna_Uczelnia
             lblStudenci.TabIndex = 29;
             lblStudenci.Text = "Studenci: ";
             // 
+            // btnLogout
+            // 
+            btnLogout.Location = new Point(747, 1);
+            btnLogout.Name = "btnLogout";
+            btnLogout.Size = new Size(94, 29);
+            btnLogout.TabIndex = 30;
+            btnLogout.Text = "logout";
+            btnLogout.UseVisualStyleBackColor = true;
+            btnLogout.Click += logoutUserAction;
+            // 
             // AdminPanel
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(853, 723);
+            Controls.Add(btnLogout);
             Controls.Add(lblStudenci);
             Controls.Add(lblTeachers);
             Controls.Add(listPracownicy);
@@ -466,5 +478,6 @@ namespace Wirtualna_Uczelnia
         private ListBox listPracownicy;
         private Label lblTeachers;
         private Label lblStudenci;
+        private Button btnLogout;
     }
 }

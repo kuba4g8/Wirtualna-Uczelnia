@@ -28,5 +28,10 @@ namespace Wirtualna_Uczelnia
             FormLogowanie newForm = new FormLogowanie();
             newForm.Show();
         }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -23,19 +23,19 @@ namespace Wirtualna_Uczelnia
         //forma logowania
         public LoginMenager(bool debugMode = false)
         {
+            this.debugMode = debugMode;
             sqlMenager = new sqlMenager();
             secLogin = new SecMenager(debugMode);
 
-            this.debugMode = debugMode;
         }
-
+        
         public bool tryLogin(string email, string haslo)
         {
 
             TempLoggedUser tempLoggedUser = new TempLoggedUser(); //obiekt do trzymania hasla itd.
 
             //Jeśli logowanie zablokowane włączy się od razu przed logowaniem
-            if (secLogin.IsLockedOut(out int minutesLeft))
+            if (secLogin.IsLockedOut(out int minutesLeft) && debugMode==false)
             {
                 MessageBox.Show($"Twoje konto jest zablokowane. Spróbuj ponownie za {minutesLeft} minut.");
                 return false;
@@ -158,26 +158,25 @@ namespace Wirtualna_Uczelnia
         //loggedUser? -> oznacza ze obiekt moze byc null!
         private TempLoggedUser? returnLoggedUser(string email, string haslo)
         {
-            List<TempLoggedUser> usersList = new List<TempLoggedUser>(); //lista wszystkich uzytkownikow z bazy danych
+            TempLoggedUser FetchUser = new TempLoggedUser(); //lista wszystkich uzytkownikow z bazy danych TODO: ZMIENIĆ Z LISTY NA POJEDYŃCZĄ ZMIENNĄ
 
-            MySqlCommand loginCommand = new MySqlCommand("SELECT * FROM `logowanie`");
+            MySqlCommand loginCommand = new MySqlCommand("SELECT * FROM `logowanie` WHERE email = @email AND haslo = @haslo"); //pewnie fatalnie napisane, ale ta komenda szuka konkretnie maila i hasło, jeżeli jest błędne to nic nie znajdzie I wyszukiwana jest jedna zmienna
 
-            usersList = sqlMenager.loadDataToList<TempLoggedUser>(loginCommand);
+            loginCommand.Parameters.AddWithValue("@email", email); //dodanie parametrow z wartoscia (sql injection wsm jest ciezej zrobic)
+            loginCommand.Parameters.AddWithValue("@haslo", haslo);
 
-            foreach (var user in usersList)
+            FetchUser = sqlMenager.loadDataToList<TempLoggedUser>(loginCommand).First(); //komenda na ladowanie pojedynczego entry
+
+            if (FetchUser.email == email.ToLower() && FetchUser.haslo == haslo)
             {
-                if (user.email == email && user.haslo == haslo)
-                {
-                    return user; //zalogowano
-                }
+                return FetchUser; //zalogowano
             }
-
             return null;
         }
         //Sprawdzanie ile jest błędnych prób logowania
         private int GetFailedAttempts()
         {
-            return new SecMenager(true).GetRegistryValue("Attempts", 0);
+            return secLogin.GetRegistryValue("Attempts", 0);
         }
 
         //Funkcja używania entera podczas logowania
@@ -225,7 +224,7 @@ namespace Wirtualna_Uczelnia
         public int userID { get; set; }
         public string imie { get; set; }
         public string nazwisko { get; set; }
-        public bool isAdmin { get; set; }
+        public bool isAdmin { get; set; } // TODO must have wywalic wszystkie zaleznosci od isAdmin w klasie Student i Pracownik, bo nie ma takiej kolumny w bazie dnaych i wywala program w klasie sqlMenager
     }
 
     public class Student : Osoba

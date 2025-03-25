@@ -18,7 +18,7 @@ namespace Wirtualna_Uczelnia
         private const int InitialLockoutMinutes = 5;
         private const int MaxLockoutMinutes = 60;
 
-        public SecMenager(bool debugMode) 
+        public SecMenager(bool debugMode = false) 
         {
             EnsureRegistryKeyExists();
 

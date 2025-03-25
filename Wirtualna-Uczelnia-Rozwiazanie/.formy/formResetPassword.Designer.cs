@@ -42,7 +42,7 @@
             // textBox1
             // 
             textBox1.Location = new Point(260, 67);
-            textBox1.Margin = new Padding(2, 2, 2, 2);
+            textBox1.Margin = new Padding(2);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(121, 27);
             textBox1.TabIndex = 0;
@@ -60,7 +60,7 @@
             // textBox2
             // 
             textBox2.Location = new Point(260, 140);
-            textBox2.Margin = new Padding(2, 2, 2, 2);
+            textBox2.Margin = new Padding(2);
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(121, 27);
             textBox2.TabIndex = 2;
@@ -81,7 +81,7 @@
             button1.BackgroundImageLayout = ImageLayout.None;
             button1.Font = new Font("Trebuchet MS", 9F, FontStyle.Regular, GraphicsUnit.Point, 238);
             button1.Location = new Point(264, 255);
-            button1.Margin = new Padding(2, 2, 2, 2);
+            button1.Margin = new Padding(2);
             button1.Name = "button1";
             button1.Size = new Size(116, 43);
             button1.TabIndex = 4;
@@ -94,12 +94,13 @@
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.Location = new Point(0, 0);
-            pictureBox1.Margin = new Padding(2, 2, 2, 2);
+            pictureBox1.Margin = new Padding(2);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(641, 362);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 5;
             pictureBox1.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click;
             // 
             // linkLabel1
             // 
@@ -125,7 +126,7 @@
             Controls.Add(label1);
             Controls.Add(textBox1);
             Controls.Add(pictureBox1);
-            Margin = new Padding(2, 2, 2, 2);
+            Margin = new Padding(2);
             Name = "FormResetHasla";
             Text = "Reset Hasła";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();

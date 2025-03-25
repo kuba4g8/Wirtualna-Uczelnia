@@ -192,6 +192,20 @@ namespace Wirtualna_Uczelnia
             //zrobic checki czy int to int aby nie wyjebalo nigdzie bledu, w numerze indeksu aby tylko inta dalo sie wpisac itd analogicznie
             //i napisz funkcje userRegister ktora zaleznie od wyboru konta do rejestracji przypisze wlasciwosci obiektu Pracownicy, Studenci. A za kazdym razem temLogowanie
         }
+
+        private void logoutUserAction(object sender, EventArgs e)
+        {
+            // usuwanie danych z pamieci zalogowanego uzytkownika
+            adminMenager = null; 
+            editingLoginInfo = null;
+            editingPracownik = null;
+            editingStudent = null;
+            loggedUser = null;
+            // usuwanie danych z pamieci zalogowanego uzytkownika
+
+            new FormLogowanie().Show(); // pokazanie ponowne logowania
+            this.Close();
+        }
     }
 
     class AdminMenager
