@@ -165,9 +165,9 @@ namespace Wirtualna_Uczelnia
             loginCommand.Parameters.AddWithValue("@email", email); //dodanie parametrow z wartoscia (sql injection wsm jest ciezej zrobic)
             loginCommand.Parameters.AddWithValue("@haslo", haslo);
 
-            FetchUser = sqlMenager.loadDataToList<TempLoggedUser>(loginCommand).First(); //komenda na ladowanie pojedynczego entry
+            FetchUser = sqlMenager.loadDataToList<TempLoggedUser>(loginCommand).FirstOrDefault(); //komenda na ladowanie pojedynczego entry
 
-            if (FetchUser.email == email.ToLower() && FetchUser.haslo == haslo)
+            if (FetchUser != null && (FetchUser.email == email.ToLower() && FetchUser.haslo == haslo) )
             {
                 return FetchUser; //zalogowano
             }
