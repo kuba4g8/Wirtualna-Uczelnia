@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 08, 2025 at 02:53 PM
+-- Generation Time: Mar 31, 2025 at 05:59 PM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -20,6 +20,33 @@ SET time_zone = "+00:00";
 --
 -- Database: `wirtualna_uczelnia`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `grupy`
+--
+
+CREATE TABLE `grupy` (
+  `id_grupy` int(11) NOT NULL,
+  `id_kierunku` int(11) NOT NULL,
+  `typ_grupy` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `kierunki`
+--
+
+CREATE TABLE `kierunki` (
+  `id_kierunku` int(11) NOT NULL,
+  `id_opiekunaRoku` int(11) NOT NULL,
+  `wydzial` text DEFAULT NULL,
+  `semestr` int(11) DEFAULT NULL,
+  `nazwa_kierunku` text DEFAULT NULL,
+  `specjalizacja` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -45,8 +72,7 @@ INSERT INTO `logowanie` (`userID`, `email`, `haslo`, `isTeacher`, `isAdmin`) VAL
 (3, 'nauczyciel1@uczelnia.pl', 'tajnehaslo', 1, 0),
 (4, 'admin@uczelnia.pl', 'admin123', 1, 1),
 (5, 'student3@uczelnia.pl', 'haslo123', 0, 0),
-(6, 'nauczyciel2@uczelnia.pl', 'bezpieczne123', 1, 0),
-(14, 'chuj.cfelowski@gmail.com', 'chuj123!', 1, 1);
+(6, 'nauczyciel2@uczelnia.pl', 'bezpieczne123', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -76,6 +102,26 @@ INSERT INTO `oceny` (`id_oceny`, `userID`, `id_przedmiotu`, `ocena`, `data_wysta
 -- --------------------------------------------------------
 
 --
+-- Struktura tabeli dla tabeli `plan_lekcji`
+--
+
+CREATE TABLE `plan_lekcji` (
+  `id_planu` int(11) NOT NULL,
+  `id_prowadzacego` int(11) NOT NULL,
+  `id_grupy` int(11) NOT NULL,
+  `id_kierunku` int(11) NOT NULL,
+  `sala` varchar(255) DEFAULT NULL,
+  `dzien` date NOT NULL,
+  `godzina_startu` time NOT NULL,
+  `godzina_konca` time NOT NULL,
+  `przedmiot` varchar(255) NOT NULL,
+  `rodzaj` varchar(255) NOT NULL,
+  `notatki` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Struktura tabeli dla tabeli `pracownicy`
 --
 
@@ -94,30 +140,7 @@ CREATE TABLE `pracownicy` (
 INSERT INTO `pracownicy` (`userID`, `imie`, `nazwisko`, `stanowisko`, `stopien_naukowy`) VALUES
 (3, 'Piotr', 'Zieliński', 'Profesor', 'Dr hab.'),
 (4, 'admin', 'test', 'ADMIN', NULL),
-(6, 'Katarzyna', 'Wójcik', 'Adiunkt', 'Dr'),
-(14, 'chuj', 'cfelowski', 'admin', 'debil');
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `prowadzone_przedmioty`
---
-
-CREATE TABLE `prowadzone_przedmioty` (
-  `userID` int(11) NOT NULL,
-  `id_przedmiotu` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
-
---
--- Dumping data for table `prowadzone_przedmioty`
---
-
-INSERT INTO `prowadzone_przedmioty` (`userID`, `id_przedmiotu`) VALUES
-(3, 1),
-(3, 2),
-(3, 5),
-(6, 3),
-(6, 4);
+(6, 'Katarzyna', 'Wójcik', 'Adiunkt', 'Dr');
 
 -- --------------------------------------------------------
 
@@ -167,31 +190,23 @@ INSERT INTO `studenci` (`userID`, `imie`, `nazwisko`, `nr_indeksu`, `semestr`, `
 (2, 'Anna', 'Nowak', 'S67890', 2, 'Informatyka', 'Cyberbezpieczeństwo'),
 (5, 'Marek', 'Wiśniewski', 'S54321', 3, 'Budownictwo', 'Architektura');
 
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `zapisane_przedmioty`
---
-
-CREATE TABLE `zapisane_przedmioty` (
-  `userID` int(11) NOT NULL,
-  `id_przedmiotu` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
-
---
--- Dumping data for table `zapisane_przedmioty`
---
-
-INSERT INTO `zapisane_przedmioty` (`userID`, `id_przedmiotu`) VALUES
-(1, 1),
-(1, 3),
-(2, 2),
-(2, 4),
-(5, 5);
-
 --
 -- Indeksy dla zrzutów tabel
 --
+
+--
+-- Indeksy dla tabeli `grupy`
+--
+ALTER TABLE `grupy`
+  ADD PRIMARY KEY (`id_grupy`),
+  ADD KEY `id_kierunku` (`id_kierunku`);
+
+--
+-- Indeksy dla tabeli `kierunki`
+--
+ALTER TABLE `kierunki`
+  ADD PRIMARY KEY (`id_kierunku`),
+  ADD KEY `id_opiekunaRoku` (`id_opiekunaRoku`);
 
 --
 -- Indeksy dla tabeli `logowanie`
@@ -209,17 +224,18 @@ ALTER TABLE `oceny`
   ADD KEY `id_przedmiotu` (`id_przedmiotu`);
 
 --
+-- Indeksy dla tabeli `plan_lekcji`
+--
+ALTER TABLE `plan_lekcji`
+  ADD PRIMARY KEY (`id_planu`),
+  ADD KEY `id_grupy` (`id_grupy`),
+  ADD KEY `id_kierunku` (`id_kierunku`);
+
+--
 -- Indeksy dla tabeli `pracownicy`
 --
 ALTER TABLE `pracownicy`
   ADD PRIMARY KEY (`userID`);
-
---
--- Indeksy dla tabeli `prowadzone_przedmioty`
---
-ALTER TABLE `prowadzone_przedmioty`
-  ADD PRIMARY KEY (`userID`,`id_przedmiotu`),
-  ADD KEY `id_przedmiotu` (`id_przedmiotu`);
 
 --
 -- Indeksy dla tabeli `przedmioty`
@@ -235,15 +251,20 @@ ALTER TABLE `studenci`
   ADD UNIQUE KEY `nr_indeksu` (`nr_indeksu`);
 
 --
--- Indeksy dla tabeli `zapisane_przedmioty`
---
-ALTER TABLE `zapisane_przedmioty`
-  ADD PRIMARY KEY (`userID`,`id_przedmiotu`),
-  ADD KEY `id_przedmiotu` (`id_przedmiotu`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `grupy`
+--
+ALTER TABLE `grupy`
+  MODIFY `id_grupy` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `kierunki`
+--
+ALTER TABLE `kierunki`
+  MODIFY `id_kierunku` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `logowanie`
@@ -258,6 +279,12 @@ ALTER TABLE `oceny`
   MODIFY `id_oceny` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `plan_lekcji`
+--
+ALTER TABLE `plan_lekcji`
+  MODIFY `id_planu` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `przedmioty`
 --
 ALTER TABLE `przedmioty`
@@ -268,11 +295,30 @@ ALTER TABLE `przedmioty`
 --
 
 --
+-- Constraints for table `grupy`
+--
+ALTER TABLE `grupy`
+  ADD CONSTRAINT `grupy_ibfk_1` FOREIGN KEY (`id_kierunku`) REFERENCES `kierunki` (`id_kierunku`);
+
+--
+-- Constraints for table `kierunki`
+--
+ALTER TABLE `kierunki`
+  ADD CONSTRAINT `kierunki_ibfk_1` FOREIGN KEY (`id_opiekunaRoku`) REFERENCES `pracownicy` (`userID`);
+
+--
 -- Constraints for table `oceny`
 --
 ALTER TABLE `oceny`
   ADD CONSTRAINT `oceny_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `studenci` (`userID`) ON DELETE CASCADE,
   ADD CONSTRAINT `oceny_ibfk_2` FOREIGN KEY (`id_przedmiotu`) REFERENCES `przedmioty` (`id_przedmiotu`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `plan_lekcji`
+--
+ALTER TABLE `plan_lekcji`
+  ADD CONSTRAINT `plan_lekcji_ibfk_1` FOREIGN KEY (`id_grupy`) REFERENCES `grupy` (`id_grupy`),
+  ADD CONSTRAINT `plan_lekcji_ibfk_2` FOREIGN KEY (`id_kierunku`) REFERENCES `kierunki` (`id_kierunku`);
 
 --
 -- Constraints for table `pracownicy`
@@ -281,24 +327,10 @@ ALTER TABLE `pracownicy`
   ADD CONSTRAINT `pracownicy_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `logowanie` (`userID`) ON DELETE CASCADE;
 
 --
--- Constraints for table `prowadzone_przedmioty`
---
-ALTER TABLE `prowadzone_przedmioty`
-  ADD CONSTRAINT `prowadzone_przedmioty_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `pracownicy` (`userID`) ON DELETE CASCADE,
-  ADD CONSTRAINT `prowadzone_przedmioty_ibfk_2` FOREIGN KEY (`id_przedmiotu`) REFERENCES `przedmioty` (`id_przedmiotu`) ON DELETE CASCADE;
-
---
 -- Constraints for table `studenci`
 --
 ALTER TABLE `studenci`
   ADD CONSTRAINT `studenci_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `logowanie` (`userID`) ON DELETE CASCADE;
-
---
--- Constraints for table `zapisane_przedmioty`
---
-ALTER TABLE `zapisane_przedmioty`
-  ADD CONSTRAINT `zapisane_przedmioty_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `studenci` (`userID`) ON DELETE CASCADE,
-  ADD CONSTRAINT `zapisane_przedmioty_ibfk_2` FOREIGN KEY (`id_przedmiotu`) REFERENCES `przedmioty` (`id_przedmiotu`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
