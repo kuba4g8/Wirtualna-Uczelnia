@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Wirtualna_Uczelnia.formy;
 
 namespace Wirtualna_Uczelnia
 {
@@ -48,7 +49,11 @@ namespace Wirtualna_Uczelnia
 
             if (loginMenager.tryLogin(txtLogin.Text, txtPassword.Text))
                 this.Hide();
-            
+
+            StronaGlowna form2 = new StronaGlowna();
+            form2.Show();
+            this.Close();
+
             //mozna kiedys dodac system sprawdzania czy email to email ale to brzmi tak nie potrzebnie a ciezko
         }
 

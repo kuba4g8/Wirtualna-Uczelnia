@@ -12,6 +12,8 @@
   <ItemGroup>
     <Compile Include=".formy\AdminPanel.cs" />
     <Compile Include=".formy\AdminPanel.Designer.cs" />
+    <Compile Include=".formy\StronaGlowna.cs" />
+    <Compile Include=".formy\StronaGlowna.Designer.cs" />
     <Compile Include=".formy\stareLogowanie.cs" />
     <Compile Include=".formy\stareLogowanie.Designer.cs" />
     <Compile Include=".formy\FormLogowanie.cs" />
@@ -31,6 +33,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include=".formy\AdminPanel.resx" />
+    <EmbeddedResource Include=".formy\StronaGlowna.resx" />
     <EmbeddedResource Include=".formy\stareLogowanie.resx" />
     <EmbeddedResource Include=".formy\FormLogowanie.resx" />
     <EmbeddedResource Include=".formy\formResetPassword.resx" />
@@ -38,6 +41,21 @@
 
   <ItemGroup>
     <PackageReference Include="MySql.Data" Version="9.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>
