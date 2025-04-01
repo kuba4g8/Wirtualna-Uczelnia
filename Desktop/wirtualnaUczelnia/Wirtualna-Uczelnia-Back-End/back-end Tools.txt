@@ -1,4 +1,0 @@
-Narzedzia z ktorych korzystamy:
--Visual Studio 2022
--.net 8.0
--mySql -> (obsluga w c#, nugget addon: MySql.Data)
