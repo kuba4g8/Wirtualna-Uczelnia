@@ -19,37 +19,27 @@ namespace Wirtualna_Uczelnia.formy
 
         private void oceny_Click(object sender, EventArgs e)
         {
-            StronaGlowna form2 = new StronaGlowna();
-            form2.Show();
-            this.Close();
+            //wyswietlenie ocen
         }
 
         private void sprawdziany_Click(object sender, EventArgs e)
         {
-            StronaGlowna form2 = new StronaGlowna();
-            form2.Show();
-            this.Close();
+            //nie wiem
         }
 
         private void dokumenty_Click(object sender, EventArgs e)
         {
-            StronaGlowna form2 = new StronaGlowna();
-            form2.Show();
-            this.Close();
+            //dokumenty i wnioski, np o warunek itd
         }
 
         private void rejestracja_Click(object sender, EventArgs e)
         {
-            StronaGlowna form2 = new StronaGlowna();
-            form2.Show();
-            this.Close();
+            //przekierowac do rejestracji
         }
 
         private void kalendarz_Click(object sender, EventArgs e)
         {
-            StronaGlowna form2 = new StronaGlowna();
-            form2.Show();
-            this.Close();
+            //odpalic kalendarz
         }
 
         private void label2_Click(object sender, EventArgs e)
