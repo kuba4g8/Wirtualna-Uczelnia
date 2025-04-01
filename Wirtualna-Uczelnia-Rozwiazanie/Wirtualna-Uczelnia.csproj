@@ -12,6 +12,16 @@
   <ItemGroup>
     <Compile Include=".formy\AdminPanel.cs" />
     <Compile Include=".formy\AdminPanel.Designer.cs" />
+    <Compile Include=".formy\StronaGlowna\Dokumenty.cs" />
+    <Compile Include=".formy\StronaGlowna\Dokumenty.Designer.cs" />
+    <Compile Include=".formy\StronaGlowna\Kalendarz.cs" />
+    <Compile Include=".formy\StronaGlowna\Kalendarz.Designer.cs" />
+    <Compile Include=".formy\StronaGlowna\Oceny.cs" />
+    <Compile Include=".formy\StronaGlowna\Oceny.Designer.cs" />
+    <Compile Include=".formy\StronaGlowna\Rejestracja.cs" />
+    <Compile Include=".formy\StronaGlowna\Rejestracja.Designer.cs" />
+    <Compile Include=".formy\StronaGlowna\Sprawdziany.cs" />
+    <Compile Include=".formy\StronaGlowna\Sprawdziany.Designer.cs" />
     <Compile Include=".formy\StronaGlowna.cs" />
     <Compile Include=".formy\StronaGlowna.Designer.cs" />
     <Compile Include=".formy\stareLogowanie.cs" />
@@ -33,6 +43,11 @@
 
   <ItemGroup>
     <EmbeddedResource Include=".formy\AdminPanel.resx" />
+    <EmbeddedResource Include=".formy\StronaGlowna\Dokumenty.resx" />
+    <EmbeddedResource Include=".formy\StronaGlowna\Kalendarz.resx" />
+    <EmbeddedResource Include=".formy\StronaGlowna\Oceny.resx" />
+    <EmbeddedResource Include=".formy\StronaGlowna\Rejestracja.resx" />
+    <EmbeddedResource Include=".formy\StronaGlowna\Sprawdziany.resx" />
     <EmbeddedResource Include=".formy\StronaGlowna.resx" />
     <EmbeddedResource Include=".formy\stareLogowanie.resx" />
     <EmbeddedResource Include=".formy\FormLogowanie.resx" />

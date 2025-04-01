@@ -4,6 +4,21 @@
     <Compile Update=".formy\AdminPanel.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update=".formy\StronaGlowna\Dokumenty.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update=".formy\StronaGlowna\Kalendarz.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update=".formy\StronaGlowna\Oceny.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update=".formy\StronaGlowna\Rejestracja.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update=".formy\StronaGlowna\Sprawdziany.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update=".formy\StronaGlowna.cs">
       <SubType>Form</SubType>
     </Compile>

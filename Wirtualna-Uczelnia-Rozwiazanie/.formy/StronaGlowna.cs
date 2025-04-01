@@ -19,44 +19,44 @@ namespace Wirtualna_Uczelnia.formy
 
         private void oceny_Click(object sender, EventArgs e)
         {
-            //wyswietlenie ocen
+            Oceny oceny = new Oceny(); // Tworzenie nowego formularza
+            oceny.Show();              // Pokazanie nowego formularza
+            this.Hide();               // Ukrycie obecnego formularza
         }
+
 
         private void sprawdziany_Click(object sender, EventArgs e)
         {
-            //nie wiem
+            Sprawdziany sprawdziany = new Sprawdziany();
+            sprawdziany.Show();
+            this.Hide();
         }
 
         private void dokumenty_Click(object sender, EventArgs e)
         {
-            //dokumenty i wnioski, np o warunek itd
+            Dokumenty dokumenty = new Dokumenty();
+            dokumenty.Show();
+            this.Hide();
         }
 
         private void rejestracja_Click(object sender, EventArgs e)
         {
-            //przekierowac do rejestracji
+            Rejestracja rejestracja = new Rejestracja();
+            rejestracja.Show();
+            this.Hide();
         }
 
         private void kalendarz_Click(object sender, EventArgs e)
         {
-            //odpalic kalendarz
+            Kalendarz kalendarz = new Kalendarz();
+            kalendarz.Show();
+            this.Hide();
         }
 
         private void label2_Click(object sender, EventArgs e)
         {
             wydzial_kierunek.Parent = pictureBox1;
             wydzial_kierunek.BackColor = Color.Transparent;
-
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
 
         }
 
@@ -76,6 +76,23 @@ namespace Wirtualna_Uczelnia.formy
         private void pictureBox2_Click(object sender, EventArgs e)
         {
 
+        }
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+
+        }
+
+        private void wyloguj_Click(object sender, EventArgs e)
+        {
+            FormLogowanie formlogowanie = new FormLogowanie();
+            formlogowanie.Show();
+            this.Hide();
         }
     }
 }
