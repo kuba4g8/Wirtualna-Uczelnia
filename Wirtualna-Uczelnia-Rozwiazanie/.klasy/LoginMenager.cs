@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wirtualna_Uczelnia.formy;
 
 namespace Wirtualna_Uczelnia
 {
@@ -88,6 +89,9 @@ namespace Wirtualna_Uczelnia
                 studentData = returnUserData<Student>(querry, userID);
                 isTeacher = false;
                 studentData.isAdmin = false;
+
+                StronaGlowna stronaGlownaStudent = new StronaGlowna();
+                stronaGlownaStudent.Show();
                 // odpalic forme dla studenta
             }
             //ify sprawdzaja kto jest adminem kto jest nauczycielem itd.
