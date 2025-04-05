@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Wirtualna_Uczelnia.klasy.PrzezroczysteTlo;
+
+
 
 namespace Wirtualna_Uczelnia.formy
 {
@@ -48,29 +51,43 @@ namespace Wirtualna_Uczelnia.formy
 
         private void kalendarz_Click(object sender, EventArgs e)
         {
-            Kalendarz kalendarz = new Kalendarz();
+            /*Kalendarz kalendarz = new Kalendarz();
             kalendarz.Show();
-            this.Hide();
+            this.Hide();*/
         }
 
         private void label2_Click(object sender, EventArgs e)
         {
-            wydzial_kierunek.Parent = pictureBox1;
-            wydzial_kierunek.BackColor = Color.Transparent;
+            TransparentLabel myLabel = new TransparentLabel();
+            myLabel.Text = "wydział i kierunek";
+            myLabel.ForeColor = Color.White;
+            myLabel.Location = new Point(50, 50);
+            myLabel.AutoSize = true;
+
+            pictureBox1.Controls.Add(myLabel);
 
         }
 
         private void semestr_Click(object sender, EventArgs e)
         {
-            semestr.Parent = pictureBox1;
-            semestr.BackColor = Color.Transparent;
+            TransparentLabel myLabel = new TransparentLabel();
+            myLabel.Text = "rok i semestr";
+            myLabel.ForeColor = Color.White;
+            myLabel.Location = new Point(50, 50);
+            myLabel.AutoSize = true;
 
+            pictureBox1.Controls.Add(myLabel);
         }
 
         private void imie_nazwisko_Click(object sender, EventArgs e)
         {
-            imie_nazwisko.Parent = pictureBox1;
-            imie_nazwisko.BackColor = Color.Transparent;
+            TransparentLabel myLabel = new TransparentLabel();
+            myLabel.Text = "imię i nazwisko";
+            myLabel.ForeColor = Color.White;
+            myLabel.Location = new Point(50, 50);
+            myLabel.AutoSize = true;
+
+            pictureBox1.Controls.Add(myLabel);
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
@@ -93,6 +110,12 @@ namespace Wirtualna_Uczelnia.formy
             FormLogowanie formlogowanie = new FormLogowanie();
             formlogowanie.Show();
             this.Hide();
+        }
+
+        private void btnOpenChat_Click(object sender, EventArgs e)
+        {
+            ChatForm chat = new ChatForm();
+            chat.Show();
         }
     }
 }

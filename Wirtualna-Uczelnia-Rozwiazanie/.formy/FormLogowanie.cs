@@ -63,6 +63,11 @@ namespace Wirtualna_Uczelnia
             resetHasla.Show();
             this.Hide();
         }
+
+        private void lblChangeLang_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+
+        }
     }
 
 }

@@ -44,6 +44,7 @@
             plan = new Label();
             grupy_zajeciowe = new Label();
             wyloguj = new Button();
+            btnOpenChat = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
@@ -215,12 +216,23 @@
             wyloguj.UseVisualStyleBackColor = true;
             wyloguj.Click += wyloguj_Click;
             // 
+            // btnOpenChat
+            // 
+            btnOpenChat.Location = new Point(24, 926);
+            btnOpenChat.Name = "btnOpenChat";
+            btnOpenChat.Size = new Size(205, 76);
+            btnOpenChat.TabIndex = 16;
+            btnOpenChat.Text = "chatboot";
+            btnOpenChat.UseVisualStyleBackColor = true;
+            btnOpenChat.Click += btnOpenChat_Click;
+            // 
             // StronaGlowna
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             ClientSize = new Size(1898, 1024);
+            Controls.Add(btnOpenChat);
             Controls.Add(wyloguj);
             Controls.Add(grupy_zajeciowe);
             Controls.Add(plan);
@@ -265,5 +277,6 @@
         private Label plan;
         private Label grupy_zajeciowe;
         private Button wyloguj;
+        private Button btnOpenChat;
     }
 }

@@ -33,5 +33,10 @@ namespace Wirtualna_Uczelnia
         {
 
         }
+
+        private void lblnumerindeksu_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
