@@ -3,15 +3,10 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
-<<<<<<< HEAD:BazaDanych/wirtualna_uczelnia.sql
 -- Generation Time: Apr 06, 2025 at 08:26 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
-=======
--- Generation Time: Apr 02, 2025 at 09:54 AM
--- Wersja serwera: 10.4.32-MariaDB
--- Wersja PHP: 8.2.12
->>>>>>> af4f4caca8fb25fe2e91b4b653da4f1e01dc094a:BazaDanych/wirtualna_uczelnia 02.04.sql
+
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -30,11 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
-<<<<<<< HEAD:BazaDanych/wirtualna_uczelnia.sql
--- Table structure for table `grupy`
-=======
 -- Struktura tabeli dla tabeli `grupy`
->>>>>>> af4f4caca8fb25fe2e91b4b653da4f1e01dc094a:BazaDanych/wirtualna_uczelnia 02.04.sql
 --
 
 CREATE TABLE `grupy` (
@@ -46,11 +37,7 @@ CREATE TABLE `grupy` (
 -- --------------------------------------------------------
 
 --
-<<<<<<< HEAD:BazaDanych/wirtualna_uczelnia.sql
--- Table structure for table `kierunki`
-=======
 -- Struktura tabeli dla tabeli `kierunki`
->>>>>>> af4f4caca8fb25fe2e91b4b653da4f1e01dc094a:BazaDanych/wirtualna_uczelnia 02.04.sql
 --
 
 CREATE TABLE `kierunki` (
@@ -65,11 +52,7 @@ CREATE TABLE `kierunki` (
 -- --------------------------------------------------------
 
 --
-<<<<<<< HEAD:BazaDanych/wirtualna_uczelnia.sql
--- Table structure for table `logowanie`
-=======
 -- Struktura tabeli dla tabeli `logowanie`
->>>>>>> af4f4caca8fb25fe2e91b4b653da4f1e01dc094a:BazaDanych/wirtualna_uczelnia 02.04.sql
 --
 
 CREATE TABLE `logowanie` (
@@ -86,7 +69,6 @@ CREATE TABLE `logowanie` (
 -- Dumping data for table `logowanie`
 --
 
-<<<<<<< HEAD:BazaDanych/wirtualna_uczelnia.sql
 INSERT INTO `logowanie` (`userID`, `email`, `haslo`, `isTeacher`, `isAdmin`, `salt`, `haslobezhash`) VALUES
 (1, 'student1@uczelnia.pl', 'db3c0e58b6098051e63b4b1fd2698cdb90b3e926d61393bed4378d20daaf0704', 0, 0, 'Yr46IuFMBjma3anTMOuXcw==', 'haslo123'),
 (2, 'student2@uczelnia.pl', '78fb78059a6c365205328e7351cdbd0b74497f047ea4bff02afc5b7b5766b976', 0, 0, '+qAm/sY9OpjdFeT6MrTCpw==', 'haslo123'),
@@ -94,15 +76,6 @@ INSERT INTO `logowanie` (`userID`, `email`, `haslo`, `isTeacher`, `isAdmin`, `sa
 (4, 'admin@uczelnia.pl', '7e619e41deca0453c246018254fae57e9f76f51e9f4ca4d6099c9bf95696e72f', 1, 1, 'trC8KEIfgcq0qs8E7RGTnA==', 'admin123'),
 (5, 'student3@uczelnia.pl', '4d9b7c5e98f24f42f152da4953918016361ed40c3519ed3bc10f8b67e9006dbb', 0, 0, 'DF7oFdpsMMMt4/QJojWSyA==', 'haslo123'),
 (6, 'nauczyciel2@uczelnia.pl', 'fb14f3923cb387fde49b62a819cc218833485477c207324327bb5f614464197a', 1, 0, '2omSCI87pTqjLdZts904GA==', 'bezpieczne123');
-=======
-INSERT INTO `logowanie` (`userID`, `email`, `haslo`, `isTeacher`, `isAdmin`) VALUES
-(1, 'student1@uczelnia.pl', 'haslo123', 0, 0),
-(2, 'student2@uczelnia.pl', 'haslo123', 0, 0),
-(3, 'nauczyciel1@uczelnia.pl', 'tajnehaslo', 1, 0),
-(4, 'admin@uczelnia.pl', 'admin123', 1, 1),
-(5, 'student3@uczelnia.pl', 'haslo123', 0, 0),
-(6, 'nauczyciel2@uczelnia.pl', 'bezpieczne123', 1, 0);
->>>>>>> af4f4caca8fb25fe2e91b4b653da4f1e01dc094a:BazaDanych/wirtualna_uczelnia 02.04.sql
 
 -- --------------------------------------------------------
 
@@ -132,11 +105,7 @@ INSERT INTO `oceny` (`id_oceny`, `userID`, `id_przedmiotu`, `ocena`, `data_wysta
 -- --------------------------------------------------------
 
 --
-<<<<<<< HEAD:BazaDanych/wirtualna_uczelnia.sql
--- Table structure for table `plan_lekcji`
-=======
 -- Struktura tabeli dla tabeli `plan_lekcji`
->>>>>>> af4f4caca8fb25fe2e91b4b653da4f1e01dc094a:BazaDanych/wirtualna_uczelnia 02.04.sql
 --
 
 CREATE TABLE `plan_lekcji` (
@@ -156,11 +125,7 @@ CREATE TABLE `plan_lekcji` (
 -- --------------------------------------------------------
 
 --
-<<<<<<< HEAD:BazaDanych/wirtualna_uczelnia.sql
--- Table structure for table `pracownicy`
-=======
 -- Struktura tabeli dla tabeli `pracownicy`
->>>>>>> af4f4caca8fb25fe2e91b4b653da4f1e01dc094a:BazaDanych/wirtualna_uczelnia 02.04.sql
 --
 
 CREATE TABLE `pracownicy` (
@@ -183,11 +148,7 @@ INSERT INTO `pracownicy` (`userID`, `imie`, `nazwisko`, `stanowisko`, `stopien_n
 -- --------------------------------------------------------
 
 --
-<<<<<<< HEAD:BazaDanych/wirtualna_uczelnia.sql
--- Table structure for table `przedmioty`
-=======
 -- Struktura tabeli dla tabeli `przedmioty`
->>>>>>> af4f4caca8fb25fe2e91b4b653da4f1e01dc094a:BazaDanych/wirtualna_uczelnia 02.04.sql
 --
 
 CREATE TABLE `przedmioty` (
@@ -233,41 +194,25 @@ INSERT INTO `studenci` (`userID`, `imie`, `nazwisko`, `nr_indeksu`, `semestr`, `
 (5, 'Marek', 'Wiśniewski', 'S54321', 3, 'Budownictwo', 'Architektura');
 
 --
-<<<<<<< HEAD:BazaDanych/wirtualna_uczelnia.sql
--- Indexes for dumped tables
---
-
---
--- Indexes for table `grupy`
-=======
 -- Indeksy dla zrzutów tabel
 --
 
 --
 -- Indeksy dla tabeli `grupy`
->>>>>>> af4f4caca8fb25fe2e91b4b653da4f1e01dc094a:BazaDanych/wirtualna_uczelnia 02.04.sql
 --
 ALTER TABLE `grupy`
   ADD PRIMARY KEY (`id_grupy`),
   ADD KEY `id_kierunku` (`id_kierunku`);
 
 --
-<<<<<<< HEAD:BazaDanych/wirtualna_uczelnia.sql
--- Indexes for table `kierunki`
-=======
 -- Indeksy dla tabeli `kierunki`
->>>>>>> af4f4caca8fb25fe2e91b4b653da4f1e01dc094a:BazaDanych/wirtualna_uczelnia 02.04.sql
 --
 ALTER TABLE `kierunki`
   ADD PRIMARY KEY (`id_kierunku`),
   ADD KEY `id_opiekunaRoku` (`id_opiekunaRoku`);
 
 --
-<<<<<<< HEAD:BazaDanych/wirtualna_uczelnia.sql
--- Indexes for table `logowanie`
-=======
 -- Indeksy dla tabeli `logowanie`
->>>>>>> af4f4caca8fb25fe2e91b4b653da4f1e01dc094a:BazaDanych/wirtualna_uczelnia 02.04.sql
 --
 ALTER TABLE `logowanie`
   ADD PRIMARY KEY (`userID`),
@@ -282,11 +227,7 @@ ALTER TABLE `oceny`
   ADD KEY `id_przedmiotu` (`id_przedmiotu`);
 
 --
-<<<<<<< HEAD:BazaDanych/wirtualna_uczelnia.sql
--- Indexes for table `plan_lekcji`
-=======
 -- Indeksy dla tabeli `plan_lekcji`
->>>>>>> af4f4caca8fb25fe2e91b4b653da4f1e01dc094a:BazaDanych/wirtualna_uczelnia 02.04.sql
 --
 ALTER TABLE `plan_lekcji`
   ADD PRIMARY KEY (`id_planu`),
@@ -294,21 +235,13 @@ ALTER TABLE `plan_lekcji`
   ADD KEY `id_kierunku` (`id_kierunku`);
 
 --
-<<<<<<< HEAD:BazaDanych/wirtualna_uczelnia.sql
--- Indexes for table `pracownicy`
-=======
 -- Indeksy dla tabeli `pracownicy`
->>>>>>> af4f4caca8fb25fe2e91b4b653da4f1e01dc094a:BazaDanych/wirtualna_uczelnia 02.04.sql
 --
 ALTER TABLE `pracownicy`
   ADD PRIMARY KEY (`userID`);
 
 --
-<<<<<<< HEAD:BazaDanych/wirtualna_uczelnia.sql
--- Indexes for table `przedmioty`
-=======
 -- Indeksy dla tabeli `przedmioty`
->>>>>>> af4f4caca8fb25fe2e91b4b653da4f1e01dc094a:BazaDanych/wirtualna_uczelnia 02.04.sql
 --
 ALTER TABLE `przedmioty`
   ADD PRIMARY KEY (`id_przedmiotu`);
