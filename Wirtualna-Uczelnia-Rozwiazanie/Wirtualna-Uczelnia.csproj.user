@@ -4,6 +4,9 @@
     <Compile Update=".formy\AdminPanel.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update=".formy\OcenyPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update=".formy\StronaGlowna.cs">
       <SubType>Form</SubType>
     </Compile>
