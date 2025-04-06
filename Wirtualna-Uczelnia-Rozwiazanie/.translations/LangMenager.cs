@@ -26,7 +26,7 @@ namespace Wirtualna_Uczelnia
                 { "lblLogin", "Login" },
                 { "lblPassword", "Hasło" },
                 { "lblChangeLang", "Zmień język" },
-                { "lblForgetPass", "Zapomniałeś hasła?" }
+                { "llblForgetPassword", "Przypomnij hasło" }
             };
 
             enLang = new Dictionary<string, string>()
@@ -35,7 +35,7 @@ namespace Wirtualna_Uczelnia
                 { "lblLogin", "Login" },
                 { "lblPassword", "Password" },
                 { "lblChangeLang", "Change Language" },
-                { "lblForgetPass", "Forgot Password?" }
+                { "lblForgetPassword", "Remind Password" }
             };
 
         }

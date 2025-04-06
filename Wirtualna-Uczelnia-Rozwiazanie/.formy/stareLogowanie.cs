@@ -2,12 +2,12 @@ using System.Diagnostics;
 
 namespace Wirtualna_Uczelnia
 {
-    public partial class LoginForm : Form
+    public partial class OldLoginForm : Form
     {
 
         LoginMenager loginMenager;
         bool debugMode = true;
-        public LoginForm()
+        public OldLoginForm()
         {
             InitializeComponent();
 
@@ -19,7 +19,7 @@ namespace Wirtualna_Uczelnia
         {
             if (loginMenager.tryLogin(txtLogin.Text, txtPassword.Text))
             {
-                this.Hide();
+                Close();
             }
         }
 

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wirtualna_Uczelnia.formy;
+using Wirtualna_Uczelnia.klasy;
 
 namespace Wirtualna_Uczelnia
 {
@@ -19,23 +21,23 @@ namespace Wirtualna_Uczelnia
         //trzymanie informacji personalnych itd.
 
         private bool debugMode;
-
+         
         //forma logowania
         public LoginMenager(bool debugMode = false)
         {
+            this.debugMode = debugMode;
             sqlMenager = new sqlMenager();
             secLogin = new SecMenager(debugMode);
 
-            this.debugMode = debugMode;
         }
-
+        
         public bool tryLogin(string email, string haslo)
         {
 
             TempLoggedUser tempLoggedUser = new TempLoggedUser(); //obiekt do trzymania hasla itd.
 
             //Jeśli logowanie zablokowane włączy się od razu przed logowaniem
-            if (secLogin.IsLockedOut(out int minutesLeft))
+            if (secLogin.IsLockedOut(out int minutesLeft) && debugMode==false)
             {
                 MessageBox.Show($"Twoje konto jest zablokowane. Spróbuj ponownie za {minutesLeft} minut.");
                 return false;
@@ -88,6 +90,9 @@ namespace Wirtualna_Uczelnia
                 studentData = returnUserData<Student>(querry, userID);
                 isTeacher = false;
                 studentData.isAdmin = false;
+
+                StronaGlowna stronaGlownaStudent = new StronaGlowna();
+                stronaGlownaStudent.Show();
                 // odpalic forme dla studenta
             }
             //ify sprawdzaja kto jest adminem kto jest nauczycielem itd.
@@ -156,28 +161,41 @@ namespace Wirtualna_Uczelnia
         }
 
         //loggedUser? -> oznacza ze obiekt moze byc null!
+
+        //Lysy- dobra sam juz nie wiem co sie dzieje w tym kodzie albo w mojej glowie, ale chyba zaraz zaczne tworzyc temple OS 2
+        // Wybacz Pablo ze ci tu pozmienialem ale teraz chyba czyściej
         private TempLoggedUser? returnLoggedUser(string email, string haslo)
         {
-            List<TempLoggedUser> usersList = new List<TempLoggedUser>(); //lista wszystkich uzytkownikow z bazy danych
+            // Tworzymy zapytanie SQL z parametrami
+            MySqlCommand loginCommand = new MySqlCommand("SELECT * FROM `logowanie` WHERE email = @email");
 
-            MySqlCommand loginCommand = new MySqlCommand("SELECT * FROM `logowanie`");
+            // Dodajemy parametry do zapytania (To do sql injetion fajne, bedzie ciezej zrobic )
+            loginCommand.Parameters.AddWithValue("@email", email);
 
-            usersList = sqlMenager.loadDataToList<TempLoggedUser>(loginCommand);
+            // Ładujemy dane z bazy, ale teraz tylko jedno wystąpienie (jednego użytkownika)
+            TempLoggedUser? user = sqlMenager.loadDataToList<TempLoggedUser>(loginCommand).FirstOrDefault();
 
-            foreach (var user in usersList)
-            {
-                if (user.email == email && user.haslo == haslo)
-                {
-                    return user; //zalogowano
+            if (user != null) {
+                
+                //Pobiera salt do shashowania hasła
+                string salt = user.salt;
+                
+                //Łączy salt z hasłem
+                string haslohash = Hasher.ComputeSha256Hash(haslo, salt);
+                
+                //Jesli zhashowane hasła sie rownaja to returnuje usera inaczej nulla
+                if (haslohash.Equals(user.haslo)) {
+                    return user;
                 }
+                else return null;
             }
-
-            return null;
+            else return null;
         }
+
         //Sprawdzanie ile jest błędnych prób logowania
         private int GetFailedAttempts()
         {
-            return new SecMenager(true).GetRegistryValue("Attempts", 0);
+            return secLogin.GetRegistryValue("Attempts", 0);
         }
 
         //Funkcja używania entera podczas logowania
@@ -216,6 +234,7 @@ namespace Wirtualna_Uczelnia
         public int userID { get; set; }
         public string email { get; set; }
         public string haslo { get; set; }
+        public string salt { get; set; }
         public bool isTeacher { get; set; }
         public bool isAdmin { get; set; }
     }
@@ -225,7 +244,7 @@ namespace Wirtualna_Uczelnia
         public int userID { get; set; }
         public string imie { get; set; }
         public string nazwisko { get; set; }
-        public bool isAdmin { get; set; }
+        public bool isAdmin { get; set; } // TODO must have wywalic wszystkie zaleznosci od isAdmin w klasie Student i Pracownik, bo nie ma takiej kolumny w bazie dnaych i wywala program w klasie sqlMenager
     }
 
     public class Student : Osoba

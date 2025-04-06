@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 08, 2025 at 02:53 PM
--- Wersja serwera: 10.4.32-MariaDB
--- Wersja PHP: 8.2.12
+-- Generation Time: Apr 06, 2025 at 08:26 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,34 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `logowanie`
+-- Table structure for table `grupy`
+--
+
+CREATE TABLE `grupy` (
+  `id_grupy` int(11) NOT NULL,
+  `id_kierunku` int(11) NOT NULL,
+  `typ_grupy` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kierunki`
+--
+
+CREATE TABLE `kierunki` (
+  `id_kierunku` int(11) NOT NULL,
+  `id_opiekunaRoku` int(11) NOT NULL,
+  `wydzial` text DEFAULT NULL,
+  `semestr` int(11) DEFAULT NULL,
+  `nazwa_kierunku` text DEFAULT NULL,
+  `specjalizacja` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `logowanie`
 --
 
 CREATE TABLE `logowanie` (
@@ -32,26 +59,27 @@ CREATE TABLE `logowanie` (
   `email` varchar(255) NOT NULL,
   `haslo` varchar(255) NOT NULL,
   `isTeacher` tinyint(1) NOT NULL,
-  `isAdmin` tinyint(1) NOT NULL
+  `isAdmin` tinyint(1) NOT NULL,
+  `salt` varchar(64) NOT NULL,
+  `haslobezhash` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
 -- Dumping data for table `logowanie`
 --
 
-INSERT INTO `logowanie` (`userID`, `email`, `haslo`, `isTeacher`, `isAdmin`) VALUES
-(1, 'student1@uczelnia.pl', 'haslo123', 0, 0),
-(2, 'student2@uczelnia.pl', 'haslo123', 0, 0),
-(3, 'nauczyciel1@uczelnia.pl', 'tajnehaslo', 1, 0),
-(4, 'admin@uczelnia.pl', 'admin123', 1, 1),
-(5, 'student3@uczelnia.pl', 'haslo123', 0, 0),
-(6, 'nauczyciel2@uczelnia.pl', 'bezpieczne123', 1, 0),
-(14, 'chuj.cfelowski@gmail.com', 'chuj123!', 1, 1);
+INSERT INTO `logowanie` (`userID`, `email`, `haslo`, `isTeacher`, `isAdmin`, `salt`, `haslobezhash`) VALUES
+(1, 'student1@uczelnia.pl', 'db3c0e58b6098051e63b4b1fd2698cdb90b3e926d61393bed4378d20daaf0704', 0, 0, 'Yr46IuFMBjma3anTMOuXcw==', 'haslo123'),
+(2, 'student2@uczelnia.pl', '78fb78059a6c365205328e7351cdbd0b74497f047ea4bff02afc5b7b5766b976', 0, 0, '+qAm/sY9OpjdFeT6MrTCpw==', 'haslo123'),
+(3, 'nauczyciel1@uczelnia.pl', 'd4651b7fa8033c8a694eeb9c9c3a94a5a82ff8a8d0d936edc6466decbb173b1c', 1, 0, 'bQj7gneHNGx5MV4RAvWNzA==', 'tajnehaslo'),
+(4, 'admin@uczelnia.pl', '7e619e41deca0453c246018254fae57e9f76f51e9f4ca4d6099c9bf95696e72f', 1, 1, 'trC8KEIfgcq0qs8E7RGTnA==', 'admin123'),
+(5, 'student3@uczelnia.pl', '4d9b7c5e98f24f42f152da4953918016361ed40c3519ed3bc10f8b67e9006dbb', 0, 0, 'DF7oFdpsMMMt4/QJojWSyA==', 'haslo123'),
+(6, 'nauczyciel2@uczelnia.pl', 'fb14f3923cb387fde49b62a819cc218833485477c207324327bb5f614464197a', 1, 0, '2omSCI87pTqjLdZts904GA==', 'bezpieczne123');
 
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `oceny`
+-- Table structure for table `oceny`
 --
 
 CREATE TABLE `oceny` (
@@ -76,7 +104,27 @@ INSERT INTO `oceny` (`id_oceny`, `userID`, `id_przedmiotu`, `ocena`, `data_wysta
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `pracownicy`
+-- Table structure for table `plan_lekcji`
+--
+
+CREATE TABLE `plan_lekcji` (
+  `id_planu` int(11) NOT NULL,
+  `id_prowadzacego` int(11) NOT NULL,
+  `id_grupy` int(11) NOT NULL,
+  `id_kierunku` int(11) NOT NULL,
+  `sala` varchar(255) DEFAULT NULL,
+  `dzien` date NOT NULL,
+  `godzina_startu` time NOT NULL,
+  `godzina_konca` time NOT NULL,
+  `przedmiot` varchar(255) NOT NULL,
+  `rodzaj` varchar(255) NOT NULL,
+  `notatki` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pracownicy`
 --
 
 CREATE TABLE `pracownicy` (
@@ -94,35 +142,12 @@ CREATE TABLE `pracownicy` (
 INSERT INTO `pracownicy` (`userID`, `imie`, `nazwisko`, `stanowisko`, `stopien_naukowy`) VALUES
 (3, 'Piotr', 'Zieliński', 'Profesor', 'Dr hab.'),
 (4, 'admin', 'test', 'ADMIN', NULL),
-(6, 'Katarzyna', 'Wójcik', 'Adiunkt', 'Dr'),
-(14, 'chuj', 'cfelowski', 'admin', 'debil');
+(6, 'Katarzyna', 'Wójcik', 'Adiunkt', 'Dr');
 
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `prowadzone_przedmioty`
---
-
-CREATE TABLE `prowadzone_przedmioty` (
-  `userID` int(11) NOT NULL,
-  `id_przedmiotu` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
-
---
--- Dumping data for table `prowadzone_przedmioty`
---
-
-INSERT INTO `prowadzone_przedmioty` (`userID`, `id_przedmiotu`) VALUES
-(3, 1),
-(3, 2),
-(3, 5),
-(6, 3),
-(6, 4);
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `przedmioty`
+-- Table structure for table `przedmioty`
 --
 
 CREATE TABLE `przedmioty` (
@@ -145,7 +170,7 @@ INSERT INTO `przedmioty` (`id_przedmiotu`, `nazwa`, `ects`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `studenci`
+-- Table structure for table `studenci`
 --
 
 CREATE TABLE `studenci` (
@@ -167,41 +192,33 @@ INSERT INTO `studenci` (`userID`, `imie`, `nazwisko`, `nr_indeksu`, `semestr`, `
 (2, 'Anna', 'Nowak', 'S67890', 2, 'Informatyka', 'Cyberbezpieczeństwo'),
 (5, 'Marek', 'Wiśniewski', 'S54321', 3, 'Budownictwo', 'Architektura');
 
--- --------------------------------------------------------
-
 --
--- Struktura tabeli dla tabeli `zapisane_przedmioty`
---
-
-CREATE TABLE `zapisane_przedmioty` (
-  `userID` int(11) NOT NULL,
-  `id_przedmiotu` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
-
---
--- Dumping data for table `zapisane_przedmioty`
---
-
-INSERT INTO `zapisane_przedmioty` (`userID`, `id_przedmiotu`) VALUES
-(1, 1),
-(1, 3),
-(2, 2),
-(2, 4),
-(5, 5);
-
---
--- Indeksy dla zrzutów tabel
+-- Indexes for dumped tables
 --
 
 --
--- Indeksy dla tabeli `logowanie`
+-- Indexes for table `grupy`
+--
+ALTER TABLE `grupy`
+  ADD PRIMARY KEY (`id_grupy`),
+  ADD KEY `id_kierunku` (`id_kierunku`);
+
+--
+-- Indexes for table `kierunki`
+--
+ALTER TABLE `kierunki`
+  ADD PRIMARY KEY (`id_kierunku`),
+  ADD KEY `id_opiekunaRoku` (`id_opiekunaRoku`);
+
+--
+-- Indexes for table `logowanie`
 --
 ALTER TABLE `logowanie`
   ADD PRIMARY KEY (`userID`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Indeksy dla tabeli `oceny`
+-- Indexes for table `oceny`
 --
 ALTER TABLE `oceny`
   ADD PRIMARY KEY (`id_oceny`),
@@ -209,41 +226,47 @@ ALTER TABLE `oceny`
   ADD KEY `id_przedmiotu` (`id_przedmiotu`);
 
 --
--- Indeksy dla tabeli `pracownicy`
+-- Indexes for table `plan_lekcji`
+--
+ALTER TABLE `plan_lekcji`
+  ADD PRIMARY KEY (`id_planu`),
+  ADD KEY `id_grupy` (`id_grupy`),
+  ADD KEY `id_kierunku` (`id_kierunku`);
+
+--
+-- Indexes for table `pracownicy`
 --
 ALTER TABLE `pracownicy`
   ADD PRIMARY KEY (`userID`);
 
 --
--- Indeksy dla tabeli `prowadzone_przedmioty`
---
-ALTER TABLE `prowadzone_przedmioty`
-  ADD PRIMARY KEY (`userID`,`id_przedmiotu`),
-  ADD KEY `id_przedmiotu` (`id_przedmiotu`);
-
---
--- Indeksy dla tabeli `przedmioty`
+-- Indexes for table `przedmioty`
 --
 ALTER TABLE `przedmioty`
   ADD PRIMARY KEY (`id_przedmiotu`);
 
 --
--- Indeksy dla tabeli `studenci`
+-- Indexes for table `studenci`
 --
 ALTER TABLE `studenci`
   ADD PRIMARY KEY (`userID`),
   ADD UNIQUE KEY `nr_indeksu` (`nr_indeksu`);
 
 --
--- Indeksy dla tabeli `zapisane_przedmioty`
---
-ALTER TABLE `zapisane_przedmioty`
-  ADD PRIMARY KEY (`userID`,`id_przedmiotu`),
-  ADD KEY `id_przedmiotu` (`id_przedmiotu`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `grupy`
+--
+ALTER TABLE `grupy`
+  MODIFY `id_grupy` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `kierunki`
+--
+ALTER TABLE `kierunki`
+  MODIFY `id_kierunku` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `logowanie`
@@ -258,6 +281,12 @@ ALTER TABLE `oceny`
   MODIFY `id_oceny` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `plan_lekcji`
+--
+ALTER TABLE `plan_lekcji`
+  MODIFY `id_planu` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `przedmioty`
 --
 ALTER TABLE `przedmioty`
@@ -268,11 +297,30 @@ ALTER TABLE `przedmioty`
 --
 
 --
+-- Constraints for table `grupy`
+--
+ALTER TABLE `grupy`
+  ADD CONSTRAINT `grupy_ibfk_1` FOREIGN KEY (`id_kierunku`) REFERENCES `kierunki` (`id_kierunku`);
+
+--
+-- Constraints for table `kierunki`
+--
+ALTER TABLE `kierunki`
+  ADD CONSTRAINT `kierunki_ibfk_1` FOREIGN KEY (`id_opiekunaRoku`) REFERENCES `pracownicy` (`userID`);
+
+--
 -- Constraints for table `oceny`
 --
 ALTER TABLE `oceny`
   ADD CONSTRAINT `oceny_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `studenci` (`userID`) ON DELETE CASCADE,
   ADD CONSTRAINT `oceny_ibfk_2` FOREIGN KEY (`id_przedmiotu`) REFERENCES `przedmioty` (`id_przedmiotu`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `plan_lekcji`
+--
+ALTER TABLE `plan_lekcji`
+  ADD CONSTRAINT `plan_lekcji_ibfk_1` FOREIGN KEY (`id_grupy`) REFERENCES `grupy` (`id_grupy`),
+  ADD CONSTRAINT `plan_lekcji_ibfk_2` FOREIGN KEY (`id_kierunku`) REFERENCES `kierunki` (`id_kierunku`);
 
 --
 -- Constraints for table `pracownicy`
@@ -281,24 +329,10 @@ ALTER TABLE `pracownicy`
   ADD CONSTRAINT `pracownicy_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `logowanie` (`userID`) ON DELETE CASCADE;
 
 --
--- Constraints for table `prowadzone_przedmioty`
---
-ALTER TABLE `prowadzone_przedmioty`
-  ADD CONSTRAINT `prowadzone_przedmioty_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `pracownicy` (`userID`) ON DELETE CASCADE,
-  ADD CONSTRAINT `prowadzone_przedmioty_ibfk_2` FOREIGN KEY (`id_przedmiotu`) REFERENCES `przedmioty` (`id_przedmiotu`) ON DELETE CASCADE;
-
---
 -- Constraints for table `studenci`
 --
 ALTER TABLE `studenci`
   ADD CONSTRAINT `studenci_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `logowanie` (`userID`) ON DELETE CASCADE;
-
---
--- Constraints for table `zapisane_przedmioty`
---
-ALTER TABLE `zapisane_przedmioty`
-  ADD CONSTRAINT `zapisane_przedmioty_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `studenci` (`userID`) ON DELETE CASCADE,
-  ADD CONSTRAINT `zapisane_przedmioty_ibfk_2` FOREIGN KEY (`id_przedmiotu`) REFERENCES `przedmioty` (`id_przedmiotu`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

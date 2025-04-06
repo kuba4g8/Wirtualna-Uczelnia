@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
+using Wirtualna_Uczelnia.klasy;
 
 namespace Wirtualna_Uczelnia
 {
@@ -49,7 +50,6 @@ namespace Wirtualna_Uczelnia
                 MySqlCommand cmd = querryCommand;
                 cmd.Connection = _conn;
 
-
                 //stworzenie obiektu readera ktory szczytuje wszystkie rowy pokolei.
                 MySqlDataReader reader = cmd.ExecuteReader();
 
@@ -78,7 +78,7 @@ namespace Wirtualna_Uczelnia
                         catch (Exception ex)
                         {
                             //MessageBox.Show("Generalnie jezeli czytasz ta wiadomosc to chujowow");
-                            //MessageBox.Show(ex.Message);
+                            MessageBox.Show(ex.Message);
                         }
                         
                     }
@@ -89,9 +89,10 @@ namespace Wirtualna_Uczelnia
 
                 return list;
             }
-            catch (MySqlException ex)
+            catch (MySqlException ex) // TODO i to tak must have to ze nie ma isAdmin przetrzymywanego w bazie danych co oznacza ze za kazzdym razem sie wywala program i wylapuje exception tylko. Trzeba usunac wszystkie zaleznosci!!!!!
             {
-                //hujowo (XDD - Lysy)
+                //hujowo (XDD - Lysy, no i mi sie udalo)
+                // 1 - Licznik ile razy ktos wyjebal ten komentarz
                 MessageBox.Show(ex.Message + " i koniec:(");
                 return list;
             }
