@@ -30,9 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormResetHasla));
             textBox1 = new TextBox();
-            label1 = new Label();
+            lblnumerindeksu = new Label();
             textBox2 = new TextBox();
-            label2 = new Label();
+            lblemail = new Label();
             button1 = new Button();
             pictureBox1 = new PictureBox();
             linkLabel1 = new LinkLabel();
@@ -47,15 +47,17 @@
             textBox1.Size = new Size(150, 31);
             textBox1.TabIndex = 0;
             // 
-            // label1
+            // lblnumerindeksu
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(155, 84);
-            label1.Margin = new Padding(2, 0, 2, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(132, 25);
-            label1.TabIndex = 1;
-            label1.Text = "Numer indeksu";
+            lblnumerindeksu.AutoSize = true;
+            lblnumerindeksu.BackColor = Color.Transparent;
+            lblnumerindeksu.Location = new Point(155, 84);
+            lblnumerindeksu.Margin = new Padding(2, 0, 2, 0);
+            lblnumerindeksu.Name = "lblnumerindeksu";
+            lblnumerindeksu.Size = new Size(132, 25);
+            lblnumerindeksu.TabIndex = 1;
+            lblnumerindeksu.Text = "Numer indeksu";
+            lblnumerindeksu.Click += lblnumerindeksu_Click;
             // 
             // textBox2
             // 
@@ -65,15 +67,15 @@
             textBox2.Size = new Size(150, 31);
             textBox2.TabIndex = 2;
             // 
-            // label2
+            // lblemail
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(155, 175);
-            label2.Margin = new Padding(2, 0, 2, 0);
-            label2.Name = "label2";
-            label2.Size = new Size(112, 25);
-            label2.TabIndex = 3;
-            label2.Text = "Adres e-mail";
+            lblemail.AutoSize = true;
+            lblemail.Location = new Point(155, 175);
+            lblemail.Margin = new Padding(2, 0, 2, 0);
+            lblemail.Name = "lblemail";
+            lblemail.Size = new Size(112, 25);
+            lblemail.TabIndex = 3;
+            lblemail.Text = "Adres e-mail";
             // 
             // button1
             // 
@@ -124,9 +126,9 @@
             ClientSize = new Size(800, 450);
             Controls.Add(linkLabel1);
             Controls.Add(button1);
-            Controls.Add(label2);
+            Controls.Add(lblemail);
             Controls.Add(textBox2);
-            Controls.Add(label1);
+            Controls.Add(lblnumerindeksu);
             Controls.Add(textBox1);
             Controls.Add(pictureBox1);
             Margin = new Padding(2);
@@ -140,9 +142,9 @@
         #endregion
 
         private TextBox textBox1;
-        private Label label1;
+        private Label lblnumerindeksu;
         private TextBox textBox2;
-        private Label label2;
+        private Label lblemail;
         private Button button1;
         private PictureBox pictureBox1;
         private LinkLabel linkLabel1;

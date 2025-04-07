@@ -120,6 +120,7 @@
             lblChangeLang.TabStop = true;
             lblChangeLang.Text = "English";
             lblChangeLang.VisitedLinkColor = Color.Black;
+            lblChangeLang.LinkClicked += lblChangeLang_LinkClicked;
             lblChangeLang.MouseClick += nacisnietoZmianeJezyka;
             // 
             // pictureBox2
