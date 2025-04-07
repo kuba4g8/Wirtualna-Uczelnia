@@ -1,7 +1,9 @@
 Wirtualna-Uczelnia-Rozwiazanie/.vs
 Wirtualna-Uczelnia-Rozwiazanie/obj
 Wirtualna-Uczelnia-Rozwiazanie/bin
-/Wirtualna-Uczelnia-Rozwiazanie/bin/Debug/net8.0-windows/*.dll
-/Wirtualna-Uczelnia-Rozwiazanie/bin/Debug/net8.0-windows/*.exe
-/Wirtualna-Uczelnia-Rozwiazanie/bin/Debug/net8.0-windows/*.pdb
+**/bin/
+**/obj/
+*.dll
+*.exe
+*.pdb
 .vs/

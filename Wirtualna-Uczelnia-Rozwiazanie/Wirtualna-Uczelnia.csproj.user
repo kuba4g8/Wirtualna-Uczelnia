@@ -5,7 +5,6 @@
     <Compile Update=".formy\AdminPanel.cs">
       <SubType>Form</SubType>
     </Compile>
-<<<<<<< HEAD
     <Compile Update=".formy\ChatForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -27,8 +26,6 @@
     <Compile Update=".formy\stareLogowanie.cs">
       <SubType>Form</SubType>
     </Compile>
-=======
->>>>>>> f052eb345ba4a55b127a135c378762b009661f03
     <Compile Update=".formy\FormLogowanie.cs">
       <SubType>Form</SubType>
     </Compile>
