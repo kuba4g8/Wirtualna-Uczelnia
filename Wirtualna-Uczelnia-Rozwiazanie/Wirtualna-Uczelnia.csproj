@@ -37,6 +37,7 @@
     <Compile Include=".formy\formResetPassword.cs" />
     <Compile Include=".formy\formResetPassword.Designer.cs" />
     <Compile Include=".klasy\PrzezroczysteTlo.cs" />
+    <Compile Include=".klasy\Hasher.cs" />
     <Compile Include=".klasy\jsonMenager.cs" />
     <Compile Include=".translations\LangMenager.cs" />
     <Compile Include=".klasy\LoginMenager.cs" />

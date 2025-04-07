@@ -3,9 +3,10 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 02, 2025 at 09:54 AM
--- Wersja serwera: 10.4.32-MariaDB
--- Wersja PHP: 8.2.12
+-- Generation Time: Apr 06, 2025 at 08:26 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
+
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -59,25 +60,27 @@ CREATE TABLE `logowanie` (
   `email` varchar(255) NOT NULL,
   `haslo` varchar(255) NOT NULL,
   `isTeacher` tinyint(1) NOT NULL,
-  `isAdmin` tinyint(1) NOT NULL
+  `isAdmin` tinyint(1) NOT NULL,
+  `salt` varchar(64) NOT NULL,
+  `haslobezhash` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
 -- Dumping data for table `logowanie`
 --
 
-INSERT INTO `logowanie` (`userID`, `email`, `haslo`, `isTeacher`, `isAdmin`) VALUES
-(1, 'student1@uczelnia.pl', 'haslo123', 0, 0),
-(2, 'student2@uczelnia.pl', 'haslo123', 0, 0),
-(3, 'nauczyciel1@uczelnia.pl', 'tajnehaslo', 1, 0),
-(4, 'admin@uczelnia.pl', 'admin123', 1, 1),
-(5, 'student3@uczelnia.pl', 'haslo123', 0, 0),
-(6, 'nauczyciel2@uczelnia.pl', 'bezpieczne123', 1, 0);
+INSERT INTO `logowanie` (`userID`, `email`, `haslo`, `isTeacher`, `isAdmin`, `salt`, `haslobezhash`) VALUES
+(1, 'student1@uczelnia.pl', 'db3c0e58b6098051e63b4b1fd2698cdb90b3e926d61393bed4378d20daaf0704', 0, 0, 'Yr46IuFMBjma3anTMOuXcw==', 'haslo123'),
+(2, 'student2@uczelnia.pl', '78fb78059a6c365205328e7351cdbd0b74497f047ea4bff02afc5b7b5766b976', 0, 0, '+qAm/sY9OpjdFeT6MrTCpw==', 'haslo123'),
+(3, 'nauczyciel1@uczelnia.pl', 'd4651b7fa8033c8a694eeb9c9c3a94a5a82ff8a8d0d936edc6466decbb173b1c', 1, 0, 'bQj7gneHNGx5MV4RAvWNzA==', 'tajnehaslo'),
+(4, 'admin@uczelnia.pl', '7e619e41deca0453c246018254fae57e9f76f51e9f4ca4d6099c9bf95696e72f', 1, 1, 'trC8KEIfgcq0qs8E7RGTnA==', 'admin123'),
+(5, 'student3@uczelnia.pl', '4d9b7c5e98f24f42f152da4953918016361ed40c3519ed3bc10f8b67e9006dbb', 0, 0, 'DF7oFdpsMMMt4/QJojWSyA==', 'haslo123'),
+(6, 'nauczyciel2@uczelnia.pl', 'fb14f3923cb387fde49b62a819cc218833485477c207324327bb5f614464197a', 1, 0, '2omSCI87pTqjLdZts904GA==', 'bezpieczne123');
 
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `oceny`
+-- Table structure for table `oceny`
 --
 
 CREATE TABLE `oceny` (
@@ -168,7 +171,7 @@ INSERT INTO `przedmioty` (`id_przedmiotu`, `nazwa`, `ects`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `studenci`
+-- Table structure for table `studenci`
 --
 
 CREATE TABLE `studenci` (
@@ -216,7 +219,7 @@ ALTER TABLE `logowanie`
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Indeksy dla tabeli `oceny`
+-- Indexes for table `oceny`
 --
 ALTER TABLE `oceny`
   ADD PRIMARY KEY (`id_oceny`),
@@ -244,7 +247,7 @@ ALTER TABLE `przedmioty`
   ADD PRIMARY KEY (`id_przedmiotu`);
 
 --
--- Indeksy dla tabeli `studenci`
+-- Indexes for table `studenci`
 --
 ALTER TABLE `studenci`
   ADD PRIMARY KEY (`userID`),
