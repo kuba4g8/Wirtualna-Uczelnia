@@ -68,7 +68,6 @@ namespace Wirtualna_Uczelnia
                 querry = "SELECT * FROM pracownicy WHERE userID = @userID";
                 teacherData = returnUserData<Pracownik>(querry, userID);
                 isTeacher = true;
-                teacherData.isAdmin = true;
 
 
                 AdminPanel adminPanel = new AdminPanel(teacherData);
@@ -83,7 +82,6 @@ namespace Wirtualna_Uczelnia
                 querry = "SELECT * FROM pracownicy WHERE userID = @userID";
                 teacherData = returnUserData<Pracownik>(querry, userID);
                 isTeacher = true;
-                teacherData.isAdmin = false;
                 // odpalic forme dla teachera
             }
             else // UZYTKOWNIK TO STUDENT
@@ -91,7 +89,6 @@ namespace Wirtualna_Uczelnia
                 querry = "SELECT * FROM studenci WHERE userID = @userID";
                 studentData = returnUserData<Student>(querry, userID);
                 isTeacher = false;
-                studentData.isAdmin = false;
 
                 StronaGlowna stronaGlownaStudent = new StronaGlowna();
                 stronaGlownaStudent.Show();
@@ -151,8 +148,7 @@ namespace Wirtualna_Uczelnia
                                  $"Imię: {teacherData.imie}\n" +
                                  $"Nazwisko: {teacherData.nazwisko}\n" +
                                  $"Stanowisko: {teacherData.stanowisko}\n" +
-                                 $"Stopień naukowy: {teacherData.stopien_naukowy}\n" +
-                                 $"Admin: {teacherData.isAdmin}";
+                                 $"Stopień naukowy: {teacherData.stopien_naukowy}\n";
 
                 MessageBox.Show(teacherInfo, "Debug - Pracownik", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -246,7 +242,6 @@ namespace Wirtualna_Uczelnia
         public int userID { get; set; }
         public string imie { get; set; }
         public string nazwisko { get; set; }
-        public bool isAdmin { get; set; } // TODO must have wywalic wszystkie zaleznosci od isAdmin w klasie Student i Pracownik, bo nie ma takiej kolumny w bazie dnaych i wywala program w klasie sqlMenager
     }
 
     public class Student : Osoba

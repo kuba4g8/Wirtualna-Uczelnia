@@ -24,7 +24,7 @@ namespace Wirtualna_Uczelnia.formy
         {
             Oceny oceny = new Oceny(); // Tworzenie nowego formularza
             oceny.Show();              // Pokazanie nowego formularza
-            this.Hide();               // Ukrycie obecnego formularza
+            //this.Hide();               // Ukrycie obecnego formularza
         }
 
 
@@ -32,28 +32,28 @@ namespace Wirtualna_Uczelnia.formy
         {
             Sprawdziany sprawdziany = new Sprawdziany();
             sprawdziany.Show();
-            this.Hide();
+            //this.Hide();
         }
 
         private void dokumenty_Click(object sender, EventArgs e)
         {
             Dokumenty dokumenty = new Dokumenty();
             dokumenty.Show();
-            this.Hide();
+            //this.Hide();
         }
 
         private void rejestracja_Click(object sender, EventArgs e)
         {
             Rejestracja rejestracja = new Rejestracja();
             rejestracja.Show();
-            this.Hide();
+            //this.Hide();
         }
 
         private void kalendarz_Click(object sender, EventArgs e)
         {
-            /*Kalendarz kalendarz = new Kalendarz();
-            kalendarz.Show();
-            this.Hide();*/
+            //FormKalendarz kalendarz = new FormKalendarz();
+                  
+            this.Hide();
         }
 
         private void label2_Click(object sender, EventArgs e)
