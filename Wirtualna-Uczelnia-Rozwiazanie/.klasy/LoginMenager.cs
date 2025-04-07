@@ -6,6 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Wirtualna_Uczelnia.formy;
 
+using Wirtualna_Uczelnia.klasy;
+
+
 namespace Wirtualna_Uczelnia
 {
     public class LoginMenager
@@ -20,7 +23,7 @@ namespace Wirtualna_Uczelnia
         //trzymanie informacji personalnych itd.
 
         private bool debugMode;
-
+         
         //forma logowania
         public LoginMenager(bool debugMode = false)
         {
@@ -160,23 +163,37 @@ namespace Wirtualna_Uczelnia
         }
 
         //loggedUser? -> oznacza ze obiekt moze byc null!
+
+        //Lysy- dobra sam juz nie wiem co sie dzieje w tym kodzie albo w mojej glowie, ale chyba zaraz zaczne tworzyc temple OS 2
+        // Wybacz Pablo ze ci tu pozmienialem ale teraz chyba czyściej
         private TempLoggedUser? returnLoggedUser(string email, string haslo)
         {
-            TempLoggedUser FetchUser = new TempLoggedUser(); //lista wszystkich uzytkownikow z bazy danych TODO: ZMIENIĆ Z LISTY NA POJEDYŃCZĄ ZMIENNĄ
+            // Tworzymy zapytanie SQL z parametrami
+            MySqlCommand loginCommand = new MySqlCommand("SELECT * FROM `logowanie` WHERE email = @email");
 
-            MySqlCommand loginCommand = new MySqlCommand("SELECT * FROM `logowanie` WHERE email = @email AND haslo = @haslo"); //pewnie fatalnie napisane, ale ta komenda szuka konkretnie maila i hasło, jeżeli jest błędne to nic nie znajdzie I wyszukiwana jest jedna zmienna
+            // Dodajemy parametry do zapytania (To do sql injetion fajne, bedzie ciezej zrobic )
+            loginCommand.Parameters.AddWithValue("@email", email);
 
-            loginCommand.Parameters.AddWithValue("@email", email); //dodanie parametrow z wartoscia (sql injection wsm jest ciezej zrobic)
-            loginCommand.Parameters.AddWithValue("@haslo", haslo);
+            // Ładujemy dane z bazy, ale teraz tylko jedno wystąpienie (jednego użytkownika)
+            TempLoggedUser? user = sqlMenager.loadDataToList<TempLoggedUser>(loginCommand).FirstOrDefault();
 
-            FetchUser = sqlMenager.loadDataToList<TempLoggedUser>(loginCommand).FirstOrDefault(); //komenda na ladowanie pojedynczego entry
-
-            if (FetchUser != null && (FetchUser.email == email.ToLower() && FetchUser.haslo == haslo) )
-            {
-                return FetchUser; //zalogowano
+            if (user != null) {
+                
+                //Pobiera salt do shashowania hasła
+                string salt = user.salt;
+                
+                //Łączy salt z hasłem
+                string haslohash = Hasher.ComputeSha256Hash(haslo, salt);
+                
+                //Jesli zhashowane hasła sie rownaja to returnuje usera inaczej nulla
+                if (haslohash.Equals(user.haslo)) {
+                    return user;
+                }
+                else return null;
             }
-            return null;
+            else return null;
         }
+
         //Sprawdzanie ile jest błędnych prób logowania
         private int GetFailedAttempts()
         {
@@ -219,6 +236,7 @@ namespace Wirtualna_Uczelnia
         public int userID { get; set; }
         public string email { get; set; }
         public string haslo { get; set; }
+        public string salt { get; set; }
         public bool isTeacher { get; set; }
         public bool isAdmin { get; set; }
     }

@@ -36,7 +36,11 @@
     <Compile Include=".formy\FormLogowanie.Designer.cs" />
     <Compile Include=".formy\formResetPassword.cs" />
     <Compile Include=".formy\formResetPassword.Designer.cs" />
+<<<<<<< HEAD
     <Compile Include=".klasy\PrzezroczysteTlo.cs" />
+=======
+    <Compile Include=".klasy\Hasher.cs" />
+>>>>>>> f052eb345ba4a55b127a135c378762b009661f03
     <Compile Include=".klasy\jsonMenager.cs" />
     <Compile Include=".translations\LangMenager.cs" />
     <Compile Include=".klasy\LoginMenager.cs" />

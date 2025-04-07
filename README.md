@@ -26,3 +26,11 @@ cos zrobic, a zrobicie to samo 2 razy xdxdxd. Tak dla przypomnienia:
 git add .
 git commit -m "(Nazwa waszej zmiany czy cos idk, tak sie zapisze potem na stronie. TUTAJ BEZ PRZEKLENSTW)"
 git push origin (nazwa brancha np. Front-End)
+
+INFO DLA CHCACYCH ZAINSTALOWAC BAZE DANYCH:
+https://www.apachefriends.org/pl/download.html -> strona xamppa stad pobierasz.
+W xampie odpalamy Apache i MySql - tam start powinien byc jak cos nie dziala to standardowo caly error do chatugpt i moze pomoze
+Ale jak sie odpali to trzeba kliknac admin przy MySql i powinna odpalic sie strona localhost cos tam dalej.
+Klikasz new kolo lewyego gornego rogu. Nie wiem czy powinno sie nazywac tak samo ale najlpiej nazwac "wirtualna_uczelnia" - oczywsice bez ""
+Nastepnie jak bedziemy w bazie danych klikasz import wybierasz plik bazy danych z pliku i powinno dzialac. Jak nie dziala to odnosze do punktu z chatem gpt.
+Na samym dole ja mam przycisk import. POWINNO dzialac. Znowu chat gpt.
