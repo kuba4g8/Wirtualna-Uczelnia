@@ -35,6 +35,8 @@
             IdInput = new TextBox();
             Load_Student = new Button();
             Label_Id = new Label();
+            Label_Przedmiot = new Label();
+            PrzedmiotInput = new TextBox();
             ((System.ComponentModel.ISupportInitialize)Tabela_Ocen).BeginInit();
             SuspendLayout();
             // 
@@ -50,7 +52,7 @@
             // 
             // Col1
             // 
-            Col1.HeaderText = "Rodzaj";
+            Col1.HeaderText = "Przedmiot";
             Col1.Name = "Col1";
             Col1.ReadOnly = true;
             Col1.Width = 200;
@@ -79,7 +81,7 @@
             // 
             // Load_Student
             // 
-            Load_Student.Location = new Point(12, 59);
+            Load_Student.Location = new Point(12, 103);
             Load_Student.Name = "Load_Student";
             Load_Student.Size = new Size(136, 23);
             Load_Student.TabIndex = 2;
@@ -90,17 +92,38 @@
             // Label_Id
             // 
             Label_Id.AutoSize = true;
+            Label_Id.ForeColor = Color.Black;
             Label_Id.Location = new Point(12, 12);
             Label_Id.Name = "Label_Id";
-            Label_Id.Size = new Size(71, 15);
+            Label_Id.Size = new Size(94, 15);
             Label_Id.TabIndex = 3;
-            Label_Id.Text = "ID Studenta:";
+            Label_Id.Text = "Indeks Studenta:";
+            // 
+            // Label_Przedmiot
+            // 
+            Label_Przedmiot.AutoSize = true;
+            Label_Przedmiot.ForeColor = Color.Black;
+            Label_Przedmiot.Location = new Point(12, 56);
+            Label_Przedmiot.Name = "Label_Przedmiot";
+            Label_Przedmiot.Size = new Size(64, 15);
+            Label_Przedmiot.TabIndex = 4;
+            Label_Przedmiot.Text = "Przedmiot:";
+            // 
+            // PrzedmiotInput
+            // 
+            PrzedmiotInput.Location = new Point(12, 74);
+            PrzedmiotInput.Name = "PrzedmiotInput";
+            PrzedmiotInput.Size = new Size(136, 23);
+            PrzedmiotInput.TabIndex = 5;
+            PrzedmiotInput.TextChanged += PrzedmiotInput_TextChanged;
             // 
             // OcenyPanel
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(PrzedmiotInput);
+            Controls.Add(Label_Przedmiot);
             Controls.Add(Label_Id);
             Controls.Add(Load_Student);
             Controls.Add(IdInput);
@@ -115,11 +138,13 @@
         #endregion
 
         private DataGridView Tabela_Ocen;
-        private DataGridViewTextBoxColumn Col1;
-        private DataGridViewTextBoxColumn Col2;
-        private DataGridViewTextBoxColumn Col3;
         private TextBox IdInput;
         private Button Load_Student;
         private Label Label_Id;
+        private DataGridViewTextBoxColumn Col1;
+        private DataGridViewTextBoxColumn Col2;
+        private DataGridViewTextBoxColumn Col3;
+        private Label Label_Przedmiot;
+        private TextBox PrzedmiotInput;
     }
 }

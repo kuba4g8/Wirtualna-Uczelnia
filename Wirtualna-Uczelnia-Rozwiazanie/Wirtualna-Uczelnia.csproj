@@ -20,6 +20,8 @@
     <Compile Include=".formy\AdminPanel.Designer.cs" />
     <Compile Include=".formy\ChatForm.cs" />
     <Compile Include=".formy\ChatForm.Designer.cs" />
+    <Compile Include=".formy\OcenyPanel.cs" />
+    <Compile Include=".formy\OcenyPanel.Designer.cs" />
     <Compile Include=".formy\StronaGlowna\Dokumenty.cs" />
     <Compile Include=".formy\StronaGlowna\Dokumenty.Designer.cs" />
     <Compile Include=".formy\StronaGlowna\Oceny.cs" />
@@ -52,6 +54,7 @@
   <ItemGroup>
     <EmbeddedResource Include=".formy\AdminPanel.resx" />
     <EmbeddedResource Include=".formy\ChatForm.resx" />
+    <EmbeddedResource Include=".formy\OcenyPanel.resx" />
     <EmbeddedResource Include=".formy\StronaGlowna\Dokumenty.resx" />
     <EmbeddedResource Include=".formy\StronaGlowna\Oceny.resx" />
     <EmbeddedResource Include=".formy\StronaGlowna\Rejestracja.resx" />

@@ -82,6 +82,11 @@ namespace Wirtualna_Uczelnia
                 querry = "SELECT * FROM pracownicy WHERE userID = @userID";
                 teacherData = returnUserData<Pracownik>(querry, userID);
                 isTeacher = true;
+
+                OcenyPanel ocenyPanel = new OcenyPanel(teacherData);
+                ocenyPanel.Show();
+                return true; //do usuenia potem jak beda inne formy!!!/////
+
                 // odpalic forme dla teachera
             }
             else // UZYTKOWNIK TO STUDENT
