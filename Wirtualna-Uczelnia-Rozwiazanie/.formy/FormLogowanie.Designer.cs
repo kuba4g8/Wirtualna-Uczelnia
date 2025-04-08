@@ -38,9 +38,11 @@
             lblChangeLang = new LinkLabel();
             pictureBox2 = new PictureBox();
             lblForgetPassword = new Label();
+            pictureBox3 = new PictureBox();
             pictureBox1 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             SuspendLayout();
             // 
             // pictureBox1
@@ -49,46 +51,44 @@
             pictureBox1.Location = new Point(1, 0);
             pictureBox1.Margin = new Padding(2);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(980, 600);
+            pictureBox1.Size = new Size(784, 480);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 5;
             pictureBox1.TabStop = false;
             // 
             // txtLogin
             // 
-            txtLogin.Location = new Point(348, 110);
-            txtLogin.Margin = new Padding(4);
+            txtLogin.Location = new Point(278, 88);
             txtLogin.Name = "txtLogin";
-            txtLogin.Size = new Size(276, 31);
+            txtLogin.Size = new Size(222, 27);
             txtLogin.TabIndex = 1;
             // 
             // txtPassword
             // 
-            txtPassword.Location = new Point(349, 199);
-            txtPassword.Margin = new Padding(4);
+            txtPassword.Location = new Point(279, 159);
             txtPassword.Name = "txtPassword";
             txtPassword.PasswordChar = '*';
-            txtPassword.Size = new Size(276, 31);
+            txtPassword.Size = new Size(222, 27);
             txtPassword.TabIndex = 2;
             // 
             // lblPassword
             // 
             lblPassword.AutoSize = true;
             lblPassword.BackColor = Color.Transparent;
-            lblPassword.Location = new Point(462, 160);
+            lblPassword.Location = new Point(370, 128);
             lblPassword.Margin = new Padding(2, 0, 2, 0);
             lblPassword.Name = "lblPassword";
-            lblPassword.Size = new Size(58, 25);
+            lblPassword.Size = new Size(47, 20);
             lblPassword.TabIndex = 6;
             lblPassword.Text = "Hasło";
             // 
             // lblLogin
             // 
             lblLogin.AutoSize = true;
-            lblLogin.Location = new Point(464, 64);
+            lblLogin.Location = new Point(371, 51);
             lblLogin.Margin = new Padding(2, 0, 2, 0);
             lblLogin.Name = "lblLogin";
-            lblLogin.Size = new Size(56, 25);
+            lblLogin.Size = new Size(46, 20);
             lblLogin.TabIndex = 7;
             lblLogin.Text = "Login";
             // 
@@ -98,10 +98,9 @@
             btnLogin.BackgroundImageLayout = ImageLayout.Stretch;
             btnLogin.FlatStyle = FlatStyle.Flat;
             btnLogin.Font = new Font("Trebuchet MS", 10F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            btnLogin.Location = new Point(416, 285);
-            btnLogin.Margin = new Padding(4);
+            btnLogin.Location = new Point(333, 228);
             btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(158, 36);
+            btnLogin.Size = new Size(126, 29);
             btnLogin.TabIndex = 0;
             btnLogin.Text = "Zaloguj!";
             btnLogin.UseVisualStyleBackColor = false;
@@ -112,10 +111,10 @@
             lblChangeLang.ActiveLinkColor = Color.Black;
             lblChangeLang.AutoSize = true;
             lblChangeLang.LinkColor = Color.Black;
-            lblChangeLang.Location = new Point(809, 19);
+            lblChangeLang.Location = new Point(647, 15);
             lblChangeLang.Margin = new Padding(2, 0, 2, 0);
             lblChangeLang.Name = "lblChangeLang";
-            lblChangeLang.Size = new Size(68, 25);
+            lblChangeLang.Size = new Size(56, 20);
             lblChangeLang.TabIndex = 8;
             lblChangeLang.TabStop = true;
             lblChangeLang.Text = "English";
@@ -126,10 +125,10 @@
             // pictureBox2
             // 
             pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
-            pictureBox2.Location = new Point(748, 11);
+            pictureBox2.Location = new Point(598, 9);
             pictureBox2.Margin = new Padding(2);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(40, 40);
+            pictureBox2.Size = new Size(32, 32);
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox2.TabIndex = 10;
             pictureBox2.TabStop = false;
@@ -139,21 +138,31 @@
             // 
             lblForgetPassword.AutoSize = true;
             lblForgetPassword.BackColor = Color.Transparent;
-            lblForgetPassword.Location = new Point(421, 341);
-            lblForgetPassword.Margin = new Padding(4, 0, 4, 0);
+            lblForgetPassword.Location = new Point(337, 273);
             lblForgetPassword.Name = "lblForgetPassword";
-            lblForgetPassword.Size = new Size(148, 25);
+            lblForgetPassword.Size = new Size(122, 20);
             lblForgetPassword.TabIndex = 11;
             lblForgetPassword.Text = "Przypomnij haslo";
             lblForgetPassword.MouseClick += resetPassword;
             // 
+            // pictureBox3
+            // 
+            pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
+            pictureBox3.Location = new Point(524, 38);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(179, 178);
+            pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox3.TabIndex = 12;
+            pictureBox3.TabStop = false;
+            // 
             // FormLogowanie
             // 
             AcceptButton = btnLogin;
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = btnLogin;
-            ClientSize = new Size(978, 594);
+            ClientSize = new Size(782, 475);
+            Controls.Add(pictureBox3);
             Controls.Add(lblForgetPassword);
             Controls.Add(pictureBox2);
             Controls.Add(lblChangeLang);
@@ -165,11 +174,11 @@
             Controls.Add(pictureBox1);
             FormBorderStyle = FormBorderStyle.SizableToolWindow;
             KeyPreview = true;
-            Margin = new Padding(4);
             Name = "FormLogowanie";
             Text = "Logowanie";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -184,5 +193,6 @@
         private LinkLabel lblChangeLang;
         private PictureBox pictureBox2;
         private Label lblForgetPassword;
+        private PictureBox pictureBox3;
     }
 }
