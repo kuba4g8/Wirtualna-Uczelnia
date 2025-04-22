@@ -35,7 +35,7 @@ namespace Wirtualna_Uczelnia.formy
         {
             Tabela_Ocen.Rows.Clear();
             Tabela_Ocen.Refresh(); //Redundant(?), refreshuje tabele
-            if (IdInput == null || PrzedmiotInput == null)
+            if (IdInput == null)
             {
                 return; //zwraca nic jeżeli puste, plus jest taki, że też dubluje jako czyszczenie przez ↑
             }
@@ -43,12 +43,20 @@ namespace Wirtualna_Uczelnia.formy
             String przedmiot = PrzedmiotInput.Text.ToString();
 
             List<Ocena> FetchOceny = new List<Ocena>();
-            MySqlCommand FetchCommand = new MySqlCommand($"SELECT * FROM oceny WHERE userID = (SELECT userID from studenci WHERE nr_indeksu = '{indeks}') AND id_przedmiotu = (SELECT id_przedmiotu from przedmioty WHERE nazwa = '{przedmiot}')");
+            if (String.IsNullOrWhiteSpace(przedmiot))
+            {
+                MySqlCommand FetchCommand = new MySqlCommand($"SELECT przedmioty.nazwa, oceny.ocena, oceny.data_wystawienia FROM oceny JOIN przedmioty ON oceny.id_przedmiotu = przedmioty.id_przedmiotu WHERE userID = (SELECT userID from studenci WHERE nr_indeksu = '{indeks}')");
+                FetchOceny = sqlMenager.loadDataToList<Ocena>(FetchCommand);
+            }
+            else
+            {
+                MySqlCommand FetchCommand = new MySqlCommand($"SELECT przedmioty.nazwa, oceny.ocena, oceny.data_wystawienia FROM oceny JOIN przedmioty ON oceny.id_przedmiotu = przedmioty.id_przedmiotu WHERE userID = (SELECT userID from studenci WHERE nr_indeksu = '{indeks}') AND id_przedmiotu = (SELECT id_przedmiotu from przedmioty WHERE nazwa = '{przedmiot}')"); //MMM... Długie komendy w s
+                FetchOceny = sqlMenager.loadDataToList<Ocena>(FetchCommand);
+            }
 
-            FetchOceny = sqlMenager.loadDataToList<Ocena>(FetchCommand);
             foreach (var ocena in FetchOceny)
             {
-                this.Tabela_Ocen.Rows.Add(ocena.id_przedmiotu, ocena.ocena, ocena.data_wystawienia);
+                this.Tabela_Ocen.Rows.Add(ocena.nazwa, ocena.ocena, ocena.data_wystawienia);
             }
         }
 
@@ -59,9 +67,7 @@ namespace Wirtualna_Uczelnia.formy
     }
     public class Ocena
     {
-        public int id_oceny { get; set; }
-        public int userID { get; set; }
-        public int id_przedmiotu { get; set; }
+        public string nazwa { get; set; }
         public decimal ocena { get; set; }
         public DateTime data_wystawienia { get; set; }
     }
