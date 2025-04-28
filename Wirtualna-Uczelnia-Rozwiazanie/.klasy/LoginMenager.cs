@@ -240,6 +240,18 @@ namespace Wirtualna_Uczelnia
         public string salt { get; set; }
         public bool isTeacher { get; set; }
         public bool isAdmin { get; set; }
+
+        public TempLoggedUser() { }
+        
+        public TempLoggedUser(int userID, string email, string haslo, string salt, bool isTeacher, bool isAdmin)
+        {
+            this.userID = userID;
+            this.email = email;
+            this.haslo = haslo;
+            this.salt = salt;
+            this.isTeacher = isTeacher;
+            this.isAdmin = isAdmin;
+        }
     }
 
     public abstract class Osoba

@@ -188,6 +188,7 @@ namespace Wirtualna_Uczelnia
         {
             MessageBox.Show(checkIfAllTextBoxesAreNull().ToString());
 
+            adminMenager.test();
             //zrob kiedys jak ci sie bedzie chcialo lol LYSY TO DO CB ZAPOMNIALEM NAPISAC NA POCZATKU.
             //zrobic checki czy int to int aby nie wyjebalo nigdzie bledu, w numerze indeksu aby tylko inta dalo sie wpisac itd analogicznie
             //i napisz funkcje userRegister ktora zaleznie od wyboru konta do rejestracji przypisze wlasciwosci obiektu Pracownicy, Studenci. A za kazdym razem temLogowanie
@@ -233,6 +234,13 @@ namespace Wirtualna_Uczelnia
             this.listStudenci = listStudenci;
 
             loadToListBoxes();
+        }
+
+        public void test()
+        {
+            var temp = new TempLoggedUser(100, "lol", "dupka", "slono", true, true);
+
+            sqlMenager.loadObjectToDataBase(temp, "logowanie", false);
         }
 
         public T findUserData<T>(int clickedID, bool isTeacher) where T : Osoba
