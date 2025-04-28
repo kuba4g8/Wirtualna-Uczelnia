@@ -35,6 +35,7 @@ namespace Wirtualna_Uczelnia
         }
 
         //wpisanie do bazy danych dynamicznego obiektu typu T, majac na uwadze ze nazwy tabel musza byc takie same jak nazwy wlasciwosci.
+        // niech zwraca jesli inser id jest false niech zwraca przypisany userID.
         public bool loadObjectToDataBase<T>(T objToInsert, string tableName, bool insertUSERID) where T : new()
         {
             if (!tryConnect())
@@ -70,7 +71,6 @@ namespace Wirtualna_Uczelnia
 
                 // Pojedyncze entry dla DB
                 string sqlCommand = $"INSERT INTO {tableName} ({string.Join(", ", nazwyKolumn)}) VALUES ({string.Join(", ", wlasciwosciLista)});";
-
 
                 //wykonanie komendy oraz faktycznie wprowadzenie do bazy danych
                 using (MySqlCommand cmd = new MySqlCommand(sqlCommand, _conn))
@@ -163,7 +163,7 @@ namespace Wirtualna_Uczelnia
             catch (MySqlException ex) // TODO i to tak must have to ze nie ma isAdmin przetrzymywanego w bazie danych co oznacza ze za kazzdym razem sie wywala program i wylapuje exception tylko. Trzeba usunac wszystkie zaleznosci!!!!!
             {
                 //hujowo (XDD - Lysy, no i mi sie udalo)
-                // 1 - Licznik ile razy ktos wyjebal ten komentarz
+                // 2 - Licznik ile razy ktos wyjebal ten komentarz
                 MessageBox.Show(ex.Message + " i koniec:(");
                 return list;
             }

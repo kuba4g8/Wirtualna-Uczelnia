@@ -50,9 +50,6 @@ namespace Wirtualna_Uczelnia
             if (loginMenager.tryLogin(txtLogin.Text, txtPassword.Text))
                 this.Hide();
 
-
-            this.Hide();
-
             //mozna kiedys dodac system sprawdzania czy email to email ale to brzmi tak nie potrzebnie a ciezko
         }
 

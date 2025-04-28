@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Google.Protobuf.WellKnownTypes;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Wirtualna_Uczelnia.klasy;
 
 namespace Wirtualna_Uczelnia
 {
@@ -99,12 +101,15 @@ namespace Wirtualna_Uczelnia
         //comboBox index 0 - nauczyciel, 1 - student
         private bool checkIfAllTextBoxesAreNull()
         {
+            if (string.IsNullOrEmpty(txtEmail.Text) &&
+                string.IsNullOrEmpty(txtPassword.Text)) return false;
+
             if (cmbAccountType.SelectedIndex == 0) // Sprawdzamy pola dla nauczyciela
             {
-                if (txtFirstName.Text != "" &&
-                    txtLastName.Text != "" &&
-                    txtPosition.Text != "" &&
-                    txtAcademicDegree.Text != "")
+                if (!string.IsNullOrWhiteSpace(txtFirstName.Text) &&
+                    !string.IsNullOrEmpty(txtLastName.Text) &&
+                    !string.IsNullOrEmpty(txtPosition.Text) &&
+                    !string.IsNullOrEmpty(txtAcademicDegree.Text))
                 {
                     return true;
                 }
@@ -115,12 +120,12 @@ namespace Wirtualna_Uczelnia
             }
             else if (cmbAccountType.SelectedIndex == 1) // Sprawdzamy pola dla studenta
             {
-                if (txtFirstName.Text != "" &&
-                    txtLastName.Text != "" &&
-                    txtStudentId.Text != "" &&
-                    txtSemester.Text != "" &&
-                    txtWydzial.Text != "" &&
-                    txtKierunek.Text != "")
+                if (!string.IsNullOrEmpty(txtFirstName.Text) &&
+                    !string.IsNullOrEmpty(txtLastName.Text)&&
+                    txtStudentId.Text.All(char.IsDigit) &&
+                    txtSemester.Text.All(char.IsDigit) &&
+                    !string.IsNullOrEmpty(txtWydzial.Text) &&
+                    !string.IsNullOrEmpty(txtKierunek.Text))
                 {
                     return true;
                 }
@@ -186,9 +191,17 @@ namespace Wirtualna_Uczelnia
 
         private void btnRegister_Click(object sender, EventArgs e)
         {
+            sqlMenager sqlMenager = new sqlMenager();
+
             MessageBox.Show(checkIfAllTextBoxesAreNull().ToString());
 
-            adminMenager.test();
+            string salt = Hasher.GenerateSalt();
+
+            bool isTeacher = (cmbAccountType.SelectedIndex == 0);
+
+            var temp = new TempLoggedUser(0, txtEmail.Text, Hasher.ComputeSha256Hash(txtPassword.Text, salt), salt, isTeacher, false);
+
+            sqlMenager.loadObjectToDataBase(temp, "logowanie", false);
             //zrob kiedys jak ci sie bedzie chcialo lol LYSY TO DO CB ZAPOMNIALEM NAPISAC NA POCZATKU.
             //zrobic checki czy int to int aby nie wyjebalo nigdzie bledu, w numerze indeksu aby tylko inta dalo sie wpisac itd analogicznie
             //i napisz funkcje userRegister ktora zaleznie od wyboru konta do rejestracji przypisze wlasciwosci obiektu Pracownicy, Studenci. A za kazdym razem temLogowanie
@@ -234,13 +247,6 @@ namespace Wirtualna_Uczelnia
             this.listStudenci = listStudenci;
 
             loadToListBoxes();
-        }
-
-        public void test()
-        {
-            var temp = new TempLoggedUser(100, "lol", "dupka", "slono", true, true);
-
-            sqlMenager.loadObjectToDataBase(temp, "logowanie", false);
         }
 
         public T findUserData<T>(int clickedID, bool isTeacher) where T : Osoba
