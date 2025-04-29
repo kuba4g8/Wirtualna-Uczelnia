@@ -39,7 +39,7 @@ namespace Wirtualna_Uczelnia
         {
             if (!editMode) // wykona sie jezeli editMode = false
             {
-                btnRegister.Text = "REGISTER";
+                btnRegister.Text = "Zarejestruj nowego użytkownika";
 
                 listPracownicy.SelectedIndex = -1;
                 listStudenci.SelectedIndex = -1;
@@ -193,18 +193,94 @@ namespace Wirtualna_Uczelnia
         {
             sqlMenager sqlMenager = new sqlMenager();
 
-            MessageBox.Show(checkIfAllTextBoxesAreNull().ToString());
+            // Sprawdź czy wszystkie wymagane pola są wypełnione
+            if (!checkIfAllTextBoxesAreNull())
+            {
+                MessageBox.Show("Proszę wypełnić wszystkie wymagane pola.", "Niepełne dane", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-            string salt = Hasher.GenerateSalt();
+            try
+            {
+                // Generowanie salt i hashowanie hasła
+                string salt = Hasher.GenerateSalt();
+                bool isTeacher = (cmbAccountType.SelectedIndex == 0);
 
-            bool isTeacher = (cmbAccountType.SelectedIndex == 0);
+                // Tworzenie obiektu z danymi logowania
+                var tempUser = new TempLoggedUser(0, txtEmail.Text, Hasher.ComputeSha256Hash(txtPassword.Text, salt), salt, isTeacher, false);
 
-            var temp = new TempLoggedUser(0, txtEmail.Text, Hasher.ComputeSha256Hash(txtPassword.Text, salt), salt, isTeacher, false);
+                // Zapisz dane logowania do bazy
+                if (!sqlMenager.loadObjectToDataBase(tempUser, "logowanie", false))
+                {
+                    MessageBox.Show("Błąd podczas zapisywania danych logowania.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
-            sqlMenager.loadObjectToDataBase(temp, "logowanie", false);
-            //zrob kiedys jak ci sie bedzie chcialo lol LYSY TO DO CB ZAPOMNIALEM NAPISAC NA POCZATKU.
-            //zrobic checki czy int to int aby nie wyjebalo nigdzie bledu, w numerze indeksu aby tylko inta dalo sie wpisac itd analogicznie
-            //i napisz funkcje userRegister ktora zaleznie od wyboru konta do rejestracji przypisze wlasciwosci obiektu Pracownicy, Studenci. A za kazdym razem temLogowanie
+                // Pobierz ID nowo utworzonego użytkownika
+                int newUserId = sqlMenager.GetLastInsertedId();
+                if (newUserId == -1)
+                {
+                    MessageBox.Show("Nie udało się pobrać ID nowego użytkownika.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                bool success = false;
+
+                // Zapisz dane do odpowiedniej tabeli w zależności od typu konta
+                if (isTeacher) // Nauczyciel/Pracownik
+                {
+                    var pracownik = new Pracownik
+                    {
+                        userID = newUserId,
+                        imie = txtFirstName.Text,
+                        nazwisko = txtLastName.Text,
+                        stanowisko = txtPosition.Text,
+                        stopien_naukowy = txtAcademicDegree.Text
+                    };
+
+                    success = sqlMenager.loadObjectToDataBase(pracownik, "pracownicy", true);
+                }
+                else // Student
+                {
+                    int semestr;
+                    if (!int.TryParse(txtSemester.Text, out semestr))
+                    {
+                        MessageBox.Show("Nieprawidłowa wartość semestru. Proszę podać liczbę.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    var student = new Student
+                    {
+                        userID = newUserId,
+                        imie = txtFirstName.Text,
+                        nazwisko = txtLastName.Text,
+                        nr_indeksu = txtStudentId.Text,
+                        semestr = semestr,
+                        wydzial = txtWydzial.Text,
+                        kierunek = txtKierunek.Text
+                    };
+
+                    success = sqlMenager.loadObjectToDataBase(student, "studenci", true);
+                }
+
+                if (success)
+                {
+                    MessageBox.Show("Użytkownik został dodany pomyślnie.", "Sukces", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    editMode = false;
+                    updateVisualData();
+                    
+                    // Odśwież listę użytkowników
+                    adminMenager.loadToListBoxes();
+                }
+                else
+                {
+                    MessageBox.Show("Wystąpił błąd podczas dodawania danych użytkownika.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Wystąpił nieoczekiwany błąd: {ex.Message}", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void logoutUserAction(object sender, EventArgs e)

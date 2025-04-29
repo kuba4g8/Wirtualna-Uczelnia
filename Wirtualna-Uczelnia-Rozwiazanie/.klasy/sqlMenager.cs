@@ -131,7 +131,7 @@ namespace Wirtualna_Uczelnia
 
                     // przelatujemy przez kazdy property w obiekcie np:
                     // student.id, student.imie, student.nazwisko itd
-                    // i przypisujemy te wlasciwosci do obiektu ktory ma te same wlasciowisci
+                    // i przypisujemy te wlasciwosci do obiektu ktory ma te same wlasciowosci
                     // nastepnie po kazdym foreachu kiedy wszystko bedzie przypisane dodajemy do listy
                     // obiekt aby wszystkie byly trzymane w jednym miejscu
                     foreach (PropertyInfo info in typeof(T).GetProperties())
@@ -202,6 +202,40 @@ namespace Wirtualna_Uczelnia
                 Console.WriteLine(ex.Message);
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Pobiera ID ostatnio wstawionego rekordu
+        /// </summary>
+        /// <returns>ID ostatnio wstawionego rekordu lub -1 w przypadku błędu</returns>
+        public int GetLastInsertedId()
+        {
+            if (!tryConnect())
+            {
+                return -1;
+            }
+
+            try
+            {
+                using (MySqlCommand cmd = new MySqlCommand("SELECT LAST_INSERT_ID()", _conn))
+                {
+                    object result = cmd.ExecuteScalar();
+                    if (result != null && result != DBNull.Value)
+                    {
+                        return Convert.ToInt32(result);
+                    }
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Błąd bazy danych: " + ex.Message);
+            }
+            finally
+            {
+                tryDissconect();
+            }
+
+            return -1;
         }
 
         //zwraca stringConnection

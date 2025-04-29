@@ -35,6 +35,20 @@ namespace Wirtualna_Uczelnia
         
         public bool tryLogin(string email, string haslo)
         {
+            // Sprawdzamy, czy nie ma blokady z powodu podejrzanej aktywności
+            if (secLogin.IsSuspiciousActivityLocked(out int suspiciousMinutes) && !debugMode)
+            {
+                MessageBox.Show($"System jest tymczasowo niedostępny z powodu podejrzanej aktywności. " +
+                                $"Spróbuj ponownie za {suspiciousMinutes} minut.", 
+                                "Dostęp ograniczony", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            // Zapisujemy próbę logowania dla tego użytkownika
+            secLogin.RecordLoginAttempt(email);
+            
+            // Monitorujemy częstotliwość prób logowania
+            secLogin.MonitorLoginAttemptFrequency();
 
             TempLoggedUser tempLoggedUser = new TempLoggedUser(); //obiekt do trzymania hasla itd.
 
@@ -51,7 +65,7 @@ namespace Wirtualna_Uczelnia
             {
                 //Sprawdzanie ilosci nieudanych logowań
                 secLogin.RegisterFailedAttempt();
-                int remainingAttempts = 3 - GetFailedAttempts();
+                int remainingAttempts = secLogin.MaxAllowedAttempts - GetFailedAttempts();
 
                 MessageBox.Show(remainingAttempts > 0
                     ? $"Nieprawidłowe dane. Pozostało prób: {remainingAttempts}"
@@ -59,6 +73,9 @@ namespace Wirtualna_Uczelnia
                 return false;
             }
             string querry; //command querry (zapytanie) -> zostanie wyslane do sql
+
+            //Zresetowanie licznika błędnych prób
+            secLogin.ResetLockout();
 
             //ify sprawdzaja kto jest adminem kto jest nauczycielem itd.
             int userID = tempLoggedUser.userID;
@@ -102,8 +119,7 @@ namespace Wirtualna_Uczelnia
             //ify sprawdzaja kto jest adminem kto jest nauczycielem itd.
             ShowDebugInfo();
 
-            //Zresetowanie licznika błędynch prób
-            secLogin.ResetLockout();
+            
             //MessageBox.Show("Zalogowano");
             return true;
 
@@ -165,8 +181,6 @@ namespace Wirtualna_Uczelnia
 
         //loggedUser? -> oznacza ze obiekt moze byc null!
 
-        //Lysy- dobra sam juz nie wiem co sie dzieje w tym kodzie albo w mojej glowie, ale chyba zaraz zaczne tworzyc temple OS 2
-        // Wybacz Pablo ze ci tu pozmienialem ale teraz chyba czyściej
         private TempLoggedUser? returnLoggedUser(string email, string haslo)
         {
             // Tworzymy zapytanie SQL z parametrami
