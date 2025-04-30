@@ -25,7 +25,7 @@ namespace Wirtualna_Uczelnia
         private bool debugMode;
          
         //forma logowania
-        public LoginMenager(bool debugMode = false)
+        public LoginMenager(bool debugMode)
         {
             this.debugMode = debugMode;
             sqlMenager = new sqlMenager();

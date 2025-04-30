@@ -97,30 +97,30 @@ namespace Wirtualna_Uczelnia
             // lblUserId
             // 
             lblUserId.AutoSize = true;
-            lblUserId.Location = new Point(34, 39);
-            lblUserId.Margin = new Padding(5, 0, 5, 0);
+            lblUserId.Location = new Point(27, 31);
+            lblUserId.Margin = new Padding(4, 0, 4, 0);
             lblUserId.Name = "lblUserId";
-            lblUserId.Size = new Size(69, 25);
+            lblUserId.Size = new Size(56, 20);
             lblUserId.TabIndex = 0;
             lblUserId.Text = "UserID:";
             // 
             // txtUserId
             // 
             txtUserId.Enabled = false;
-            txtUserId.Location = new Point(200, 39);
-            txtUserId.Margin = new Padding(5, 6, 5, 6);
+            txtUserId.Location = new Point(160, 31);
+            txtUserId.Margin = new Padding(4, 5, 4, 5);
             txtUserId.Name = "txtUserId";
-            txtUserId.Size = new Size(135, 31);
+            txtUserId.Size = new Size(109, 27);
             txtUserId.TabIndex = 1;
             txtUserId.Text = "123";
             // 
             // btnClear
             // 
             btnClear.Font = new Font("Segoe UI", 8F);
-            btnClear.Location = new Point(346, 39);
-            btnClear.Margin = new Padding(5, 6, 5, 6);
+            btnClear.Location = new Point(277, 31);
+            btnClear.Margin = new Padding(4, 5, 4, 5);
             btnClear.Name = "btnClear";
-            btnClear.Size = new Size(188, 44);
+            btnClear.Size = new Size(150, 35);
             btnClear.TabIndex = 2;
             btnClear.Text = "Dodaj uzytkownika";
             btnClear.UseVisualStyleBackColor = true;
@@ -129,82 +129,82 @@ namespace Wirtualna_Uczelnia
             // lblEmail
             // 
             lblEmail.AutoSize = true;
-            lblEmail.Location = new Point(34, 191);
-            lblEmail.Margin = new Padding(5, 0, 5, 0);
+            lblEmail.Location = new Point(27, 153);
+            lblEmail.Margin = new Padding(4, 0, 4, 0);
             lblEmail.Name = "lblEmail";
-            lblEmail.Size = new Size(58, 25);
+            lblEmail.Size = new Size(49, 20);
             lblEmail.TabIndex = 3;
             lblEmail.Text = "Email:";
             // 
             // txtEmail
             // 
-            txtEmail.Location = new Point(200, 191);
-            txtEmail.Margin = new Padding(5, 6, 5, 6);
+            txtEmail.Location = new Point(160, 153);
+            txtEmail.Margin = new Padding(4, 5, 4, 5);
             txtEmail.Name = "txtEmail";
-            txtEmail.Size = new Size(330, 31);
+            txtEmail.Size = new Size(265, 27);
             txtEmail.TabIndex = 4;
             // 
             // lblPassword
             // 
             lblPassword.AutoSize = true;
-            lblPassword.Location = new Point(34, 269);
-            lblPassword.Margin = new Padding(5, 0, 5, 0);
+            lblPassword.Location = new Point(27, 215);
+            lblPassword.Margin = new Padding(4, 0, 4, 0);
             lblPassword.Name = "lblPassword";
-            lblPassword.Size = new Size(62, 25);
+            lblPassword.Size = new Size(50, 20);
             lblPassword.TabIndex = 5;
             lblPassword.Text = "Hasło:";
             // 
             // txtPassword
             // 
-            txtPassword.Location = new Point(200, 269);
-            txtPassword.Margin = new Padding(5, 6, 5, 6);
+            txtPassword.Location = new Point(160, 215);
+            txtPassword.Margin = new Padding(4, 5, 4, 5);
             txtPassword.Name = "txtPassword";
-            txtPassword.Size = new Size(330, 31);
+            txtPassword.Size = new Size(265, 27);
             txtPassword.TabIndex = 6;
             // 
             // lblFirstName
             // 
             lblFirstName.AutoSize = true;
-            lblFirstName.Location = new Point(34, 345);
-            lblFirstName.Margin = new Padding(5, 0, 5, 0);
+            lblFirstName.Location = new Point(27, 276);
+            lblFirstName.Margin = new Padding(4, 0, 4, 0);
             lblFirstName.Name = "lblFirstName";
-            lblFirstName.Size = new Size(50, 25);
+            lblFirstName.Size = new Size(41, 20);
             lblFirstName.TabIndex = 7;
             lblFirstName.Text = "Imię:";
             // 
             // txtFirstName
             // 
-            txtFirstName.Location = new Point(200, 345);
-            txtFirstName.Margin = new Padding(5, 6, 5, 6);
+            txtFirstName.Location = new Point(160, 276);
+            txtFirstName.Margin = new Padding(4, 5, 4, 5);
             txtFirstName.Name = "txtFirstName";
-            txtFirstName.Size = new Size(330, 31);
+            txtFirstName.Size = new Size(265, 27);
             txtFirstName.TabIndex = 8;
             // 
             // lblLastName
             // 
             lblLastName.AutoSize = true;
-            lblLastName.Location = new Point(34, 422);
-            lblLastName.Margin = new Padding(5, 0, 5, 0);
+            lblLastName.Location = new Point(27, 338);
+            lblLastName.Margin = new Padding(4, 0, 4, 0);
             lblLastName.Name = "lblLastName";
-            lblLastName.Size = new Size(91, 25);
+            lblLastName.Size = new Size(75, 20);
             lblLastName.TabIndex = 9;
             lblLastName.Text = "Nazwisko:";
             // 
             // txtLastName
             // 
-            txtLastName.Location = new Point(200, 422);
-            txtLastName.Margin = new Padding(5, 6, 5, 6);
+            txtLastName.Location = new Point(160, 338);
+            txtLastName.Margin = new Padding(4, 5, 4, 5);
             txtLastName.Name = "txtLastName";
-            txtLastName.Size = new Size(330, 31);
+            txtLastName.Size = new Size(265, 27);
             txtLastName.TabIndex = 10;
             // 
             // lblAccountType
             // 
             lblAccountType.AutoSize = true;
-            lblAccountType.Location = new Point(34, 121);
-            lblAccountType.Margin = new Padding(5, 0, 5, 0);
+            lblAccountType.Location = new Point(27, 97);
+            lblAccountType.Margin = new Padding(4, 0, 4, 0);
             lblAccountType.Name = "lblAccountType";
-            lblAccountType.Size = new Size(94, 25);
+            lblAccountType.Size = new Size(76, 20);
             lblAccountType.TabIndex = 11;
             lblAccountType.Text = "Typ konta:";
             // 
@@ -213,133 +213,133 @@ namespace Wirtualna_Uczelnia
             cmbAccountType.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbAccountType.FormattingEnabled = true;
             cmbAccountType.Items.AddRange(new object[] { "Nauczyciel", "Student" });
-            cmbAccountType.Location = new Point(200, 121);
-            cmbAccountType.Margin = new Padding(5, 6, 5, 6);
+            cmbAccountType.Location = new Point(160, 97);
+            cmbAccountType.Margin = new Padding(4, 5, 4, 5);
             cmbAccountType.Name = "cmbAccountType";
-            cmbAccountType.Size = new Size(330, 33);
+            cmbAccountType.Size = new Size(265, 28);
             cmbAccountType.TabIndex = 12;
             cmbAccountType.SelectedIndexChanged += cmbAccountType_SelectedIndexChanged;
             // 
             // lblPosition
             // 
             lblPosition.AutoSize = true;
-            lblPosition.Location = new Point(34, 500);
-            lblPosition.Margin = new Padding(5, 0, 5, 0);
+            lblPosition.Location = new Point(27, 400);
+            lblPosition.Margin = new Padding(4, 0, 4, 0);
             lblPosition.Name = "lblPosition";
-            lblPosition.Size = new Size(106, 25);
+            lblPosition.Size = new Size(87, 20);
             lblPosition.TabIndex = 13;
             lblPosition.Text = "Stanowisko:";
             // 
             // txtPosition
             // 
-            txtPosition.Location = new Point(200, 500);
-            txtPosition.Margin = new Padding(5, 6, 5, 6);
+            txtPosition.Location = new Point(160, 400);
+            txtPosition.Margin = new Padding(4, 5, 4, 5);
             txtPosition.Name = "txtPosition";
-            txtPosition.Size = new Size(330, 31);
+            txtPosition.Size = new Size(265, 27);
             txtPosition.TabIndex = 14;
             txtPosition.Visible = false;
             // 
             // lblAcademicDegree
             // 
             lblAcademicDegree.AutoSize = true;
-            lblAcademicDegree.Location = new Point(34, 578);
-            lblAcademicDegree.Margin = new Padding(5, 0, 5, 0);
+            lblAcademicDegree.Location = new Point(27, 462);
+            lblAcademicDegree.Margin = new Padding(4, 0, 4, 0);
             lblAcademicDegree.Name = "lblAcademicDegree";
-            lblAcademicDegree.Size = new Size(152, 25);
+            lblAcademicDegree.Size = new Size(125, 20);
             lblAcademicDegree.TabIndex = 15;
             lblAcademicDegree.Text = "Stopień naukowy:";
             // 
             // txtAcademicDegree
             // 
-            txtAcademicDegree.Location = new Point(200, 578);
-            txtAcademicDegree.Margin = new Padding(5, 6, 5, 6);
+            txtAcademicDegree.Location = new Point(160, 462);
+            txtAcademicDegree.Margin = new Padding(4, 5, 4, 5);
             txtAcademicDegree.Name = "txtAcademicDegree";
-            txtAcademicDegree.Size = new Size(330, 31);
+            txtAcademicDegree.Size = new Size(265, 27);
             txtAcademicDegree.TabIndex = 16;
             txtAcademicDegree.Visible = false;
             // 
             // lblStudentId
             // 
             lblStudentId.AutoSize = true;
-            lblStudentId.Location = new Point(34, 500);
-            lblStudentId.Margin = new Padding(5, 0, 5, 0);
+            lblStudentId.Location = new Point(27, 400);
+            lblStudentId.Margin = new Padding(4, 0, 4, 0);
             lblStudentId.Name = "lblStudentId";
-            lblStudentId.Size = new Size(136, 25);
+            lblStudentId.Size = new Size(111, 20);
             lblStudentId.TabIndex = 17;
             lblStudentId.Text = "Numer indeksu:";
             // 
             // txtStudentId
             // 
-            txtStudentId.Location = new Point(200, 500);
-            txtStudentId.Margin = new Padding(5, 6, 5, 6);
+            txtStudentId.Location = new Point(160, 400);
+            txtStudentId.Margin = new Padding(4, 5, 4, 5);
             txtStudentId.Name = "txtStudentId";
-            txtStudentId.Size = new Size(330, 31);
+            txtStudentId.Size = new Size(265, 27);
             txtStudentId.TabIndex = 18;
             txtStudentId.Visible = false;
             // 
             // lblSemester
             // 
             lblSemester.AutoSize = true;
-            lblSemester.Location = new Point(34, 578);
-            lblSemester.Margin = new Padding(5, 0, 5, 0);
+            lblSemester.Location = new Point(27, 462);
+            lblSemester.Margin = new Padding(4, 0, 4, 0);
             lblSemester.Name = "lblSemester";
-            lblSemester.Size = new Size(80, 25);
+            lblSemester.Size = new Size(65, 20);
             lblSemester.TabIndex = 19;
             lblSemester.Text = "Semestr:";
             // 
             // txtSemester
             // 
-            txtSemester.Location = new Point(200, 578);
-            txtSemester.Margin = new Padding(5, 6, 5, 6);
+            txtSemester.Location = new Point(160, 462);
+            txtSemester.Margin = new Padding(4, 5, 4, 5);
             txtSemester.Name = "txtSemester";
-            txtSemester.Size = new Size(330, 31);
+            txtSemester.Size = new Size(265, 27);
             txtSemester.TabIndex = 20;
             txtSemester.Visible = false;
             // 
             // lblFaculty
             // 
             lblFaculty.AutoSize = true;
-            lblFaculty.Location = new Point(34, 654);
-            lblFaculty.Margin = new Padding(5, 0, 5, 0);
+            lblFaculty.Location = new Point(27, 523);
+            lblFaculty.Margin = new Padding(4, 0, 4, 0);
             lblFaculty.Name = "lblFaculty";
-            lblFaculty.Size = new Size(79, 25);
+            lblFaculty.Size = new Size(65, 20);
             lblFaculty.TabIndex = 21;
             lblFaculty.Text = "Wydział:";
             // 
             // txtWydzial
             // 
-            txtWydzial.Location = new Point(200, 654);
-            txtWydzial.Margin = new Padding(5, 6, 5, 6);
+            txtWydzial.Location = new Point(160, 523);
+            txtWydzial.Margin = new Padding(4, 5, 4, 5);
             txtWydzial.Name = "txtWydzial";
-            txtWydzial.Size = new Size(330, 31);
+            txtWydzial.Size = new Size(265, 27);
             txtWydzial.TabIndex = 22;
             txtWydzial.Visible = false;
             // 
             // lblFieldOfStudy
             // 
             lblFieldOfStudy.AutoSize = true;
-            lblFieldOfStudy.Location = new Point(34, 731);
-            lblFieldOfStudy.Margin = new Padding(5, 0, 5, 0);
+            lblFieldOfStudy.Location = new Point(27, 585);
+            lblFieldOfStudy.Margin = new Padding(4, 0, 4, 0);
             lblFieldOfStudy.Name = "lblFieldOfStudy";
-            lblFieldOfStudy.Size = new Size(83, 25);
+            lblFieldOfStudy.Size = new Size(69, 20);
             lblFieldOfStudy.TabIndex = 23;
             lblFieldOfStudy.Text = "Kierunek:";
             // 
             // txtKierunek
             // 
-            txtKierunek.Location = new Point(200, 731);
-            txtKierunek.Margin = new Padding(5, 6, 5, 6);
+            txtKierunek.Location = new Point(160, 585);
+            txtKierunek.Margin = new Padding(4, 5, 4, 5);
             txtKierunek.Name = "txtKierunek";
-            txtKierunek.Size = new Size(330, 31);
+            txtKierunek.Size = new Size(265, 27);
             txtKierunek.TabIndex = 24;
             txtKierunek.Visible = false;
             // 
             // btnRegister
             // 
-            btnRegister.Location = new Point(200, 808);
-            btnRegister.Margin = new Padding(5, 6, 5, 6);
+            btnRegister.Location = new Point(160, 646);
+            btnRegister.Margin = new Padding(4, 5, 4, 5);
             btnRegister.Name = "btnRegister";
-            btnRegister.Size = new Size(334, 58);
+            btnRegister.Size = new Size(267, 46);
             btnRegister.TabIndex = 25;
             btnRegister.Text = "Zarejestruj/Aktualizuj";
             btnRegister.UseVisualStyleBackColor = true;
@@ -348,24 +348,20 @@ namespace Wirtualna_Uczelnia
             // listStudenci
             // 
             listStudenci.FormattingEnabled = true;
-            listStudenci.ItemHeight = 25;
             listStudenci.Items.AddRange(new object[] { "asd", "asd", "asd", "asd", "asd", "asdd", "asd", "asd", "as", "assd", "asd", "assd", "assd", "asd", "asd", "asd", "asd", "asd", "asd", "asd", "asd", "asd", "assd" });
-            listStudenci.Location = new Point(540, 45);
-            listStudenci.Margin = new Padding(4, 4, 4, 4);
+            listStudenci.Location = new Point(432, 36);
             listStudenci.Name = "listStudenci";
-            listStudenci.Size = new Size(463, 379);
+            listStudenci.Size = new Size(371, 304);
             listStudenci.TabIndex = 26;
             listStudenci.SelectedIndexChanged += listBoxStudenciItemChanged;
             // 
             // listPracownicy
             // 
             listPracownicy.FormattingEnabled = true;
-            listPracownicy.ItemHeight = 25;
             listPracownicy.Items.AddRange(new object[] { "asd", "asd", "asd", "asd", "asd", "asdd", "asd", "asd", "as", "assd", "asd", "assd", "assd", "asd", "asd", "asd", "asd", "asd", "asd", "asd", "asd", "asd", "assd" });
-            listPracownicy.Location = new Point(540, 475);
-            listPracownicy.Margin = new Padding(4, 4, 4, 4);
+            listPracownicy.Location = new Point(432, 380);
             listPracownicy.Name = "listPracownicy";
-            listPracownicy.Size = new Size(463, 379);
+            listPracownicy.Size = new Size(371, 304);
             listPracownicy.TabIndex = 27;
             listPracownicy.SelectedIndexChanged += listBoxItemPracownicyChanged;
             // 
@@ -373,10 +369,9 @@ namespace Wirtualna_Uczelnia
             // 
             lblTeachers.AutoSize = true;
             lblTeachers.Font = new Font("Segoe UI", 12F);
-            lblTeachers.Location = new Point(540, 436);
-            lblTeachers.Margin = new Padding(4, 0, 4, 0);
+            lblTeachers.Location = new Point(432, 349);
             lblTeachers.Name = "lblTeachers";
-            lblTeachers.Size = new Size(144, 32);
+            lblTeachers.Size = new Size(119, 28);
             lblTeachers.TabIndex = 28;
             lblTeachers.Text = "Pracownicy: ";
             // 
@@ -384,19 +379,17 @@ namespace Wirtualna_Uczelnia
             // 
             lblStudenci.AutoSize = true;
             lblStudenci.Font = new Font("Segoe UI", 12F);
-            lblStudenci.Location = new Point(540, 6);
-            lblStudenci.Margin = new Padding(4, 0, 4, 0);
+            lblStudenci.Location = new Point(432, 5);
             lblStudenci.Name = "lblStudenci";
-            lblStudenci.Size = new Size(118, 32);
+            lblStudenci.Size = new Size(96, 28);
             lblStudenci.TabIndex = 29;
             lblStudenci.Text = "Studenci: ";
             // 
             // btnLogout
             // 
-            btnLogout.Location = new Point(934, 1);
-            btnLogout.Margin = new Padding(4, 4, 4, 4);
+            btnLogout.Location = new Point(747, 1);
             btnLogout.Name = "btnLogout";
-            btnLogout.Size = new Size(118, 36);
+            btnLogout.Size = new Size(94, 29);
             btnLogout.TabIndex = 30;
             btnLogout.Text = "logout";
             btnLogout.UseVisualStyleBackColor = true;
@@ -406,17 +399,18 @@ namespace Wirtualna_Uczelnia
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.Location = new Point(0, 0);
+            pictureBox1.Margin = new Padding(2);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(1066, 906);
+            pictureBox1.Size = new Size(853, 725);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 31;
             pictureBox1.TabStop = false;
             // 
             // AdminPanel
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1066, 904);
+            ClientSize = new Size(853, 723);
             Controls.Add(btnLogout);
             Controls.Add(lblStudenci);
             Controls.Add(lblTeachers);
@@ -449,7 +443,7 @@ namespace Wirtualna_Uczelnia
             Controls.Add(txtKierunek);
             Controls.Add(btnRegister);
             Controls.Add(pictureBox1);
-            Margin = new Padding(5, 6, 5, 6);
+            Margin = new Padding(4, 5, 4, 5);
             Name = "AdminPanel";
             Text = "Panel Administracyjny";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();

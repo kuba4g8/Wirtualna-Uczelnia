@@ -24,18 +24,22 @@ namespace Wirtualna_Uczelnia
         AdminMenager adminMenager;
         Pracownik loggedUser; // dane aktualnie zalogowanego uzytkownika
 
+        public delegate void UpdateVisualData(); // utworzenie delegaty funkcji bo jakims chujem nie moge se uzyc funkcji z tej klasy w adminMenagerze ale spk
+
         public AdminPanel(Pracownik loggedUser)
         {
             InitializeComponent();
             this.loggedUser = loggedUser;
 
-            adminMenager = new AdminMenager(loggedUser, listPracownicy, listStudenci);
+            UpdateVisualData funcDelegate = new UpdateVisualData(updateVisualData); // przypisanie utworzenia tej funkcji (delegaty) do zmiennej funcDelegate ktora potem trzeba przekazac w argumentach
+            adminMenager = new AdminMenager(loggedUser, listPracownicy, listStudenci, funcDelegate);
+
 
             updateVisualData();
         }
 
         //funkcja updatuje visualne sprawy textboxow itd
-        private void updateVisualData()
+        public void updateVisualData()
         {
             if (!editMode) // wykona sie jezeli editMode = false
             {
@@ -101,8 +105,9 @@ namespace Wirtualna_Uczelnia
         //comboBox index 0 - nauczyciel, 1 - student
         private bool checkIfAllTextBoxesAreNull()
         {
-            if (string.IsNullOrEmpty(txtEmail.Text) &&
-                string.IsNullOrEmpty(txtPassword.Text)) return false;
+            if (string.IsNullOrEmpty(txtEmail.Text) ||
+                string.IsNullOrEmpty(txtPassword.Text) ||
+                cmbAccountType.SelectedIndex == -1) return false;
 
             if (cmbAccountType.SelectedIndex == 0) // Sprawdzamy pola dla nauczyciela
             {
@@ -121,7 +126,7 @@ namespace Wirtualna_Uczelnia
             else if (cmbAccountType.SelectedIndex == 1) // Sprawdzamy pola dla studenta
             {
                 if (!string.IsNullOrEmpty(txtFirstName.Text) &&
-                    !string.IsNullOrEmpty(txtLastName.Text)&&
+                    !string.IsNullOrEmpty(txtLastName.Text) &&
                     txtStudentId.Text.All(char.IsDigit) &&
                     txtSemester.Text.All(char.IsDigit) &&
                     !string.IsNullOrEmpty(txtWydzial.Text) &&
@@ -189,104 +194,78 @@ namespace Wirtualna_Uczelnia
             updateVisualData();
         }
 
+        // lysy jesli ty to pisales jestem mega dumny
         private void btnRegister_Click(object sender, EventArgs e)
         {
-            sqlMenager sqlMenager = new sqlMenager();
-
-            // Sprawdź czy wszystkie wymagane pola są wypełnione
             if (!checkIfAllTextBoxesAreNull())
             {
-                MessageBox.Show("Proszę wypełnić wszystkie wymagane pola.", "Niepełne dane", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Jakies dane nie wpisane");
                 return;
             }
+            bool isTeacher = (cmbAccountType.SelectedIndex == 0);
 
-            try
+            // Generowanie salt i hashowanie hasła
+            string salt = Hasher.GenerateSalt();
+
+            // Tworzenie obiektu z danymi logowania
+            var userData = new TempLoggedUser(0, txtEmail.Text, Hasher.ComputeSha256Hash(txtPassword.Text, salt), salt, isTeacher, false);
+
+
+            bool czyUdalo = false;
+
+            // Zapisz dane do odpowiedniej zmiennej a potem utworzyc z tego usera.
+            if (isTeacher) // Nauczyciel/Pracownik
             {
-                // Generowanie salt i hashowanie hasła
-                string salt = Hasher.GenerateSalt();
-                bool isTeacher = (cmbAccountType.SelectedIndex == 0);
-
-                // Tworzenie obiektu z danymi logowania
-                var tempUser = new TempLoggedUser(0, txtEmail.Text, Hasher.ComputeSha256Hash(txtPassword.Text, salt), salt, isTeacher, false);
-
-                // Zapisz dane logowania do bazy
-                if (!sqlMenager.loadObjectToDataBase(tempUser, "logowanie", false))
+                var pracownik = new Pracownik
                 {
-                    MessageBox.Show("Błąd podczas zapisywania danych logowania.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //userID = newUserId,
+                    imie = txtFirstName.Text,
+                    nazwisko = txtLastName.Text,
+                    stanowisko = txtPosition.Text,
+                    stopien_naukowy = txtAcademicDegree.Text
+                };
+
+                czyUdalo = adminMenager.insertNewUser(userData, pracownik: pracownik);
+
+            }
+            else // Student
+            {
+                int semestr;
+                if (!int.TryParse(txtSemester.Text, out semestr))
+                {
+                    MessageBox.Show("Nieprawidłowa wartość semestru. Proszę podać liczbę.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                // Pobierz ID nowo utworzonego użytkownika
-                int newUserId = sqlMenager.GetLastInsertedId();
-                if (newUserId == -1)
+                var student = new Student
                 {
-                    MessageBox.Show("Nie udało się pobrać ID nowego użytkownika.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+                    //userID = newUserId,
+                    imie = txtFirstName.Text,
+                    nazwisko = txtLastName.Text,
+                    nr_indeksu = txtStudentId.Text,
+                    semestr = semestr,
+                    wydzial = txtWydzial.Text,
+                    kierunek = txtKierunek.Text
+                };
 
-                bool success = false;
+                czyUdalo = adminMenager.insertNewUser(userData, student: student);
 
-                // Zapisz dane do odpowiedniej tabeli w zależności od typu konta
-                if (isTeacher) // Nauczyciel/Pracownik
+                if (czyUdalo)
                 {
-                    var pracownik = new Pracownik
-                    {
-                        userID = newUserId,
-                        imie = txtFirstName.Text,
-                        nazwisko = txtLastName.Text,
-                        stanowisko = txtPosition.Text,
-                        stopien_naukowy = txtAcademicDegree.Text
-                    };
-
-                    success = sqlMenager.loadObjectToDataBase(pracownik, "pracownicy", true);
-                }
-                else // Student
-                {
-                    int semestr;
-                    if (!int.TryParse(txtSemester.Text, out semestr))
-                    {
-                        MessageBox.Show("Nieprawidłowa wartość semestru. Proszę podać liczbę.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
-                    var student = new Student
-                    {
-                        userID = newUserId,
-                        imie = txtFirstName.Text,
-                        nazwisko = txtLastName.Text,
-                        nr_indeksu = txtStudentId.Text,
-                        semestr = semestr,
-                        wydzial = txtWydzial.Text,
-                        kierunek = txtKierunek.Text
-                    };
-
-                    success = sqlMenager.loadObjectToDataBase(student, "studenci", true);
-                }
-
-                if (success)
-                {
-                    MessageBox.Show("Użytkownik został dodany pomyślnie.", "Sukces", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     editMode = false;
-                    updateVisualData();
-                    
-                    // Odśwież listę użytkowników
-                    adminMenager.loadToListBoxes();
+
                 }
                 else
                 {
-                    MessageBox.Show("Wystąpił błąd podczas dodawania danych użytkownika.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("No cos sie wyjebało ale juz nie wiem co....");
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Wystąpił nieoczekiwany błąd: {ex.Message}", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void logoutUserAction(object sender, EventArgs e)
         {
             // usuwanie danych z pamieci zalogowanego uzytkownika
-            adminMenager = null; 
+            adminMenager = null;
             editingLoginInfo = null;
             editingPracownik = null;
             editingStudent = null;
@@ -315,14 +294,60 @@ namespace Wirtualna_Uczelnia
         public List<Pracownik> pracownicy = new List<Pracownik>(); // lista wszystkich pracownikow pobranych z bazy danych
         public List<TempLoggedUser> loginInfoData = new List<TempLoggedUser>(); // lista informacji o danych logowania uzytkownikow
 
-        public AdminMenager(Pracownik loggedUser, ListBox listPracownicy, ListBox listStudenci)
+        private AdminPanel.UpdateVisualData updateVisualData; // utworzenie delegaty tego samego typu co w klasie AdminPanel
+
+        public AdminMenager(Pracownik loggedUser, ListBox listPracownicy, ListBox listStudenci, AdminPanel.UpdateVisualData updateVisualData)
         {
             this.loggedUser = loggedUser;
             sqlMenager = new sqlMenager();
             this.listPracownicy = listPracownicy;
             this.listStudenci = listStudenci;
+            this.updateVisualData = updateVisualData;
 
             loadToListBoxes();
+        }
+
+
+        public bool insertNewUser(TempLoggedUser userPersonalData, Student student = null, Pracownik pracownik = null)
+        {
+            try
+            {
+                // Zapisz dane logowania do bazy i przypisanie userID
+                int newUserId = sqlMenager.loadObjectToDataBase(userPersonalData, "logowanie", false);
+
+                // Pobierz ID nowo utworzonego użytkownika
+                //int newUserId = sqlMenager.GetLastInsertedId();
+                if (newUserId == -1)
+                {
+                    MessageBox.Show("Nie udało się pobrać ID nowego użytkownika.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+
+                // Zapisz dane do odpowiedniej tabeli w zależności od typu konta
+                if (pracownik != null) // Nauczyciel/Pracownik
+                {
+                    pracownik.userID = newUserId;
+                    sqlMenager.loadObjectToDataBase(pracownik, "pracownicy", true);
+                }
+                else // Student
+                {
+                    student.userID = newUserId;
+
+                    sqlMenager.loadObjectToDataBase(student, "studenci", true);
+                }
+
+                MessageBox.Show("Użytkownik został dodany pomyślnie.", "Sukces", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                updateVisualData();
+
+                // Odśwież listę użytkowników
+                loadToListBoxes();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Wystąpił nieoczekiwany błąd: {ex.Message}", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
         }
 
         public T findUserData<T>(int clickedID, bool isTeacher) where T : Osoba

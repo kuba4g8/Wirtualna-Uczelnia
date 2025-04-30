@@ -16,11 +16,23 @@ namespace Wirtualna_Uczelnia
         private MySqlConnection _conn; // obiekt klasy umozliwiajacy laczenie sie z baza danych.
 
         // info do poleczenia do DataBase
-        private protected readonly string connIP = "sql.freedb.tech";
-        private protected readonly string dataBaseName = "freedb_wirtualna_uczelnia";
-        private protected readonly string username = "freedb_KubaH";
-        private protected readonly string PWD = "w6#csh$?cW!TDhz";
+        private static class cloudConnInfo
+        {
+            public static readonly string connIP = "sql.freedb.tech";
+            public static readonly string dataBaseName = "freedb_wirtualna_uczelnia";
+            public static readonly string username = "freedb_KubaH";
+            public static readonly string PWD = "w6#csh$?cW!TDhz";
+        }
+        private static class remoteConnInfo
+        {
+            public static readonly string connIP = "127.0.0.1";
+            public static readonly string dataBaseName = "wirtualna_uczelnia";
+            public static readonly string username = "root";
+            public static readonly string PWD = "";
+        }
         // info do poleczenia do DataBase
+
+
 
         private readonly string connString; // string laczeniowy z baza danych (wynikajace z konstrukcji klasy idk)
 
@@ -28,20 +40,23 @@ namespace Wirtualna_Uczelnia
         //konstruktor klasy sqlMenager -> dzieje sie na poczatku stworzenia obiektu.
         public sqlMenager()
         {
-            connString = getConnString();
+            // zmienic jak wydupcy baze danych w chmurze aby moc pracowac dalej!
+            
+            //connString = getCloudConnInfo();
+            connString = getRemoteConnInfo();
 
             //utworzony obiekt mysqlconnection
             _conn = new MySqlConnection(connString);
         }
 
         //wpisanie do bazy danych dynamicznego obiektu typu T, majac na uwadze ze nazwy tabel musza byc takie same jak nazwy wlasciwosci.
-        // niech zwraca jesli inser id jest false niech zwraca przypisany userID.
-        public bool loadObjectToDataBase<T>(T objToInsert, string tableName, bool insertUSERID) where T : new()
+        // Zwraca osattni userID dodany jako int
+        public int loadObjectToDataBase<T>(T objToInsert, string tableName, bool insertUSERID) where T : new()
         {
             if (!tryConnect())
             {
                 MessageBox.Show("Błąd podczas łączenia");
-                return false;
+                return -1;
             }
 
             try
@@ -69,8 +84,9 @@ namespace Wirtualna_Uczelnia
                     wlasciwosciLista.Add(paramName);
                 }
 
+                object userID;
                 // Pojedyncze entry dla DB
-                string sqlCommand = $"INSERT INTO {tableName} ({string.Join(", ", nazwyKolumn)}) VALUES ({string.Join(", ", wlasciwosciLista)});";
+                string sqlCommand = $"INSERT INTO {tableName} ({string.Join(", ", nazwyKolumn)}) VALUES ({string.Join(", ", wlasciwosciLista)});SELECT LAST_INSERT_ID();";
 
                 //wykonanie komendy oraz faktycznie wprowadzenie do bazy danych
                 using (MySqlCommand cmd = new MySqlCommand(sqlCommand, _conn))
@@ -78,22 +94,22 @@ namespace Wirtualna_Uczelnia
                     // Dodaj parametry
                     foreach (PropertyInfo prop in properties)
                     {
-                        if (!insertUSERID && prop.Name == "userID")
+                        if (!insertUSERID && prop.Name.Equals("userID"))
                             continue;
 
                         object value = prop.GetValue(objToInsert, null);
                         cmd.Parameters.AddWithValue($"@{prop.Name}", value ?? DBNull.Value);
                     }
 
-                    cmd.ExecuteNonQuery();
+                    userID = cmd.ExecuteScalar();
                 }
 
-                return true;
+                return Convert.ToInt32(userID);
             }
             catch (MySqlException ex)
             {
                 MessageBox.Show("Błąd bazy danych: " + ex.Message);
-                return false;
+                return -1;
             }
             finally
             {
@@ -204,44 +220,14 @@ namespace Wirtualna_Uczelnia
             }
         }
 
-        /// <summary>
-        /// Pobiera ID ostatnio wstawionego rekordu
-        /// </summary>
-        /// <returns>ID ostatnio wstawionego rekordu lub -1 w przypadku błędu</returns>
-        public int GetLastInsertedId()
-        {
-            if (!tryConnect())
-            {
-                return -1;
-            }
-
-            try
-            {
-                using (MySqlCommand cmd = new MySqlCommand("SELECT LAST_INSERT_ID()", _conn))
-                {
-                    object result = cmd.ExecuteScalar();
-                    if (result != null && result != DBNull.Value)
-                    {
-                        return Convert.ToInt32(result);
-                    }
-                }
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Błąd bazy danych: " + ex.Message);
-            }
-            finally
-            {
-                tryDissconect();
-            }
-
-            return -1;
-        }
-
         //zwraca stringConnection
-        private string getConnString()
+        private string getCloudConnInfo()
         {
-            return $"DATA SOURCE={connIP};INITIAL CATALOG={dataBaseName};USER ID={username};PWD={PWD}";
+            return $"DATA SOURCE={cloudConnInfo.connIP};INITIAL CATALOG={cloudConnInfo.dataBaseName};USER ID={cloudConnInfo.username};PWD={cloudConnInfo.PWD}";
+        }
+        private string getRemoteConnInfo()
+        {
+            return $"DATA SOURCE={remoteConnInfo.connIP};INITIAL CATALOG={remoteConnInfo.dataBaseName};USER ID={remoteConnInfo.username};PWD={remoteConnInfo.PWD}";
         }
     }
 }

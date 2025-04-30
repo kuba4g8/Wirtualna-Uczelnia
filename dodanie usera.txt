@@ -1,0 +1,10 @@
+START TRANSACTION;
+
+INSERT INTO logowanie (email, haslo, isTeacher, salt)
+VALUES ("uzytkownik@szkola.pl", "haslo123", true, "ale slonojnmg");
+
+SET @last_id = LAST_INSERT_ID();
+
+INSERT INTO pracownicy VALUES (@last_id, "imie", "nazwisko", "stanowisko" ,"stopein naukowy");
+
+COMMIT;
