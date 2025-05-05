@@ -7,15 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Wirtualna_Uczelnia.formy.StronaGlowna;
 using static Wirtualna_Uczelnia.klasy.PrzezroczysteTlo;
 
 
 
 namespace Wirtualna_Uczelnia.formy
 {
-    public partial class StronaGlowna : Form
+    public partial class FormStronaGlowna : Form
     {
-        public StronaGlowna()
+        public FormStronaGlowna()
         {
             InitializeComponent();
         }
@@ -30,9 +31,6 @@ namespace Wirtualna_Uczelnia.formy
 
         private void sprawdziany_Click(object sender, EventArgs e)
         {
-            Sprawdziany sprawdziany = new Sprawdziany();
-            sprawdziany.Show();
-            //this.Hide();
         }
 
         private void dokumenty_Click(object sender, EventArgs e)
@@ -52,7 +50,7 @@ namespace Wirtualna_Uczelnia.formy
         private void kalendarz_Click(object sender, EventArgs e)
         {
             //FormKalendarz kalendarz = new FormKalendarz();
-                  
+
             this.Hide();
         }
 
@@ -116,6 +114,12 @@ namespace Wirtualna_Uczelnia.formy
         {
             ChatForm chat = new ChatForm();
             chat.Show();
+        }
+
+        private void lblPlanLekcji_Click(object sender, EventArgs e)
+        {
+            FormPlanZajec planZajec = new FormPlanZajec();
+            planZajec.Show();
         }
     }
 }
