@@ -31,9 +31,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChatForm));
             button1 = new Button();
             listBox1 = new ListBox();
-            textBox1 = new TextBox();
-            txtInput = new TextBox();
             pictureBox1 = new PictureBox();
+            txtInput = new RichTextBox();
+            textBox1 = new RichTextBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -57,22 +57,6 @@
             listBox1.Size = new Size(528, 154);
             listBox1.TabIndex = 1;
             // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(97, 100);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(628, 65);
-            textBox1.TabIndex = 2;
-            textBox1.TextChanged += textBox1_TextChanged;
-            // 
-            // txtInput
-            // 
-            txtInput.Location = new Point(97, 50);
-            txtInput.Name = "txtInput";
-            txtInput.Size = new Size(628, 31);
-            txtInput.TabIndex = 3;
-            // 
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
@@ -83,13 +67,29 @@
             pictureBox1.TabIndex = 4;
             pictureBox1.TabStop = false;
             // 
+            // txtInput
+            // 
+            txtInput.Location = new Point(134, 12);
+            txtInput.Name = "txtInput";
+            txtInput.Size = new Size(528, 43);
+            txtInput.TabIndex = 5;
+            txtInput.Text = "";
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(134, 79);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(528, 78);
+            textBox1.TabIndex = 6;
+            textBox1.Text = "";
+            // 
             // ChatForm
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(txtInput);
             Controls.Add(textBox1);
+            Controls.Add(txtInput);
             Controls.Add(listBox1);
             Controls.Add(button1);
             Controls.Add(pictureBox1);
@@ -98,15 +98,14 @@
             Load += Chat_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
         private Button button1;
         private ListBox listBox1;
-        private TextBox textBox1;
-        private TextBox txtInput;
         private PictureBox pictureBox1;
+        private RichTextBox txtInput;
+        private RichTextBox textBox1;
     }
 }
