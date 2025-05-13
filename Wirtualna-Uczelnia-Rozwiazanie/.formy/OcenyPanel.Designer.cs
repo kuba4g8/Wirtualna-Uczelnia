@@ -37,6 +37,9 @@
             Label_Id = new Label();
             Label_Przedmiot = new Label();
             PrzedmiotInput = new TextBox();
+            OcenaInput = new TextBox();
+            OcenaIndicator = new Label();
+            Add_Grade = new Button();
             ((System.ComponentModel.ISupportInitialize)Tabela_Ocen).BeginInit();
             SuspendLayout();
             // 
@@ -117,11 +120,41 @@
             PrzedmiotInput.TabIndex = 5;
             PrzedmiotInput.TextChanged += PrzedmiotInput_TextChanged;
             // 
+            // OcenaInput
+            // 
+            OcenaInput.Location = new Point(12, 386);
+            OcenaInput.Name = "OcenaInput";
+            OcenaInput.Size = new Size(136, 23);
+            OcenaInput.TabIndex = 8;
+            // 
+            // OcenaIndicator
+            // 
+            OcenaIndicator.AutoSize = true;
+            OcenaIndicator.ForeColor = Color.Black;
+            OcenaIndicator.Location = new Point(12, 368);
+            OcenaIndicator.Name = "OcenaIndicator";
+            OcenaIndicator.Size = new Size(44, 15);
+            OcenaIndicator.TabIndex = 7;
+            OcenaIndicator.Text = "Ocena:";
+            // 
+            // Add_Grade
+            // 
+            Add_Grade.Location = new Point(12, 415);
+            Add_Grade.Name = "Add_Grade";
+            Add_Grade.Size = new Size(136, 23);
+            Add_Grade.TabIndex = 6;
+            Add_Grade.Text = "Dodaj Ocene";
+            Add_Grade.UseVisualStyleBackColor = true;
+            Add_Grade.Click += Add_Grade_Click;
+            // 
             // OcenyPanel
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(OcenaInput);
+            Controls.Add(OcenaIndicator);
+            Controls.Add(Add_Grade);
             Controls.Add(PrzedmiotInput);
             Controls.Add(Label_Przedmiot);
             Controls.Add(Label_Id);
@@ -146,5 +179,8 @@
         private DataGridViewTextBoxColumn Col3;
         private Label Label_Przedmiot;
         private TextBox PrzedmiotInput;
+        private TextBox OcenaInput;
+        private Label OcenaIndicator;
+        private Button Add_Grade;
     }
 }
