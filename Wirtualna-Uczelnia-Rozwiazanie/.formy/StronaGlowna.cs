@@ -3,27 +3,30 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Wirtualna_Uczelnia;
 using Wirtualna_Uczelnia.formy.StronaGlowna;
 using static Wirtualna_Uczelnia.klasy.PrzezroczysteTlo;
-
 
 
 namespace Wirtualna_Uczelnia.formy
 {
     public partial class FormStronaGlowna : Form
     {
-        public FormStronaGlowna()
+        private Int32 userID;
+        public FormStronaGlowna(Int32 ID)
         {
-            InitializeComponent();
+            userID = ID;
+        InitializeComponent();
         }
 
         private void oceny_Click(object sender, EventArgs e)
         {
-            Oceny oceny = new Oceny(); // Tworzenie nowego formularza
+            Oceny oceny = new Oceny(userID); // Tworzenie nowego formularza
             oceny.Show();              // Pokazanie nowego formularza
             //this.Hide();               // Ukrycie obecnego formularza
         }

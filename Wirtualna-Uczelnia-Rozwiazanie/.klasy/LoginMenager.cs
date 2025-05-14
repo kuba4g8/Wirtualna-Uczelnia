@@ -112,7 +112,7 @@ namespace Wirtualna_Uczelnia
                 studentData = returnUserData<Student>(querry, userID);
                 isTeacher = false;
 
-                FormStronaGlowna stronaGlownaStudent = new FormStronaGlowna();
+                FormStronaGlowna stronaGlownaStudent = new FormStronaGlowna(userID);
                 stronaGlownaStudent.Show();
                 // odpalic forme dla studenta
             }
