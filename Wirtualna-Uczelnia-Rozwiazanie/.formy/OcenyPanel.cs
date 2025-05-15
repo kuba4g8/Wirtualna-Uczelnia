@@ -119,7 +119,7 @@ namespace Wirtualna_Uczelnia.formy
             
             MessageBox.Show(FetchUserID[0].userID + " " + FetchSubID[0].id_przedmiotu + " " + ocena + " " + czas); //debug
 
-            sqlMenager.loadObjectToDataBase<OcenaDod>(Ocena, "oceny", false); //coś powoduje błędy, do naprawy w sqlmeneger lub bazie danych
+            sqlMenager.loadObjectToDataBase<OcenaDod>(Ocena, "oceny", true); //coś powoduje błędy, do naprawy w sqlmeneger lub bazie danych
         }
 
 
