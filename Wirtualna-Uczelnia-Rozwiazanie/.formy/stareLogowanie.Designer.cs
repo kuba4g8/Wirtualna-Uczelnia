@@ -53,7 +53,7 @@
             txtLogin.Name = "txtLogin";
             txtLogin.Size = new Size(222, 27);
             txtLogin.TabIndex = 1;
-            txtLogin.Text = "admin@uczelnia.pl";
+            txtLogin.Text = "student1@uczelnia.pl";
             txtLogin.KeyUp += KeyUp;
             // 
             // txtPassword
@@ -63,7 +63,7 @@
             txtPassword.PasswordChar = '*';
             txtPassword.Size = new Size(222, 27);
             txtPassword.TabIndex = 2;
-            txtPassword.Text = "admin123";
+            txtPassword.Text = "haslo123";
             txtPassword.KeyUp += KeyUp;
             // 
             // lblLogin

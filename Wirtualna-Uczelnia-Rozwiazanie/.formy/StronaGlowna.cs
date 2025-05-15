@@ -3,26 +3,30 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Wirtualna_Uczelnia;
+using Wirtualna_Uczelnia.formy.StronaGlowna;
 using static Wirtualna_Uczelnia.klasy.PrzezroczysteTlo;
-
 
 
 namespace Wirtualna_Uczelnia.formy
 {
-    public partial class StronaGlowna : Form
+    public partial class FormStronaGlowna : Form
     {
-        public StronaGlowna()
+        private Int32 userID;
+        public FormStronaGlowna(Int32 ID)
         {
-            InitializeComponent();
+            userID = ID;
+        InitializeComponent();
         }
 
         private void oceny_Click(object sender, EventArgs e)
         {
-            Oceny oceny = new Oceny(); // Tworzenie nowego formularza
+            Oceny oceny = new Oceny(userID); // Tworzenie nowego formularza
             oceny.Show();              // Pokazanie nowego formularza
             //this.Hide();               // Ukrycie obecnego formularza
         }
@@ -30,9 +34,6 @@ namespace Wirtualna_Uczelnia.formy
 
         private void sprawdziany_Click(object sender, EventArgs e)
         {
-            Sprawdziany sprawdziany = new Sprawdziany();
-            sprawdziany.Show();
-            //this.Hide();
         }
 
         private void dokumenty_Click(object sender, EventArgs e)
@@ -52,7 +53,7 @@ namespace Wirtualna_Uczelnia.formy
         private void kalendarz_Click(object sender, EventArgs e)
         {
             //FormKalendarz kalendarz = new FormKalendarz();
-                  
+
             this.Hide();
         }
 
@@ -116,6 +117,12 @@ namespace Wirtualna_Uczelnia.formy
         {
             ChatForm chat = new ChatForm();
             chat.Show();
+        }
+
+        private void lblPlanLekcji_Click(object sender, EventArgs e)
+        {
+            FormPlanZajec planZajec = new FormPlanZajec();
+            planZajec.Show();
         }
     }
 }
