@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Wirtualna_Uczelnia.formy
 {
@@ -15,12 +16,16 @@ namespace Wirtualna_Uczelnia.formy
 
         private void Chat_Load(object sender, EventArgs e)
         {
+            txtInput.ReadOnly = true;
+
+            listBox1.Items.Add("== Informacje ogólne ==");
             listBox1.Items.Add("Jak obliczyć średnią?");
-            listBox1.Items.Add("Gdzie mogę skontaktować się z wykładowcą?");
-            listBox1.Items.Add("Gdzie mogę skontaktować się z wykładowcą?");
-            listBox1.Items.Add("Jak zarejestrować się na zajęcia?");
             listBox1.Items.Add("Jakie są godziny otwarcia uczelni?");
             listBox1.Items.Add("Jakie są zasady korzystania z biblioteki?");
+            listBox1.Items.Add("== Kontakt ==");
+            listBox1.Items.Add("Gdzie mogę skontaktować się z wykładowcą?");
+            listBox1.Items.Add("== Rejestracja ==");
+            listBox1.Items.Add("Jak zarejestrować się na zajęcia?");
             listBox1.Items.Add("Koniec");
         }
 
@@ -29,10 +34,13 @@ namespace Wirtualna_Uczelnia.formy
             if (listBox1.SelectedItem != null)
             {
                 string selectedCommand = listBox1.SelectedItem.ToString();
-                txtInput.Text = selectedCommand; // tylko wpisujemy tekst
-                txtInput.Focus(); // opcjonalnie: ustawia kursor w textboxie
+                if (selectedCommand.StartsWith("==")) return; // zignoruj nagłówki
+
+                txtInput.Text = selectedCommand;
+                txtInput.Focus();
             }
         }
+
 
 
         private async void button1_Click(object sender, EventArgs e)
@@ -79,8 +87,8 @@ namespace Wirtualna_Uczelnia.formy
                     "Biblioteka jest czynna od poniedziałku do piątku w godzinach 8:00–18:00. Można wypożyczyć maksymalnie 5 książek na 2 tygodnie.",
                 "W czym mogę pomóc?" =>
                     "Wybierz pytanie z listy lub wpisz własne zapytanie.",
-                "Koniec" =>
-                    "Do zobaczenia!",
+                "Koniec" => CloseAppAndReturnMessage(),
+
                 _ =>
                     "Nie rozumiem tej komendy. Spróbuj inaczej."
             };
@@ -108,5 +116,16 @@ namespace Wirtualna_Uczelnia.formy
         {
             // Zostaw puste lub dodaj automatyczne przewijanie jeśli chcesz
         }
+
+        private string CloseAppAndReturnMessage()
+        {
+            Task.Delay(500).ContinueWith(_ =>
+            {
+                // zamknięcie formularza (na wątku UI)
+                this.Invoke((Action)(() => this.Close()));
+            });
+            return "Do zobaczenia!";
+        }
+
     }
 }
