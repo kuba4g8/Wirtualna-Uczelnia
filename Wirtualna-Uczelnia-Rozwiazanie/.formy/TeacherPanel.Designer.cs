@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
-        
-namespace Wirtualna_Uczelnia.formy
+
+namespace Wirtualna_Uczelnia.formy.StronaGlowna
 {
     public partial class TeacherPanel
     {
@@ -23,6 +23,7 @@ namespace Wirtualna_Uczelnia.formy
             this.lblTitle = new System.Windows.Forms.Label();
             this.btnOceny = new System.Windows.Forms.Button();
             this.btnKalendarz = new System.Windows.Forms.Button();
+            this.btnEdytujKalendarz = new System.Windows.Forms.Button(); // Nowy przycisk
             this.SuspendLayout();
             // 
             // lblTitle
@@ -53,18 +54,30 @@ namespace Wirtualna_Uczelnia.formy
             this.btnKalendarz.Name = "btnKalendarz";
             this.btnKalendarz.Size = new System.Drawing.Size(200, 60);
             this.btnKalendarz.TabIndex = 2;
-            this.btnKalendarz.Text = "Edytuj kalendarz";
+            this.btnKalendarz.Text = "Pokaż kalendarz";
             this.btnKalendarz.UseVisualStyleBackColor = true;
             this.btnKalendarz.Click += new System.EventHandler(this.btnKalendarz_Click);
+            // 
+            // btnEdytujKalendarz
+            // 
+            this.btnEdytujKalendarz.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.btnEdytujKalendarz.Location = new System.Drawing.Point(100, 300);
+            this.btnEdytujKalendarz.Name = "btnEdytujKalendarz";
+            this.btnEdytujKalendarz.Size = new System.Drawing.Size(200, 60);
+            this.btnEdytujKalendarz.TabIndex = 3;
+            this.btnEdytujKalendarz.Text = "Edytuj kalendarz";
+            this.btnEdytujKalendarz.UseVisualStyleBackColor = true;
+            this.btnEdytujKalendarz.Click += new System.EventHandler(this.btnEdytujKalendarz_Click);
             // 
             // TeacherPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(400, 300);
+            this.ClientSize = new System.Drawing.Size(400, 400); // Zwiększyłem wysokość formularza
             this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.btnOceny);
             this.Controls.Add(this.btnKalendarz);
+            this.Controls.Add(this.btnEdytujKalendarz); // Dodałem przycisk do formularza
             this.Name = "TeacherPanel";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Panel nauczyciela";
@@ -77,5 +90,6 @@ namespace Wirtualna_Uczelnia.formy
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Button btnOceny;
         private System.Windows.Forms.Button btnKalendarz;
+        private System.Windows.Forms.Button btnEdytujKalendarz; // Dodana deklaracja przycisku
     }
 }

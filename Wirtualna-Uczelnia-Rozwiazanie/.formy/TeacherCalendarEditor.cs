@@ -1,0 +1,419 @@
+﻿using MySql.Data.MySqlClient;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Windows.Forms;
+using Wirtualna_Uczelnia.klasy;
+using Wirtualna_Uczelnia.formy.StronaGlowna;
+
+namespace Wirtualna_Uczelnia.formy
+{
+    public partial class TeacherCalendarEditor : Form
+    {
+        private DateTime currentDate = DateTime.Now;
+        private List<CalendarEvent> events = new List<CalendarEvent>();
+        private Pracownik loggedTeacher;
+        private sqlMenager sqlManager;
+
+        // Kolory dla różnych typów wydarzeń
+        private static readonly Color KolorKolokwium = Color.LightCoral;
+        private static readonly Color KolorGodzinyRektorskie = Color.LightBlue;
+        private static readonly Color KolorDzienWolny = Color.LightGreen;
+        private static readonly Color KolorSesja = Color.LightGoldenrodYellow;
+        private static readonly Color KolorSesjaPoprawkowa = Color.Orange;
+        private static readonly Color KolorInne = Color.LightPink;
+
+        public TeacherCalendarEditor(Pracownik teacher)
+        {
+            InitializeComponent();
+            loggedTeacher = teacher;
+            sqlManager = new sqlMenager();
+            this.Text = $"Edytor kalendarza - {teacher.imie} {teacher.nazwisko}";
+
+            // Wypełnienie comboboxa z typami wydarzeń
+            cmbTypWydarzenia.Items.AddRange(new string[] {
+                "Kolokwium",
+                "Godziny rektorskie",
+                "Dzień wolny",
+                "Sesja",
+                "Sesja poprawkowa",
+                "Inne"
+            });
+            cmbTypWydarzenia.SelectedIndex = 0;
+
+            // Załadowanie wydarzeń z bazy danych
+            LoadEventsFromDatabase();
+            UpdateCalendar();
+        }
+
+        private void LoadEventsFromDatabase()
+        {
+            events.Clear();
+
+            string command = "SELECT * FROM calendar_events WHERE teacher_id = @teacherId";
+            MySqlCommand cmd = new MySqlCommand(command);
+            cmd.Parameters.AddWithValue("@teacherId", loggedTeacher.userID);
+
+            List<CalendarEvent> dbEvents = sqlManager.loadDataToList<CalendarEvent>(cmd);
+            if (dbEvents != null)
+            {
+                events.AddRange(dbEvents);
+            }
+        }
+
+        private void UpdateCalendar()
+        {
+            // Aktualizacja etykiety miesiąca i roku
+            lblMiesiacRok.Text = currentDate.ToString("MMMM yyyy");
+
+            // Wyczyszczenie panelu dni
+            panelDni.Controls.Clear();
+
+            // Uzyskanie pierwszego dnia miesiąca
+            DateTime firstDay = new DateTime(currentDate.Year, currentDate.Month, 1);
+
+            // Obliczenie, od którego dnia tygodnia zacząć (0 = poniedziałek, 6 = niedziela)
+            int dayOfWeek = ((int)firstDay.DayOfWeek - 1 + 7) % 7;
+
+            // Obliczenie liczby dni w miesiącu
+            int daysInMonth = DateTime.DaysInMonth(currentDate.Year, currentDate.Month);
+
+            // Dodanie przycisków dni
+            for (int i = 0; i < 42; i++)
+            {
+                int row = i / 7;
+                int col = i % 7;
+
+                Button btn = new Button
+                {
+                    Size = new Size(70, 60),
+                    Location = new Point(col * 72, row * 62),
+                    FlatStyle = FlatStyle.Flat
+                };
+
+                btn.FlatAppearance.BorderColor = Color.LightGray;
+
+                if (i >= dayOfWeek && i < dayOfWeek + daysInMonth)
+                {
+                    int day = i - dayOfWeek + 1;
+                    btn.Text = day.ToString();
+
+                    DateTime dayDate = new DateTime(currentDate.Year, currentDate.Month, day);
+
+                    // Sprawdź czy jest weekend (sobota lub niedziela)
+                    bool isWeekend = dayDate.DayOfWeek == DayOfWeek.Saturday || dayDate.DayOfWeek == DayOfWeek.Sunday;
+
+                    if (isWeekend)
+                    {
+                        btn.BackColor = KolorDzienWolny;
+                    }
+
+                    // Sprawdź czy są wydarzenia na ten dzień
+                    var dayEvents = events.FindAll(e => e.event_date.Date == dayDate.Date);
+
+                    if (dayEvents.Count > 0)
+                    {
+                        btn.Font = new Font(btn.Font, FontStyle.Bold);
+
+                        if (dayEvents.Count == 1 && !isWeekend)
+                        {
+                            btn.BackColor = GetEventTypeColor(dayEvents[0].event_type);
+                        }
+                        else if (dayEvents.Count > 1)
+                        {
+                            // Priorytet kolorów dla wielu wydarzeń
+                            if (dayEvents.Exists(e => e.event_type == "Sesja"))
+                            {
+                                btn.BackColor = KolorSesja;
+                            }
+                            else if (dayEvents.Exists(e => e.event_type == "Sesja poprawkowa"))
+                            {
+                                btn.BackColor = KolorSesjaPoprawkowa;
+                            }
+                            else if (dayEvents.Exists(e => e.event_type == "Kolokwium"))
+                            {
+                                btn.BackColor = KolorKolokwium;
+                            }
+
+                            btn.FlatAppearance.BorderColor = Color.DarkGray;
+                            btn.FlatAppearance.BorderSize = 2;
+                        }
+                    }
+
+                    // Oznacz dzisiejszą datę
+                    if (dayDate.Date == DateTime.Now.Date)
+                    {
+                        btn.FlatAppearance.BorderColor = Color.Blue;
+                        btn.FlatAppearance.BorderSize = 2;
+                    }
+
+                    // Tag do przechowywania daty
+                    btn.Tag = dayDate;
+                    btn.Click += DayButton_Click;
+                }
+                else
+                {
+                    btn.Text = "";
+                    btn.Enabled = false;
+                    btn.BackColor = Color.WhiteSmoke;
+                }
+
+                panelDni.Controls.Add(btn);
+            }
+        }
+
+        private Color GetEventTypeColor(string eventType)
+        {
+            switch (eventType)
+            {
+                case "Kolokwium":
+                    return KolorKolokwium;
+                case "Godziny rektorskie":
+                    return KolorGodzinyRektorskie;
+                case "Dzień wolny":
+                    return KolorDzienWolny;
+                case "Sesja":
+                    return KolorSesja;
+                case "Sesja poprawkowa":
+                    return KolorSesjaPoprawkowa;
+                default:
+                    return KolorInne;
+            }
+        }
+
+        private void DayButton_Click(object sender, EventArgs e)
+        {
+            Button btn = sender as Button;
+            if (btn != null && btn.Tag is DateTime)
+            {
+                DateTime selectedDate = (DateTime)btn.Tag;
+                dtpDataWydarzenia.Value = selectedDate;
+
+                // Wyświetl wydarzenia dla wybranego dnia
+                UpdateEventsList(selectedDate);
+            }
+        }
+
+        private void UpdateEventsList(DateTime date)
+        {
+            lstWydarzenia.Items.Clear();
+            lblWybranaDzien.Text = date.ToLongDateString();
+
+            // Dodaj informację o weekendzie
+            if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+            {
+                lstWydarzenia.Items.Add("[Dzień wolny] Weekend");
+            }
+
+            var dayEvents = events.FindAll(e => e.event_date.Date == date.Date);
+            foreach (var evt in dayEvents)
+            {
+                string timeInfo = evt.event_time.HasValue ?
+                    $"{evt.event_time.Value.ToString(@"hh\:mm")}" +
+                    (evt.end_time.HasValue ? $" - {evt.end_time.Value.ToString(@"hh\:mm")}" : "") :
+                    "";
+
+                lstWydarzenia.Items.Add(new EventListItem
+                {
+                    Event = evt,
+                    DisplayText = $"[{evt.event_type}] {evt.title} {timeInfo}"
+                });
+            }
+
+            if (lstWydarzenia.Items.Count == 0)
+                lstWydarzenia.Items.Add("Brak wydarzeń na wybrany dzień");
+        }
+
+        private void btnPoprzedniMiesiac_Click(object sender, EventArgs e)
+        {
+            currentDate = currentDate.AddMonths(-1);
+            UpdateCalendar();
+        }
+
+        private void btnNastepnyMiesiac_Click(object sender, EventArgs e)
+        {
+            currentDate = currentDate.AddMonths(1);
+            UpdateCalendar();
+        }
+
+        private void btnDzisiaj_Click(object sender, EventArgs e)
+        {
+            currentDate = DateTime.Now;
+            UpdateCalendar();
+
+            // Znajdź i wybierz przycisk z dzisiejszą datą
+            foreach (Control ctrl in panelDni.Controls)
+            {
+                if (ctrl is Button btn && btn.Tag is DateTime date && date.Date == DateTime.Now.Date)
+                {
+                    DayButton_Click(btn, EventArgs.Empty);
+                    break;
+                }
+            }
+        }
+
+        private void btnDodajWydarzenie_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtTytul.Text))
+            {
+                MessageBox.Show("Wprowadź tytuł wydarzenia.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            CalendarEvent newEvent = new CalendarEvent
+            {
+                title = txtTytul.Text,
+                description = txtOpis.Text,
+                event_date = dtpDataWydarzenia.Value.Date,
+                event_type = cmbTypWydarzenia.SelectedItem.ToString(),
+                teacher_id = loggedTeacher.userID,
+                subject = txtPrzedmiot.Text,
+                created_at = DateTime.Now,
+                updated_at = DateTime.Now
+            };
+
+            if (chkCzas.Checked)
+            {
+                newEvent.event_time = dtpGodzinaPoczatek.Value.TimeOfDay;
+                newEvent.end_time = dtpGodzinaKoniec.Value.TimeOfDay;
+            }
+
+            // Zapisz wydarzenie do bazy danych
+            int result = sqlManager.loadObjectToDataBase(newEvent, "calendar_events", true);
+
+            if (result > 0)
+            {
+                newEvent.id = result;
+                events.Add(newEvent);
+                MessageBox.Show("Wydarzenie zostało dodane pomyślnie.", "Sukces", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ClearEventForm();
+                UpdateCalendar();
+                UpdateEventsList(dtpDataWydarzenia.Value.Date);
+            }
+            else
+            {
+                MessageBox.Show("Nie udało się dodać wydarzenia.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnUsunWydarzenie_Click(object sender, EventArgs e)
+        {
+            if (lstWydarzenia.SelectedItem == null || !(lstWydarzenia.SelectedItem is EventListItem))
+            {
+                MessageBox.Show("Wybierz wydarzenie do usunięcia.", "Informacja", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            EventListItem selectedItem = (EventListItem)lstWydarzenia.SelectedItem;
+            CalendarEvent eventToDelete = selectedItem.Event;
+
+            DialogResult result = MessageBox.Show(
+                $"Czy na pewno chcesz usunąć wydarzenie '{eventToDelete.title}'?",
+                "Potwierdzenie",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                if (!DeleteEventFromDatabase(eventToDelete.id))
+                {
+                    MessageBox.Show("Nie udało się usunąć wydarzenia.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                events.RemoveAll(e => e.id == eventToDelete.id);
+                UpdateCalendar();
+                UpdateEventsList(dtpDataWydarzenia.Value.Date);
+                MessageBox.Show("Wydarzenie zostało usunięte.", "Sukces", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private bool DeleteEventFromDatabase(int eventId)
+        {
+            if (!sqlManager.tryConnect())
+                return false;
+
+            try
+            {
+                string sql = "DELETE FROM calendar_events WHERE id = @id AND teacher_id = @teacherId";
+                using (MySqlCommand cmd = new MySqlCommand(sql, sqlManager.Connection))
+                {
+                    cmd.Parameters.AddWithValue("@id", eventId);
+                    cmd.Parameters.AddWithValue("@teacherId", loggedTeacher.userID);
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    return rowsAffected > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Błąd podczas usuwania: " + ex.Message);
+                return false;
+            }
+            finally
+            {
+                sqlManager.tryDissconect();
+            }
+        }
+
+        private void lstWydarzenia_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnUsunWydarzenie.Enabled = lstWydarzenia.SelectedItem is EventListItem;
+
+            if (lstWydarzenia.SelectedItem is EventListItem selectedItem)
+            {
+                CalendarEvent evt = selectedItem.Event;
+                txtTytul.Text = evt.title;
+                txtOpis.Text = evt.description;
+                txtPrzedmiot.Text = evt.subject ?? "";
+                cmbTypWydarzenia.SelectedItem = evt.event_type;
+
+                if (evt.event_time.HasValue)
+                {
+                    chkCzas.Checked = true;
+                    dtpGodzinaPoczatek.Value = DateTime.Today.Add(evt.event_time.Value);
+                    if (evt.end_time.HasValue)
+                        dtpGodzinaKoniec.Value = DateTime.Today.Add(evt.end_time.Value);
+                }
+                else
+                {
+                    chkCzas.Checked = false;
+                }
+            }
+        }
+
+        private void chkCzas_CheckedChanged(object sender, EventArgs e)
+        {
+            dtpGodzinaPoczatek.Enabled = chkCzas.Checked;
+            dtpGodzinaKoniec.Enabled = chkCzas.Checked;
+        }
+
+        private void btnPowrot_Click(object sender, EventArgs e)
+        {
+            Wirtualna_Uczelnia.formy.StronaGlowna.TeacherPanel panel = new Wirtualna_Uczelnia.formy.StronaGlowna.TeacherPanel(loggedTeacher);
+            panel.Show();
+            this.Close();
+        }
+
+        private void ClearEventForm()
+        {
+            txtTytul.Text = "";
+            txtOpis.Text = "";
+            txtPrzedmiot.Text = "";
+            chkCzas.Checked = false;
+            dtpGodzinaPoczatek.Value = DateTime.Now;
+            dtpGodzinaKoniec.Value = DateTime.Now.AddHours(1);
+        }
+    }
+
+    // Klasa pomocnicza do wyświetlania elementów na liście
+    public class EventListItem
+    {
+        public CalendarEvent Event { get; set; }
+        public string DisplayText { get; set; }
+
+        public override string ToString()
+        {
+            return DisplayText;
+        }
+    }
+}

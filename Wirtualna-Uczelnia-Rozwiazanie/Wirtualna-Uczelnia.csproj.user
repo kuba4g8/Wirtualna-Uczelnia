@@ -41,7 +41,10 @@
     <Compile Update=".formy\StronaGlowna\Rejestracja.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update=".formy\StronaGlowna\TeacherPanel.cs">
+    <Compile Update=".formy\TeacherPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update=".formy\TeacherCalendarEditor.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update=".formy\UserControlBlank.cs">

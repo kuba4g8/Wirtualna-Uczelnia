@@ -9,6 +9,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Wirtualna_Uczelnia.formy.StronaGlowna;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 //TODO       ↓
