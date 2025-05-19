@@ -100,11 +100,10 @@ namespace Wirtualna_Uczelnia
                 teacherData = returnUserData<Pracownik>(querry, userID);
                 isTeacher = true;
 
-                OcenyPanel ocenyPanel = new OcenyPanel(teacherData);
-                ocenyPanel.Show();
-                return true; //do usuenia potem jak beda inne formy!!!/////
-
-                // odpalic forme dla teachera
+                // Zamiast OcenyPanel otwieramy TeacherPanel
+                TeacherPanel teacherPanel = new TeacherPanel(teacherData);
+                teacherPanel.Show();
+                return true;
             }
             else // UZYTKOWNIK TO STUDENT
             {

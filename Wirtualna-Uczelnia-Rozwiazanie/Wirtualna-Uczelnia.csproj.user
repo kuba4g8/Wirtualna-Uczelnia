@@ -41,6 +41,9 @@
     <Compile Update=".formy\StronaGlowna\Rejestracja.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update=".formy\StronaGlowna\TeacherPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update=".formy\UserControlBlank.cs">
       <SubType>UserControl</SubType>
     </Compile>

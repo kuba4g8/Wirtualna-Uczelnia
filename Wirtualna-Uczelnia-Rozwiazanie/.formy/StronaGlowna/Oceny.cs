@@ -65,7 +65,6 @@ namespace Wirtualna_Uczelnia.formy
             }
         }
 
-
         public class Przedmiot
         {
             public string nazwa { get; set; }
