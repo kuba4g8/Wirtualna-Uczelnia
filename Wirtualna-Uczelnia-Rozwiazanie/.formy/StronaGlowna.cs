@@ -21,7 +21,7 @@ namespace Wirtualna_Uczelnia.formy
         public FormStronaGlowna(Int32 ID)
         {
             userID = ID;
-        InitializeComponent();
+            InitializeComponent();
         }
 
         private void oceny_Click(object sender, EventArgs e)
@@ -123,6 +123,14 @@ namespace Wirtualna_Uczelnia.formy
         {
             FormPlanZajec planZajec = new FormPlanZajec();
             planZajec.Show();
+        }
+
+        private void lblPracownicyClicked(object sender, EventArgs e)
+        {
+            FormKontaktPracownicy form = new FormKontaktPracownicy();
+
+            form.Show();
+            this.Hide();
         }
     }
 }
