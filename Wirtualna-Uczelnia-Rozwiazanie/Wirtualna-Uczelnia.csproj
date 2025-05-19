@@ -20,6 +20,8 @@
     <Compile Include=".formy\AdminPanel.Designer.cs" />
     <Compile Include=".formy\ChatForm.cs" />
     <Compile Include=".formy\ChatForm.Designer.cs" />
+    <Compile Include=".formy\FormKalendarz.cs" />
+    <Compile Include=".formy\FormKalendarz.Designer.cs" />
     <Compile Include=".formy\OcenyPanel.cs" />
     <Compile Include=".formy\OcenyPanel.Designer.cs" />
     <Compile Include=".formy\StronaGlowna\Dokumenty.cs" />
@@ -58,6 +60,7 @@
   <ItemGroup>
     <EmbeddedResource Include=".formy\AdminPanel.resx" />
     <EmbeddedResource Include=".formy\ChatForm.resx" />
+    <EmbeddedResource Include=".formy\FormKalendarz.resx" />
     <EmbeddedResource Include=".formy\OcenyPanel.resx" />
     <EmbeddedResource Include=".formy\StronaGlowna\Dokumenty.resx" />
     <EmbeddedResource Include=".formy\StronaGlowna\FormKontaktPracownicy.resx" />

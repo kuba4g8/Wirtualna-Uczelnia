@@ -8,6 +8,9 @@
     <Compile Update=".formy\ChatForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update=".formy\FormKalendarz.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update=".formy\FormLogowanie.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -47,5 +50,10 @@
     <Compile Update=".formy\UserControls\ContactUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update=".formy\StronaGlowna.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

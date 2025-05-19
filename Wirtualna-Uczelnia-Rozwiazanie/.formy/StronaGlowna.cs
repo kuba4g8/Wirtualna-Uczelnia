@@ -52,9 +52,9 @@ namespace Wirtualna_Uczelnia.formy
 
         private void kalendarz_Click(object sender, EventArgs e)
         {
-            //FormKalendarz kalendarz = new FormKalendarz();
-
-            this.Hide();
+            FormKalendarz kalendarz = new FormKalendarz();
+            kalendarz.Show();
+            //this.Hide();
         }
 
         private void label2_Click(object sender, EventArgs e)
