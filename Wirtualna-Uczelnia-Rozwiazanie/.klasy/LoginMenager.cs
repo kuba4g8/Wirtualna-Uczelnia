@@ -39,6 +39,13 @@ namespace Wirtualna_Uczelnia
             teacherData = null;
             isTeacher = false;
 
+            // zarycie wszystkich otwartych formularzy
+            foreach (Form f in Application.OpenForms)
+            {
+                f.Hide();
+            }
+
+            new FormLogowanie().Show();
             return true;
         }
         

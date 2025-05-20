@@ -141,7 +141,6 @@
             imie_nazwisko.Size = new Size(113, 20);
             imie_nazwisko.TabIndex = 7;
             imie_nazwisko.Text = "imię i nazwisko:";
-            imie_nazwisko.Click += imie_nazwisko_Click;
             // 
             // wydzial_kierunek
             // 
@@ -152,7 +151,6 @@
             wydzial_kierunek.Size = new Size(129, 20);
             wydzial_kierunek.TabIndex = 8;
             wydzial_kierunek.Text = "wydział i kierunek:";
-            wydzial_kierunek.Click += label2_Click;
             // 
             // semestr
             // 
@@ -163,7 +161,6 @@
             semestr.Size = new Size(157, 20);
             semestr.TabIndex = 9;
             semestr.Text = "tryb studiów i semestr:";
-            semestr.Click += semestr_Click;
             // 
             // pictureBox2
             // 

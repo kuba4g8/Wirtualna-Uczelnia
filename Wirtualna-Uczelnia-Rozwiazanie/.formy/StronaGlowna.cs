@@ -62,44 +62,9 @@ namespace Wirtualna_Uczelnia.formy
             //this.Hide();
         }
 
-        private void label2_Click(object sender, EventArgs e)
-        {
-            TransparentLabel myLabel = new TransparentLabel();
-            myLabel.Text = "wydział i kierunek";
-            myLabel.ForeColor = Color.White;
-            myLabel.Location = new Point(50, 50);
-            myLabel.AutoSize = true;
-
-            pictureBox1.Controls.Add(myLabel);
-
-        }
-
-        private void semestr_Click(object sender, EventArgs e)
-        {
-            TransparentLabel myLabel = new TransparentLabel();
-            myLabel.Text = "rok i semestr";
-            myLabel.ForeColor = Color.White;
-            myLabel.Location = new Point(50, 50);
-            myLabel.AutoSize = true;
-
-            pictureBox1.Controls.Add(myLabel);
-        }
-
-        private void imie_nazwisko_Click(object sender, EventArgs e)
-        {
-            TransparentLabel myLabel = new TransparentLabel();
-            myLabel.Text = "imię i nazwisko";
-            myLabel.ForeColor = Color.White;
-            myLabel.Location = new Point(50, 50);
-            myLabel.AutoSize = true;
-
-            pictureBox1.Controls.Add(myLabel);
-        }
         private void wyloguj_Click(object sender, EventArgs e)
         {
-            FormLogowanie formlogowanie = new FormLogowanie();
-            formlogowanie.Show();
-            this.Hide();
+            SesionControl.loginMenager.logOut();
         }
 
         private void btnOpenChat_Click(object sender, EventArgs e)
