@@ -2,13 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
+using Wirtualna_Uczelnia.klasy;
 
 namespace Wirtualna_Uczelnia.formy
 {
     public partial class FormKalendarz : Form
     {
         private DateTime currentDate = DateTime.Now;
-        private List<WydarzenieKalendarza> wydarzenia = new List<WydarzenieKalendarza>();
+        private List<CalendarEvent> wydarzenia = new List<CalendarEvent>();
+        private sqlMenager sqlManager;
 
         // Kolory dla ró¿nych typów wydarzeñ
         private static readonly Color KolorKolokwium = Color.LightCoral;
@@ -16,99 +19,30 @@ namespace Wirtualna_Uczelnia.formy
         private static readonly Color KolorDzienWolny = Color.LightGreen;
         private static readonly Color KolorSesja = Color.LightGoldenrodYellow;
         private static readonly Color KolorSesjaPoprawkowa = Color.Orange;
+        private static readonly Color KolorInne = Color.LightPink;
 
         public FormKalendarz()
         {
             InitializeComponent();
-            DodajPrzykladoweWydarzenia();
-            DodajSesje2025();
+            sqlManager = new sqlMenager();
+            
+            // Za³adowanie wydarzeñ z bazy danych
+            LoadEventsFromDatabase();
             AktualizujKalendarz();
         }
 
-        private void DodajPrzykladoweWydarzenia()
+        private void LoadEventsFromDatabase()
         {
-            // Przyk³adowe wydarzenia do demonstracji
-            wydarzenia.Add(new WydarzenieKalendarza
-            {
-                Data = DateTime.Now.AddDays(2),
-                Tytul = "Kolokwium z matematyki",
-                Opis = "Sala 302, godz. 10:15-11:45",
-                Typ = TypWydarzenia.Kolokwium
-            });
+            wydarzenia.Clear();
 
-            wydarzenia.Add(new WydarzenieKalendarza
-            {
-                Data = DateTime.Now.AddDays(5),
-                Tytul = "Godziny rektorskie",
-                Opis = "Okazja: Juwenalia",
-                Typ = TypWydarzenia.GodzinyRektorskie
-            });
+            // Pobieranie wszystkich wydarzeñ (bez filtrowania po nauczycielu)
+            string command = "SELECT * FROM calendar_events";
+            MySqlCommand cmd = new MySqlCommand(command);
 
-            wydarzenia.Add(new WydarzenieKalendarza
+            List<CalendarEvent> dbEvents = sqlManager.loadDataToList<CalendarEvent>(cmd);
+            if (dbEvents != null)
             {
-                Data = DateTime.Now.AddDays(15),
-                Tytul = "Pocz¹tek sesji letniej",
-                Opis = "Sesja trwa do 30.06.2023",
-                Typ = TypWydarzenia.Sesja
-            });
-
-            wydarzenia.Add(new WydarzenieKalendarza
-            {
-                Data = DateTime.Now.AddDays(-3),
-                Tytul = "Dzieñ wolny - Œwiêto Uczelni",
-                Opis = "Wszystkie zajêcia odwo³ane",
-                Typ = TypWydarzenia.DzienWolny
-            });
-        }
-
-        private void DodajSesje2025()
-        {
-            // Sesja egzaminacyjna zimowa
-            for (DateTime date = new DateTime(2025, 2, 1); date <= new DateTime(2025, 2, 9); date = date.AddDays(1))
-            {
-                wydarzenia.Add(new WydarzenieKalendarza
-                {
-                    Data = date,
-                    Tytul = "Sesja egzaminacyjna zimowa",
-                    Opis = "Sesja trwa 1.02.2025 - 9.02.2025",
-                    Typ = TypWydarzenia.Sesja
-                });
-            }
-
-            // Sesja egzaminacyjna letnia
-            for (DateTime date = new DateTime(2025, 6, 14); date <= new DateTime(2025, 6, 25); date = date.AddDays(1))
-            {
-                wydarzenia.Add(new WydarzenieKalendarza
-                {
-                    Data = date,
-                    Tytul = "Sesja egzaminacyjna letnia",
-                    Opis = "Sesja trwa 14.06.2025 - 25.06.2025",
-                    Typ = TypWydarzenia.Sesja
-                });
-            }
-
-            // Sesja poprawkowa zimowa
-            for (DateTime date = new DateTime(2025, 2, 10); date <= new DateTime(2025, 2, 16); date = date.AddDays(1))
-            {
-                wydarzenia.Add(new WydarzenieKalendarza
-                {
-                    Data = date,
-                    Tytul = "Sesja poprawkowa zimowa",
-                    Opis = "Sesja trwa 10.02.2025 - 16.02.2025",
-                    Typ = TypWydarzenia.SesjaPoprawkowa
-                });
-            }
-
-            // Sesja poprawkowa letnia
-            for (DateTime date = new DateTime(2025, 9, 8); date <= new DateTime(2025, 9, 17); date = date.AddDays(1))
-            {
-                wydarzenia.Add(new WydarzenieKalendarza
-                {
-                    Data = date,
-                    Tytul = "Sesja poprawkowa letnia",
-                    Opis = "Sesja trwa 8.09.2025 - 17.09.2025",
-                    Typ = TypWydarzenia.SesjaPoprawkowa
-                });
+                wydarzenia.AddRange(dbEvents);
             }
         }
 
@@ -160,7 +94,7 @@ namespace Wirtualna_Uczelnia.formy
                     }
 
                     // SprawdŸ czy s¹ wydarzenia na ten dzieñ
-                    var wydarzeniaDnia = wydarzenia.FindAll(w => w.Data.Date == dataDnia.Date);
+                    var wydarzeniaDnia = wydarzenia.FindAll(w => w.event_date.Date == dataDnia.Date);
 
                     if (wydarzeniaDnia.Count > 0)
                     {
@@ -168,20 +102,20 @@ namespace Wirtualna_Uczelnia.formy
 
                         if (wydarzeniaDnia.Count == 1 && !jestWeekend)
                         {
-                            btn.BackColor = DajKolorTypu(wydarzeniaDnia[0].Typ);
+                            btn.BackColor = DajKolorTypu(wydarzeniaDnia[0].event_type);
                         }
                         else if (wydarzeniaDnia.Count > 1)
                         {
                             // Priorytet kolorów dla wielu wydarzeñ
-                            if (wydarzeniaDnia.Exists(w => w.Typ == TypWydarzenia.Sesja))
+                            if (wydarzeniaDnia.Exists(w => w.event_type == "Sesja"))
                             {
                                 btn.BackColor = KolorSesja;
                             }
-                            else if (wydarzeniaDnia.Exists(w => w.Typ == TypWydarzenia.SesjaPoprawkowa))
+                            else if (wydarzeniaDnia.Exists(w => w.event_type == "Sesja poprawkowa"))
                             {
                                 btn.BackColor = KolorSesjaPoprawkowa;
                             }
-                            else if (wydarzeniaDnia.Exists(w => w.Typ == TypWydarzenia.Kolokwium))
+                            else if (wydarzeniaDnia.Exists(w => w.event_type == "Kolokwium"))
                             {
                                 btn.BackColor = KolorKolokwium;
                             }
@@ -213,22 +147,22 @@ namespace Wirtualna_Uczelnia.formy
             }
         }
 
-        private Color DajKolorTypu(TypWydarzenia typ)
+        private Color DajKolorTypu(string typ)
         {
             switch (typ)
             {
-                case TypWydarzenia.Kolokwium:
+                case "Kolokwium":
                     return KolorKolokwium;
-                case TypWydarzenia.GodzinyRektorskie:
+                case "Godziny rektorskie":
                     return KolorGodzinyRektorskie;
-                case TypWydarzenia.DzienWolny:
+                case "Dzieñ wolny":
                     return KolorDzienWolny;
-                case TypWydarzenia.Sesja:
+                case "Sesja":
                     return KolorSesja;
-                case TypWydarzenia.SesjaPoprawkowa:
+                case "Sesja poprawkowa":
                     return KolorSesjaPoprawkowa;
                 default:
-                    return Color.White;
+                    return KolorInne;
             }
         }
 
@@ -255,30 +189,17 @@ namespace Wirtualna_Uczelnia.formy
                 listBoxWydarzenia.Items.Add("[Dzieñ wolny] Weekend");
             }
 
-            var wydarzeniaDnia = wydarzenia.FindAll(w => w.Data.Date == data.Date);
+            var wydarzeniaDnia = wydarzenia.FindAll(w => w.event_date.Date == data.Date);
             foreach (var wydarzenie in wydarzeniaDnia)
             {
-                string typTextem = "";
-                switch (wydarzenie.Typ)
-                {
-                    case TypWydarzenia.Kolokwium:
-                        typTextem = "[Kolokwium] ";
-                        break;
-                    case TypWydarzenia.GodzinyRektorskie:
-                        typTextem = "[Godziny rektorskie] ";
-                        break;
-                    case TypWydarzenia.DzienWolny:
-                        typTextem = "[Dzieñ wolny] ";
-                        break;
-                    case TypWydarzenia.Sesja:
-                        typTextem = "[Sesja] ";
-                        break;
-                    case TypWydarzenia.SesjaPoprawkowa:
-                        typTextem = "[Sesja poprawkowa] ";
-                        break;
-                }
+                string czasInfo = wydarzenie.event_time.HasValue ?
+                    $"{wydarzenie.event_time.Value.ToString(@"hh\:mm")}" +
+                    (wydarzenie.end_time.HasValue ? $" - {wydarzenie.end_time.Value.ToString(@"hh\:mm")}" : "") :
+                    "";
 
-                listBoxWydarzenia.Items.Add($"{typTextem}{wydarzenie.Tytul} - {wydarzenie.Opis}");
+                string przedmiotInfo = !string.IsNullOrEmpty(wydarzenie.subject) ? $" ({wydarzenie.subject})" : "";
+                
+                listBoxWydarzenia.Items.Add($"[{wydarzenie.event_type}] {wydarzenie.title}{przedmiotInfo} {czasInfo} - {wydarzenie.description}");
             }
 
             if (listBoxWydarzenia.Items.Count == 0)
@@ -312,22 +233,5 @@ namespace Wirtualna_Uczelnia.formy
                 }
             }
         }
-    }
-
-    public class WydarzenieKalendarza
-    {
-        public DateTime Data { get; set; }
-        public string Tytul { get; set; }
-        public string Opis { get; set; }
-        public TypWydarzenia Typ { get; set; }
-    }
-
-    public enum TypWydarzenia
-    {
-        Kolokwium,
-        GodzinyRektorskie,
-        DzienWolny,
-        Sesja,
-        SesjaPoprawkowa
     }
 }

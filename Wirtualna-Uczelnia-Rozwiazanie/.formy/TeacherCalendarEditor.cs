@@ -14,6 +14,8 @@ namespace Wirtualna_Uczelnia.formy
         private List<CalendarEvent> events = new List<CalendarEvent>();
         private Pracownik loggedTeacher;
         private sqlMenager sqlManager;
+        private const int BUTTON_SIZE = 70;
+        private const int BUTTON_MARGIN = 2;
 
         // Kolory dla różnych typów wydarzeń
         private static readonly Color KolorKolokwium = Color.LightCoral;
@@ -40,6 +42,9 @@ namespace Wirtualna_Uczelnia.formy
                 "Inne"
             });
             cmbTypWydarzenia.SelectedIndex = 0;
+
+            // Ustaw datę zakończenia na dzień później niż data rozpoczęcia
+            dtpDataZakonczenia.Value = dtpDataWydarzenia.Value.AddDays(1);
 
             // Załadowanie wydarzeń z bazy danych
             LoadEventsFromDatabase();
@@ -78,87 +83,95 @@ namespace Wirtualna_Uczelnia.formy
             // Obliczenie liczby dni w miesiącu
             int daysInMonth = DateTime.DaysInMonth(currentDate.Year, currentDate.Month);
 
-            // Dodanie przycisków dni
-            for (int i = 0; i < 42; i++)
+            // Wymiary kalendarza - tygodnie
+            int totalWeeks = (int)Math.Ceiling((dayOfWeek + daysInMonth) / 7.0);
+
+            // Generowanie przycisków dni
+            for (int week = 0; week < totalWeeks; week++)
             {
-                int row = i / 7;
-                int col = i % 7;
-
-                Button btn = new Button
+                for (int dayOfW = 0; dayOfW < 7; dayOfW++)
                 {
-                    Size = new Size(70, 60),
-                    Location = new Point(col * 72, row * 62),
-                    FlatStyle = FlatStyle.Flat
-                };
+                    // Indeks przycisku
+                    int index = week * 7 + dayOfW;
+                    // Numer dnia miesiąca
+                    int day = index - dayOfWeek + 1;
 
-                btn.FlatAppearance.BorderColor = Color.LightGray;
-
-                if (i >= dayOfWeek && i < dayOfWeek + daysInMonth)
-                {
-                    int day = i - dayOfWeek + 1;
-                    btn.Text = day.ToString();
-
-                    DateTime dayDate = new DateTime(currentDate.Year, currentDate.Month, day);
-
-                    // Sprawdź czy jest weekend (sobota lub niedziela)
-                    bool isWeekend = dayDate.DayOfWeek == DayOfWeek.Saturday || dayDate.DayOfWeek == DayOfWeek.Sunday;
-
-                    if (isWeekend)
+                    Button btn = new Button
                     {
-                        btn.BackColor = KolorDzienWolny;
-                    }
+                        Size = new Size(BUTTON_SIZE, BUTTON_SIZE),
+                        Location = new Point(dayOfW * (BUTTON_SIZE + BUTTON_MARGIN), week * (BUTTON_SIZE + BUTTON_MARGIN)),
+                        FlatStyle = FlatStyle.Flat
+                    };
 
-                    // Sprawdź czy są wydarzenia na ten dzień
-                    var dayEvents = events.FindAll(e => e.event_date.Date == dayDate.Date);
+                    btn.FlatAppearance.BorderColor = Color.LightGray;
 
-                    if (dayEvents.Count > 0)
+                    if (day > 0 && day <= daysInMonth)
                     {
-                        btn.Font = new Font(btn.Font, FontStyle.Bold);
+                        // Ten dzień należy do aktualnego miesiąca
+                        btn.Text = day.ToString();
+                        DateTime dayDate = new DateTime(currentDate.Year, currentDate.Month, day);
 
-                        if (dayEvents.Count == 1 && !isWeekend)
+                        // Sprawdź czy jest weekend (sobota lub niedziela)
+                        bool isWeekend = dayDate.DayOfWeek == DayOfWeek.Saturday || dayDate.DayOfWeek == DayOfWeek.Sunday;
+
+                        if (isWeekend)
                         {
-                            btn.BackColor = GetEventTypeColor(dayEvents[0].event_type);
+                            btn.BackColor = KolorDzienWolny;
                         }
-                        else if (dayEvents.Count > 1)
-                        {
-                            // Priorytet kolorów dla wielu wydarzeń
-                            if (dayEvents.Exists(e => e.event_type == "Sesja"))
-                            {
-                                btn.BackColor = KolorSesja;
-                            }
-                            else if (dayEvents.Exists(e => e.event_type == "Sesja poprawkowa"))
-                            {
-                                btn.BackColor = KolorSesjaPoprawkowa;
-                            }
-                            else if (dayEvents.Exists(e => e.event_type == "Kolokwium"))
-                            {
-                                btn.BackColor = KolorKolokwium;
-                            }
 
-                            btn.FlatAppearance.BorderColor = Color.DarkGray;
+                        // Sprawdź czy są wydarzenia na ten dzień
+                        var dayEvents = events.FindAll(e => e.event_date.Date == dayDate.Date);
+
+                        if (dayEvents.Count > 0)
+                        {
+                            btn.Font = new Font(btn.Font, FontStyle.Bold);
+
+                            if (dayEvents.Count == 1 && !isWeekend)
+                            {
+                                btn.BackColor = GetEventTypeColor(dayEvents[0].event_type);
+                            }
+                            else if (dayEvents.Count > 1)
+                            {
+                                // Priorytet kolorów dla wielu wydarzeń
+                                if (dayEvents.Exists(e => e.event_type == "Sesja"))
+                                {
+                                    btn.BackColor = KolorSesja;
+                                }
+                                else if (dayEvents.Exists(e => e.event_type == "Sesja poprawkowa"))
+                                {
+                                    btn.BackColor = KolorSesjaPoprawkowa;
+                                }
+                                else if (dayEvents.Exists(e => e.event_type == "Kolokwium"))
+                                {
+                                    btn.BackColor = KolorKolokwium;
+                                }
+
+                                btn.FlatAppearance.BorderColor = Color.DarkGray;
+                                btn.FlatAppearance.BorderSize = 2;
+                            }
+                        }
+
+                        // Oznacz dzisiejszą datę
+                        if (dayDate.Date == DateTime.Now.Date)
+                        {
+                            btn.FlatAppearance.BorderColor = Color.Blue;
                             btn.FlatAppearance.BorderSize = 2;
                         }
-                    }
 
-                    // Oznacz dzisiejszą datę
-                    if (dayDate.Date == DateTime.Now.Date)
+                        // Tag do przechowywania daty
+                        btn.Tag = dayDate;
+                        btn.Click += DayButton_Click;
+                    }
+                    else
                     {
-                        btn.FlatAppearance.BorderColor = Color.Blue;
-                        btn.FlatAppearance.BorderSize = 2;
+                        // Dzień spoza aktualnego miesiąca
+                        btn.Text = "";
+                        btn.Enabled = false;
+                        btn.BackColor = Color.WhiteSmoke;
                     }
 
-                    // Tag do przechowywania daty
-                    btn.Tag = dayDate;
-                    btn.Click += DayButton_Click;
+                    panelDni.Controls.Add(btn);
                 }
-                else
-                {
-                    btn.Text = "";
-                    btn.Enabled = false;
-                    btn.BackColor = Color.WhiteSmoke;
-                }
-
-                panelDni.Controls.Add(btn);
             }
         }
 
@@ -260,11 +273,78 @@ namespace Wirtualna_Uczelnia.formy
                 return;
             }
 
+            // Sprawdź, czy to wydarzenia wielodniowe
+            if (chkWielodniowe.Checked)
+            {
+                if (dtpDataZakonczenia.Value < dtpDataWydarzenia.Value)
+                {
+                    MessageBox.Show("Data zakończenia nie może być wcześniejsza niż data rozpoczęcia.",
+                        "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Dodaj wydarzenie dla każdego dnia w zakresie
+                DateTime startDate = dtpDataWydarzenia.Value.Date;
+                DateTime endDate = dtpDataZakonczenia.Value.Date;
+                int addedCount = 0;
+
+                // Dla każdego dnia w zakresie dodaj wydarzenie
+                for (DateTime currentDay = startDate; currentDay <= endDate; currentDay = currentDay.AddDays(1))
+                {
+                    CalendarEvent newEvent = CreateEvent(currentDay);
+                    int result = sqlManager.loadObjectToDataBase(newEvent, "calendar_events", true);
+
+                    if (result > 0)
+                    {
+                        newEvent.id = result;
+                        events.Add(newEvent);
+                        addedCount++;
+                    }
+                }
+
+                if (addedCount > 0)
+                {
+                    MessageBox.Show($"Dodano pomyślnie {addedCount} wydarzeń w zakresie dat.",
+                        "Sukces", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ClearEventForm();
+                    UpdateCalendar();
+                    UpdateEventsList(dtpDataWydarzenia.Value.Date);
+                }
+                else
+                {
+                    MessageBox.Show("Nie udało się dodać wydarzeń.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                // Standardowe dodawanie pojedynczego wydarzenia
+                CalendarEvent newEvent = CreateEvent(dtpDataWydarzenia.Value);
+                int result = sqlManager.loadObjectToDataBase(newEvent, "calendar_events", true);
+
+                if (result > 0)
+                {
+                    newEvent.id = result;
+                    events.Add(newEvent);
+                    MessageBox.Show("Wydarzenie zostało dodane pomyślnie.", "Sukces", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ClearEventForm();
+                    UpdateCalendar();
+                    UpdateEventsList(dtpDataWydarzenia.Value.Date);
+                }
+                else
+                {
+                    MessageBox.Show("Nie udało się dodać wydarzenia.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        // Pomocnicza metoda do tworzenia obiektu wydarzenia
+        private CalendarEvent CreateEvent(DateTime date)
+        {
             CalendarEvent newEvent = new CalendarEvent
             {
                 title = txtTytul.Text,
                 description = txtOpis.Text,
-                event_date = dtpDataWydarzenia.Value.Date,
+                event_date = date.Date,
                 event_type = cmbTypWydarzenia.SelectedItem.ToString(),
                 teacher_id = loggedTeacher.userID,
                 subject = txtPrzedmiot.Text,
@@ -278,22 +358,7 @@ namespace Wirtualna_Uczelnia.formy
                 newEvent.end_time = dtpGodzinaKoniec.Value.TimeOfDay;
             }
 
-            // Zapisz wydarzenie do bazy danych
-            int result = sqlManager.loadObjectToDataBase(newEvent, "calendar_events", true);
-
-            if (result > 0)
-            {
-                newEvent.id = result;
-                events.Add(newEvent);
-                MessageBox.Show("Wydarzenie zostało dodane pomyślnie.", "Sukces", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                ClearEventForm();
-                UpdateCalendar();
-                UpdateEventsList(dtpDataWydarzenia.Value.Date);
-            }
-            else
-            {
-                MessageBox.Show("Nie udało się dodać wydarzenia.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            return newEvent;
         }
 
         private void btnUsunWydarzenie_Click(object sender, EventArgs e)
@@ -387,6 +452,11 @@ namespace Wirtualna_Uczelnia.formy
             dtpGodzinaKoniec.Enabled = chkCzas.Checked;
         }
 
+        private void chkWielodniowe_CheckedChanged(object sender, EventArgs e)
+        {
+            dtpDataZakonczenia.Enabled = chkWielodniowe.Checked;
+        }
+
         private void btnPowrot_Click(object sender, EventArgs e)
         {
             Wirtualna_Uczelnia.formy.StronaGlowna.TeacherPanel panel = new Wirtualna_Uczelnia.formy.StronaGlowna.TeacherPanel(loggedTeacher);
@@ -400,6 +470,8 @@ namespace Wirtualna_Uczelnia.formy
             txtOpis.Text = "";
             txtPrzedmiot.Text = "";
             chkCzas.Checked = false;
+            chkWielodniowe.Checked = false;
+            dtpDataZakonczenia.Enabled = false;
             dtpGodzinaPoczatek.Value = DateTime.Now;
             dtpGodzinaKoniec.Value = DateTime.Now.AddHours(1);
         }

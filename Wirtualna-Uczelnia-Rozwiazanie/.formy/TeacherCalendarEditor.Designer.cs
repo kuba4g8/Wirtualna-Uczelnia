@@ -28,7 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            panelDni = new FlowLayoutPanel();
+            panelDni = new Panel();
+            panelNaglowki = new Panel();
+            lblNiedziela = new Label();
+            lblSobota = new Label();
+            lblPiatek = new Label();
+            lblCzwartek = new Label();
+            lblSroda = new Label();
+            lblWtorek = new Label();
+            lblPoniedzialek = new Label();
             lblMiesiacRok = new Label();
             btnPoprzedniMiesiac = new Button();
             btnNastepnyMiesiac = new Button();
@@ -53,14 +61,103 @@
             label6 = new Label();
             label7 = new Label();
             txtPrzedmiot = new TextBox();
+            chkWielodniowe = new CheckBox();
+            dtpDataZakonczenia = new DateTimePicker();
+            label8 = new Label();
+            panelNaglowki.SuspendLayout();
             SuspendLayout();
             // 
             // panelDni
             // 
-            panelDni.Location = new Point(14, 46);
+            panelDni.Location = new Point(14, 80);
             panelDni.Name = "panelDni";
-            panelDni.Size = new Size(504, 373);
+            panelDni.Size = new Size(504, 339);
             panelDni.TabIndex = 0;
+            // 
+            // panelNaglowki
+            // 
+            panelNaglowki.Controls.Add(lblNiedziela);
+            panelNaglowki.Controls.Add(lblSobota);
+            panelNaglowki.Controls.Add(lblPiatek);
+            panelNaglowki.Controls.Add(lblCzwartek);
+            panelNaglowki.Controls.Add(lblSroda);
+            panelNaglowki.Controls.Add(lblWtorek);
+            panelNaglowki.Controls.Add(lblPoniedzialek);
+            panelNaglowki.Location = new Point(14, 46);
+            panelNaglowki.Name = "panelNaglowki";
+            panelNaglowki.Size = new Size(504, 30);
+            panelNaglowki.TabIndex = 1;
+            // 
+            // lblNiedziela
+            // 
+            lblNiedziela.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblNiedziela.ForeColor = Color.Red;
+            lblNiedziela.Location = new Point(432, 0);
+            lblNiedziela.Name = "lblNiedziela";
+            lblNiedziela.Size = new Size(72, 30);
+            lblNiedziela.TabIndex = 6;
+            lblNiedziela.Text = "Nd";
+            lblNiedziela.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // lblSobota
+            // 
+            lblSobota.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblSobota.Location = new Point(360, 0);
+            lblSobota.Name = "lblSobota";
+            lblSobota.Size = new Size(72, 30);
+            lblSobota.TabIndex = 5;
+            lblSobota.Text = "Sb";
+            lblSobota.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // lblPiatek
+            // 
+            lblPiatek.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblPiatek.Location = new Point(288, 0);
+            lblPiatek.Name = "lblPiatek";
+            lblPiatek.Size = new Size(72, 30);
+            lblPiatek.TabIndex = 4;
+            lblPiatek.Text = "Pt";
+            lblPiatek.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // lblCzwartek
+            // 
+            lblCzwartek.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblCzwartek.Location = new Point(216, 0);
+            lblCzwartek.Name = "lblCzwartek";
+            lblCzwartek.Size = new Size(72, 30);
+            lblCzwartek.TabIndex = 3;
+            lblCzwartek.Text = "Czw";
+            lblCzwartek.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // lblSroda
+            // 
+            lblSroda.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblSroda.Location = new Point(144, 0);
+            lblSroda.Name = "lblSroda";
+            lblSroda.Size = new Size(72, 30);
+            lblSroda.TabIndex = 2;
+            lblSroda.Text = "Śr";
+            lblSroda.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // lblWtorek
+            // 
+            lblWtorek.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblWtorek.Location = new Point(72, 0);
+            lblWtorek.Name = "lblWtorek";
+            lblWtorek.Size = new Size(72, 30);
+            lblWtorek.TabIndex = 1;
+            lblWtorek.Text = "Wt";
+            lblWtorek.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // lblPoniedzialek
+            // 
+            lblPoniedzialek.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblPoniedzialek.Location = new Point(0, 0);
+            lblPoniedzialek.Name = "lblPoniedzialek";
+            lblPoniedzialek.Size = new Size(72, 30);
+            lblPoniedzialek.TabIndex = 0;
+            lblPoniedzialek.Text = "Pn";
+            lblPoniedzialek.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblMiesiacRok
             // 
@@ -222,7 +319,7 @@
             dtpDataWydarzenia.Format = DateTimePickerFormat.Short;
             dtpDataWydarzenia.Location = new Point(539, 356);
             dtpDataWydarzenia.Name = "dtpDataWydarzenia";
-            dtpDataWydarzenia.Size = new Size(163, 27);
+            dtpDataWydarzenia.Size = new Size(148, 27);
             dtpDataWydarzenia.TabIndex = 17;
             // 
             // chkCzas
@@ -292,11 +389,43 @@
             txtPrzedmiot.Size = new Size(326, 27);
             txtPrzedmiot.TabIndex = 25;
             // 
+            // chkWielodniowe
+            // 
+            chkWielodniowe.AutoSize = true;
+            chkWielodniowe.Location = new Point(716, 333);
+            chkWielodniowe.Name = "chkWielodniowe";
+            chkWielodniowe.Size = new Size(149, 24);
+            chkWielodniowe.TabIndex = 26;
+            chkWielodniowe.Text = "Wielodniowe";
+            chkWielodniowe.UseVisualStyleBackColor = true;
+            chkWielodniowe.CheckedChanged += chkWielodniowe_CheckedChanged;
+            // 
+            // dtpDataZakonczenia
+            // 
+            dtpDataZakonczenia.Enabled = false;
+            dtpDataZakonczenia.Format = DateTimePickerFormat.Short;
+            dtpDataZakonczenia.Location = new Point(716, 356);
+            dtpDataZakonczenia.Name = "dtpDataZakonczenia";
+            dtpDataZakonczenia.Size = new Size(149, 27);
+            dtpDataZakonczenia.TabIndex = 27;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(692, 360);
+            label8.Name = "label8";
+            label8.Size = new Size(19, 20);
+            label8.TabIndex = 28;
+            label8.Text = "-";
+            // 
             // TeacherCalendarEditor
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(882, 653);
+            Controls.Add(label8);
+            Controls.Add(dtpDataZakonczenia);
+            Controls.Add(chkWielodniowe);
             Controls.Add(txtPrzedmiot);
             Controls.Add(label7);
             Controls.Add(label6);
@@ -321,19 +450,29 @@
             Controls.Add(btnNastepnyMiesiac);
             Controls.Add(btnPoprzedniMiesiac);
             Controls.Add(lblMiesiacRok);
+            Controls.Add(panelNaglowki);
             Controls.Add(panelDni);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             Name = "TeacherCalendarEditor";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Edytor kalendarza";
+            panelNaglowki.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private FlowLayoutPanel panelDni;
+        private Panel panelDni;
+        private Panel panelNaglowki;
+        private Label lblNiedziela;
+        private Label lblSobota;
+        private Label lblPiatek;
+        private Label lblCzwartek;
+        private Label lblSroda;
+        private Label lblWtorek;
+        private Label lblPoniedzialek;
         private Label lblMiesiacRok;
         private Button btnPoprzedniMiesiac;
         private Button btnNastepnyMiesiac;
@@ -358,5 +497,8 @@
         private Label label6;
         private Label label7;
         private TextBox txtPrzedmiot;
+        private CheckBox chkWielodniowe;
+        private DateTimePicker dtpDataZakonczenia;
+        private Label label8;
     }
 }
