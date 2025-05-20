@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Wirtualna_Uczelnia.formy
 {
@@ -15,70 +11,121 @@ namespace Wirtualna_Uczelnia.formy
         public ChatForm()
         {
             InitializeComponent();
+            listBox1.SelectedIndexChanged += listBox1_SelectedIndexChanged;
         }
 
-
-        private void Chat_Load(object sender, EventArgs e) // Poprawiona nazwa
+        private void Chat_Load(object sender, EventArgs e)
         {
+            txtInput.ReadOnly = true;
+
+            listBox1.Items.Add("== Informacje ogólne ==");
             listBox1.Items.Add("Jak obliczyć średnią?");
+            listBox1.Items.Add("Jakie są godziny otwarcia uczelni?");
+            listBox1.Items.Add("Jakie są zasady korzystania z biblioteki?");
+            listBox1.Items.Add("== Kontakt ==");
             listBox1.Items.Add("Gdzie mogę skontaktować się z wykładowcą?");
-            listBox1.Items.Add("W czym mogę pomóc");
-
+            listBox1.Items.Add("== Rejestracja ==");
+            listBox1.Items.Add("Jak zarejestrować się na zajęcia?");
+            listBox1.Items.Add("Koniec");
         }
 
-        private void lstCommands_SelectedIndexChanged(object sender, EventArgs e)
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Sprawdzamy, czy użytkownik wybrał coś z listy
             if (listBox1.SelectedItem != null)
             {
                 string selectedCommand = listBox1.SelectedItem.ToString();
-                txtInput.Text = selectedCommand; // Ustawiamy tekst w TextBoxie
+                if (selectedCommand.StartsWith("==")) return; // zignoruj nagłówki
+
+                txtInput.Text = selectedCommand;
+                txtInput.Focus();
             }
         }
 
-        private void ProcessCommand(string command)
-        {
-            string response;
 
-            switch (command)
-            {
-                case "Jak obliczyć średnią?":
-                    response = "To proste! Zaraz przekieruję Cię do kalkulatora.";
-                    break;
-                case "Gdzie mogę skontaktować się z wykładowcą?":
-                    response = "Wejdź w zakładkę 'pracownicy' tam masz spis wykładowców. Znajdz osobę, z którą chcesz się skontaktować.";
-                    break;
-                case "Koniec":
-                    response = "Do zobaczenia!";
-                    break;
-                default:
-                    response = "Nie rozumiem tej komendy.";
-                    break;
-            }
 
-            txtInput.AppendText("Ty: " + command + Environment.NewLine);
-            textBox1.AppendText("\nChatbot: " + response + Environment.NewLine);
-        }
-
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
             string userMessage = txtInput.Text.Trim();
             if (!string.IsNullOrEmpty(userMessage))
             {
-                ProcessCommand(userMessage); // Przetwarzanie komendy
-               // txtInput.Clear(); // Czyszczenie TextBox po wysłaniu
+                await ProcessCommandAsync(userMessage); // Użyj wersji async
             }
             else
             {
                 MessageBox.Show("Wpisz wiadomość przed wysłaniem.");
             }
+        }
 
+
+        // Główna logika obsługi poleceń — z efektem pisania i kolorami
+        private async Task ProcessCommandAsync(string command)
+        {
+            // Czyścimy pole odpowiedzi przed nowym pytaniem
+            textBox1.Clear();
+
+            // Pokazujemy "bot pisze..."
+            AppendColoredText(textBox1, "Chatbot: piszę...\n", Color.Gray);
+            await Task.Delay(800);
+
+            // Usuwamy "piszę..."
+            int index = textBox1.Text.LastIndexOf("Chatbot: piszę...\n");
+            if (index >= 0)
+                textBox1.Text = textBox1.Text.Remove(index, "Chatbot: piszę...\n".Length);
+
+            // Generowanie odpowiedzi
+            string response = command switch
+            {
+                "Jak obliczyć średnią?" =>
+                    "To proste! Zaraz przekieruję Cię do kalkulatora.",
+                "Gdzie mogę skontaktować się z wykładowcą?" =>
+                    "Wejdź w zakładkę 'Pracownicy', tam znajdziesz spis wykładowców.",
+                "Jak zarejestrować się na zajęcia?" =>
+                    "W zakładce 'Rejestracja na zajęcia' znajduje się tutorial.",
+                "Jakie są godziny otwarcia uczelni?" =>
+                    "Uczelnia jest otwarta od poniedziałku do piątku w godzinach 8:00–19:00.",
+                "Jakie są zasady korzystania z biblioteki?" =>
+                    "Biblioteka jest czynna od poniedziałku do piątku w godzinach 8:00–18:00. Można wypożyczyć maksymalnie 5 książek na 2 tygodnie.",
+                "W czym mogę pomóc?" =>
+                    "Wybierz pytanie z listy lub wpisz własne zapytanie.",
+                "Koniec" => CloseAppAndReturnMessage(),
+
+                _ =>
+                    "Nie rozumiem tej komendy. Spróbuj inaczej."
+            };
+
+            // Wyświetlenie odpowiedzi
+            AppendColoredText(textBox1, "Chatbot: " + response + Environment.NewLine, Color.Green);
+        }
+
+
+
+
+
+        // Funkcja do kolorowego tekstu
+        private void AppendColoredText(RichTextBox box, string text, Color color)
+        {
+            box.SelectionStart = box.TextLength;
+            box.SelectionLength = 0;
+
+            box.SelectionColor = color;
+            box.AppendText(text);
+            box.SelectionColor = box.ForeColor;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-
+            // Zostaw puste lub dodaj automatyczne przewijanie jeśli chcesz
         }
+
+        private string CloseAppAndReturnMessage()
+        {
+            Task.Delay(500).ContinueWith(_ =>
+            {
+                // zamknięcie formularza (na wątku UI)
+                this.Invoke((Action)(() => this.Close()));
+            });
+            return "Do zobaczenia!";
+        }
+
     }
 }
-

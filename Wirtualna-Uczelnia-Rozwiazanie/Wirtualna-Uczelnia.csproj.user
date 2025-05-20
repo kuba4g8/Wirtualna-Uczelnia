@@ -8,25 +8,7 @@
     <Compile Update=".formy\ChatForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update=".formy\OcenyPanel.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update=".formy\StronaGlowna.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update=".formy\StronaGlowna\Dokumenty.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update=".formy\StronaGlowna\Oceny.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update=".formy\StronaGlowna\Rejestracja.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update=".formy\StronaGlowna\Sprawdziany.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update=".formy\stareLogowanie.cs">
+    <Compile Update=".formy\FormKalendarz.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update=".formy\FormLogowanie.cs">
@@ -35,11 +17,49 @@
     <Compile Update=".formy\formResetPassword.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update=".formy\OcenyPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update=".formy\stareLogowanie.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update=".formy\StronaGlowna.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update=".formy\StronaGlowna\Dokumenty.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update=".formy\StronaGlowna\FormKontaktPracownicy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update=".formy\StronaGlowna\FormPlanLekcji.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update=".formy\StronaGlowna\Oceny.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update=".formy\StronaGlowna\Rejestracja.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update=".formy\TeacherPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update=".formy\TeacherCalendarEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update=".formy\UserControlBlank.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update=".formy\UserControlDays.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update=".formy\UserControls\ContactUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update=".formy\StronaGlowna.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>
