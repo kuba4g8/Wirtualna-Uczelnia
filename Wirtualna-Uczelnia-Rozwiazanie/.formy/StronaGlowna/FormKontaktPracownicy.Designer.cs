@@ -28,23 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormKontaktPracownicy));
+            panelContactHolder = new Panel();
             SuspendLayout();
-            
+            // 
+            // panelContactHolder
+            // 
+            panelContactHolder.AutoScroll = true;
+            panelContactHolder.AutoSize = true;
+            panelContactHolder.BackColor = Color.Transparent;
+            panelContactHolder.Location = new Point(0, 0);
+            panelContactHolder.Name = "panelContactHolder";
+            panelContactHolder.Size = new Size(900, 500);
+            panelContactHolder.TabIndex = 0;
             // 
             // FormKontaktPracownicy
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(897, 508);
-            Controls.Add(contactUserControl5);
-            Controls.Add(contactUserControl4);
-            Controls.Add(contactUserControl3);
-            Controls.Add(contactUserControl2);
-            Controls.Add(contactUserControl1);
+            ClientSize = new Size(897, 503);
+            Controls.Add(panelContactHolder);
             Name = "FormKontaktPracownicy";
             Text = "FormKontaktPracownicy";
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -54,5 +60,6 @@
         private UserControls.ContactUserControl contactUserControl3;
         private UserControls.ContactUserControl contactUserControl4;
         private UserControls.ContactUserControl contactUserControl5;
+        private Panel panelContactHolder;
     }
 }

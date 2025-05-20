@@ -52,6 +52,7 @@
     <Compile Include=".klasy\PrzezroczysteTlo.cs" />
     <Compile Include=".klasy\Hasher.cs" />
     <Compile Include=".klasy\jsonMenager.cs" />
+    <Compile Include=".klasy\SesionControl.cs" />
     <Compile Include=".translations\LangMenager.cs" />
     <Compile Include=".klasy\LoginMenager.cs" />
     <Compile Include=".klasy\SecMenager.cs" />

@@ -49,34 +49,24 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
             int yOffset = 170; // zmiana y w czasie
 
             int xMax = 3; // maksywalnie ile kontaktow w jednej lini mozna polozyc na x
-            int yMax = 3; // maksymalnie ile kontaktow w jednej lini mozna polozyc na y
 
-            int currI = 0; // current I aby dostac sie do teacherInfo po koleii
-            int maxI = xMax * yMax; // juz kurwa nawet nie wiem chyba zeby nie wyejbalo ponad liczbe ale piszac to
             // to nawet nie wiem czy to ma kurwa jakis sens
 
-            for (int i = 0; i < xMax; i++)
+            for (int i = 0; i < teacherInfo.Count; i++)
             {
-                for (int j = 0; j < yMax; j++)
+                // co wartosc xMax skkipujemy sie o jeden poziom nizej
+                if (i % xMax == 0 && i != 0)
                 {
-                    // to chyba kurwa wynika z siebie te 2 opcje ale chuj
-                    // blagam oby pani nie przeczytala tych komenatzy
-                    if (currI >= teacherInfo.Count || currI > maxI)
-                    {
-                        MessageBox.Show("Wiecej sie nie zmiesci :(");
-                        return;
-                    }
-
-                    var teacherTempItem = createItem(teacherInfo[currI], x, y);
                     y += yOffset;
-                    currI++;
-                    teacherTempItem.btnContact.Click += contactClicked;
-
-                    // w koncu dodanie na forme
-                    this.Controls.Add(teacherTempItem);
+                    x = 0;
                 }
+                
+                var teacherTempItem = createItem(teacherInfo[i], x, y);
+                teacherTempItem.btnContact.Click += contactClicked;
+
+                // w koncu dodanie do panelu zeby mozna bylo scrollowac itd
+                panelContactHolder.Controls.Add(teacherTempItem);
                 x += xOffset;
-                y = 0;
             }
         }
 

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Wirtualna_Uczelnia;
 using Wirtualna_Uczelnia.formy.StronaGlowna;
+using Wirtualna_Uczelnia.klasy;
 using static Wirtualna_Uczelnia.klasy.PrzezroczysteTlo;
 
 
@@ -17,24 +18,28 @@ namespace Wirtualna_Uczelnia.formy
 {
     public partial class FormStronaGlowna : Form
     {
-        private Int32 userID;
-        public FormStronaGlowna(Int32 ID)
+        public FormStronaGlowna()
         {
-            userID = ID;
             InitializeComponent();
+
+            loadStudentInfoVisually();
+        }
+
+        //zaladowanie imienia naziwska i takie tam
+        public void loadStudentInfoVisually()
+        {
+            imie_nazwisko.Text = $"Imie: {SesionControl.loginMenager.studentData.imie}, Nazwisko: {SesionControl.loginMenager.studentData.nazwisko}";
+            wydzial_kierunek.Text = $"Wydział: {SesionControl.loginMenager.studentData.wydzial}, Kierunek: {SesionControl.loginMenager.studentData.kierunek}";
+            semestr.Text = $"Semestr: {SesionControl.loginMenager.studentData.semestr}";
         }
 
         private void oceny_Click(object sender, EventArgs e)
         {
-            Oceny oceny = new Oceny(userID); // Tworzenie nowego formularza
+            Oceny oceny = new Oceny(); // Tworzenie nowego formularza
             oceny.Show();              // Pokazanie nowego formularza
             //this.Hide();               // Ukrycie obecnego formularza
         }
 
-
-        private void sprawdziany_Click(object sender, EventArgs e)
-        {
-        }
 
         private void dokumenty_Click(object sender, EventArgs e)
         {
@@ -90,22 +95,6 @@ namespace Wirtualna_Uczelnia.formy
 
             pictureBox1.Controls.Add(myLabel);
         }
-
-        private void pictureBox2_Click(object sender, EventArgs e)
-        {
-
-        }
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-
-        }
-
         private void wyloguj_Click(object sender, EventArgs e)
         {
             FormLogowanie formlogowanie = new FormLogowanie();
@@ -130,7 +119,7 @@ namespace Wirtualna_Uczelnia.formy
             FormKontaktPracownicy form = new FormKontaktPracownicy();
 
             form.Show();
-            this.Hide();
+            //this.Hide();
         }
     }
 }

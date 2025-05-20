@@ -58,7 +58,6 @@
             pictureBox1.Size = new Size(1522, 864);
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
-            pictureBox1.Click += pictureBox1_Click;
             // 
             // oceny
             // 
@@ -88,7 +87,6 @@
             sprawdziany.Size = new Size(370, 166);
             sprawdziany.TabIndex = 2;
             sprawdziany.UseVisualStyleBackColor = true;
-            sprawdziany.Click += sprawdziany_Click;
             // 
             // dokumenty
             // 
@@ -177,7 +175,6 @@
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox2.TabIndex = 10;
             pictureBox2.TabStop = false;
-            pictureBox2.Click += pictureBox2_Click;
             // 
             // pracownicy
             // 
