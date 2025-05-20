@@ -39,13 +39,16 @@
             linkLabel6 = new LinkLabel();
             linkLabel7 = new LinkLabel();
             linkLabel8 = new LinkLabel();
-            linkLabel9 = new LinkLabel();
-            linkLabel10 = new LinkLabel();
+            podanie_dziekanski = new LinkLabel();
+            podanie_warunek = new LinkLabel();
             pictureBox5 = new PictureBox();
-            linkLabel11 = new LinkLabel();
-            linkLabel12 = new LinkLabel();
-            linkLabel13 = new LinkLabel();
+            podanie_zdrowotny = new LinkLabel();
+            podanie_powtorzenie = new LinkLabel();
+            podanie_skreslenie = new LinkLabel();
             label1 = new Label();
+            regulamin = new LinkLabel();
+            akademik_wniosek = new LinkLabel();
+            akademik_regulamin = new LinkLabel();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             SuspendLayout();
             // 
@@ -141,25 +144,27 @@
             linkLabel8.Size = new Size(100, 23);
             linkLabel8.TabIndex = 25;
             // 
-            // linkLabel9
+            // podanie_dziekanski
             // 
-            linkLabel9.AutoSize = true;
-            linkLabel9.Location = new Point(168, 177);
-            linkLabel9.Name = "linkLabel9";
-            linkLabel9.Size = new Size(224, 25);
-            linkLabel9.TabIndex = 23;
-            linkLabel9.TabStop = true;
-            linkLabel9.Text = "Podanie o urlop dziekański";
+            podanie_dziekanski.AutoSize = true;
+            podanie_dziekanski.Location = new Point(168, 177);
+            podanie_dziekanski.Name = "podanie_dziekanski";
+            podanie_dziekanski.Size = new Size(224, 25);
+            podanie_dziekanski.TabIndex = 23;
+            podanie_dziekanski.TabStop = true;
+            podanie_dziekanski.Text = "Podanie o urlop dziekański";
+            podanie_dziekanski.LinkClicked += linkLabel9_LinkClicked;
             // 
-            // linkLabel10
+            // podanie_warunek
             // 
-            linkLabel10.AutoSize = true;
-            linkLabel10.Location = new Point(168, 142);
-            linkLabel10.Name = "linkLabel10";
-            linkLabel10.Size = new Size(227, 25);
-            linkLabel10.TabIndex = 22;
-            linkLabel10.TabStop = true;
-            linkLabel10.Text = "Podanie o wpis warunkowy";
+            podanie_warunek.AutoSize = true;
+            podanie_warunek.Location = new Point(169, 313);
+            podanie_warunek.Name = "podanie_warunek";
+            podanie_warunek.Size = new Size(227, 25);
+            podanie_warunek.TabIndex = 22;
+            podanie_warunek.TabStop = true;
+            podanie_warunek.Text = "Podanie o wpis warunkowy";
+            podanie_warunek.LinkClicked += linkLabel10_LinkClicked;
             // 
             // pictureBox5
             // 
@@ -171,35 +176,38 @@
             pictureBox5.TabIndex = 21;
             pictureBox5.TabStop = false;
             // 
-            // linkLabel11
+            // podanie_zdrowotny
             // 
-            linkLabel11.AutoSize = true;
-            linkLabel11.Location = new Point(168, 211);
-            linkLabel11.Name = "linkLabel11";
-            linkLabel11.Size = new Size(228, 25);
-            linkLabel11.TabIndex = 26;
-            linkLabel11.TabStop = true;
-            linkLabel11.Text = "Podanie o urlop zdrowotny";
+            podanie_zdrowotny.AutoSize = true;
+            podanie_zdrowotny.Location = new Point(168, 211);
+            podanie_zdrowotny.Name = "podanie_zdrowotny";
+            podanie_zdrowotny.Size = new Size(228, 25);
+            podanie_zdrowotny.TabIndex = 26;
+            podanie_zdrowotny.TabStop = true;
+            podanie_zdrowotny.Text = "Podanie o urlop zdrowotny";
+            podanie_zdrowotny.LinkClicked += linkLabel11_LinkClicked;
             // 
-            // linkLabel12
+            // podanie_powtorzenie
             // 
-            linkLabel12.AutoSize = true;
-            linkLabel12.Location = new Point(168, 245);
-            linkLabel12.Name = "linkLabel12";
-            linkLabel12.Size = new Size(263, 25);
-            linkLabel12.TabIndex = 27;
-            linkLabel12.TabStop = true;
-            linkLabel12.Text = "Podanie o powtórzenie semetru";
+            podanie_powtorzenie.AutoSize = true;
+            podanie_powtorzenie.Location = new Point(168, 245);
+            podanie_powtorzenie.Name = "podanie_powtorzenie";
+            podanie_powtorzenie.Size = new Size(263, 25);
+            podanie_powtorzenie.TabIndex = 27;
+            podanie_powtorzenie.TabStop = true;
+            podanie_powtorzenie.Text = "Podanie o powtórzenie semetru";
+            podanie_powtorzenie.LinkClicked += linkLabel12_LinkClicked;
             // 
-            // linkLabel13
+            // podanie_skreslenie
             // 
-            linkLabel13.AutoSize = true;
-            linkLabel13.Location = new Point(168, 279);
-            linkLabel13.Name = "linkLabel13";
-            linkLabel13.Size = new Size(310, 25);
-            linkLabel13.TabIndex = 28;
-            linkLabel13.TabStop = true;
-            linkLabel13.Text = "Podanie o skreślenie z listy studentów";
+            podanie_skreslenie.AutoSize = true;
+            podanie_skreslenie.Location = new Point(168, 279);
+            podanie_skreslenie.Name = "podanie_skreslenie";
+            podanie_skreslenie.Size = new Size(310, 25);
+            podanie_skreslenie.TabIndex = 28;
+            podanie_skreslenie.TabStop = true;
+            podanie_skreslenie.Text = "Podanie o skreślenie z listy studentów";
+            podanie_skreslenie.LinkClicked += linkLabel13_LinkClicked;
             // 
             // label1
             // 
@@ -211,17 +219,53 @@
             label1.TabIndex = 29;
             label1.Text = "Dokumenty";
             // 
+            // regulamin
+            // 
+            regulamin.AutoSize = true;
+            regulamin.Location = new Point(167, 143);
+            regulamin.Name = "regulamin";
+            regulamin.Size = new Size(163, 25);
+            regulamin.TabIndex = 30;
+            regulamin.TabStop = true;
+            regulamin.Text = "Regulamin studiów";
+            regulamin.LinkClicked += regulamin_LinkClicked;
+            // 
+            // akademik_wniosek
+            // 
+            akademik_wniosek.AutoSize = true;
+            akademik_wniosek.Location = new Point(169, 346);
+            akademik_wniosek.Name = "akademik_wniosek";
+            akademik_wniosek.Size = new Size(268, 25);
+            akademik_wniosek.TabIndex = 32;
+            akademik_wniosek.TabStop = true;
+            akademik_wniosek.Text = "Wniosek o miejsce w akademiku";
+            akademik_wniosek.LinkClicked += linkLabel14_LinkClicked;
+            // 
+            // akademik_regulamin
+            // 
+            akademik_regulamin.AutoSize = true;
+            akademik_regulamin.Location = new Point(169, 381);
+            akademik_regulamin.Name = "akademik_regulamin";
+            akademik_regulamin.Size = new Size(536, 25);
+            akademik_regulamin.TabIndex = 33;
+            akademik_regulamin.TabStop = true;
+            akademik_regulamin.Text = "Regulamin przyznawania miejsc w Studenckich Domach Marynarza";
+            akademik_regulamin.LinkClicked += linkLabel15_LinkClicked;
+            // 
             // Dokumenty
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(akademik_regulamin);
+            Controls.Add(akademik_wniosek);
+            Controls.Add(regulamin);
             Controls.Add(label1);
-            Controls.Add(linkLabel13);
-            Controls.Add(linkLabel12);
-            Controls.Add(linkLabel11);
-            Controls.Add(linkLabel9);
-            Controls.Add(linkLabel10);
+            Controls.Add(podanie_skreslenie);
+            Controls.Add(podanie_powtorzenie);
+            Controls.Add(podanie_zdrowotny);
+            Controls.Add(podanie_dziekanski);
+            Controls.Add(podanie_warunek);
             Controls.Add(pictureBox5);
             Controls.Add(linkLabel7);
             Controls.Add(linkLabel8);
@@ -251,12 +295,15 @@
         private LinkLabel linkLabel6;
         private LinkLabel linkLabel7;
         private LinkLabel linkLabel8;
-        private LinkLabel linkLabel9;
-        private LinkLabel linkLabel10;
+        private LinkLabel podanie_dziekanski;
+        private LinkLabel podanie_warunek;
         private PictureBox pictureBox5;
-        private LinkLabel linkLabel11;
-        private LinkLabel linkLabel12;
-        private LinkLabel linkLabel13;
+        private LinkLabel podanie_zdrowotny;
+        private LinkLabel podanie_powtorzenie;
+        private LinkLabel podanie_skreslenie;
         private Label label1;
+        private LinkLabel regulamin;
+        private LinkLabel akademik_wniosek;
+        private LinkLabel akademik_regulamin;
     }
 }

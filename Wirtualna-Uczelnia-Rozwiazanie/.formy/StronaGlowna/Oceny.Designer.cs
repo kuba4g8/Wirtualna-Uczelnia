@@ -35,6 +35,7 @@
             Label_Przedmiot = new Label();
             PrzedmiotyCombo = new ComboBox();
             Load_Grades = new Button();
+            Back_Button = new Button();
             ((System.ComponentModel.ISupportInitialize)Tabela_Ocen).BeginInit();
             SuspendLayout();
             // 
@@ -122,5 +123,6 @@
         private Label Label_Przedmiot;
         private ComboBox PrzedmiotyCombo;
         private Button Load_Grades;
+        private Button Back_Button;
     }
 }

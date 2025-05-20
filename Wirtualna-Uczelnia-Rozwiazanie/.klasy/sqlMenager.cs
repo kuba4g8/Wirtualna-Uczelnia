@@ -15,6 +15,12 @@ namespace Wirtualna_Uczelnia
     {
         private MySqlConnection _conn; // obiekt klasy umozliwiajacy laczenie sie z baza danych.
 
+        // Publiczna właściwość z inną nazwą
+        public MySqlConnection Connection
+        {
+            get { return _conn; }
+        }
+
         // info do poleczenia do DataBase
         private static class cloudConnInfo
         {
@@ -89,7 +95,7 @@ namespace Wirtualna_Uczelnia
                 string sqlCommand = $"INSERT INTO {tableName} ({string.Join(", ", nazwyKolumn)}) VALUES ({string.Join(", ", wlasciwosciLista)});SELECT LAST_INSERT_ID();";
 
                 //wykonanie komendy oraz faktycznie wprowadzenie do bazy danych
-                using (MySqlCommand cmd = new MySqlCommand(sqlCommand, _conn))
+                using (MySqlCommand cmd = new MySqlCommand(sqlCommand, Connection))
                 {
                     // Dodaj parametry
                     foreach (PropertyInfo prop in properties)
@@ -135,7 +141,7 @@ namespace Wirtualna_Uczelnia
             {
                 // MySqlCommand -> komenda do wysylania w sql
                 MySqlCommand cmd = querryCommand;
-                cmd.Connection = _conn;
+                cmd.Connection = Connection;
 
                 //stworzenie obiektu readera ktory szczytuje wszystkie rowy pokolei.
                 MySqlDataReader reader = cmd.ExecuteReader();
@@ -190,7 +196,7 @@ namespace Wirtualna_Uczelnia
         }
 
         //sprobuj sie polaczyc 
-        private bool tryConnect()
+        public bool tryConnect()
         {
             try
             {
@@ -205,7 +211,7 @@ namespace Wirtualna_Uczelnia
             }
         }
         //sprobuj sie rozlaczyc
-        private bool tryDissconect()
+        public bool tryDissconect()
         {
             try
             {
