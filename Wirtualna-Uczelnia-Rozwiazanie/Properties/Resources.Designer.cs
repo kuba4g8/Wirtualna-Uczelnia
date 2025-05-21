@@ -63,9 +63,29 @@ namespace Wirtualna_Uczelnia.Properties {
         /// <summary>
         ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _79f71007_64cc_4bab_9a64_90fb1cb07f37 {
+            get {
+                object obj = ResourceManager.GetObject("79f71007-64cc-4bab-9a64-90fb1cb07f37", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Bez_nazwy_11_202505140850_07944 {
             get {
                 object obj = ResourceManager.GetObject("Bez nazwy 11_202505140850_07944", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Bez_nazwy_7_202505212012_55935 {
+            get {
+                object obj = ResourceManager.GetObject("Bez nazwy 7_202505212012_55935", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
