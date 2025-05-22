@@ -56,6 +56,9 @@
     <Compile Update=".formy\UserControls\ContactUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update=".formy\UserControls\PlanLekcjiUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update=".formy\StronaGlowna.resx">
