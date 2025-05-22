@@ -23,8 +23,7 @@
         #region Windows Form Designer generated code
 
         /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
+        /// Required method for Designer support - do not modify the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
@@ -64,6 +63,8 @@
             chkWielodniowe = new CheckBox();
             dtpDataZakonczenia = new DateTimePicker();
             label8 = new Label();
+            lblGrupa = new Label();
+            cmbGrupa = new ComboBox();
             panelNaglowki.SuspendLayout();
             SuspendLayout();
             // 
@@ -71,7 +72,7 @@
             // 
             panelDni.Location = new Point(14, 80);
             panelDni.Name = "panelDni";
-            panelDni.Size = new Size(504, 339);
+            panelDni.Size = new Size(520, 340);
             panelDni.TabIndex = 0;
             // 
             // panelNaglowki
@@ -205,7 +206,7 @@
             lstWydarzenia.ItemHeight = 20;
             lstWydarzenia.Location = new Point(14, 455);
             lstWydarzenia.Name = "lstWydarzenia";
-            lstWydarzenia.Size = new Size(504, 164);
+            lstWydarzenia.Size = new Size(520, 220);
             lstWydarzenia.TabIndex = 5;
             lstWydarzenia.SelectedIndexChanged += lstWydarzenia_SelectedIndexChanged;
             // 
@@ -222,7 +223,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(539, 46);
+            label1.Location = new Point(550, 46);
             label1.Name = "label1";
             label1.Size = new Size(46, 20);
             label1.TabIndex = 7;
@@ -230,15 +231,15 @@
             // 
             // txtTytul
             // 
-            txtTytul.Location = new Point(539, 69);
+            txtTytul.Location = new Point(550, 69);
             txtTytul.Name = "txtTytul";
-            txtTytul.Size = new Size(326, 27);
+            txtTytul.Size = new Size(400, 27);
             txtTytul.TabIndex = 8;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(539, 109);
+            label2.Location = new Point(550, 109);
             label2.Name = "label2";
             label2.Size = new Size(42, 20);
             label2.TabIndex = 9;
@@ -246,16 +247,16 @@
             // 
             // txtOpis
             // 
-            txtOpis.Location = new Point(539, 132);
+            txtOpis.Location = new Point(550, 132);
             txtOpis.Multiline = true;
             txtOpis.Name = "txtOpis";
-            txtOpis.Size = new Size(326, 86);
+            txtOpis.Size = new Size(400, 86);
             txtOpis.TabIndex = 10;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(539, 271);
+            label3.Location = new Point(550, 335);
             label3.Name = "label3";
             label3.Size = new Size(113, 20);
             label3.TabIndex = 11;
@@ -265,18 +266,18 @@
             // 
             cmbTypWydarzenia.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbTypWydarzenia.FormattingEnabled = true;
-            cmbTypWydarzenia.Location = new Point(539, 294);
+            cmbTypWydarzenia.Location = new Point(550, 358);
             cmbTypWydarzenia.Name = "cmbTypWydarzenia";
-            cmbTypWydarzenia.Size = new Size(326, 28);
+            cmbTypWydarzenia.Size = new Size(400, 28);
             cmbTypWydarzenia.TabIndex = 12;
             // 
             // btnDodajWydarzenie
             // 
             btnDodajWydarzenie.BackColor = Color.LightGreen;
             btnDodajWydarzenie.FlatStyle = FlatStyle.Flat;
-            btnDodajWydarzenie.Location = new Point(539, 480);
+            btnDodajWydarzenie.Location = new Point(550, 480);
             btnDodajWydarzenie.Name = "btnDodajWydarzenie";
-            btnDodajWydarzenie.Size = new Size(326, 43);
+            btnDodajWydarzenie.Size = new Size(400, 45);
             btnDodajWydarzenie.TabIndex = 13;
             btnDodajWydarzenie.Text = "Dodaj/Aktualizuj wydarzenie";
             btnDodajWydarzenie.UseVisualStyleBackColor = false;
@@ -287,9 +288,9 @@
             btnUsunWydarzenie.BackColor = Color.LightCoral;
             btnUsunWydarzenie.Enabled = false;
             btnUsunWydarzenie.FlatStyle = FlatStyle.Flat;
-            btnUsunWydarzenie.Location = new Point(539, 529);
+            btnUsunWydarzenie.Location = new Point(550, 529);
             btnUsunWydarzenie.Name = "btnUsunWydarzenie";
-            btnUsunWydarzenie.Size = new Size(326, 43);
+            btnUsunWydarzenie.Size = new Size(400, 45);
             btnUsunWydarzenie.TabIndex = 14;
             btnUsunWydarzenie.Text = "Usuń wybrane wydarzenie";
             btnUsunWydarzenie.UseVisualStyleBackColor = false;
@@ -297,9 +298,9 @@
             // 
             // btnPowrot
             // 
-            btnPowrot.Location = new Point(539, 578);
+            btnPowrot.Location = new Point(550, 578);
             btnPowrot.Name = "btnPowrot";
-            btnPowrot.Size = new Size(326, 41);
+            btnPowrot.Size = new Size(400, 45);
             btnPowrot.TabIndex = 15;
             btnPowrot.Text = "Powrót do panelu";
             btnPowrot.UseVisualStyleBackColor = true;
@@ -308,7 +309,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(539, 333);
+            label4.Location = new Point(550, 396);
             label4.Name = "label4";
             label4.Size = new Size(45, 20);
             label4.TabIndex = 16;
@@ -317,7 +318,7 @@
             // dtpDataWydarzenia
             // 
             dtpDataWydarzenia.Format = DateTimePickerFormat.Short;
-            dtpDataWydarzenia.Location = new Point(539, 356);
+            dtpDataWydarzenia.Location = new Point(550, 419);
             dtpDataWydarzenia.Name = "dtpDataWydarzenia";
             dtpDataWydarzenia.Size = new Size(148, 27);
             dtpDataWydarzenia.TabIndex = 17;
@@ -325,7 +326,7 @@
             // chkCzas
             // 
             chkCzas.AutoSize = true;
-            chkCzas.Location = new Point(539, 398);
+            chkCzas.Location = new Point(550, 461);
             chkCzas.Name = "chkCzas";
             chkCzas.Size = new Size(155, 24);
             chkCzas.TabIndex = 18;
@@ -337,7 +338,7 @@
             // 
             dtpGodzinaPoczatek.Enabled = false;
             dtpGodzinaPoczatek.Format = DateTimePickerFormat.Time;
-            dtpGodzinaPoczatek.Location = new Point(613, 428);
+            dtpGodzinaPoczatek.Location = new Point(613, 491);
             dtpGodzinaPoczatek.Name = "dtpGodzinaPoczatek";
             dtpGodzinaPoczatek.ShowUpDown = true;
             dtpGodzinaPoczatek.Size = new Size(122, 27);
@@ -347,7 +348,7 @@
             // 
             dtpGodzinaKoniec.Enabled = false;
             dtpGodzinaKoniec.Format = DateTimePickerFormat.Time;
-            dtpGodzinaKoniec.Location = new Point(741, 428);
+            dtpGodzinaKoniec.Location = new Point(741, 491);
             dtpGodzinaKoniec.Name = "dtpGodzinaKoniec";
             dtpGodzinaKoniec.ShowUpDown = true;
             dtpGodzinaKoniec.Size = new Size(122, 27);
@@ -356,7 +357,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(539, 431);
+            label5.Location = new Point(550, 494);
             label5.Name = "label5";
             label5.Size = new Size(68, 20);
             label5.TabIndex = 21;
@@ -366,7 +367,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 9F);
-            label6.Location = new Point(613, 405);
+            label6.Location = new Point(613, 468);
             label6.Name = "label6";
             label6.Size = new Size(84, 20);
             label6.TabIndex = 22;
@@ -376,7 +377,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(539, 228);
+            label7.Location = new Point(550, 271);
             label7.Name = "label7";
             label7.Size = new Size(80, 20);
             label7.TabIndex = 23;
@@ -384,15 +385,15 @@
             // 
             // txtPrzedmiot
             // 
-            txtPrzedmiot.Location = new Point(539, 251);
+            txtPrzedmiot.Location = new Point(550, 294);
             txtPrzedmiot.Name = "txtPrzedmiot";
-            txtPrzedmiot.Size = new Size(326, 27);
+            txtPrzedmiot.Size = new Size(400, 27);
             txtPrzedmiot.TabIndex = 25;
             // 
             // chkWielodniowe
             // 
             chkWielodniowe.AutoSize = true;
-            chkWielodniowe.Location = new Point(716, 333);
+            chkWielodniowe.Location = new Point(716, 396);
             chkWielodniowe.Name = "chkWielodniowe";
             chkWielodniowe.Size = new Size(149, 24);
             chkWielodniowe.TabIndex = 26;
@@ -404,7 +405,7 @@
             // 
             dtpDataZakonczenia.Enabled = false;
             dtpDataZakonczenia.Format = DateTimePickerFormat.Short;
-            dtpDataZakonczenia.Location = new Point(716, 356);
+            dtpDataZakonczenia.Location = new Point(716, 419);
             dtpDataZakonczenia.Name = "dtpDataZakonczenia";
             dtpDataZakonczenia.Size = new Size(149, 27);
             dtpDataZakonczenia.TabIndex = 27;
@@ -412,17 +413,38 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(692, 360);
+            label8.Location = new Point(692, 423);
             label8.Name = "label8";
             label8.Size = new Size(19, 20);
             label8.TabIndex = 28;
             label8.Text = "-";
             // 
+            // lblGrupa
+            // 
+            lblGrupa.AutoSize = true;
+            lblGrupa.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblGrupa.Location = new Point(550, 228);
+            lblGrupa.Name = "lblGrupa";
+            lblGrupa.Size = new Size(70, 20);
+            lblGrupa.TabIndex = 29;
+            lblGrupa.Text = "Grupa:";
+            // 
+            // cmbGrupa
+            // 
+            cmbGrupa.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbGrupa.FormattingEnabled = true;
+            cmbGrupa.Location = new Point(625, 228);
+            cmbGrupa.Name = "cmbGrupa";
+            cmbGrupa.Size = new Size(350, 28);
+            cmbGrupa.TabIndex = 30;
+            cmbGrupa.DisplayMember = "Value";
+            cmbGrupa.ValueMember = "Key";
+            // 
             // TeacherCalendarEditor
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(882, 653);
+            ClientSize = new Size(1000, 700);
             Controls.Add(label8);
             Controls.Add(dtpDataZakonczenia);
             Controls.Add(chkWielodniowe);
@@ -452,8 +474,11 @@
             Controls.Add(lblMiesiacRok);
             Controls.Add(panelNaglowki);
             Controls.Add(panelDni);
+            Controls.Add(lblGrupa);
+            Controls.Add(cmbGrupa);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
+            MinimumSize = new Size(1000, 700);
             Name = "TeacherCalendarEditor";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Edytor kalendarza";
@@ -500,5 +525,7 @@
         private CheckBox chkWielodniowe;
         private DateTimePicker dtpDataZakonczenia;
         private Label label8;
+        private Label lblGrupa;
+        private ComboBox cmbGrupa;
     }
 }

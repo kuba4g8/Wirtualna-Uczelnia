@@ -16,7 +16,7 @@ namespace Wirtualna_Uczelnia.klasy
         public TimeSpan? end_time { get; set; }
         public int teacher_id { get; set; }
         public string subject { get; set; }
-        public int? group_id { get; set; }
+        public int? id_grupy { get; set; }
         public string event_type { get; set; }
         public DateTime created_at { get; set; }
         public DateTime updated_at { get; set; }
