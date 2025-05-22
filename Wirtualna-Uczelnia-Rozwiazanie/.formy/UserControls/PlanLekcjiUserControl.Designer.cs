@@ -43,7 +43,7 @@
             lblProwadzacy.Location = new Point(0, 110);
             lblProwadzacy.Margin = new Padding(3, 0, 10, 5);
             lblProwadzacy.Name = "lblProwadzacy";
-            lblProwadzacy.Size = new Size(330, 29);
+            lblProwadzacy.Size = new Size(286, 29);
             lblProwadzacy.TabIndex = 0;
             lblProwadzacy.Text = "dr Jan Kowalski";
             lblProwadzacy.TextAlign = ContentAlignment.MiddleLeft;

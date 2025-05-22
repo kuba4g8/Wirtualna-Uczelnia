@@ -203,9 +203,9 @@
             lblPlanLekcji.Location = new Point(19, 320);
             lblPlanLekcji.Margin = new Padding(2, 0, 2, 0);
             lblPlanLekcji.Name = "lblPlanLekcji";
-            lblPlanLekcji.Size = new Size(224, 28);
+            lblPlanLekcji.Size = new Size(110, 28);
             lblPlanLekcji.TabIndex = 13;
-            lblPlanLekcji.Text = "- Plan zajęć (in progress)";
+            lblPlanLekcji.Text = "- Plan zajęć";
             lblPlanLekcji.Click += lblPlanLekcji_Click;
             // 
             // grupy_zajeciowe
