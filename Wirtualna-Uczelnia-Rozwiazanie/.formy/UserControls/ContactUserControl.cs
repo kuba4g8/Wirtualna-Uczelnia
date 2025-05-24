@@ -16,8 +16,8 @@ namespace Wirtualna_Uczelnia.formy.UserControls
         public string imie
         {
             get { return lblImie.Text; }
-            set 
-            { 
+            set
+            {
                 lblImie.Text = value;
                 AdjustLabelPositions();
             }
@@ -26,8 +26,8 @@ namespace Wirtualna_Uczelnia.formy.UserControls
         public string nazwisko
         {
             get { return lblNazwisko.Text; }
-            set 
-            { 
+            set
+            {
                 lblNazwisko.Text = value;
                 AdjustLabelPositions();
             }
@@ -36,26 +36,38 @@ namespace Wirtualna_Uczelnia.formy.UserControls
         public string stopien_naukowy
         {
             get { return lblStopien.Text; }
-            set 
-            { 
+            set
+            {
                 lblStopien.Text = value;
                 AdjustLabelPositions();
             }
         }
 
-        public string email;
+        public string email
+        {
+            get { return lblEmail.Text; }
+            set
+            {
+                lblEmail.Text = value;
+                AdjustLabelPositions();
+            }
+        }
+        public string konsultacje;
+        public string przedmioty;
 
         public ContactUserControl()
         {
             InitializeComponent();
         }
 
-        public void initalize(string imie, string nazwisko, string email, string stopien)
+        public void initalize(string imie, string nazwisko, string email, string stopien, string konsultacje, string przedmioty)
         {
             this.imie = imie;
             this.nazwisko = nazwisko;
             this.email = email;
             this.stopien_naukowy = stopien;
+            this.konsultacje = konsultacje;
+            this.przedmioty = przedmioty;
             AdjustLabelPositions();
         }
 
@@ -63,7 +75,7 @@ namespace Wirtualna_Uczelnia.formy.UserControls
         {
             // Stała określająca odstęp między labelami
             const int HORIZONTAL_MARGIN = 5;
-            
+
             // Rozpoczynamy od lewej strony
             int currentX = 0;
 
@@ -92,10 +104,12 @@ namespace Wirtualna_Uczelnia.formy.UserControls
             this.Width = Math.Max(this.Width, currentX);
         }
 
-        public override string ToString()
+        private void showInfo(object sender, EventArgs e)
         {
-            return $"Kontakt do: {stopien_naukowy} {imie} {nazwisko} : {email}";
+            if (konsultacje == null)
+                MessageBox.Show("Nie ma konsultacjii\n" + "Przedmioty: " + przedmioty);
+            else
+                MessageBox.Show($"Konsultację: " + konsultacje + "\nPrzedmioty: " + przedmioty);
         }
-
     }
 }

@@ -126,7 +126,7 @@ namespace Wirtualna_Uczelnia
         //zczytanie danych z bazy danych sql przy podaniu dokladnej komendy
         //szczytuje kazdy rekord jako jeden element dynamicznego typu T
         //Podajesz obiekt on sam sie sczyta lol
-        public List<T> loadDataToList<T>(MySqlCommand querryCommand) where T : new()
+        public List<T> loadDataToList<T>(MySqlCommand querryCommand, bool safeDebugMsgOff = false) where T : new()
         {
             //tworzenie listy obiektow z Typem T jakiegos obiektu podanego przy wywolaniu
             var list = new List<T>();
@@ -171,7 +171,8 @@ namespace Wirtualna_Uczelnia
                         catch (Exception ex)
                         {
                             //MessageBox.Show("Generalnie jezeli czytasz ta wiadomosc to chujowow");
-                            MessageBox.Show(ex.Message);
+                            if (!safeDebugMsgOff)
+                                MessageBox.Show(ex.Message);
                         }
                         
                     }

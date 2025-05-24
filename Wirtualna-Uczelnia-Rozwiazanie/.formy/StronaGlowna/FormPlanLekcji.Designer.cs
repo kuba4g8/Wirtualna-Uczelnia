@@ -60,7 +60,7 @@
             tabControl.Location = new Point(10, 10);
             tabControl.Name = "tabControl";
             tabControl.SelectedIndex = 0;
-            tabControl.Size = new Size(1000, 700);
+            tabControl.Size = new Size(768, 683);
             tabControl.TabIndex = 0;
             // 
             // tabPoniedzialek
@@ -70,7 +70,7 @@
             tabPoniedzialek.Location = new Point(4, 34);
             tabPoniedzialek.Name = "tabPoniedzialek";
             tabPoniedzialek.Padding = new Padding(3);
-            tabPoniedzialek.Size = new Size(992, 662);
+            tabPoniedzialek.Size = new Size(760, 645);
             tabPoniedzialek.TabIndex = 0;
             tabPoniedzialek.Text = "PONIEDZIAŁEK";
             // 
@@ -82,7 +82,7 @@
             panelPoniedzialek.Location = new Point(3, 3);
             panelPoniedzialek.Name = "panelPoniedzialek";
             panelPoniedzialek.Padding = new Padding(10);
-            panelPoniedzialek.Size = new Size(986, 656);
+            panelPoniedzialek.Size = new Size(754, 639);
             panelPoniedzialek.TabIndex = 0;
             // 
             // tabWtorek
@@ -175,7 +175,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(1020, 720);
+            ClientSize = new Size(788, 703);
             Controls.Add(tabControl);
             MinimumSize = new Size(800, 600);
             Name = "FormPlanLekcji";

@@ -304,6 +304,7 @@ namespace Wirtualna_Uczelnia
     {
         public string stanowisko { get; set; }
         public string stopien_naukowy { get; set; } // moze byc null
+        public string konsultacje { get; set; } // moze byc null
     }
 
 }

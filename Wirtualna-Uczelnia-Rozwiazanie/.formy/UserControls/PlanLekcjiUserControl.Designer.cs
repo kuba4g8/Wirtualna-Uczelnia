@@ -40,10 +40,10 @@
             lblProwadzacy.AutoEllipsis = true;
             lblProwadzacy.Font = new Font("Segoe UI Semilight", 9F, FontStyle.Italic);
             lblProwadzacy.ForeColor = Color.FromArgb(64, 64, 64);
-            lblProwadzacy.Location = new Point(0, 110);
+            lblProwadzacy.Location = new Point(0, 160);
             lblProwadzacy.Margin = new Padding(3, 0, 10, 5);
             lblProwadzacy.Name = "lblProwadzacy";
-            lblProwadzacy.Size = new Size(286, 29);
+            lblProwadzacy.Size = new Size(536, 29);
             lblProwadzacy.TabIndex = 0;
             lblProwadzacy.Text = "dr Jan Kowalski";
             lblProwadzacy.TextAlign = ContentAlignment.MiddleLeft;
@@ -57,7 +57,7 @@
             lblSala.Location = new Point(10, 5);
             lblSala.Margin = new Padding(3, 10, 3, 0);
             lblSala.Name = "lblSala";
-            lblSala.Size = new Size(150, 20);
+            lblSala.Size = new Size(400, 20);
             lblSala.TabIndex = 1;
             lblSala.Text = "Sala: C202";
             lblSala.TextAlign = ContentAlignment.MiddleLeft;
@@ -67,7 +67,7 @@
             lblGodziny.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             lblGodziny.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
             lblGodziny.ForeColor = Color.FromArgb(192, 0, 0);
-            lblGodziny.Location = new Point(170, 5);
+            lblGodziny.Location = new Point(420, 5);
             lblGodziny.Margin = new Padding(3, 10, 3, 0);
             lblGodziny.Name = "lblGodziny";
             lblGodziny.Size = new Size(170, 20);
@@ -79,12 +79,12 @@
             // 
             lblPrzedmiot.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblPrzedmiot.AutoEllipsis = true;
-            lblPrzedmiot.Font = new Font("Segoe UI Semibold", 15F, FontStyle.Bold);
+            lblPrzedmiot.Font = new Font("Segoe UI Semibold", 23F, FontStyle.Bold);
             lblPrzedmiot.ForeColor = Color.FromArgb(0, 64, 0);
             lblPrzedmiot.Location = new Point(10, 30);
             lblPrzedmiot.Margin = new Padding(3, 5, 10, 0);
             lblPrzedmiot.Name = "lblPrzedmiot";
-            lblPrzedmiot.Size = new Size(330, 80);
+            lblPrzedmiot.Size = new Size(580, 140);
             lblPrzedmiot.TabIndex = 3;
             lblPrzedmiot.Text = "Matematyka dyskretna";
             lblPrzedmiot.TextAlign = ContentAlignment.MiddleCenter;
@@ -101,7 +101,7 @@
             Margin = new Padding(5);
             Name = "PlanLekcjiUserControl";
             Padding = new Padding(5);
-            Size = new Size(350, 150);
+            Size = new Size(600, 200);
             ResumeLayout(false);
         }
 

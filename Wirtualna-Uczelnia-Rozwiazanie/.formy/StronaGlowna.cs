@@ -84,7 +84,7 @@ namespace Wirtualna_Uczelnia.formy
             FormKontaktPracownicy form = new FormKontaktPracownicy();
 
             form.Show();
-            //this.Hide();
+            this.Hide();
         }
     }
 }

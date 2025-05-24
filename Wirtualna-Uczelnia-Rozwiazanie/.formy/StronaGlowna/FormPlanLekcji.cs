@@ -81,7 +81,7 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
         private void loadVisually()
         {
             ShiftMenager shift = new ShiftMenager();
-            int przesuniecieStale = 150;
+            int przesuniecieStale = 200;
             sortujListe();
 
             foreach (BlokLekcjiHolder item in wszystkieLekcje)
