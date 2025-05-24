@@ -203,9 +203,9 @@
             lblPlanLekcji.Location = new Point(19, 320);
             lblPlanLekcji.Margin = new Padding(2, 0, 2, 0);
             lblPlanLekcji.Name = "lblPlanLekcji";
-            lblPlanLekcji.Size = new Size(224, 28);
+            lblPlanLekcji.Size = new Size(110, 28);
             lblPlanLekcji.TabIndex = 13;
-            lblPlanLekcji.Text = "- Plan zajęć (in progress)";
+            lblPlanLekcji.Text = "- Plan zajęć";
             lblPlanLekcji.Click += lblPlanLekcji_Click;
             // 
             // grupy_zajeciowe
@@ -245,9 +245,10 @@
             // 
             // FormStronaGlowna
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(120F, 120F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             AutoSize = true;
+            AutoSizeMode = AutoSizeMode.GrowAndShrink;
             ClientSize = new Size(1518, 819);
             Controls.Add(btnOpenChat);
             Controls.Add(wyloguj);

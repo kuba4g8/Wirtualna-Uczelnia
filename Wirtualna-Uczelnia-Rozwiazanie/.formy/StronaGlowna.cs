@@ -75,7 +75,7 @@ namespace Wirtualna_Uczelnia.formy
 
         private void lblPlanLekcji_Click(object sender, EventArgs e)
         {
-            FormPlanZajec planZajec = new FormPlanZajec();
+            FormPlanLekcji planZajec = new FormPlanLekcji();
             planZajec.Show();
         }
 
@@ -84,7 +84,7 @@ namespace Wirtualna_Uczelnia.formy
             FormKontaktPracownicy form = new FormKontaktPracownicy();
 
             form.Show();
-            //this.Hide();
+            this.Hide();
         }
     }
 }
