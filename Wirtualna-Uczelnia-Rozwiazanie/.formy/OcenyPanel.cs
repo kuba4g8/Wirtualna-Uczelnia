@@ -9,6 +9,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Wirtualna_Uczelnia.formy.StronaGlowna;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 //TODO       ↓
@@ -18,10 +19,39 @@ namespace Wirtualna_Uczelnia.formy
 {
     public partial class OcenyPanel : Form
     {
+        private Pracownik loggedTeacher; // Przechowuje informacje o zalogowanym nauczycielu
         sqlMenager sqlMenager = new sqlMenager(); //tbh nie wiem co robię ale nie pokazuje dzięki temu błędów :Fire:
+        
         public OcenyPanel(Pracownik loggedUser) //TODO: UWZGLĘDNIĆ W KOMENDZIE ID PROWADZĄCEGO BY POKAZAĆ OCENY TYLKO Z PRZEDMIOTÓW KTÓRE PROWADZI. UPD 13.05 -> wywołanie przydatne dla dodawania do bazy
         {
             InitializeComponent();
+            
+            // Zapisanie referencji do zalogowanego nauczyciela
+            this.loggedTeacher = loggedUser;
+            
+            // Dodanie przycisku powrotu
+            Button btnPowrot = new Button();
+            btnPowrot.Location = new Point(12, 280);
+            btnPowrot.Name = "btnPowrot";
+            btnPowrot.Size = new Size(136, 30);
+            btnPowrot.Text = "Powrót do panelu";
+            btnPowrot.UseVisualStyleBackColor = true;
+            btnPowrot.Click += BtnPowrot_Click;
+            this.Controls.Add(btnPowrot);
+        }
+        
+        // Metoda obsługująca kliknięcie przycisku powrotu
+        private void BtnPowrot_Click(object sender, EventArgs e)
+        {
+            // Zamknij ten formularz
+            this.Close();
+            
+            // Znajdź i pokaż formularz TeacherPanel
+            Form teacherPanel = Application.OpenForms.OfType<TeacherPanel>().FirstOrDefault();
+            if (teacherPanel != null)
+            {
+                teacherPanel.Show();
+            }
         }
 
         private void Tabela_Ocen_CellContentClick(object sender, DataGridViewCellEventArgs e)

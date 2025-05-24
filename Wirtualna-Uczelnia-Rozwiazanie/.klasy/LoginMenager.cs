@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Wirtualna_Uczelnia.formy;
-
+using Wirtualna_Uczelnia.formy.StronaGlowna;
 using Wirtualna_Uczelnia.klasy;
 
 
@@ -17,12 +17,12 @@ namespace Wirtualna_Uczelnia
         private SecMenager secLogin;
 
         //trzymanie informacji personalnych itd.
-        private Student studentData;
-        private Pracownik teacherData;
+        public Student studentData;
+        public Pracownik teacherData;
         private bool isTeacher;
         //trzymanie informacji personalnych itd.
 
-        private bool debugMode;
+        public bool debugMode;
          
         //forma logowania
         public LoginMenager(bool debugMode)
@@ -31,6 +31,22 @@ namespace Wirtualna_Uczelnia
             sqlMenager = new sqlMenager();
             secLogin = new SecMenager(debugMode);
 
+        }
+
+        public bool logOut()
+        {
+            studentData = null;
+            teacherData = null;
+            isTeacher = false;
+
+            // zarycie wszystkich otwartych formularzy
+            foreach (Form f in Application.OpenForms)
+            {
+                f.Hide();
+            }
+
+            new FormLogowanie().Show();
+            return true;
         }
         
         public bool tryLogin(string email, string haslo)
@@ -100,24 +116,23 @@ namespace Wirtualna_Uczelnia
                 teacherData = returnUserData<Pracownik>(querry, userID);
                 isTeacher = true;
 
-                OcenyPanel ocenyPanel = new OcenyPanel(teacherData);
-                ocenyPanel.Show();
-                return true; //do usuenia potem jak beda inne formy!!!/////
-
-                // odpalic forme dla teachera
+                // Zamiast OcenyPanel otwieramy TeacherPanel
+                TeacherPanel teacherPanel = new TeacherPanel(teacherData);
+                teacherPanel.Show();
+                return true;
             }
             else // UZYTKOWNIK TO STUDENT
             {
-                querry = "SELECT * FROM studenci WHERE userID = @userID";
+                querry = "SELECT s.userID, s.imie, s.nazwisko, s.nr_indeksu, s.semestr, w.nazwa AS wydzial, k.nazwa_kierunku AS kierunek, s.id_kierunku, s.id_grupy\r\nFROM studenci s\r\nLEFT JOIN kierunki k ON s.id_kierunku = k.id_kierunku\r\nLEFT JOIN wydzialy w ON k.id_wydzialu = w.id_wydzialu\r\nWHERE s.userID = @userID;";
                 studentData = returnUserData<Student>(querry, userID);
                 isTeacher = false;
 
-                FormStronaGlowna stronaGlownaStudent = new FormStronaGlowna(userID);
+                FormStronaGlowna stronaGlownaStudent = new FormStronaGlowna();
                 stronaGlownaStudent.Show();
                 // odpalic forme dla studenta
             }
             //ify sprawdzaja kto jest adminem kto jest nauczycielem itd.
-            ShowDebugInfo();
+            //ShowDebugInfo();
 
             
             //MessageBox.Show("Zalogowano");
@@ -134,7 +149,7 @@ namespace Wirtualna_Uczelnia
         /// <param name="querry"></param>
         /// <param name="userID"></param>
         /// <returns></returns>
-        public T returnUserData<T>(string querry, int userID) where T : Osoba, new()
+        private T returnUserData<T>(string querry, int userID) where T : Osoba, new()
         {
             MySqlCommand dataCommand = new MySqlCommand(querry);
             dataCommand.Parameters.AddWithValue("@userID", userID);
@@ -143,7 +158,7 @@ namespace Wirtualna_Uczelnia
             return userObj.FirstOrDefault();
         }
 
-        public void ShowDebugInfo()
+        private void ShowDebugInfo()
         {
             if (!debugMode)
                 return;
@@ -281,12 +296,15 @@ namespace Wirtualna_Uczelnia
         public int semestr { get; set; }
         public string wydzial { get; set; }
         public string kierunek { get; set; }
+        public int id_kierunku { get; set; }
+        public int id_grupy { get; set; }
     }
 
     public class Pracownik : Osoba
     {
         public string stanowisko { get; set; }
         public string stopien_naukowy { get; set; } // moze byc null
+        public string konsultacje { get; set; } // moze byc null
     }
 
 }

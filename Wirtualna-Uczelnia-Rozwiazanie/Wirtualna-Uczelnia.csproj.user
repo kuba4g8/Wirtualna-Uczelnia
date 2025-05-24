@@ -8,6 +8,9 @@
     <Compile Update=".formy\ChatForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update=".formy\FormKalendarz.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update=".formy\FormLogowanie.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -26,6 +29,9 @@
     <Compile Update=".formy\StronaGlowna\Dokumenty.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update=".formy\StronaGlowna\FormKontaktPracownicy.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update=".formy\StronaGlowna\FormPlanLekcji.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -35,11 +41,28 @@
     <Compile Update=".formy\StronaGlowna\Rejestracja.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update=".formy\TeacherCalendarEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update=".formy\TeacherPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update=".formy\UserControlBlank.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update=".formy\UserControlDays.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update=".formy\UserControls\ContactUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update=".formy\UserControls\PlanLekcjiUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update=".formy\StronaGlowna.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

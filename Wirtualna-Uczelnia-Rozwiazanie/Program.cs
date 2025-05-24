@@ -1,3 +1,5 @@
+using Wirtualna_Uczelnia.formy.StronaGlowna;
+
 namespace Wirtualna_Uczelnia
 {
     internal static class Program

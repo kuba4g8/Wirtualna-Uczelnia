@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Wirtualna_Uczelnia.klasy;
 using static Wirtualna_Uczelnia.formy.Oceny;
 using static Wirtualna_Uczelnia.formy.OcenyPanel;
 
@@ -15,13 +16,13 @@ namespace Wirtualna_Uczelnia.formy
 {
     public partial class Oceny : Form
     {
-        private Int32 _ID;
         sqlMenager sqlMenager = new sqlMenager();
-        public Oceny(Int32 ID)
+        public Oceny()
         {
-            _ID = ID;
             InitializeComponent();
         }
+
+
 
         private void Oceny_Load(object sender, EventArgs e)
         {
@@ -42,7 +43,7 @@ namespace Wirtualna_Uczelnia.formy
 
             String przedmiot = PrzedmiotyCombo.Text.ToString();
 
-            MySqlCommand FetchCommand = new MySqlCommand($"SELECT nr_indeksu FROM studenci WHERE userID = '{_ID}'"); //Zbieranie indeksu na podstawie ID
+            MySqlCommand FetchCommand = new MySqlCommand($"SELECT nr_indeksu FROM studenci WHERE userID = '{SesionControl.loginMenager.studentData.userID}'"); //Zbieranie indeksu na podstawie ID
             List<Indeks> FetchIndeks = new List<Indeks>();
             FetchIndeks = sqlMenager.loadDataToList<Indeks>(FetchCommand);
             string indeks = FetchIndeks[0].nr_indeksu;
@@ -64,7 +65,6 @@ namespace Wirtualna_Uczelnia.formy
                 this.Tabela_Ocen.Rows.Add(ocena.nazwa, ocena.ocena, ocena.data_wystawienia);
             }
         }
-
 
         public class Przedmiot
         {

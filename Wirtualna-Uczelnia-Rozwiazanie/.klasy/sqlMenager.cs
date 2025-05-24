@@ -15,6 +15,12 @@ namespace Wirtualna_Uczelnia
     {
         private MySqlConnection _conn; // obiekt klasy umozliwiajacy laczenie sie z baza danych.
 
+        // Publiczna właściwość z inną nazwą
+        public MySqlConnection Connection
+        {
+            get { return _conn; }
+        }
+
         // info do poleczenia do DataBase
         private static class cloudConnInfo
         {
@@ -89,7 +95,7 @@ namespace Wirtualna_Uczelnia
                 string sqlCommand = $"INSERT INTO {tableName} ({string.Join(", ", nazwyKolumn)}) VALUES ({string.Join(", ", wlasciwosciLista)});SELECT LAST_INSERT_ID();";
 
                 //wykonanie komendy oraz faktycznie wprowadzenie do bazy danych
-                using (MySqlCommand cmd = new MySqlCommand(sqlCommand, _conn))
+                using (MySqlCommand cmd = new MySqlCommand(sqlCommand, Connection))
                 {
                     // Dodaj parametry
                     foreach (PropertyInfo prop in properties)
@@ -120,7 +126,7 @@ namespace Wirtualna_Uczelnia
         //zczytanie danych z bazy danych sql przy podaniu dokladnej komendy
         //szczytuje kazdy rekord jako jeden element dynamicznego typu T
         //Podajesz obiekt on sam sie sczyta lol
-        public List<T> loadDataToList<T>(MySqlCommand querryCommand) where T : new()
+        public List<T> loadDataToList<T>(MySqlCommand querryCommand, bool safeDebugMsgOff = false) where T : new()
         {
             //tworzenie listy obiektow z Typem T jakiegos obiektu podanego przy wywolaniu
             var list = new List<T>();
@@ -135,7 +141,7 @@ namespace Wirtualna_Uczelnia
             {
                 // MySqlCommand -> komenda do wysylania w sql
                 MySqlCommand cmd = querryCommand;
-                cmd.Connection = _conn;
+                cmd.Connection = Connection;
 
                 //stworzenie obiektu readera ktory szczytuje wszystkie rowy pokolei.
                 MySqlDataReader reader = cmd.ExecuteReader();
@@ -165,7 +171,8 @@ namespace Wirtualna_Uczelnia
                         catch (Exception ex)
                         {
                             //MessageBox.Show("Generalnie jezeli czytasz ta wiadomosc to chujowow");
-                            MessageBox.Show(ex.Message);
+                            if (!safeDebugMsgOff)
+                                MessageBox.Show(ex.Message);
                         }
                         
                     }
@@ -190,7 +197,7 @@ namespace Wirtualna_Uczelnia
         }
 
         //sprobuj sie polaczyc 
-        private bool tryConnect()
+        public bool tryConnect()
         {
             try
             {
@@ -205,7 +212,7 @@ namespace Wirtualna_Uczelnia
             }
         }
         //sprobuj sie rozlaczyc
-        private bool tryDissconect()
+        public bool tryDissconect()
         {
             try
             {

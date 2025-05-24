@@ -1,13 +1,11 @@
 using System.Diagnostics;
 using Wirtualna_Uczelnia.formy;
+using Wirtualna_Uczelnia.klasy;
 
 namespace Wirtualna_Uczelnia
 {
     public partial class FormLogowanie : Form
     {
-        LoginMenager loginMenager;
-
-
         //GLOBALNA przekazywana zmienna debugMode ktora w calym programie i wszystkich klasach ma odpalac tryb dewelopera.
         //JAK ROBICIE JAKIEGOS DEBUG MODE TO TA ZMIENNA WLASNIE MA TYM STEROWAC.
         //w konstruktorze ma byc podawana najlepiej, nie osobno w argumentach funkcji pls nie robicie tak
@@ -19,7 +17,7 @@ namespace Wirtualna_Uczelnia
         {
             InitializeComponent();
 
-            loginMenager = new LoginMenager(debugMode);
+            SesionControl.loginMenager = new LoginMenager(debugMode);
         }
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -47,7 +45,7 @@ namespace Wirtualna_Uczelnia
             if (txtLogin.Text.Length == 0 || txtPassword.Text.Length == 0)
                 return;
 
-            if (loginMenager.tryLogin(txtLogin.Text, txtPassword.Text))
+            if (SesionControl.loginMenager.tryLogin(txtLogin.Text, txtPassword.Text))
                 this.Hide();
 
             //mozna kiedys dodac system sprawdzania czy email to email ale to brzmi tak nie potrzebnie a ciezko
