@@ -83,9 +83,129 @@ namespace Wirtualna_Uczelnia.Properties {
         /// <summary>
         ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Bez_nazwy_15_202505260855_36185 {
+            get {
+                object obj = ResourceManager.GetObject("Bez nazwy 15_202505260855_36185", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Bez_nazwy_19_202505260912_55015 {
+            get {
+                object obj = ResourceManager.GetObject("Bez nazwy 19_202505260912_55015", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Bez_nazwy_19_202505260912_55015__4_ {
+            get {
+                object obj = ResourceManager.GetObject("Bez nazwy 19_202505260912_55015 (4)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Bez_nazwy_19_202505260912_55015__5_ {
+            get {
+                object obj = ResourceManager.GetObject("Bez nazwy 19_202505260912_55015 (5)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Bez_nazwy_19_202505260912_550151 {
+            get {
+                object obj = ResourceManager.GetObject("Bez nazwy 19_202505260912_550151", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Bez_nazwy_19_202505260912_550152 {
+            get {
+                object obj = ResourceManager.GetObject("Bez nazwy 19_202505260912_550152", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Bez_nazwy_19_202505260912_550153 {
+            get {
+                object obj = ResourceManager.GetObject("Bez nazwy 19_202505260912_550153", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Bez_nazwy_24_202505261058_58516 {
+            get {
+                object obj = ResourceManager.GetObject("Bez nazwy 24_202505261058_58516", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Bez_nazwy_7_202505212012_55935 {
             get {
                 object obj = ResourceManager.GetObject("Bez nazwy 7_202505212012_55935", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap EDYTUJKALENDARZ {
+            get {
+                object obj = ResourceManager.GetObject("EDYTUJKALENDARZ", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap EDYTUJKALENDARZ__1_ {
+            get {
+                object obj = ResourceManager.GetObject("EDYTUJKALENDARZ (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap EDYTUJKALENDARZ__2_ {
+            get {
+                object obj = ResourceManager.GetObject("EDYTUJKALENDARZ (2)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap EDYTUJKALENDARZ1 {
+            get {
+                object obj = ResourceManager.GetObject("EDYTUJKALENDARZ1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
