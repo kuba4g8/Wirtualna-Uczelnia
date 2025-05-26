@@ -12,6 +12,7 @@ namespace Wirtualna_Uczelnia.formy
         private DateTime currentDate = DateTime.Now;
         private List<CalendarEvent> wydarzenia = new List<CalendarEvent>();
         private sqlMenager sqlManager;
+        private Student loggedStudent; // Referencja do zalogowanego studenta
 
         // Kolory dla ró¿nych typów wydarzeñ
         private static readonly Color KolorKolokwium = Color.LightCoral;
@@ -23,9 +24,18 @@ namespace Wirtualna_Uczelnia.formy
 
         public FormKalendarz()
         {
+            // Najpierw inicjalizuj komponenty z Designer.cs
             InitializeComponent();
+
+            // Dopiero potem wykonuj inne operacje
             sqlManager = new sqlMenager();
-            
+
+            // Pobierz zalogowanego studenta z klasy SesionControl
+            if (SesionControl.loginMenager != null && SesionControl.loginMenager.studentData != null)
+            {
+                loggedStudent = SesionControl.loginMenager.studentData;
+            }
+
             // Za³adowanie wydarzeñ z bazy danych
             LoadEventsFromDatabase();
             AktualizujKalendarz();
@@ -35,15 +45,83 @@ namespace Wirtualna_Uczelnia.formy
         {
             wydarzenia.Clear();
 
-            // Pobieranie wszystkich wydarzeñ (bez filtrowania po nauczycielu)
-            string command = "SELECT * FROM calendar_events";
-            MySqlCommand cmd = new MySqlCommand(command);
-
-            List<CalendarEvent> dbEvents = sqlManager.loadDataToList<CalendarEvent>(cmd);
-            if (dbEvents != null)
+            // Jeœli nie ma zalogowanego studenta, pobierz tylko wydarzenia ogólne
+            if (loggedStudent == null)
             {
-                wydarzenia.AddRange(dbEvents);
+                string command = "SELECT * FROM calendar_events WHERE id_grupy IS NULL";
+                MySqlCommand cmd = new MySqlCommand(command);
+                List<CalendarEvent> dbEvents = sqlManager.loadDataToList<CalendarEvent>(cmd);
+                if (dbEvents != null)
+                {
+                    wydarzenia.AddRange(dbEvents);
+                }
+                return;
             }
+
+            // Pobierz grupy studenta wy³¹cznie z tabeli studenci_grupy
+            List<int> studentGroups = GetStudentGroups(loggedStudent.userID);
+
+            // Jeœli student nale¿y do jakichœ grup, pobierz wydarzenia dla tych grup
+            if (studentGroups.Count > 0)
+            {
+                string groupIds = string.Join(",", studentGroups);
+                string command = $"SELECT * FROM calendar_events WHERE id_grupy IS NULL OR id_grupy IN ({groupIds})";
+
+                MySqlCommand cmd = new MySqlCommand(command);
+                List<CalendarEvent> dbEvents = sqlManager.loadDataToList<CalendarEvent>(cmd);
+                if (dbEvents != null)
+                {
+                    wydarzenia.AddRange(dbEvents);
+                }
+            }
+            else
+            {
+                // Jeœli student nie nale¿y do ¿adnej grupy, pobierz tylko ogólne wydarzenia
+                string command = "SELECT * FROM calendar_events WHERE id_grupy IS NULL";
+                MySqlCommand cmd = new MySqlCommand(command);
+                List<CalendarEvent> dbEvents = sqlManager.loadDataToList<CalendarEvent>(cmd);
+                if (dbEvents != null)
+                {
+                    wydarzenia.AddRange(dbEvents);
+                }
+            }
+        }
+
+        // Zmodyfikowana metoda pobieraj¹ca listy grup, do których nale¿y student - wy³¹cznie z tabeli studenci_grupy
+        private List<int> GetStudentGroups(int studentId)
+        {
+            List<int> groups = new List<int>();
+
+            // Pobierz grupy studenta tylko z tabeli studenci_grupy
+            string command = "SELECT id_grupy FROM studenci_grupy WHERE userID = @userId";
+            MySqlCommand cmd = new MySqlCommand(command);
+            cmd.Parameters.AddWithValue("@userId", studentId);
+
+            try
+            {
+                if (sqlManager.tryConnect())
+                {
+                    cmd.Connection = sqlManager.Connection;
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int groupId = reader.GetInt32(0);
+                            groups.Add(groupId);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("B³¹d podczas pobierania grup studenta: " + ex.Message);
+            }
+            finally
+            {
+                sqlManager.tryDissconect();
+            }
+
+            return groups;
         }
 
         private void AktualizujKalendarz()
@@ -198,8 +276,9 @@ namespace Wirtualna_Uczelnia.formy
                     "";
 
                 string przedmiotInfo = !string.IsNullOrEmpty(wydarzenie.subject) ? $" ({wydarzenie.subject})" : "";
-                
-                listBoxWydarzenia.Items.Add($"[{wydarzenie.event_type}] {wydarzenie.title}{przedmiotInfo} {czasInfo} - {wydarzenie.description}");
+                string grupaInfo = wydarzenie.id_grupy.HasValue ? $" [Grupa: {wydarzenie.id_grupy}]" : " [Wszyscy]";
+
+                listBoxWydarzenia.Items.Add($"[{wydarzenie.event_type}] {wydarzenie.title}{przedmiotInfo}{grupaInfo} {czasInfo} - {wydarzenie.description}");
             }
 
             if (listBoxWydarzenia.Items.Count == 0)
@@ -232,6 +311,16 @@ namespace Wirtualna_Uczelnia.formy
                     break;
                 }
             }
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void FormKalendarz_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

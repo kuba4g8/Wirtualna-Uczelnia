@@ -23,11 +23,11 @@
         #region Windows Form Designer generated code
 
         /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
+        /// Required method for Designer support - do not modify the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TeacherCalendarEditor));
             panelDni = new Panel();
             panelNaglowki = new Panel();
             lblNiedziela = new Label();
@@ -64,14 +64,17 @@
             chkWielodniowe = new CheckBox();
             dtpDataZakonczenia = new DateTimePicker();
             label8 = new Label();
+            lblGrupa = new Label();
+            cmbGrupa = new ComboBox();
             panelNaglowki.SuspendLayout();
             SuspendLayout();
             // 
             // panelDni
             // 
-            panelDni.Location = new Point(14, 80);
+            panelDni.Location = new Point(18, 100);
+            panelDni.Margin = new Padding(4, 4, 4, 4);
             panelDni.Name = "panelDni";
-            panelDni.Size = new Size(504, 339);
+            panelDni.Size = new Size(650, 425);
             panelDni.TabIndex = 0;
             // 
             // panelNaglowki
@@ -83,18 +86,20 @@
             panelNaglowki.Controls.Add(lblSroda);
             panelNaglowki.Controls.Add(lblWtorek);
             panelNaglowki.Controls.Add(lblPoniedzialek);
-            panelNaglowki.Location = new Point(14, 46);
+            panelNaglowki.Location = new Point(18, 58);
+            panelNaglowki.Margin = new Padding(4, 4, 4, 4);
             panelNaglowki.Name = "panelNaglowki";
-            panelNaglowki.Size = new Size(504, 30);
+            panelNaglowki.Size = new Size(630, 38);
             panelNaglowki.TabIndex = 1;
             // 
             // lblNiedziela
             // 
             lblNiedziela.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblNiedziela.ForeColor = Color.Red;
-            lblNiedziela.Location = new Point(432, 0);
+            lblNiedziela.Location = new Point(540, 0);
+            lblNiedziela.Margin = new Padding(4, 0, 4, 0);
             lblNiedziela.Name = "lblNiedziela";
-            lblNiedziela.Size = new Size(72, 30);
+            lblNiedziela.Size = new Size(90, 38);
             lblNiedziela.TabIndex = 6;
             lblNiedziela.Text = "Nd";
             lblNiedziela.TextAlign = ContentAlignment.MiddleCenter;
@@ -102,9 +107,10 @@
             // lblSobota
             // 
             lblSobota.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblSobota.Location = new Point(360, 0);
+            lblSobota.Location = new Point(450, 0);
+            lblSobota.Margin = new Padding(4, 0, 4, 0);
             lblSobota.Name = "lblSobota";
-            lblSobota.Size = new Size(72, 30);
+            lblSobota.Size = new Size(90, 38);
             lblSobota.TabIndex = 5;
             lblSobota.Text = "Sb";
             lblSobota.TextAlign = ContentAlignment.MiddleCenter;
@@ -112,9 +118,10 @@
             // lblPiatek
             // 
             lblPiatek.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblPiatek.Location = new Point(288, 0);
+            lblPiatek.Location = new Point(360, 0);
+            lblPiatek.Margin = new Padding(4, 0, 4, 0);
             lblPiatek.Name = "lblPiatek";
-            lblPiatek.Size = new Size(72, 30);
+            lblPiatek.Size = new Size(90, 38);
             lblPiatek.TabIndex = 4;
             lblPiatek.Text = "Pt";
             lblPiatek.TextAlign = ContentAlignment.MiddleCenter;
@@ -122,9 +129,10 @@
             // lblCzwartek
             // 
             lblCzwartek.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblCzwartek.Location = new Point(216, 0);
+            lblCzwartek.Location = new Point(270, 0);
+            lblCzwartek.Margin = new Padding(4, 0, 4, 0);
             lblCzwartek.Name = "lblCzwartek";
-            lblCzwartek.Size = new Size(72, 30);
+            lblCzwartek.Size = new Size(90, 38);
             lblCzwartek.TabIndex = 3;
             lblCzwartek.Text = "Czw";
             lblCzwartek.TextAlign = ContentAlignment.MiddleCenter;
@@ -132,9 +140,10 @@
             // lblSroda
             // 
             lblSroda.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblSroda.Location = new Point(144, 0);
+            lblSroda.Location = new Point(180, 0);
+            lblSroda.Margin = new Padding(4, 0, 4, 0);
             lblSroda.Name = "lblSroda";
-            lblSroda.Size = new Size(72, 30);
+            lblSroda.Size = new Size(90, 38);
             lblSroda.TabIndex = 2;
             lblSroda.Text = "Śr";
             lblSroda.TextAlign = ContentAlignment.MiddleCenter;
@@ -142,9 +151,10 @@
             // lblWtorek
             // 
             lblWtorek.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblWtorek.Location = new Point(72, 0);
+            lblWtorek.Location = new Point(90, 0);
+            lblWtorek.Margin = new Padding(4, 0, 4, 0);
             lblWtorek.Name = "lblWtorek";
-            lblWtorek.Size = new Size(72, 30);
+            lblWtorek.Size = new Size(90, 38);
             lblWtorek.TabIndex = 1;
             lblWtorek.Text = "Wt";
             lblWtorek.TextAlign = ContentAlignment.MiddleCenter;
@@ -153,8 +163,9 @@
             // 
             lblPoniedzialek.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblPoniedzialek.Location = new Point(0, 0);
+            lblPoniedzialek.Margin = new Padding(4, 0, 4, 0);
             lblPoniedzialek.Name = "lblPoniedzialek";
-            lblPoniedzialek.Size = new Size(72, 30);
+            lblPoniedzialek.Size = new Size(90, 38);
             lblPoniedzialek.TabIndex = 0;
             lblPoniedzialek.Text = "Pn";
             lblPoniedzialek.TextAlign = ContentAlignment.MiddleCenter;
@@ -162,18 +173,20 @@
             // lblMiesiacRok
             // 
             lblMiesiacRok.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            lblMiesiacRok.Location = new Point(14, 9);
+            lblMiesiacRok.Location = new Point(18, 11);
+            lblMiesiacRok.Margin = new Padding(4, 0, 4, 0);
             lblMiesiacRok.Name = "lblMiesiacRok";
-            lblMiesiacRok.Size = new Size(245, 34);
+            lblMiesiacRok.Size = new Size(306, 42);
             lblMiesiacRok.TabIndex = 1;
             lblMiesiacRok.Text = "Miesiąc Rok";
             lblMiesiacRok.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // btnPoprzedniMiesiac
             // 
-            btnPoprzedniMiesiac.Location = new Point(265, 9);
+            btnPoprzedniMiesiac.Location = new Point(331, 11);
+            btnPoprzedniMiesiac.Margin = new Padding(4, 4, 4, 4);
             btnPoprzedniMiesiac.Name = "btnPoprzedniMiesiac";
-            btnPoprzedniMiesiac.Size = new Size(67, 34);
+            btnPoprzedniMiesiac.Size = new Size(84, 42);
             btnPoprzedniMiesiac.TabIndex = 2;
             btnPoprzedniMiesiac.Text = "<<";
             btnPoprzedniMiesiac.UseVisualStyleBackColor = true;
@@ -181,9 +194,10 @@
             // 
             // btnNastepnyMiesiac
             // 
-            btnNastepnyMiesiac.Location = new Point(338, 9);
+            btnNastepnyMiesiac.Location = new Point(422, 11);
+            btnNastepnyMiesiac.Margin = new Padding(4, 4, 4, 4);
             btnNastepnyMiesiac.Name = "btnNastepnyMiesiac";
-            btnNastepnyMiesiac.Size = new Size(67, 34);
+            btnNastepnyMiesiac.Size = new Size(84, 42);
             btnNastepnyMiesiac.TabIndex = 3;
             btnNastepnyMiesiac.Text = ">>";
             btnNastepnyMiesiac.UseVisualStyleBackColor = true;
@@ -191,9 +205,10 @@
             // 
             // btnDzisiaj
             // 
-            btnDzisiaj.Location = new Point(411, 9);
+            btnDzisiaj.Location = new Point(514, 11);
+            btnDzisiaj.Margin = new Padding(4, 4, 4, 4);
             btnDzisiaj.Name = "btnDzisiaj";
-            btnDzisiaj.Size = new Size(107, 34);
+            btnDzisiaj.Size = new Size(134, 42);
             btnDzisiaj.TabIndex = 4;
             btnDzisiaj.Text = "Dzisiaj";
             btnDzisiaj.UseVisualStyleBackColor = true;
@@ -202,10 +217,11 @@
             // lstWydarzenia
             // 
             lstWydarzenia.FormattingEnabled = true;
-            lstWydarzenia.ItemHeight = 20;
-            lstWydarzenia.Location = new Point(14, 455);
+            lstWydarzenia.ItemHeight = 25;
+            lstWydarzenia.Location = new Point(18, 569);
+            lstWydarzenia.Margin = new Padding(4, 4, 4, 4);
             lstWydarzenia.Name = "lstWydarzenia";
-            lstWydarzenia.Size = new Size(504, 164);
+            lstWydarzenia.Size = new Size(649, 254);
             lstWydarzenia.TabIndex = 5;
             lstWydarzenia.SelectedIndexChanged += lstWydarzenia_SelectedIndexChanged;
             // 
@@ -213,51 +229,57 @@
             // 
             lblWybranaDzien.AutoSize = true;
             lblWybranaDzien.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold);
-            lblWybranaDzien.Location = new Point(14, 428);
+            lblWybranaDzien.Location = new Point(18, 535);
+            lblWybranaDzien.Margin = new Padding(4, 0, 4, 0);
             lblWybranaDzien.Name = "lblWybranaDzien";
-            lblWybranaDzien.Size = new Size(127, 23);
+            lblWybranaDzien.Size = new Size(150, 30);
             lblWybranaDzien.TabIndex = 6;
             lblWybranaDzien.Text = "Wybrana data";
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(539, 46);
+            label1.Location = new Point(688, 58);
+            label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new Size(46, 20);
+            label1.Size = new Size(54, 25);
             label1.TabIndex = 7;
             label1.Text = "Tytuł:";
             // 
             // txtTytul
             // 
-            txtTytul.Location = new Point(539, 69);
+            txtTytul.Location = new Point(688, 86);
+            txtTytul.Margin = new Padding(4, 4, 4, 4);
             txtTytul.Name = "txtTytul";
-            txtTytul.Size = new Size(326, 27);
+            txtTytul.Size = new Size(499, 31);
             txtTytul.TabIndex = 8;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(539, 109);
+            label2.Location = new Point(688, 136);
+            label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
-            label2.Size = new Size(42, 20);
+            label2.Size = new Size(53, 25);
             label2.TabIndex = 9;
             label2.Text = "Opis:";
             // 
             // txtOpis
             // 
-            txtOpis.Location = new Point(539, 132);
+            txtOpis.Location = new Point(688, 165);
+            txtOpis.Margin = new Padding(4, 4, 4, 4);
             txtOpis.Multiline = true;
             txtOpis.Name = "txtOpis";
-            txtOpis.Size = new Size(326, 86);
+            txtOpis.Size = new Size(499, 106);
             txtOpis.TabIndex = 10;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(539, 271);
+            label3.Location = new Point(688, 419);
+            label3.Margin = new Padding(4, 0, 4, 0);
             label3.Name = "label3";
-            label3.Size = new Size(113, 20);
+            label3.Size = new Size(137, 25);
             label3.TabIndex = 11;
             label3.Text = "Typ wydarzenia:";
             // 
@@ -265,18 +287,20 @@
             // 
             cmbTypWydarzenia.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbTypWydarzenia.FormattingEnabled = true;
-            cmbTypWydarzenia.Location = new Point(539, 294);
+            cmbTypWydarzenia.Location = new Point(688, 448);
+            cmbTypWydarzenia.Margin = new Padding(4, 4, 4, 4);
             cmbTypWydarzenia.Name = "cmbTypWydarzenia";
-            cmbTypWydarzenia.Size = new Size(326, 28);
+            cmbTypWydarzenia.Size = new Size(499, 33);
             cmbTypWydarzenia.TabIndex = 12;
             // 
             // btnDodajWydarzenie
             // 
             btnDodajWydarzenie.BackColor = Color.LightGreen;
             btnDodajWydarzenie.FlatStyle = FlatStyle.Flat;
-            btnDodajWydarzenie.Location = new Point(539, 480);
+            btnDodajWydarzenie.Location = new Point(687, 632);
+            btnDodajWydarzenie.Margin = new Padding(4, 4, 4, 4);
             btnDodajWydarzenie.Name = "btnDodajWydarzenie";
-            btnDodajWydarzenie.Size = new Size(326, 43);
+            btnDodajWydarzenie.Size = new Size(500, 56);
             btnDodajWydarzenie.TabIndex = 13;
             btnDodajWydarzenie.Text = "Dodaj/Aktualizuj wydarzenie";
             btnDodajWydarzenie.UseVisualStyleBackColor = false;
@@ -287,9 +311,10 @@
             btnUsunWydarzenie.BackColor = Color.LightCoral;
             btnUsunWydarzenie.Enabled = false;
             btnUsunWydarzenie.FlatStyle = FlatStyle.Flat;
-            btnUsunWydarzenie.Location = new Point(539, 529);
+            btnUsunWydarzenie.Location = new Point(688, 701);
+            btnUsunWydarzenie.Margin = new Padding(4, 4, 4, 4);
             btnUsunWydarzenie.Name = "btnUsunWydarzenie";
-            btnUsunWydarzenie.Size = new Size(326, 43);
+            btnUsunWydarzenie.Size = new Size(500, 56);
             btnUsunWydarzenie.TabIndex = 14;
             btnUsunWydarzenie.Text = "Usuń wybrane wydarzenie";
             btnUsunWydarzenie.UseVisualStyleBackColor = false;
@@ -297,9 +322,10 @@
             // 
             // btnPowrot
             // 
-            btnPowrot.Location = new Point(539, 578);
+            btnPowrot.Location = new Point(688, 767);
+            btnPowrot.Margin = new Padding(4, 4, 4, 4);
             btnPowrot.Name = "btnPowrot";
-            btnPowrot.Size = new Size(326, 41);
+            btnPowrot.Size = new Size(500, 56);
             btnPowrot.TabIndex = 15;
             btnPowrot.Text = "Powrót do panelu";
             btnPowrot.UseVisualStyleBackColor = true;
@@ -308,26 +334,29 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(539, 333);
+            label4.Location = new Point(688, 495);
+            label4.Margin = new Padding(4, 0, 4, 0);
             label4.Name = "label4";
-            label4.Size = new Size(45, 20);
+            label4.Size = new Size(53, 25);
             label4.TabIndex = 16;
             label4.Text = "Data:";
             // 
             // dtpDataWydarzenia
             // 
             dtpDataWydarzenia.Format = DateTimePickerFormat.Short;
-            dtpDataWydarzenia.Location = new Point(539, 356);
+            dtpDataWydarzenia.Location = new Point(688, 524);
+            dtpDataWydarzenia.Margin = new Padding(4, 4, 4, 4);
             dtpDataWydarzenia.Name = "dtpDataWydarzenia";
-            dtpDataWydarzenia.Size = new Size(148, 27);
+            dtpDataWydarzenia.Size = new Size(184, 31);
             dtpDataWydarzenia.TabIndex = 17;
             // 
             // chkCzas
             // 
             chkCzas.AutoSize = true;
-            chkCzas.Location = new Point(539, 398);
+            chkCzas.Location = new Point(688, 576);
+            chkCzas.Margin = new Padding(4, 4, 4, 4);
             chkCzas.Name = "chkCzas";
-            chkCzas.Size = new Size(155, 24);
+            chkCzas.Size = new Size(157, 29);
             chkCzas.TabIndex = 18;
             chkCzas.Text = "Określ godziny";
             chkCzas.UseVisualStyleBackColor = true;
@@ -337,28 +366,31 @@
             // 
             dtpGodzinaPoczatek.Enabled = false;
             dtpGodzinaPoczatek.Format = DateTimePickerFormat.Time;
-            dtpGodzinaPoczatek.Location = new Point(613, 428);
+            dtpGodzinaPoczatek.Location = new Point(848, 595);
+            dtpGodzinaPoczatek.Margin = new Padding(4, 4, 4, 4);
             dtpGodzinaPoczatek.Name = "dtpGodzinaPoczatek";
             dtpGodzinaPoczatek.ShowUpDown = true;
-            dtpGodzinaPoczatek.Size = new Size(122, 27);
+            dtpGodzinaPoczatek.Size = new Size(152, 31);
             dtpGodzinaPoczatek.TabIndex = 19;
             // 
             // dtpGodzinaKoniec
             // 
             dtpGodzinaKoniec.Enabled = false;
             dtpGodzinaKoniec.Format = DateTimePickerFormat.Time;
-            dtpGodzinaKoniec.Location = new Point(741, 428);
+            dtpGodzinaKoniec.Location = new Point(1035, 594);
+            dtpGodzinaKoniec.Margin = new Padding(4, 4, 4, 4);
             dtpGodzinaKoniec.Name = "dtpGodzinaKoniec";
             dtpGodzinaKoniec.ShowUpDown = true;
-            dtpGodzinaKoniec.Size = new Size(122, 27);
+            dtpGodzinaKoniec.Size = new Size(152, 31);
             dtpGodzinaKoniec.TabIndex = 20;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(539, 431);
+            label5.Location = new Point(688, 618);
+            label5.Margin = new Padding(4, 0, 4, 0);
             label5.Name = "label5";
-            label5.Size = new Size(68, 20);
+            label5.Size = new Size(81, 25);
             label5.TabIndex = 21;
             label5.Text = "Godziny:";
             // 
@@ -366,9 +398,10 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 9F);
-            label6.Location = new Point(613, 405);
+            label6.Location = new Point(853, 571);
+            label6.Margin = new Padding(4, 0, 4, 0);
             label6.Name = "label6";
-            label6.Size = new Size(84, 20);
+            label6.Size = new Size(81, 25);
             label6.TabIndex = 22;
             label6.Text = "Początek";
             label6.TextAlign = ContentAlignment.MiddleCenter;
@@ -376,25 +409,28 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(539, 228);
+            label7.Location = new Point(688, 339);
+            label7.Margin = new Padding(4, 0, 4, 0);
             label7.Name = "label7";
-            label7.Size = new Size(80, 20);
+            label7.Size = new Size(97, 25);
             label7.TabIndex = 23;
             label7.Text = "Przedmiot:";
             // 
             // txtPrzedmiot
             // 
-            txtPrzedmiot.Location = new Point(539, 251);
+            txtPrzedmiot.Location = new Point(688, 368);
+            txtPrzedmiot.Margin = new Padding(4, 4, 4, 4);
             txtPrzedmiot.Name = "txtPrzedmiot";
-            txtPrzedmiot.Size = new Size(326, 27);
+            txtPrzedmiot.Size = new Size(499, 31);
             txtPrzedmiot.TabIndex = 25;
             // 
             // chkWielodniowe
             // 
             chkWielodniowe.AutoSize = true;
-            chkWielodniowe.Location = new Point(716, 333);
+            chkWielodniowe.Location = new Point(895, 495);
+            chkWielodniowe.Margin = new Padding(4, 4, 4, 4);
             chkWielodniowe.Name = "chkWielodniowe";
-            chkWielodniowe.Size = new Size(149, 24);
+            chkWielodniowe.Size = new Size(141, 29);
             chkWielodniowe.TabIndex = 26;
             chkWielodniowe.Text = "Wielodniowe";
             chkWielodniowe.UseVisualStyleBackColor = true;
@@ -404,25 +440,52 @@
             // 
             dtpDataZakonczenia.Enabled = false;
             dtpDataZakonczenia.Format = DateTimePickerFormat.Short;
-            dtpDataZakonczenia.Location = new Point(716, 356);
+            dtpDataZakonczenia.Location = new Point(895, 524);
+            dtpDataZakonczenia.Margin = new Padding(4, 4, 4, 4);
             dtpDataZakonczenia.Name = "dtpDataZakonczenia";
-            dtpDataZakonczenia.Size = new Size(149, 27);
+            dtpDataZakonczenia.Size = new Size(185, 31);
             dtpDataZakonczenia.TabIndex = 27;
             // 
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(692, 360);
+            label8.Location = new Point(865, 529);
+            label8.Margin = new Padding(4, 0, 4, 0);
             label8.Name = "label8";
-            label8.Size = new Size(19, 20);
+            label8.Size = new Size(19, 25);
             label8.TabIndex = 28;
             label8.Text = "-";
             // 
+            // lblGrupa
+            // 
+            lblGrupa.AutoSize = true;
+            lblGrupa.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblGrupa.Location = new Point(688, 285);
+            lblGrupa.Margin = new Padding(4, 0, 4, 0);
+            lblGrupa.Name = "lblGrupa";
+            lblGrupa.Size = new Size(69, 25);
+            lblGrupa.TabIndex = 29;
+            lblGrupa.Text = "Grupa:";
+            // 
+            // cmbGrupa
+            // 
+            cmbGrupa.DisplayMember = "Value";
+            cmbGrupa.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbGrupa.FormattingEnabled = true;
+            cmbGrupa.Location = new Point(781, 285);
+            cmbGrupa.Margin = new Padding(4, 4, 4, 4);
+            cmbGrupa.Name = "cmbGrupa";
+            cmbGrupa.Size = new Size(436, 33);
+            cmbGrupa.TabIndex = 30;
+            cmbGrupa.ValueMember = "Key";
+            // 
             // TeacherCalendarEditor
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(882, 653);
+            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
+            BackgroundImageLayout = ImageLayout.Stretch;
+            ClientSize = new Size(1250, 875);
             Controls.Add(label8);
             Controls.Add(dtpDataZakonczenia);
             Controls.Add(chkWielodniowe);
@@ -452,8 +515,12 @@
             Controls.Add(lblMiesiacRok);
             Controls.Add(panelNaglowki);
             Controls.Add(panelDni);
+            Controls.Add(lblGrupa);
+            Controls.Add(cmbGrupa);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            Margin = new Padding(4, 4, 4, 4);
             MaximizeBox = false;
+            MinimumSize = new Size(1244, 861);
             Name = "TeacherCalendarEditor";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Edytor kalendarza";
@@ -500,5 +567,7 @@
         private CheckBox chkWielodniowe;
         private DateTimePicker dtpDataZakonczenia;
         private Label label8;
+        private Label lblGrupa;
+        private ComboBox cmbGrupa;
     }
 }

@@ -49,6 +49,7 @@
             regulamin = new LinkLabel();
             akademik_wniosek = new LinkLabel();
             akademik_regulamin = new LinkLabel();
+            stypendia = new LinkLabel();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             SuspendLayout();
             // 
@@ -252,11 +253,23 @@
             akademik_regulamin.Text = "Regulamin przyznawania miejsc w Studenckich Domach Marynarza";
             akademik_regulamin.LinkClicked += linkLabel15_LinkClicked;
             // 
+            // stypendia
+            // 
+           /* stypendia.AutoSize = true;
+            stypendia.Location = new Point(615, 143);
+            stypendia.Name = "stypendia";
+            stypendia.Size = new Size(90, 25);
+            stypendia.TabIndex = 35;
+            stypendia.TabStop = true;
+            stypendia.Text = "Stypendia";
+            stypendia.LinkClicked += this.linkLabel9_LinkClicked_1;*/
+            // 
             // Dokumenty
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(stypendia);
             Controls.Add(akademik_regulamin);
             Controls.Add(akademik_wniosek);
             Controls.Add(regulamin);
@@ -305,5 +318,7 @@
         private LinkLabel regulamin;
         private LinkLabel akademik_wniosek;
         private LinkLabel akademik_regulamin;
+        private Label stypendia;
+      //  private LinkLabel stypendia;
     }
 }

@@ -121,7 +121,7 @@ namespace Wirtualna_Uczelnia.formy
         {
             Task.Delay(500).ContinueWith(_ =>
             {
-                // zamknięcie formularza (na wątku UI)
+                // zamknięcie formularza 
                 this.Invoke((Action)(() => this.Close()));
             });
             return "Do zobaczenia!";

@@ -123,7 +123,7 @@ namespace Wirtualna_Uczelnia
             }
             else // UZYTKOWNIK TO STUDENT
             {
-                querry = "SELECT * FROM studenci WHERE userID = @userID";
+                querry = "SELECT s.userID, s.imie, s.nazwisko, s.nr_indeksu, s.semestr, w.nazwa AS wydzial, k.nazwa_kierunku AS kierunek, s.id_kierunku, s.id_grupy\r\nFROM studenci s\r\nLEFT JOIN kierunki k ON s.id_kierunku = k.id_kierunku\r\nLEFT JOIN wydzialy w ON k.id_wydzialu = w.id_wydzialu\r\nWHERE s.userID = @userID;";
                 studentData = returnUserData<Student>(querry, userID);
                 isTeacher = false;
 
@@ -296,12 +296,15 @@ namespace Wirtualna_Uczelnia
         public int semestr { get; set; }
         public string wydzial { get; set; }
         public string kierunek { get; set; }
+        public int id_kierunku { get; set; }
+        public int id_grupy { get; set; }
     }
 
     public class Pracownik : Osoba
     {
         public string stanowisko { get; set; }
         public string stopien_naukowy { get; set; } // moze byc null
+        public string konsultacje { get; set; } // moze byc null
     }
 
 }

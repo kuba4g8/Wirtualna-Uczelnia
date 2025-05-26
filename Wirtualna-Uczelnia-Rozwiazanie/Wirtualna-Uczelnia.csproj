@@ -48,6 +48,8 @@
     <Compile Include=".formy\TeacherCalendarEditor.Designer.cs" />
     <Compile Include=".formy\UserControls\ContactUserControl.cs" />
     <Compile Include=".formy\UserControls\ContactUserControl.Designer.cs" />
+    <Compile Include=".formy\UserControls\PlanLekcjiUserControl.cs" />
+    <Compile Include=".formy\UserControls\PlanLekcjiUserControl.Designer.cs" />
     <Compile Include=".klasy\CalendarEvent.cs" />
     <Compile Include=".klasy\PrzezroczysteTlo.cs" />
     <Compile Include=".klasy\Hasher.cs" />
@@ -80,6 +82,7 @@
     <EmbeddedResource Include=".formy\TeacherPanel.resx" />
     <EmbeddedResource Include=".formy\TeacherCalendarEditor.resx" />
     <EmbeddedResource Include=".formy\UserControls\ContactUserControl.resx" />
+    <EmbeddedResource Include=".formy\UserControls\PlanLekcjiUserControl.resx" />
   </ItemGroup>
 
   <ItemGroup>

@@ -20,6 +20,9 @@
     <Compile Update=".formy\OcenyPanel.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update=".formy\PlanLekcjiUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update=".formy\stareLogowanie.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -54,6 +57,9 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update=".formy\UserControls\ContactUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update=".formy\UserControls\PlanLekcjiUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
   </ItemGroup>
