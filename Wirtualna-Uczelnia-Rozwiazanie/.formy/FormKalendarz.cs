@@ -26,16 +26,16 @@ namespace Wirtualna_Uczelnia.formy
         {
             // Najpierw inicjalizuj komponenty z Designer.cs
             InitializeComponent();
-            
+
             // Dopiero potem wykonuj inne operacje
             sqlManager = new sqlMenager();
-            
+
             // Pobierz zalogowanego studenta z klasy SesionControl
             if (SesionControl.loginMenager != null && SesionControl.loginMenager.studentData != null)
             {
                 loggedStudent = SesionControl.loginMenager.studentData;
             }
-            
+
             // Za³adowanie wydarzeñ z bazy danych
             LoadEventsFromDatabase();
             AktualizujKalendarz();
@@ -66,7 +66,7 @@ namespace Wirtualna_Uczelnia.formy
             {
                 string groupIds = string.Join(",", studentGroups);
                 string command = $"SELECT * FROM calendar_events WHERE id_grupy IS NULL OR id_grupy IN ({groupIds})";
-                
+
                 MySqlCommand cmd = new MySqlCommand(command);
                 List<CalendarEvent> dbEvents = sqlManager.loadDataToList<CalendarEvent>(cmd);
                 if (dbEvents != null)
@@ -277,7 +277,7 @@ namespace Wirtualna_Uczelnia.formy
 
                 string przedmiotInfo = !string.IsNullOrEmpty(wydarzenie.subject) ? $" ({wydarzenie.subject})" : "";
                 string grupaInfo = wydarzenie.id_grupy.HasValue ? $" [Grupa: {wydarzenie.id_grupy}]" : " [Wszyscy]";
-                
+
                 listBoxWydarzenia.Items.Add($"[{wydarzenie.event_type}] {wydarzenie.title}{przedmiotInfo}{grupaInfo} {czasInfo} - {wydarzenie.description}");
             }
 
@@ -311,6 +311,16 @@ namespace Wirtualna_Uczelnia.formy
                     break;
                 }
             }
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void FormKalendarz_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
