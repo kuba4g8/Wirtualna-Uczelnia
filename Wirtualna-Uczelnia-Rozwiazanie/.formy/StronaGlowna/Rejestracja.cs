@@ -43,5 +43,10 @@ namespace Wirtualna_Uczelnia.formy
         {
             MessageBox.Show("Zarejestrowano na zajęcia!");
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

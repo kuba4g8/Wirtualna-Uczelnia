@@ -19,7 +19,7 @@ namespace Wirtualna_Uczelnia
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            MessageBox.Show("Formularz do zmiany hasła został wysłany na podanego maila.");
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

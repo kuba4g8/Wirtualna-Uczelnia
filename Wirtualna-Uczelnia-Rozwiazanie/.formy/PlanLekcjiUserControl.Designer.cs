@@ -79,12 +79,12 @@
             // 
             lblPrzedmiot.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lblPrzedmiot.AutoEllipsis = true;
-            lblPrzedmiot.Font = new Font("Segoe UI Semibold", 22F, FontStyle.Bold);
+            lblPrzedmiot.Font = new Font("Segoe UI Semibold", 23F, FontStyle.Bold);
             lblPrzedmiot.ForeColor = Color.FromArgb(0, 64, 0);
             lblPrzedmiot.Location = new Point(10, 30);
             lblPrzedmiot.Margin = new Padding(3, 5, 10, 0);
             lblPrzedmiot.Name = "lblPrzedmiot";
-            lblPrzedmiot.Size = new Size(580, 130);
+            lblPrzedmiot.Size = new Size(580, 140);
             lblPrzedmiot.TabIndex = 3;
             lblPrzedmiot.Text = "Matematyka dyskretna";
             lblPrzedmiot.TextAlign = ContentAlignment.MiddleCenter;

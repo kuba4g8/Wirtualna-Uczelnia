@@ -49,7 +49,6 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
             {
                 //znalezienie do jakich grup nalezy uzytkownik
                 string querry = "SELECT * FROM studenci_grupy\r\nWHERE userID = @userID";
-                MessageBox.Show(SesionControl.loginMenager.studentData.userID.ToString());
                 MySqlCommand cmd = new MySqlCommand(querry);
                 cmd.Parameters.AddWithValue("@userID", SesionControl.loginMenager.studentData.userID);
                 
@@ -57,8 +56,7 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
 
                 foreach (IDholder id_grupy in grupy)
                 {
-                    
-                    querry = "SELECT p.id_prowadzacego, p.sala, p.dzien, p.godzina_startu, p.godzina_konca, p.przedmiot, p.rodzaj, p.notatki, g.numer_grupy, pr.imie, pr.nazwisko, pr.stopien_naukowy FROM plan_lekcji p JOIN grupy g ON p.id_grupy = g.id_grupy JOIN pracownicy pr ON p.id_prowadzacego = pr.userID WHERE p.id_grupy = @id_grupy;\r\n";
+                    querry = "SELECT \r\n    p.id_prowadzacego, \r\n    p.sala, \r\n    p.dzien, \r\n    p.godzina_startu, \r\n    p.godzina_konca, \r\n    przed.nazwa AS przedmiot, \r\n    p.rodzaj, \r\n    p.notatki, \r\n    g.numer_grupy, \r\n    pr.imie, \r\n    pr.nazwisko, \r\n    pr.stopien_naukowy \r\nFROM \r\n    plan_lekcji p \r\nJOIN \r\n    grupy g ON p.id_grupy = g.id_grupy \r\nJOIN \r\n    pracownicy pr ON p.id_prowadzacego = pr.userID \r\nJOIN \r\n    przedmioty przed ON p.id_przedmiotu = przed.id_przedmiotu\r\nWHERE \r\n    p.id_grupy = @id_grupy;\r\n";
 
                     cmd = new MySqlCommand(querry);
                     cmd.Parameters.AddWithValue("@id_grupy", id_grupy.id_grupy);

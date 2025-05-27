@@ -1,5 +1,6 @@
 ﻿using Google.Protobuf.WellKnownTypes;
 using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Asn1.Mozilla;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,6 +22,8 @@ namespace Wirtualna_Uczelnia
 
         private bool editMode = false;
 
+
+
         AdminMenager adminMenager;
         Pracownik loggedUser; // dane aktualnie zalogowanego uzytkownika
 
@@ -32,7 +35,7 @@ namespace Wirtualna_Uczelnia
             this.loggedUser = loggedUser;
 
             UpdateVisualData funcDelegate = new UpdateVisualData(updateVisualData); // przypisanie utworzenia tej funkcji (delegaty) do zmiennej funcDelegate ktora potem trzeba przekazac w argumentach
-            adminMenager = new AdminMenager(loggedUser, listPracownicy, listStudenci, funcDelegate);
+            adminMenager = new AdminMenager(loggedUser, listPracownicy, listStudenci, comboKierunek, comboWydzial, funcDelegate);
 
 
             updateVisualData();
@@ -61,8 +64,10 @@ namespace Wirtualna_Uczelnia
 
                 txtStudentId.Text = "";
                 txtSemester.Text = "";
-                txtWydzial.Text = "";
-                txtKierunek.Text = "";
+                comboKierunek.SelectedIndex = -1;
+                comboKierunek.Enabled = true;
+                comboWydzial.SelectedIndex = -1;
+                comboWydzial.Enabled = true;
 
                 return;
             }
@@ -94,10 +99,11 @@ namespace Wirtualna_Uczelnia
 
                 txtStudentId.Text = editingStudent.nr_indeksu;
                 txtSemester.Text = editingStudent.semestr.ToString();
-                txtWydzial.Text = editingStudent.wydzial;
-                txtKierunek.Text = editingStudent.kierunek;
-            }
 
+
+                comboKierunek.SelectedIndex = -1;
+                comboWydzial.SelectedIndex = -1;
+            }
 
             editMode = true;
         }
@@ -129,8 +135,8 @@ namespace Wirtualna_Uczelnia
                     !string.IsNullOrEmpty(txtLastName.Text) &&
                     txtStudentId.Text.All(char.IsDigit) &&
                     txtSemester.Text.All(char.IsDigit) &&
-                    !string.IsNullOrEmpty(txtWydzial.Text) &&
-                    !string.IsNullOrEmpty(txtKierunek.Text))
+                    comboKierunek.SelectedIndex != -1 &&
+                    comboWydzial.SelectedIndex != -1)
                 {
                     return true;
                 }
@@ -197,6 +203,11 @@ namespace Wirtualna_Uczelnia
         // lysy jesli ty to pisales jestem mega dumny
         private void btnRegister_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("REJESTRACJA AKTUALNIE NIE DZIALA \nTODO: ZROBIC ABY DZIALALO");
+            MessageBox.Show("ale sokrates");
+
+            return;
+
             if (!checkIfAllTextBoxesAreNull())
             {
                 MessageBox.Show("Jakies dane nie wpisane");
@@ -244,8 +255,8 @@ namespace Wirtualna_Uczelnia
                     nazwisko = txtLastName.Text,
                     nr_indeksu = txtStudentId.Text,
                     semestr = semestr,
-                    wydzial = txtWydzial.Text,
-                    kierunek = txtKierunek.Text
+                    wydzial = "nie dziala", // TO DO naprawic rejestracje uzytkownikow
+                    kierunek = "nie dziala"
                 };
 
                 czyUdalo = adminMenager.insertNewUser(userData, student: student);
@@ -288,21 +299,30 @@ namespace Wirtualna_Uczelnia
         private Student editingStudent;
         private Pracownik editingPracownik;
 
+        private ComboBox comboKierunek; // combo box z kierunkami
+        private ComboBox comboWydzial; // combo box z wydzialami
+
         private sqlMenager sqlMenager; // klasa laczenia do sql
 
         public List<Student> studenci = new List<Student>(); // lista wszystkich studentow pobranych z bazy danych
         public List<Pracownik> pracownicy = new List<Pracownik>(); // lista wszystkich pracownikow pobranych z bazy danych
         public List<TempLoggedUser> loginInfoData = new List<TempLoggedUser>(); // lista informacji o danych logowania uzytkownikow
 
+        public List<Kierunki> kierunki; // lista kierunkow pobranych z bazy danych
+        public List<Wydzialy> wydzialy; // lista wydzialow pobranych z bazy danych
+
+
         private AdminPanel.UpdateVisualData updateVisualData; // utworzenie delegaty tego samego typu co w klasie AdminPanel
 
-        public AdminMenager(Pracownik loggedUser, ListBox listPracownicy, ListBox listStudenci, AdminPanel.UpdateVisualData updateVisualData)
+        public AdminMenager(Pracownik loggedUser, ListBox listPracownicy, ListBox listStudenci, ComboBox comboKierunek, ComboBox comboWydzial, AdminPanel.UpdateVisualData updateVisualData)
         {
             this.loggedUser = loggedUser;
             sqlMenager = new sqlMenager();
             this.listPracownicy = listPracownicy;
             this.listStudenci = listStudenci;
             this.updateVisualData = updateVisualData;
+            this.comboKierunek = comboKierunek;
+            this.comboWydzial = comboWydzial;
 
             loadToListBoxes();
         }
@@ -365,12 +385,17 @@ namespace Wirtualna_Uczelnia
         //funkcja laduje dane z listy studenci i pracownicy do list boxow
         public void loadToListBoxes()
         {
-            addToLists();
+            if (!addToLists())
+            {
+                listPracownicy.Items.Add("error");
+                listStudenci.Items.Add("error");
+                return;
+            }
 
             listPracownicy.Items.Clear();
             listStudenci.Items.Clear();
 
-            for (int i = 0; i <  pracownicy.Count; i++)
+            for (int i = 0; i < pracownicy.Count; i++)
             {
                 listPracownicy.Items.Add($"{pracownicy[i].userID} : {pracownicy[i].imie} , {pracownicy[i].nazwisko} , {pracownicy[i].stanowisko}");
             }
@@ -379,20 +404,36 @@ namespace Wirtualna_Uczelnia
             {
                 listStudenci.Items.Add($"{studenci[i].userID}: {studenci[i].imie} , {studenci[i].nazwisko}");
             }
+            comboKierunek.Items.Clear();
+            foreach (var kierunek in kierunki)
+            {
+                comboKierunek.Items.Add(kierunek.nazwa_kierunku + " " + kierunek.specjalizacja);
+            }
+
+            comboWydzial.Items.Clear();
+            foreach (var wydzial in wydzialy)
+            {
+                comboWydzial.Items.Add(wydzial.nazwa);
+            }
         }
 
         //funkcja dodaje tylko do listy zaleznie od tego czy jest to nauczyciel czy student do wybranej listy. Widac ze ze mnie humanista to chujowy
-        private void addToLists()
+        private bool addToLists()
         {
             try
             {
                 studenci = returnStudents();
                 pracownicy = returnPracownicy();
+                kierunki = returnKierunki();
+                wydzialy = returnWydzialy();
                 loginInfoData = returnLoginData("SELECT * FROM logowanie");
+
+                return true;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+                return false;
             }
         }
 
@@ -407,9 +448,27 @@ namespace Wirtualna_Uczelnia
             return loggedData;
         }
         //laczenie z sqlMenager i pobranie danych z sql
+
+        private List<Kierunki> returnKierunki()
+        {
+            string querry = "SELECT * FROM kierunki";
+            var sqlCommand = new MySqlCommand(querry);
+            var kierunkiObj = sqlMenager.loadDataToList<Kierunki>(sqlCommand);
+            return kierunkiObj;
+        }
+        private List<Wydzialy> returnWydzialy()
+        {
+            string querry = "SELECT * FROM wydzialy";
+            var sqlCommand = new MySqlCommand(querry);
+            var wydzialyObj = sqlMenager.loadDataToList<Wydzialy>(sqlCommand);
+            return wydzialyObj;
+        }
         private List<Student> returnStudents()
         {
-            var sqlCommand = new MySqlCommand("SELECT * FROM studenci");
+            string querry = "SELECT s.userID, s.imie, s.nazwisko, s.nr_indeksu, s.semestr, w.nazwa AS wydzial, k.nazwa_kierunku AS kierunek, s.id_kierunku, s.id_grupy\r\nFROM studenci s\r\nLEFT JOIN kierunki k ON s.id_kierunku = k.id_kierunku\r\nLEFT JOIN wydzialy w ON k.id_wydzialu = w.id_wydzialu";
+
+
+            var sqlCommand = new MySqlCommand(querry);
 
             var studentObjs = sqlMenager.loadDataToList<Student>(sqlCommand);
             return studentObjs;
@@ -424,5 +483,23 @@ namespace Wirtualna_Uczelnia
             return pracownicyObj;
         }
 
+        internal class Wydzialy
+        {
+            public int id_wydzialu { get; set; }
+            public string nazwa { get; set; }
+        }
+
+        internal class Kierunki
+        {
+            public int id_kierunku { get; set; }
+            public int id_opiekunaRoku { get; set; }
+            public int semestr { get; set; }
+            public string nazwa_kierunku { get; set; }
+            public string specjalizacja { get; set; }
+            public string tryb_studiow { get; set; }
+            public string tytul { get; set; }
+            public int id_wydzialu { get; set; }
+        }
     }
+
 }

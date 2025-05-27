@@ -106,8 +106,7 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
         {
             //komenda sql szczytuje dane takie jak userID email imie nazwisko i stopein kazdego nauczyciela bazy danych
             // TO DO zrobic kiedys aby tylko dla nauczyciela ktory uczy pokazywal sie kontakt aleee to nie dzisiaj hihi hehe
-
-            string commandQuerry = "SELECT l.userID,  l.email,  p.imie,  p.nazwisko,  p.stopien_naukowy, p.konsultacje, GROUP_CONCAT(DISTINCT pl.przedmiot SEPARATOR ', ') AS przedmioty\r\nFROM logowanie l\r\nJOIN pracownicy p ON l.userID = p.userID\r\nLEFT JOIN plan_lekcji pl ON pl.id_prowadzacego = l.userID\r\nWHERE l.isTeacher = TRUE\r\nGROUP BY l.userID, l.email, p.imie, p.nazwisko, p.stopien_naukowy;\r\n";
+            string commandQuerry = "SELECT \r\n    l.userID,  \r\n    l.email,  \r\n    p.imie,  \r\n    p.nazwisko,  \r\n    p.stopien_naukowy, \r\n    p.konsultacje, \r\n    GROUP_CONCAT(DISTINCT przed.nazwa SEPARATOR ', ') AS przedmioty\r\nFROM \r\n    logowanie l\r\nJOIN \r\n    pracownicy p ON l.userID = p.userID\r\nLEFT JOIN \r\n    plan_lekcji pl ON pl.id_prowadzacego = l.userID\r\nLEFT JOIN \r\n    przedmioty przed ON pl.id_przedmiotu = przed.id_przedmiotu\r\nWHERE \r\n    l.isTeacher = TRUE\r\nGROUP BY \r\n    l.userID, l.email, p.imie, p.nazwisko, p.stopien_naukowy, p.konsultacje;\r\n\r\n";
 
             MySqlCommand cmd = new MySqlCommand(commandQuerry);
 

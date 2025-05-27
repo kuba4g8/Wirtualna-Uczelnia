@@ -28,37 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
-            pictureBox1 = new PictureBox();
             label1 = new Label();
             comboBox1 = new ComboBox();
             label2 = new Label();
             button1 = new Button();
+            pictureBox1 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = Properties.Resources.Bez_nazwy_11_202505140850_07944;
-            pictureBox1.Location = new Point(-7, -5);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(833, 478);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 0;
-            pictureBox1.TabStop = false;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(146, 124);
+            label1.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            label1.Location = new Point(167, 120);
             label1.Name = "label1";
-            label1.Size = new Size(151, 20);
-            label1.TabIndex = 1;
+            label1.Size = new Size(332, 46);
+            label1.TabIndex = 29;
             label1.Text = "Rejestracja na zajęcia";
+            label1.Click += label1_Click;
             // 
             // comboBox1
             // 
             comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(146, 191);
+            comboBox1.Location = new Point(167, 214);
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(151, 28);
             comboBox1.TabIndex = 2;
@@ -67,7 +59,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(146, 162);
+            label2.Location = new Point(167, 181);
             label2.Name = "label2";
             label2.Size = new Size(94, 20);
             label2.TabIndex = 6;
@@ -75,13 +67,23 @@
             // 
             // button1
             // 
-            button1.Location = new Point(146, 300);
+            button1.Location = new Point(167, 311);
             button1.Name = "button1";
-            button1.Size = new Size(94, 29);
+            button1.Size = new Size(151, 53);
             button1.TabIndex = 7;
             button1.Text = "Zajerestruj!";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = Properties.Resources._79f71007_64cc_4bab_9a64_90fb1cb07f37;
+            pictureBox1.Location = new Point(-5, -2);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(812, 459);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 8;
+            pictureBox1.TabStop = false;
             // 
             // Rejestracja
             // 
@@ -101,11 +103,10 @@
         }
 
         #endregion
-
-        private PictureBox pictureBox1;
         private Label label1;
         private ComboBox comboBox1;
         private Label label2;
         private Button button1;
+        private PictureBox pictureBox1;
     }
 }

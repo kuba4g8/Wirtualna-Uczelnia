@@ -145,6 +145,9 @@
             // wydzial_kierunek
             // 
             wydzial_kierunek.AutoSize = true;
+            wydzial_kierunek.BackColor = Color.Transparent;
+            wydzial_kierunek.Parent = pictureBox1;
+            wydzial_kierunek.FlatStyle = FlatStyle.Flat;
             wydzial_kierunek.Location = new Point(255, 78);
             wydzial_kierunek.Margin = new Padding(2, 0, 2, 0);
             wydzial_kierunek.Name = "wydzial_kierunek";
@@ -155,6 +158,9 @@
             // semestr
             // 
             semestr.AutoSize = true;
+            semestr.BackColor = Color.Transparent;
+            semestr.Parent = pictureBox1;
+            semestr.FlatStyle = FlatStyle.Flat;
             semestr.Location = new Point(255, 123);
             semestr.Margin = new Padding(2, 0, 2, 0);
             semestr.Name = "semestr";

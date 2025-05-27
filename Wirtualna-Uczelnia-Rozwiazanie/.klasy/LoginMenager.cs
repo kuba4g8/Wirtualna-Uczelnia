@@ -20,10 +20,12 @@ namespace Wirtualna_Uczelnia
         public Student studentData;
         public Pracownik teacherData;
         private bool isTeacher;
+
+        public TempLoggedUser tempLoggedUser;
         //trzymanie informacji personalnych itd.
 
         public bool debugMode;
-         
+
         //forma logowania
         public LoginMenager(bool debugMode)
         {
@@ -48,28 +50,28 @@ namespace Wirtualna_Uczelnia
             new FormLogowanie().Show();
             return true;
         }
-        
+
         public bool tryLogin(string email, string haslo)
         {
             // Sprawdzamy, czy nie ma blokady z powodu podejrzanej aktywności
             if (secLogin.IsSuspiciousActivityLocked(out int suspiciousMinutes) && !debugMode)
             {
                 MessageBox.Show($"System jest tymczasowo niedostępny z powodu podejrzanej aktywności. " +
-                                $"Spróbuj ponownie za {suspiciousMinutes} minut.", 
+                                $"Spróbuj ponownie za {suspiciousMinutes} minut.",
                                 "Dostęp ograniczony", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
             // Zapisujemy próbę logowania dla tego użytkownika
             secLogin.RecordLoginAttempt(email);
-            
+
             // Monitorujemy częstotliwość prób logowania
             secLogin.MonitorLoginAttemptFrequency();
 
-            TempLoggedUser tempLoggedUser = new TempLoggedUser(); //obiekt do trzymania hasla itd.
+            tempLoggedUser = new TempLoggedUser(); //obiekt do trzymania hasla itd.
 
             //Jeśli logowanie zablokowane włączy się od razu przed logowaniem
-            if (secLogin.IsLockedOut(out int minutesLeft) && debugMode==false)
+            if (secLogin.IsLockedOut(out int minutesLeft) && debugMode == false)
             {
                 MessageBox.Show($"Twoje konto jest zablokowane. Spróbuj ponownie za {minutesLeft} minut.");
                 return false;
@@ -107,7 +109,7 @@ namespace Wirtualna_Uczelnia
 
                 adminPanel.Show();
                 return true; //do usuenia potem jak beda inne formy!!!/////
-                
+
                 // odpalic forme dla admina
             }
             else if (tempLoggedUser.isTeacher) // UZYTKOWNIK TO NAUCZYCIEL
@@ -134,7 +136,7 @@ namespace Wirtualna_Uczelnia
             //ify sprawdzaja kto jest adminem kto jest nauczycielem itd.
             //ShowDebugInfo();
 
-            
+
             //MessageBox.Show("Zalogowano");
             return true;
 
@@ -177,7 +179,7 @@ namespace Wirtualna_Uczelnia
 
                 MessageBox.Show(studentInfo, "Debug - Student", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            else if (teacherData  != null)
+            else if (teacherData != null)
             {
                 string teacherInfo = $"[DEBUG] Pracownik:\n" +
                                  $"ID: {teacherData.userID.ToString()}\n" +
@@ -207,16 +209,18 @@ namespace Wirtualna_Uczelnia
             // Ładujemy dane z bazy, ale teraz tylko jedno wystąpienie (jednego użytkownika)
             TempLoggedUser? user = sqlMenager.loadDataToList<TempLoggedUser>(loginCommand).FirstOrDefault();
 
-            if (user != null) {
-                
+            if (user != null)
+            {
+
                 //Pobiera salt do shashowania hasła
                 string salt = user.salt;
-                
+
                 //Łączy salt z hasłem
                 string haslohash = Hasher.ComputeSha256Hash(haslo, salt);
-                
+
                 //Jesli zhashowane hasła sie rownaja to returnuje usera inaczej nulla
-                if (haslohash.Equals(user.haslo)) {
+                if (haslohash.Equals(user.haslo))
+                {
                     return user;
                 }
                 else return null;
@@ -258,7 +262,7 @@ namespace Wirtualna_Uczelnia
                 }
             }
         }
-        
+
     }
     //obiekt przetrzymujace dane do logowania -> do usuniecia po zalogowaniu
     public class TempLoggedUser
@@ -271,7 +275,6 @@ namespace Wirtualna_Uczelnia
         public bool isAdmin { get; set; }
 
         public TempLoggedUser() { }
-        
         public TempLoggedUser(int userID, string email, string haslo, string salt, bool isTeacher, bool isAdmin)
         {
             this.userID = userID;

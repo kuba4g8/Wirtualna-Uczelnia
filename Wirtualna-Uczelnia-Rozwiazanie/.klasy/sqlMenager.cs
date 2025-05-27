@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -15,10 +16,13 @@ namespace Wirtualna_Uczelnia
     {
         private MySqlConnection _conn; // obiekt klasy umozliwiajacy laczenie sie z baza danych.
 
-        // Publiczna właściwość z inną nazwą
-        public MySqlConnection Connection
-        {
-            get { return _conn; }
+
+        public MySqlConnection Connection 
+        { 
+            get 
+            { 
+                return _conn; 
+            } 
         }
 
         // info do poleczenia do DataBase
@@ -55,13 +59,42 @@ namespace Wirtualna_Uczelnia
             _conn = new MySqlConnection(connString);
         }
 
+        // executuje komende w sql -> glownie uzywane do usuwania rekordow w tabeli
+        // zwraca boolean: true -> udalo sie, false -> error
+        public bool executeRawCommand(MySqlCommand cmd)
+        {
+            if (!tryConnect())
+            {
+                MessageBox.Show("Błąd podczas łączenia do bazy");
+                return false;
+            }
+
+            cmd.Connection = _conn;
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+
+                return true;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Błąd bazy danych: " + ex.Message);
+                return false;
+            }
+            finally
+            {
+                tryDissconect();
+            }
+        }
+
         //wpisanie do bazy danych dynamicznego obiektu typu T, majac na uwadze ze nazwy tabel musza byc takie same jak nazwy wlasciwosci.
         // Zwraca osattni userID dodany jako int
         public int loadObjectToDataBase<T>(T objToInsert, string tableName, bool insertUSERID) where T : new()
         {
             if (!tryConnect())
             {
-                MessageBox.Show("Błąd podczas łączenia");
+                MessageBox.Show("Błąd podczas łączenia do bazy");
                 return -1;
             }
 
@@ -95,7 +128,7 @@ namespace Wirtualna_Uczelnia
                 string sqlCommand = $"INSERT INTO {tableName} ({string.Join(", ", nazwyKolumn)}) VALUES ({string.Join(", ", wlasciwosciLista)});SELECT LAST_INSERT_ID();";
 
                 //wykonanie komendy oraz faktycznie wprowadzenie do bazy danych
-                using (MySqlCommand cmd = new MySqlCommand(sqlCommand, Connection))
+                using (MySqlCommand cmd = new MySqlCommand(sqlCommand, _conn))
                 {
                     // Dodaj parametry
                     foreach (PropertyInfo prop in properties)
@@ -141,7 +174,7 @@ namespace Wirtualna_Uczelnia
             {
                 // MySqlCommand -> komenda do wysylania w sql
                 MySqlCommand cmd = querryCommand;
-                cmd.Connection = Connection;
+                cmd.Connection = _conn;
 
                 //stworzenie obiektu readera ktory szczytuje wszystkie rowy pokolei.
                 MySqlDataReader reader = cmd.ExecuteReader();
@@ -158,7 +191,6 @@ namespace Wirtualna_Uczelnia
                     // obiekt aby wszystkie byly trzymane w jednym miejscu
                     foreach (PropertyInfo info in typeof(T).GetProperties())
                     {
-                        
                         try
                         {
                             //jezeli w bazie danych rekord bedzie null to pomijamy i nic nie przypisujemy
