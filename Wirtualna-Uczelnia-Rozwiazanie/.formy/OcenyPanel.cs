@@ -54,11 +54,25 @@ namespace Wirtualna_Uczelnia.formy
 
         private void Tabela_Ocen_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            //TODO: KLIKNIĘCIE ELEMENTU OCENY UMOŻLIWIA USUNIĘCIE CAŁEJ OCENY
+            //KLIKNIĘCIE ELEMENTU OCENY UMOŻLIWIA USUNIĘCIE CAŁEJ OCENY
+
             DialogResult dialogResult = MessageBox.Show("Usunąć ocenę" + Tabela_Ocen.Rows[Tabela_Ocen.CurrentCell.RowIndex].Cells[1].Value.ToString(), "UWAGA", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                //do something
+
+                String indeks = IdInput.Text.ToString();
+                String przedmiot = PrzedmiotInput.Text.ToString();
+                String wartosc = Tabela_Ocen.Rows[Tabela_Ocen.CurrentCell.RowIndex].Cells[1].Value.ToString(); wartosc = wartosc.Replace(",", ".");
+                String kiedy = Tabela_Ocen.Rows[Tabela_Ocen.CurrentCell.RowIndex].Cells[2].Value.ToString();
+
+                //MessageBox.Show($"SELECT oceny.id_oceny FROM oceny JOIN studenci ON oceny.userID = studenci.userID JOIN przedmioty ON oceny.id_przedmiotu = przedmioty.id_przedmiotu WHERE studenci.nr_indeksu = '{indeks}' AND przedmioty.nazwa = '{przedmiot}' AND oceny.ocena = {wartosc} AND oceny.data_wystawienia = '{kiedy}' LIMIT 1;"); //debug
+
+                List<OcenaID> FetchID = new List<OcenaID>();
+                MySqlCommand FetchCommand = new MySqlCommand($"SELECT oceny.id_oceny FROM oceny JOIN studenci ON oceny.userID = studenci.userID JOIN przedmioty ON oceny.id_przedmiotu = przedmioty.id_przedmiotu WHERE studenci.nr_indeksu = '{indeks}' AND przedmioty.nazwa = '{przedmiot}' AND oceny.ocena = {wartosc} AND oceny.data_wystawienia = '{kiedy}' LIMIT 1;");
+                FetchID = sqlMenager.loadDataToList<OcenaID>(FetchCommand); //klasyk
+
+                sqlMenager.executeRawCommand(new MySqlCommand($"DELETE FROM oceny WHERE id_oceny = {FetchID.First().id_oceny}"));
+                Load_Student_Click(sender, e); //refreshuje tablice
             }
         }
 
@@ -67,14 +81,14 @@ namespace Wirtualna_Uczelnia.formy
         private void PrzedmiotInput_SelectedIndexChanged(object sender, EventArgs e)
         {
             IdInput.Items.Clear();
-            IdInput.ResetText();
+            IdInput.ResetText(); //czyść, by prowadzący nie dodał oceny gdy ktoś nie jest nie zapisanemy
             String przedmiot = PrzedmiotInput.Text.ToString();
 
-            List<Indeks> FetchIndeks = new List<Indeks>();
-            MySqlCommand FetchCommand = new MySqlCommand($"SELECT DISTINCT studenci.nr_indeksu FROM przedmioty JOIN plan_lekcji ON plan_lekcji.id_przedmiotu = przedmioty.id_przedmiotu JOIN studenci_grupy ON plan_lekcji.id_grupy = studenci_grupy.id_grupy JOIN studenci ON studenci.userID = studenci_grupy.userID WHERE przedmioty.nazwa = '{przedmiot}'"); //select as wynika z dziwnej budowy planu lekcji
+            List<Indeks> FetchIndeks = new List<Indeks>(); //(27.05.2025) W tym momencie chyba już każdy wie że to służy do przygotowania konkretnej listy do późniejszej obróbki/wprowadzenia
+            MySqlCommand FetchCommand = new MySqlCommand($"SELECT DISTINCT studenci.nr_indeksu FROM przedmioty JOIN plan_lekcji ON plan_lekcji.id_przedmiotu = przedmioty.id_przedmiotu JOIN studenci_grupy ON plan_lekcji.id_grupy = studenci_grupy.id_grupy JOIN studenci ON studenci.userID = studenci_grupy.userID WHERE przedmioty.nazwa = '{przedmiot}'");
             FetchIndeks = sqlMenager.loadDataToList<Indeks>(FetchCommand);
 
-            for (int i = 0; i < FetchIndeks.Count; i++)
+            for (int i = 0; i < FetchIndeks.Count; i++) //wypełniamy listę Id tych którzy chodzą
             {
                 IdInput.Items.Add(FetchIndeks[i].nr_indeksu);
             }
@@ -198,6 +212,10 @@ namespace Wirtualna_Uczelnia.formy
         public class PrzedmiotID
         {
             public Int32 id_przedmiotu { get; set; }
+        }
+        public class OcenaID
+        {
+            public Int32 id_oceny { get; set; }
         }
     }
 
