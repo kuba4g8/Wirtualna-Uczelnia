@@ -92,7 +92,7 @@
             tabWtorek.Location = new Point(4, 34);
             tabWtorek.Name = "tabWtorek";
             tabWtorek.Padding = new Padding(3);
-            tabWtorek.Size = new Size(992, 662);
+            tabWtorek.Size = new Size(760, 645);
             tabWtorek.TabIndex = 1;
             tabWtorek.Text = "WTOREK";
             // 
@@ -104,7 +104,7 @@
             panelWtorek.Location = new Point(3, 3);
             panelWtorek.Name = "panelWtorek";
             panelWtorek.Padding = new Padding(10);
-            panelWtorek.Size = new Size(986, 656);
+            panelWtorek.Size = new Size(754, 639);
             panelWtorek.TabIndex = 1;
             // 
             // tabSroda
@@ -113,7 +113,7 @@
             tabSroda.Controls.Add(panelSroda);
             tabSroda.Location = new Point(4, 34);
             tabSroda.Name = "tabSroda";
-            tabSroda.Size = new Size(992, 662);
+            tabSroda.Size = new Size(760, 645);
             tabSroda.TabIndex = 2;
             tabSroda.Text = "ŚRODA";
             // 
@@ -125,7 +125,7 @@
             panelSroda.Location = new Point(0, 0);
             panelSroda.Name = "panelSroda";
             panelSroda.Padding = new Padding(10);
-            panelSroda.Size = new Size(992, 662);
+            panelSroda.Size = new Size(760, 645);
             panelSroda.TabIndex = 2;
             // 
             // tabCzwartek
@@ -134,7 +134,7 @@
             tabCzwartek.Controls.Add(panelCzwartek);
             tabCzwartek.Location = new Point(4, 34);
             tabCzwartek.Name = "tabCzwartek";
-            tabCzwartek.Size = new Size(992, 662);
+            tabCzwartek.Size = new Size(760, 645);
             tabCzwartek.TabIndex = 3;
             tabCzwartek.Text = "CZWARTEK";
             // 
@@ -146,7 +146,7 @@
             panelCzwartek.Location = new Point(0, 0);
             panelCzwartek.Name = "panelCzwartek";
             panelCzwartek.Padding = new Padding(10);
-            panelCzwartek.Size = new Size(992, 662);
+            panelCzwartek.Size = new Size(760, 645);
             panelCzwartek.TabIndex = 3;
             // 
             // tabPiatek
@@ -155,7 +155,7 @@
             tabPiatek.Controls.Add(panelPiatek);
             tabPiatek.Location = new Point(4, 34);
             tabPiatek.Name = "tabPiatek";
-            tabPiatek.Size = new Size(992, 662);
+            tabPiatek.Size = new Size(760, 645);
             tabPiatek.TabIndex = 4;
             tabPiatek.Text = "PIĄTEK";
             // 
@@ -167,7 +167,7 @@
             panelPiatek.Location = new Point(0, 0);
             panelPiatek.Name = "panelPiatek";
             panelPiatek.Padding = new Padding(10);
-            panelPiatek.Size = new Size(992, 662);
+            panelPiatek.Size = new Size(760, 645);
             panelPiatek.TabIndex = 4;
             // 
             // FormPlanLekcji

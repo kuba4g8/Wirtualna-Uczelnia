@@ -11,7 +11,7 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
         public TeacherPanel(Pracownik teacher)
         {
             InitializeComponent();
-            
+
             if (teacher == null)
             {
                 MessageBox.Show("Błąd: Nie przekazano danych pracownika!", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -20,7 +20,7 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
             else
             {
                 loggedTeacher = teacher;
-                
+
                 // Bezpieczne odwoływanie się do właściwości
                 this.Text = $"Panel nauczyciela - {teacher.imie} {teacher.nazwisko}";
             }
@@ -39,12 +39,39 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
             kalendarz.Show();
             this.Hide(); // Ukryj panel nauczyciela, ale go nie zamykaj
         }
-        
+
         private void btnEdytujKalendarz_Click(object sender, EventArgs e)
         {
             TeacherCalendarEditor edytorKalendarza = new TeacherCalendarEditor(loggedTeacher);
             edytorKalendarza.Show();
             this.Hide(); // Ukryj panel nauczyciela, ale go nie zamykaj
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void richTextBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+
+
+        private void wylogujnauczyciel_Click(object sender, EventArgs e)
+        {
+            SesionControl.loginMenager.logOut();
+        }
+
+        private void richTextBox4_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
