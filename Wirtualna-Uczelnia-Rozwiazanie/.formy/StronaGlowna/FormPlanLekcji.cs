@@ -49,7 +49,6 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
             {
                 //znalezienie do jakich grup nalezy uzytkownik
                 string querry = "SELECT * FROM studenci_grupy\r\nWHERE userID = @userID";
-                MessageBox.Show(SesionControl.loginMenager.studentData.userID.ToString());
                 MySqlCommand cmd = new MySqlCommand(querry);
                 cmd.Parameters.AddWithValue("@userID", SesionControl.loginMenager.studentData.userID);
                 

@@ -32,9 +32,7 @@ namespace Wirtualna_Uczelnia
         private Label lblSemester;
         private TextBox txtSemester;
         private Label lblFaculty;
-        private TextBox txtWydzial;
         private Label lblFieldOfStudy;
-        private TextBox txtKierunek;
         private Button btnRegister;
 
         /// <summary>
@@ -48,6 +46,7 @@ namespace Wirtualna_Uczelnia
                 components.Dispose();
             }
             base.Dispose(disposing);
+
         }
 
         #region Windows Form Designer generated code
@@ -81,9 +80,7 @@ namespace Wirtualna_Uczelnia
             lblSemester = new Label();
             txtSemester = new TextBox();
             lblFaculty = new Label();
-            txtWydzial = new TextBox();
             lblFieldOfStudy = new Label();
-            txtKierunek = new TextBox();
             btnRegister = new Button();
             listStudenci = new ListBox();
             listPracownicy = new ListBox();
@@ -91,6 +88,8 @@ namespace Wirtualna_Uczelnia
             lblStudenci = new Label();
             btnLogout = new Button();
             pictureBox1 = new PictureBox();
+            comboWydzial = new ComboBox();
+            comboKierunek = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -306,15 +305,6 @@ namespace Wirtualna_Uczelnia
             lblFaculty.TabIndex = 21;
             lblFaculty.Text = "Wydział:";
             // 
-            // txtWydzial
-            // 
-            txtWydzial.Location = new Point(160, 523);
-            txtWydzial.Margin = new Padding(4, 5, 4, 5);
-            txtWydzial.Name = "txtWydzial";
-            txtWydzial.Size = new Size(265, 27);
-            txtWydzial.TabIndex = 22;
-            txtWydzial.Visible = false;
-            // 
             // lblFieldOfStudy
             // 
             lblFieldOfStudy.AutoSize = true;
@@ -324,15 +314,6 @@ namespace Wirtualna_Uczelnia
             lblFieldOfStudy.Size = new Size(69, 20);
             lblFieldOfStudy.TabIndex = 23;
             lblFieldOfStudy.Text = "Kierunek:";
-            // 
-            // txtKierunek
-            // 
-            txtKierunek.Location = new Point(160, 585);
-            txtKierunek.Margin = new Padding(4, 5, 4, 5);
-            txtKierunek.Name = "txtKierunek";
-            txtKierunek.Size = new Size(265, 27);
-            txtKierunek.TabIndex = 24;
-            txtKierunek.Visible = false;
             // 
             // btnRegister
             // 
@@ -406,11 +387,29 @@ namespace Wirtualna_Uczelnia
             pictureBox1.TabIndex = 31;
             pictureBox1.TabStop = false;
             // 
+            // comboWydzial
+            // 
+            comboWydzial.FormattingEnabled = true;
+            comboWydzial.Location = new Point(160, 520);
+            comboWydzial.Name = "comboWydzial";
+            comboWydzial.Size = new Size(265, 28);
+            comboWydzial.TabIndex = 32;
+            // 
+            // comboKierunek
+            // 
+            comboKierunek.FormattingEnabled = true;
+            comboKierunek.Location = new Point(160, 582);
+            comboKierunek.Name = "comboKierunek";
+            comboKierunek.Size = new Size(265, 28);
+            comboKierunek.TabIndex = 33;
+            // 
             // AdminPanel
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(853, 723);
+            Controls.Add(comboKierunek);
+            Controls.Add(comboWydzial);
             Controls.Add(btnLogout);
             Controls.Add(lblStudenci);
             Controls.Add(lblTeachers);
@@ -438,23 +437,28 @@ namespace Wirtualna_Uczelnia
             Controls.Add(lblSemester);
             Controls.Add(txtSemester);
             Controls.Add(lblFaculty);
-            Controls.Add(txtWydzial);
             Controls.Add(lblFieldOfStudy);
-            Controls.Add(txtKierunek);
             Controls.Add(btnRegister);
             Controls.Add(pictureBox1);
             Margin = new Padding(4, 5, 4, 5);
             Name = "AdminPanel";
             Text = "Panel Administracyjny";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            changeVisibility();
+            
             ResumeLayout(false);
             PerformLayout();
+
         }
 
         #endregion
 
         // Obsługa zdarzenia zmiany typu konta
         private void cmbAccountType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            changeVisibility();
+        }
+        public void changeVisibility()
         {
             bool isTeacher, isStudent;
 
@@ -482,11 +486,18 @@ namespace Wirtualna_Uczelnia
             lblSemester.Visible = isStudent;
             txtSemester.Visible = isStudent;
             lblFaculty.Visible = isStudent;
-            txtWydzial.Visible = isStudent;
             lblFieldOfStudy.Visible = isStudent;
-            txtKierunek.Visible = isStudent;
+            if (isStudent)
+            {
+                comboKierunek.Visible = true;
+                comboWydzial.Visible = true;
+            }
+            else
+            {
+                comboKierunek.Visible = false;
+                comboWydzial.Visible = false;
+            }
         }
-
         // Obsługa zdarzenia wczytywania użytkownika
 
 
@@ -496,5 +507,7 @@ namespace Wirtualna_Uczelnia
         private Label lblStudenci;
         private Button btnLogout;
         private PictureBox pictureBox1;
+        private ComboBox comboWydzial;
+        private ComboBox comboKierunek;
     }
 }

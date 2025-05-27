@@ -28,15 +28,16 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
             pictureBox5 = new PictureBox();
             richTextBox1 = new RichTextBox();
             richTextBox2 = new RichTextBox();
-            richTextBox3 = new RichTextBox();
-            richTextBox5 = new RichTextBox();
             wylogujnauczyciel = new Button();
+            lblImie = new Label();
+            lblEmail = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             SuspendLayout();
             // 
             // lblTitle
             // 
             lblTitle.AutoSize = true;
+            lblTitle.BackColor = Color.Transparent;
             lblTitle.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             lblTitle.Location = new Point(143, -1);
             lblTitle.Name = "lblTitle";
@@ -114,35 +115,40 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
             richTextBox2.TabStop = false;
             richTextBox2.Text = "- Grupy zajęciowe";
             // 
-            // richTextBox3
-            // 
-            richTextBox3.Enabled = false;
-            richTextBox3.Location = new Point(152, 44);
-            richTextBox3.Name = "richTextBox3";
-            richTextBox3.ReadOnly = true;
-            richTextBox3.Size = new Size(139, 27);
-            richTextBox3.TabIndex = 14;
-            richTextBox3.Text = "tytuł/imie/naziwsko:";
-            richTextBox3.TextChanged += richTextBox3_TextChanged;
-            // 
-            // richTextBox5
-            // 
-            richTextBox5.Enabled = false;
-            richTextBox5.Location = new Point(152, 77);
-            richTextBox5.Name = "richTextBox5";
-            richTextBox5.ReadOnly = true;
-            richTextBox5.Size = new Size(139, 25);
-            richTextBox5.TabIndex = 16;
-            richTextBox5.Text = "adres e-mail:";
-            // 
             // wylogujnauczyciel
             // 
-            wylogujnauczyciel.Location = new Point(152, 108);
+            wylogujnauczyciel.Location = new Point(159, 152);
             wylogujnauczyciel.Name = "wylogujnauczyciel";
-            wylogujnauczyciel.Size = new Size(75, 27);
+            wylogujnauczyciel.Size = new Size(75, 45);
             wylogujnauczyciel.TabIndex = 0;
             wylogujnauczyciel.Text = "Wyloguj";
             wylogujnauczyciel.Click += wylogujnauczyciel_Click;
+            // 
+            // lblImie
+            // 
+            lblImie.AutoSize = true;
+            lblImie.BackColor = Color.Transparent;
+            lblImie.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblImie.ForeColor = Color.FromArgb(64, 64, 64);
+            lblImie.Location = new Point(158, 47);
+            lblImie.Name = "lblImie";
+            lblImie.Padding = new Padding(5);
+            lblImie.Size = new Size(203, 33);
+            lblImie.TabIndex = 14;
+            lblImie.Text = "Imie,Nazwisko,Stopien";
+            // 
+            // lblEmail
+            // 
+            lblEmail.AutoSize = true;
+            lblEmail.BackColor = Color.Transparent;
+            lblEmail.Font = new Font("Segoe UI", 9.75F);
+            lblEmail.ForeColor = Color.FromArgb(64, 64, 64);
+            lblEmail.Location = new Point(158, 85);
+            lblEmail.Name = "lblEmail";
+            lblEmail.Padding = new Padding(5);
+            lblEmail.Size = new Size(61, 33);
+            lblEmail.TabIndex = 15;
+            lblEmail.Text = "Email";
             // 
             // TeacherPanel
             // 
@@ -151,9 +157,9 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
             BackgroundImage = Properties.Resources.Bez_nazwy_15_202505260855_36185;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1216, 627);
+            Controls.Add(lblEmail);
+            Controls.Add(lblImie);
             Controls.Add(wylogujnauczyciel);
-            Controls.Add(richTextBox5);
-            Controls.Add(richTextBox3);
             Controls.Add(richTextBox2);
             Controls.Add(richTextBox1);
             Controls.Add(lblTitle);
@@ -180,8 +186,8 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
         private PictureBox pictureBox5;
         private RichTextBox richTextBox1;
         private RichTextBox richTextBox2;
-        private RichTextBox richTextBox3;
-        private RichTextBox richTextBox5;
         private Button wylogujnauczyciel;
+        private Label lblImie;
+        private Label lblEmail;
     }
 }
