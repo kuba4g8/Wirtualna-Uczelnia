@@ -56,5 +56,22 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
         {
 
         }
+
+        private void richTextBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+
+
+        private void wylogujnauczyciel_Click(object sender, EventArgs e)
+        {
+            SesionControl.loginMenager.logOut();
+        }
+
+        private void richTextBox4_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

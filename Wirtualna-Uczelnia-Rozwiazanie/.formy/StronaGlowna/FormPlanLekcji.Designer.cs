@@ -30,7 +30,6 @@
         {
             tabControl = new TabControl();
             tabPoniedzialek = new TabPage();
-            pictureBox1 = new PictureBox();
             panelPoniedzialek = new Panel();
             tabWtorek = new TabPage();
             panelWtorek = new Panel();
@@ -42,8 +41,6 @@
             panelPiatek = new Panel();
             tabControl.SuspendLayout();
             tabPoniedzialek.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            panelPoniedzialek.SuspendLayout();
             tabWtorek.SuspendLayout();
             tabSroda.SuspendLayout();
             tabCzwartek.SuspendLayout();
@@ -77,21 +74,10 @@
             tabPoniedzialek.TabIndex = 0;
             tabPoniedzialek.Text = "PONIEDZIAŁEK";
             // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = Properties.Resources.Bez_nazwy_24_202505261058_58516;
-            pictureBox1.Location = new Point(-21, -3);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(799, 716);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 1;
-            pictureBox1.TabStop = false;
-            // 
             // panelPoniedzialek
             // 
             panelPoniedzialek.AutoScroll = true;
             panelPoniedzialek.BackColor = Color.White;
-            panelPoniedzialek.Controls.Add(pictureBox1);
             panelPoniedzialek.Dock = DockStyle.Fill;
             panelPoniedzialek.Location = new Point(3, 3);
             panelPoniedzialek.Name = "panelPoniedzialek";
@@ -197,8 +183,6 @@
             Text = "Plan zajęć - Informatyka I rok";
             tabControl.ResumeLayout(false);
             tabPoniedzialek.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            panelPoniedzialek.ResumeLayout(false);
             tabWtorek.ResumeLayout(false);
             tabSroda.ResumeLayout(false);
             tabCzwartek.ResumeLayout(false);
@@ -219,6 +203,5 @@
         private System.Windows.Forms.Panel panelSroda;
         private System.Windows.Forms.Panel panelCzwartek;
         private System.Windows.Forms.Panel panelPiatek;
-        private PictureBox pictureBox1;
     }
 }
