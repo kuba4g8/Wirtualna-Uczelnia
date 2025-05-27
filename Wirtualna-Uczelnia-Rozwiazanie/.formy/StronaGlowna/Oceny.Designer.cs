@@ -34,7 +34,6 @@
             Col3 = new DataGridViewTextBoxColumn();
             Label_Przedmiot = new Label();
             PrzedmiotyCombo = new ComboBox();
-            Load_Grades = new Button();
             Back_Button = new Button();
             pictureBox1 = new PictureBox();
             label1 = new Label();
@@ -95,17 +94,7 @@
             PrzedmiotyCombo.Name = "PrzedmiotyCombo";
             PrzedmiotyCombo.Size = new Size(192, 28);
             PrzedmiotyCombo.TabIndex = 6;
-            // 
-            // Load_Grades
-            // 
-            Load_Grades.Location = new Point(246, 341);
-            Load_Grades.Margin = new Padding(3, 4, 3, 4);
-            Load_Grades.Name = "Load_Grades";
-            Load_Grades.Size = new Size(192, 31);
-            Load_Grades.TabIndex = 7;
-            Load_Grades.Text = "Załaduj Dane";
-            Load_Grades.UseVisualStyleBackColor = true;
-            Load_Grades.Click += Load_Grades_Click;
+            PrzedmiotyCombo.SelectedIndexChanged += IndexChanged;
             // 
             // Back_Button
             // 
@@ -140,7 +129,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1130, 681);
             Controls.Add(label1);
-            Controls.Add(Load_Grades);
             Controls.Add(PrzedmiotyCombo);
             Controls.Add(Label_Przedmiot);
             Controls.Add(Tabela_Ocen);
@@ -163,7 +151,6 @@
         private DataGridViewTextBoxColumn Col3;
         private Label Label_Przedmiot;
         private ComboBox PrzedmiotyCombo;
-        private Button Load_Grades;
         private Button Back_Button;
         private PictureBox pictureBox1;
         private Label label1;
