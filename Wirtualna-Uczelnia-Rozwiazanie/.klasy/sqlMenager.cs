@@ -20,7 +20,7 @@ namespace Wirtualna_Uczelnia
         public MySqlConnection Connection 
         { 
             get 
-            { 
+            {
                 return _conn; 
             } 
         }

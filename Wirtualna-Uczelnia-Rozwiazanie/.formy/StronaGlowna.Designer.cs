@@ -45,6 +45,8 @@
             grupy_zajeciowe = new Label();
             wyloguj = new Button();
             btnOpenChat = new Button();
+            labelCHuj = new Label();
+            lblGrupyHolder = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
@@ -135,7 +137,7 @@
             // imie_nazwisko
             // 
             imie_nazwisko.AutoSize = true;
-            imie_nazwisko.Location = new Point(255, 32);
+            imie_nazwisko.Location = new Point(255, 4);
             imie_nazwisko.Margin = new Padding(2, 0, 2, 0);
             imie_nazwisko.Name = "imie_nazwisko";
             imie_nazwisko.Size = new Size(113, 20);
@@ -146,9 +148,8 @@
             // 
             wydzial_kierunek.AutoSize = true;
             wydzial_kierunek.BackColor = Color.Transparent;
-            wydzial_kierunek.Parent = pictureBox1;
             wydzial_kierunek.FlatStyle = FlatStyle.Flat;
-            wydzial_kierunek.Location = new Point(255, 78);
+            wydzial_kierunek.Location = new Point(255, 50);
             wydzial_kierunek.Margin = new Padding(2, 0, 2, 0);
             wydzial_kierunek.Name = "wydzial_kierunek";
             wydzial_kierunek.Size = new Size(129, 20);
@@ -159,9 +160,8 @@
             // 
             semestr.AutoSize = true;
             semestr.BackColor = Color.Transparent;
-            semestr.Parent = pictureBox1;
             semestr.FlatStyle = FlatStyle.Flat;
-            semestr.Location = new Point(255, 123);
+            semestr.Location = new Point(255, 95);
             semestr.Margin = new Padding(2, 0, 2, 0);
             semestr.Name = "semestr";
             semestr.Size = new Size(157, 20);
@@ -249,12 +249,40 @@
             btnOpenChat.UseVisualStyleBackColor = false;
             btnOpenChat.Click += btnOpenChat_Click;
             // 
+            // labelCHuj
+            // 
+            labelCHuj.AutoSize = true;
+            labelCHuj.BackColor = Color.Transparent;
+            labelCHuj.FlatStyle = FlatStyle.Flat;
+            labelCHuj.Font = new Font("Segoe UI", 14F);
+            labelCHuj.Location = new Point(1120, 9);
+            labelCHuj.Margin = new Padding(2, 0, 2, 0);
+            labelCHuj.Name = "labelCHuj";
+            labelCHuj.Size = new Size(88, 32);
+            labelCHuj.TabIndex = 17;
+            labelCHuj.Text = "grupy: ";
+            // 
+            // lblGrupyHolder
+            // 
+            lblGrupyHolder.AutoSize = true;
+            lblGrupyHolder.BackColor = Color.Transparent;
+            lblGrupyHolder.FlatStyle = FlatStyle.Flat;
+            lblGrupyHolder.Font = new Font("Segoe UI", 12F);
+            lblGrupyHolder.Location = new Point(1212, 9);
+            lblGrupyHolder.Margin = new Padding(2, 0, 2, 0);
+            lblGrupyHolder.Name = "lblGrupyHolder";
+            lblGrupyHolder.Size = new Size(181, 84);
+            lblGrupyHolder.TabIndex = 18;
+            lblGrupyHolder.Text = "-typGrupy\r\n-nazwa kierunku\r\n-nazwa specjalizacji\r\n";
+            // 
             // FormStronaGlowna
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             ClientSize = new Size(1518, 819);
+            Controls.Add(lblGrupyHolder);
+            Controls.Add(labelCHuj);
             Controls.Add(btnOpenChat);
             Controls.Add(wyloguj);
             Controls.Add(grupy_zajeciowe);
@@ -300,5 +328,7 @@
         private Label grupy_zajeciowe;
         private Button wyloguj;
         private Button btnOpenChat;
+        private Label labelCHuj;
+        private Label lblGrupyHolder;
     }
 }
