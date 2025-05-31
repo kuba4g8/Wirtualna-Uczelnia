@@ -24,6 +24,8 @@
     <Compile Include=".formy\FormKalendarz.Designer.cs" />
     <Compile Include=".formy\OcenyPanel.cs" />
     <Compile Include=".formy\OcenyPanel.Designer.cs" />
+    <Compile Include=".formy\OcenyPanelEditSelector.cs" />
+    <Compile Include=".formy\OcenyPanelEditSelector.Designer.cs" />
     <Compile Include=".formy\StronaGlowna\Dokumenty.cs" />
     <Compile Include=".formy\StronaGlowna\Dokumenty.Designer.cs" />
     <Compile Include=".formy\StronaGlowna\FormKontaktPracownicy.cs" />
@@ -70,6 +72,7 @@
     <EmbeddedResource Include=".formy\ChatForm.resx" />
     <EmbeddedResource Include=".formy\FormKalendarz.resx" />
     <EmbeddedResource Include=".formy\OcenyPanel.resx" />
+    <EmbeddedResource Include=".formy\OcenyPanelEditSelector.resx" />
     <EmbeddedResource Include=".formy\StronaGlowna\Dokumenty.resx" />
     <EmbeddedResource Include=".formy\StronaGlowna\FormKontaktPracownicy.resx" />
     <EmbeddedResource Include=".formy\StronaGlowna\FormPlanLekcji.resx" />
