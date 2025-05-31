@@ -32,7 +32,6 @@
             Col1 = new DataGridViewTextBoxColumn();
             Col2 = new DataGridViewTextBoxColumn();
             Col3 = new DataGridViewTextBoxColumn();
-            Load_Student = new Button();
             Label_Id = new Label();
             Label_Przedmiot = new Label();
             OcenaInput = new TextBox();
@@ -78,16 +77,6 @@
             Col3.Name = "Col3";
             Col3.ReadOnly = true;
             Col3.Width = 200;
-            // 
-            // Load_Student
-            // 
-            Load_Student.Location = new Point(12, 103);
-            Load_Student.Name = "Load_Student";
-            Load_Student.Size = new Size(136, 23);
-            Load_Student.TabIndex = 2;
-            Load_Student.Text = "Załaduj Dane";
-            Load_Student.UseVisualStyleBackColor = true;
-            Load_Student.Click += Load_Student_Click;
             // 
             // Label_Id
             // 
@@ -162,6 +151,7 @@
             IdInput.Name = "IdInput";
             IdInput.Size = new Size(136, 23);
             IdInput.TabIndex = 11;
+            IdInput.SelectedIndexChanged += IdInput_SelectedIndexChanged;
             // 
             // OcenyPanel
             // 
@@ -176,7 +166,6 @@
             Controls.Add(Add_Grade);
             Controls.Add(Label_Przedmiot);
             Controls.Add(Label_Id);
-            Controls.Add(Load_Student);
             Controls.Add(Tabela_Ocen);
             Name = "OcenyPanel";
             Text = "OcenyPanel";
@@ -188,7 +177,6 @@
         #endregion
 
         private DataGridView Tabela_Ocen;
-        private Button Load_Student;
         private Label Label_Id;
         private DataGridViewTextBoxColumn Col1;
         private DataGridViewTextBoxColumn Col2;
