@@ -2,7 +2,7 @@
 
 namespace Wirtualna_Uczelnia
 {
-    partial class AdminPanel
+    partial class RegisterUser
     {
         /// <summary>
         /// Required designer variable.
@@ -57,7 +57,7 @@ namespace Wirtualna_Uczelnia
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminPanel));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RegisterUser));
             lblUserId = new Label();
             txtUserId = new TextBox();
             btnClear = new Button();

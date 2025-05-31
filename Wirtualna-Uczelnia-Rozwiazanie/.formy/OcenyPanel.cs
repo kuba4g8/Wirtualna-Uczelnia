@@ -18,7 +18,7 @@ namespace Wirtualna_Uczelnia.formy
     public partial class OcenyPanel : Form
     {
         private Pracownik loggedTeacher; // Przechowuje informacje o zalogowanym nauczycielu
-        sqlMenager sqlMenager = new sqlMenager(); //tbh nie wiem co robię ale nie pokazuje dzięki temu błędów :Fire:
+        SqlMenager sqlMenager = new SqlMenager(); //tbh nie wiem co robię ale nie pokazuje dzięki temu błędów :Fire:
 
         public OcenyPanel(Pracownik loggedUser) //TODO: UWZGLĘDNIĆ W KOMENDZIE ID PROWADZĄCEGO BY POKAZAĆ OCENY TYLKO Z PRZEDMIOTÓW KTÓRE PROWADZI. UPD 13.05 -> wywołanie przydatne dla dodawania do bazy
         {

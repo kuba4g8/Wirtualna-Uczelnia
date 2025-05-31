@@ -14,7 +14,7 @@ using Wirtualna_Uczelnia.klasy;
 
 namespace Wirtualna_Uczelnia
 {
-    public partial class AdminPanel : Form
+    public partial class RegisterUser : Form
     {
         internal Student editingStudent;
         internal Pracownik editingPracownik;
@@ -29,7 +29,7 @@ namespace Wirtualna_Uczelnia
 
         public delegate void UpdateVisualData(); // utworzenie delegaty funkcji bo jakims chujem nie moge se uzyc funkcji z tej klasy w adminMenagerze ale spk
 
-        public AdminPanel(Pracownik loggedUser)
+        public RegisterUser()
         {
             InitializeComponent();
             this.loggedUser = loggedUser;
@@ -302,7 +302,7 @@ namespace Wirtualna_Uczelnia
         private ComboBox comboKierunek; // combo box z kierunkami
         private ComboBox comboWydzial; // combo box z wydzialami
 
-        private sqlMenager sqlMenager; // klasa laczenia do sql
+        private SqlMenager sqlMenager; // klasa laczenia do sql
 
         public List<Student> studenci = new List<Student>(); // lista wszystkich studentow pobranych z bazy danych
         public List<Pracownik> pracownicy = new List<Pracownik>(); // lista wszystkich pracownikow pobranych z bazy danych
@@ -312,12 +312,12 @@ namespace Wirtualna_Uczelnia
         public List<Wydzialy> wydzialy; // lista wydzialow pobranych z bazy danych
 
 
-        private AdminPanel.UpdateVisualData updateVisualData; // utworzenie delegaty tego samego typu co w klasie AdminPanel
+        private RegisterUser.UpdateVisualData updateVisualData; // utworzenie delegaty tego samego typu co w klasie AdminPanel
 
-        public AdminMenager(Pracownik loggedUser, ListBox listPracownicy, ListBox listStudenci, ComboBox comboKierunek, ComboBox comboWydzial, AdminPanel.UpdateVisualData updateVisualData)
+        public AdminMenager(Pracownik loggedUser, ListBox listPracownicy, ListBox listStudenci, ComboBox comboKierunek, ComboBox comboWydzial, RegisterUser.UpdateVisualData updateVisualData)
         {
             this.loggedUser = loggedUser;
-            sqlMenager = new sqlMenager();
+            sqlMenager = new SqlMenager();
             this.listPracownicy = listPracownicy;
             this.listStudenci = listStudenci;
             this.updateVisualData = updateVisualData;

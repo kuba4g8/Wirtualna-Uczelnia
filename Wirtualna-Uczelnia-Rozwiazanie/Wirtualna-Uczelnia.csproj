@@ -16,8 +16,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include=".formy\AdminPanel.cs" />
-    <Compile Include=".formy\AdminPanel.Designer.cs" />
+    <Compile Include=".formy\AdminForms\AdminPanel.cs" />
+    <Compile Include=".formy\AdminForms\AdminPanel.Designer.cs" />
+    <Compile Include=".formy\AdminForms\FormEdytujPlanLekcji.cs" />
+    <Compile Include=".formy\AdminForms\FormEdytujPlanLekcji.Designer.cs" />
+    <Compile Include=".formy\AdminForms\RegisterUser.cs" />
+    <Compile Include=".formy\AdminForms\RegisterUser.Designer.cs" />
     <Compile Include=".formy\ChatForm.cs" />
     <Compile Include=".formy\ChatForm.Designer.cs" />
     <Compile Include=".formy\FormKalendarz.cs" />
@@ -58,7 +62,7 @@
     <Compile Include=".translations\LangMenager.cs" />
     <Compile Include=".klasy\LoginMenager.cs" />
     <Compile Include=".klasy\SecMenager.cs" />
-    <Compile Include=".klasy\sqlMenager.cs" />
+    <Compile Include=".klasy\SqlMenager.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -66,7 +70,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include=".formy\AdminPanel.resx" />
+    <EmbeddedResource Include=".formy\AdminForms\AdminPanel.resx" />
+    <EmbeddedResource Include=".formy\AdminForms\FormEdytujPlanLekcji.resx" />
+    <EmbeddedResource Include=".formy\AdminForms\RegisterUser.resx" />
     <EmbeddedResource Include=".formy\ChatForm.resx" />
     <EmbeddedResource Include=".formy\FormKalendarz.resx" />
     <EmbeddedResource Include=".formy\OcenyPanel.resx" />

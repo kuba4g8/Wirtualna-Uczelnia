@@ -16,7 +16,7 @@ namespace Wirtualna_Uczelnia.formy
 {
     public partial class Oceny : Form
     {
-        sqlMenager sqlMenager = new sqlMenager();
+        SqlMenager sqlMenager = new SqlMenager();
         public Oceny()
         {
             InitializeComponent();

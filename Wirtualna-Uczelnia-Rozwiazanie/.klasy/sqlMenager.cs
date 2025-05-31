@@ -12,7 +12,7 @@ using Wirtualna_Uczelnia.klasy;
 
 namespace Wirtualna_Uczelnia
 {
-    public class sqlMenager
+    public class SqlMenager
     {
         private MySqlConnection _conn; // obiekt klasy umozliwiajacy laczenie sie z baza danych.
 
@@ -48,7 +48,7 @@ namespace Wirtualna_Uczelnia
 
 
         //konstruktor klasy sqlMenager -> dzieje sie na poczatku stworzenia obiektu.
-        public sqlMenager()
+        public SqlMenager()
         {
             // zmienic jak wydupcy baze danych w chmurze aby moc pracowac dalej!
             

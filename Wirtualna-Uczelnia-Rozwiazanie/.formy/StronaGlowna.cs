@@ -19,13 +19,13 @@ namespace Wirtualna_Uczelnia.formy
 {
     public partial class FormStronaGlowna : Form
     {
-        sqlMenager sqlMenager;
+        SqlMenager sqlMenager;
         private List<grupyStudenci> grupy;
         public FormStronaGlowna()
         {
             InitializeComponent();
 
-            sqlMenager = new sqlMenager();
+            sqlMenager = new SqlMenager();
 
             loadStudentInfoVisually();
         }

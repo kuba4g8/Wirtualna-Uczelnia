@@ -15,14 +15,14 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
 {
     public partial class FormKontaktPracownicy : Form
     {
-        private sqlMenager sqlMenager;
+        private SqlMenager sqlMenager;
         private List<TeacherInfoHolder> teacherInfo;
 
         public FormKontaktPracownicy()
         {
             InitializeComponent();
 
-            sqlMenager = new sqlMenager();
+            sqlMenager = new SqlMenager();
 
             loadDataToList();
             initalizeContacts(teacherInfo);
