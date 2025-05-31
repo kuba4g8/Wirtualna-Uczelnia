@@ -45,7 +45,7 @@
             panelContactHolder.BackgroundImage = (Image)resources.GetObject("panelContactHolder.BackgroundImage");
             panelContactHolder.BackgroundImageLayout = ImageLayout.Stretch;
             panelContactHolder.Location = new Point(15, 100);
-            panelContactHolder.Margin = new Padding(4, 4, 4, 4);
+            panelContactHolder.Margin = new Padding(4);
             panelContactHolder.Name = "panelContactHolder";
             panelContactHolder.Size = new Size(1125, 514);
             panelContactHolder.TabIndex = 0;
@@ -58,7 +58,7 @@
             panelSearch.Controls.Add(lblSearch);
             panelSearch.Controls.Add(txtSearch);
             panelSearch.Location = new Point(15, 15);
-            panelSearch.Margin = new Padding(4, 4, 4, 4);
+            panelSearch.Margin = new Padding(4);
             panelSearch.Name = "panelSearch";
             panelSearch.Size = new Size(1125, 78);
             panelSearch.TabIndex = 1;
@@ -70,8 +70,8 @@
             btnReturn.FlatAppearance.BorderSize = 0;
             btnReturn.FlatStyle = FlatStyle.Flat;
             btnReturn.Font = new Font("Segoe UI", 8F);
-            btnReturn.Location = new Point(1006, 33);
-            btnReturn.Margin = new Padding(4, 4, 4, 4);
+            btnReturn.Location = new Point(1006, 28);
+            btnReturn.Margin = new Padding(4);
             btnReturn.Name = "btnReturn";
             btnReturn.Size = new Size(99, 30);
             btnReturn.TabIndex = 4;
@@ -95,7 +95,7 @@
             txtSearch.BackColor = Color.FromArgb(197, 226, 215);
             txtSearch.Font = new Font("Segoe UI", 15F);
             txtSearch.Location = new Point(290, 19);
-            txtSearch.Margin = new Padding(4, 4, 4, 4);
+            txtSearch.Margin = new Padding(4);
             txtSearch.Name = "txtSearch";
             txtSearch.PlaceholderText = "Wpisz nazwisko lub przedmiot...";
             txtSearch.Size = new Size(506, 47);
@@ -111,7 +111,7 @@
             ClientSize = new Size(1152, 629);
             Controls.Add(panelSearch);
             Controls.Add(panelContactHolder);
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             MinimumSize = new Size(1138, 674);
             Name = "FormKontaktPracownicy";
             StartPosition = FormStartPosition.CenterScreen;
