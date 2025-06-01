@@ -253,6 +253,11 @@ namespace Wirtualna_Uczelnia.formy
         {
             public Int32 id_oceny { get; set; }
         }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 
 }
