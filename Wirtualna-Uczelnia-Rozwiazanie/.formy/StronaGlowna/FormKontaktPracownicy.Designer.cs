@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormKontaktPracownicy));
             panelContactHolder = new Panel();
             panelSearch = new Panel();
             btnReturn = new Button();
@@ -41,35 +42,40 @@
             panelContactHolder.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panelContactHolder.AutoScroll = true;
             panelContactHolder.BackColor = Color.WhiteSmoke;
-            panelContactHolder.Location = new Point(12, 80);
+            panelContactHolder.BackgroundImage = (Image)resources.GetObject("panelContactHolder.BackgroundImage");
+            panelContactHolder.BackgroundImageLayout = ImageLayout.Stretch;
+            panelContactHolder.Location = new Point(15, 100);
+            panelContactHolder.Margin = new Padding(4);
             panelContactHolder.Name = "panelContactHolder";
-            panelContactHolder.Size = new Size(900, 411);
+            panelContactHolder.Size = new Size(1125, 514);
             panelContactHolder.TabIndex = 0;
             // 
             // panelSearch
             // 
             panelSearch.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            panelSearch.BackColor = Color.LightSteelBlue;
+            panelSearch.BackColor = Color.FromArgb(197, 226, 215);
             panelSearch.Controls.Add(btnReturn);
             panelSearch.Controls.Add(lblSearch);
             panelSearch.Controls.Add(txtSearch);
-            panelSearch.Location = new Point(12, 12);
+            panelSearch.Location = new Point(15, 15);
+            panelSearch.Margin = new Padding(4);
             panelSearch.Name = "panelSearch";
-            panelSearch.Size = new Size(900, 62);
+            panelSearch.Size = new Size(1125, 78);
             panelSearch.TabIndex = 1;
             // 
             // btnReturn
             // 
-            btnReturn.BackColor = Color.White;
+            btnReturn.BackColor = Color.Khaki;
             btnReturn.BackgroundImageLayout = ImageLayout.Center;
             btnReturn.FlatAppearance.BorderSize = 0;
             btnReturn.FlatStyle = FlatStyle.Flat;
-            btnReturn.Font = new Font("Segoe UI", 6F);
-            btnReturn.Location = new Point(818, 4);
+            btnReturn.Font = new Font("Segoe UI", 8F);
+            btnReturn.Location = new Point(1006, 28);
+            btnReturn.Margin = new Padding(4);
             btnReturn.Name = "btnReturn";
-            btnReturn.Size = new Size(79, 53);
+            btnReturn.Size = new Size(99, 30);
             btnReturn.TabIndex = 4;
-            btnReturn.Text = "cofanie";
+            btnReturn.Text = "wyjdź";
             btnReturn.UseVisualStyleBackColor = false;
             btnReturn.Click += btnReturn_Click;
             // 
@@ -77,31 +83,36 @@
             // 
             lblSearch.AutoSize = true;
             lblSearch.Font = new Font("Segoe UI", 15F, FontStyle.Bold);
-            lblSearch.Location = new Point(129, 18);
+            lblSearch.Location = new Point(161, 22);
+            lblSearch.Margin = new Padding(4, 0, 4, 0);
             lblSearch.Name = "lblSearch";
-            lblSearch.Size = new Size(97, 35);
+            lblSearch.Size = new Size(117, 41);
             lblSearch.TabIndex = 1;
             lblSearch.Text = "Szukaj:";
             // 
             // txtSearch
             // 
+            txtSearch.BackColor = Color.FromArgb(197, 226, 215);
             txtSearch.Font = new Font("Segoe UI", 15F);
-            txtSearch.Location = new Point(232, 15);
+            txtSearch.Location = new Point(290, 19);
+            txtSearch.Margin = new Padding(4);
             txtSearch.Name = "txtSearch";
             txtSearch.PlaceholderText = "Wpisz nazwisko lub przedmiot...";
-            txtSearch.Size = new Size(406, 41);
+            txtSearch.Size = new Size(506, 47);
             txtSearch.TabIndex = 0;
             txtSearch.TextChanged += txtSearch_TextChanged;
             // 
             // FormKontaktPracownicy
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.White;
-            ClientSize = new Size(922, 503);
+            BackColor = Color.FromArgb(197, 226, 215);
+            BackgroundImageLayout = ImageLayout.Stretch;
+            ClientSize = new Size(1152, 629);
             Controls.Add(panelSearch);
             Controls.Add(panelContactHolder);
-            MinimumSize = new Size(915, 550);
+            Margin = new Padding(4);
+            MinimumSize = new Size(1138, 674);
             Name = "FormKontaktPracownicy";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Kontakt z pracownikami";
