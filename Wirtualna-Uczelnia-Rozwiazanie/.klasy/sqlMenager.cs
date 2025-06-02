@@ -169,7 +169,6 @@ namespace Wirtualna_Uczelnia
             {
                 return list;
             }
-
             try
             {
                 // MySqlCommand -> komenda do wysylania w sql
@@ -181,35 +180,45 @@ namespace Wirtualna_Uczelnia
 
                 while (reader.Read())
                 {
-                    //obiekt o wlasciwosciach T -> obiekt ktory zostnie podany
-                    T tempObj = new T();
-
-                    // przelatujemy przez kazdy property w obiekcie np:
-                    // student.id, student.imie, student.nazwisko itd
-                    // i przypisujemy te wlasciwosci do obiektu ktory ma te same wlasciowosci
-                    // nastepnie po kazdym foreachu kiedy wszystko bedzie przypisane dodajemy do listy
-                    // obiekt aby wszystkie byly trzymane w jednym miejscu
-                    foreach (PropertyInfo info in typeof(T).GetProperties())
+                    if (typeof(T).IsPrimitive || typeof(T) == typeof(string) || typeof(T) == typeof(decimal))
                     {
-                        try
+                        if (!reader.IsDBNull(0))
                         {
-                            //jezeli w bazie danych rekord bedzie null to pomijamy i nic nie przypisujemy
-                            if (reader[info.Name] != DBNull.Value)
-                            {
-                                //MessageBox.Show(info.Name + " " + info.PropertyType);
-                                info.SetValue(tempObj, reader[info.Name]);
-                            }
+                            list.Add((T)Convert.ChangeType(reader[0], typeof(T)));
                         }
-                        catch (Exception ex)
-                        {
-                            //MessageBox.Show("Generalnie jezeli czytasz ta wiadomosc to chujowow");
-                            if (!safeDebugMsgOff)
-                                MessageBox.Show(ex.Message);
-                        }
-                        
                     }
+                    else
+                    {
+                        //obiekt o wlasciwosciach T -> obiekt ktory zostnie podany
+                        T tempObj = new T();
 
-                    list.Add(tempObj);
+                        // przelatujemy przez kazdy property w obiekcie np:
+                        // student.id, student.imie, student.nazwisko itd
+                        // i przypisujemy te wlasciwosci do obiektu ktory ma te same wlasciowosci
+                        // nastepnie po kazdym foreachu kiedy wszystko bedzie przypisane dodajemy do listy
+                        // obiekt aby wszystkie byly trzymane w jednym miejscu
+                        foreach (PropertyInfo info in typeof(T).GetProperties())
+                        {
+                            try
+                            {
+                                //jezeli w bazie danych rekord bedzie null to pomijamy i nic nie przypisujemy
+                                if (reader[info.Name] != DBNull.Value)
+                                {
+                                    //MessageBox.Show(info.Name + " " + info.PropertyType);
+                                    info.SetValue(tempObj, reader[info.Name]);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                //MessageBox.Show("Generalnie jezeli czytasz ta wiadomosc to chujowow");
+                                if (!safeDebugMsgOff)
+                                    MessageBox.Show(ex.Message);
+                            }
+
+                        }
+
+                        list.Add(tempObj);
+                    }
                 }
                 tryDissconect();
 

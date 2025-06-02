@@ -47,6 +47,7 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             comboKierunek = new ComboBox();
             comboWydzial = new ComboBox();
             btnChange = new Button();
+            comboGrupa = new ComboBox();
             tabControl.SuspendLayout();
             tabPoniedzialek.SuspendLayout();
             panelPoniedzialek.SuspendLayout();
@@ -99,7 +100,7 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             // 
             // planLekcjiUserControl1
             // 
-            planLekcjiUserControl1.actColor = Color.Red;
+            planLekcjiUserControl1.actColor = Color.Transparent;
             planLekcjiUserControl1.BackColor = Color.Transparent;
             planLekcjiUserControl1.Location = new Point(15, 15);
             planLekcjiUserControl1.Margin = new Padding(5);
@@ -203,6 +204,7 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             // 
             // comboKierunek
             // 
+            comboKierunek.DropDownStyle = ComboBoxStyle.DropDownList;
             comboKierunek.FormattingEnabled = true;
             comboKierunek.Location = new Point(699, 50);
             comboKierunek.Name = "comboKierunek";
@@ -212,6 +214,7 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             // 
             // comboWydzial
             // 
+            comboWydzial.DropDownStyle = ComboBoxStyle.DropDownList;
             comboWydzial.FormattingEnabled = true;
             comboWydzial.Location = new Point(699, 375);
             comboWydzial.Name = "comboWydzial";
@@ -228,7 +231,16 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             btnChange.TabIndex = 3;
             btnChange.Text = "Dodaj / Zmień";
             btnChange.UseVisualStyleBackColor = true;
-            btnChange.Click += btnChange_Click;
+            // 
+            // comboGrupa
+            // 
+            comboGrupa.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboGrupa.FormattingEnabled = true;
+            comboGrupa.Location = new Point(699, 448);
+            comboGrupa.Name = "comboGrupa";
+            comboGrupa.Size = new Size(338, 28);
+            comboGrupa.TabIndex = 4;
+            comboGrupa.SelectedIndexChanged += comboGrupa_SelectedIndexChanged;
             // 
             // FormEdytujPlanLekcji
             // 
@@ -236,6 +248,7 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(1050, 703);
+            Controls.Add(comboGrupa);
             Controls.Add(btnChange);
             Controls.Add(comboWydzial);
             Controls.Add(comboKierunek);
@@ -271,5 +284,6 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         private ComboBox comboWydzial;
         private UserControls.PlanLekcjiUserControl planLekcjiUserControl1;
         private Button btnChange;
+        private ComboBox comboGrupa;
     }
 }

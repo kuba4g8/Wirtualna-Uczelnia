@@ -5,8 +5,10 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
+
+using Wirtualna_Uczelnia.formy.AdminForms;
 
 namespace Wirtualna_Uczelnia.formy.UserControls
 {
@@ -14,6 +16,9 @@ namespace Wirtualna_Uczelnia.formy.UserControls
     {
         public bool isSelected = false;
         private Color _actColor = Color.Transparent;
+        public event Action<BlokLekcjiHolder> OnClicked;
+        private BlokLekcjiHolder _currentLesson;
+        private System.Windows.Forms.Timer colorTimer;
 
         public Color actColor // przyjmuje tylko klor przezroczysty lub szary
         {
@@ -23,7 +28,7 @@ namespace Wirtualna_Uczelnia.formy.UserControls
             }
             set
             {
-                if (value == Color.Transparent || value == Color.Gray || value == Color.Red)
+                if (value == Color.Transparent || value == Color.Gray)
                 {
                     _actColor = value;
                     this.BackColor = _actColor;
@@ -34,6 +39,50 @@ namespace Wirtualna_Uczelnia.formy.UserControls
         public PlanLekcjiUserControl()
         {
             InitializeComponent();
+            
+            // Inicjalizacja timera
+            colorTimer = new System.Windows.Forms.Timer();
+            colorTimer.Interval = 5000; // 5 sekund
+            colorTimer.Tick += ColorTimer_Tick;
+        }
+
+        private void ColorTimer_Tick(object sender, EventArgs e)
+        {
+            // Wywołaj na wątku UI
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new Action(() =>
+                {
+                    // Zatrzymaj timer
+                    colorTimer.Stop();
+                    
+                    // Przywróć pierwotny kolor
+                    isSelected = false;
+                    actColor = Color.Transparent;
+                }));
+            }
+            else
+            {
+                // Zatrzymaj timer
+                colorTimer.Stop();
+                
+                // Przywróć pierwotny kolor
+                isSelected = false;
+                actColor = Color.Transparent;
+            }
+        }
+
+        private void ToggleSelection()
+        {
+            // Zatrzymaj timer jeśli już działa
+            colorTimer.Stop();
+
+            // Zmień kolor
+            isSelected = true;
+            actColor = Color.Gray;
+
+            // Uruchom timer
+            colorTimer.Start();
         }
 
         public void initalizeControls(string sala, string godziny, string przedmiot, string prowadzacy)
@@ -42,6 +91,28 @@ namespace Wirtualna_Uczelnia.formy.UserControls
             lblGodziny.Text = godziny;
             lblPrzedmiot.Text = przedmiot;
             lblProwadzacy.Text = prowadzacy;
+        }
+
+        public void initalizeControlsEditable(string sala, string godziny, string przedmiot, string prowadzacy, BlokLekcjiHolder blok)
+        {
+            _currentLesson = blok;
+            lblSala.Text = sala;
+            lblGodziny.Text = godziny;
+            lblPrzedmiot.Text = przedmiot;
+            lblProwadzacy.Text = prowadzacy;
+
+            // Dodaj obsługę kliknięcia dla wszystkich kontrolek
+            foreach (Control control in this.Controls)
+            {
+                control.Click += Control_Click;
+            }
+            this.Click += Control_Click;
+        }
+
+        private void Control_Click(object sender, EventArgs e)
+        {
+            ToggleSelection();
+            OnClicked?.Invoke(_currentLesson);
         }
     }
 }

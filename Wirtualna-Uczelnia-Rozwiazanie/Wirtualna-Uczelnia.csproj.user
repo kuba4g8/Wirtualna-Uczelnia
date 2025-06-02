@@ -5,6 +5,9 @@
     <Compile Update=".formy\AdminForms\AdminPanel.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update=".formy\AdminForms\FormChangePlan.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update=".formy\AdminForms\FormEdytujPlanLekcji.cs">
       <SubType>Form</SubType>
     </Compile>

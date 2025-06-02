@@ -15,7 +15,19 @@
         {
             if (disposing && (components != null))
             {
-                components.Dispose();
+                if (colorTimer != null)
+                {
+                    colorTimer.Stop();
+                    colorTimer.Dispose();
+                    colorTimer = null;
+                }
+
+                // Odłącz wszystkie eventy
+                foreach (Control control in this.Controls)
+                {
+                    control.Click -= Control_Click;
+                }
+                this.Click -= Control_Click;
             }
             base.Dispose(disposing);
         }

@@ -15,126 +15,180 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
 {
     public partial class FormEdytujPlanLekcji : Form
     {
-        PlanLekcjiMenager planMenager;
-
+        private PlanLekcjiMenager planMenager;
         private List<Kierunek> kierunki;
         private List<Wydzial> wydzialy;
+        private List<Kierunek> filtredKierunki;
+
+        // flaga ktora zabezpiecza przed jakims edytoaniem podczas inicjalizacji
+        private bool isInitializing = true;
+
+        private SqlMenager sqlMenager;
 
         public FormEdytujPlanLekcji()
         {
+            sqlMenager = new SqlMenager();
+            filtredKierunki = new List<Kierunek>();
+
             InitializeComponent();
 
-            loadInfoFromSQL();
-
+            // Inicjalizacja menedżera
             planMenager = new PlanLekcjiMenager(panelPoniedzialek, panelWtorek, panelSroda, panelCzwartek, panelPiatek);
+
+            // Wczytanie danych
+            LoadInitialData();
+
+            isInitializing = false;
         }
 
-        private void btnDodajPon_Click(object sender, EventArgs e)
+        // funkcja laduje WSZYSTKIE informacje z bazy danych i ustawia comboboxy
+        // where idKierunku = @idKierunku
+        private void LoadInitialData()
         {
-            // TODO: Dodaj logikę dodawania zadania na poniedziałek
+            // Wczytanie danych z bazy
+            LoadDataFromDatabase();
+
+            // Wypełnienie comboboxów
+            PopulateWydzialy();
+            PopulateKierunki();
         }
 
-        private void btnDodajWt_Click(object sender, EventArgs e)
+        private void LoadDataFromDatabase()
         {
-            // TODO: Dodaj logikę dodawania zadania na wtorek
+            string kierunkiQuery = "SELECT * FROM kierunki";
+            kierunki = sqlMenager.loadDataToList<Kierunek>(new MySqlCommand(kierunkiQuery));
+
+            string wydzialyQuery = "SELECT * FROM wydzialy";
+            wydzialy = sqlMenager.loadDataToList<Wydzial>(new MySqlCommand(wydzialyQuery));
         }
 
-        private void btnDodajSr_Click(object sender, EventArgs e)
-        {
-            // TODO: Dodaj logikę dodawania zadania na środę
-        }
-
-        private void btnDodajCzw_Click(object sender, EventArgs e)
-        {
-            // TODO: Dodaj logikę dodawania zadania na czwartek
-        }
-
-        private void btnDodajPt_Click(object sender, EventArgs e)
-        {
-            // TODO: Dodaj logikę dodawania zadania na piątek
-        }
-
-        private void comboWydzial_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            loadInfoToKierunki();
-        }
-
-        private void comboKierunek_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            loadInfoVisually();
-        }
-
-        private void loadInfoFromSQL()
-        {
-            SqlMenager sqlMenager = new SqlMenager();
-
-            string querry = "SELECT * FROM kierunki";
-            MySqlCommand cmd = new MySqlCommand(querry);
-
-            kierunki = sqlMenager.loadDataToList<Kierunek>(cmd);
-
-            querry = "SELECT * FROM wydzialy";
-            cmd = new MySqlCommand(querry);
-            wydzialy = sqlMenager.loadDataToList<Wydzial>(cmd);
-
-            loadInfoToWydzialy();
-        }
-
-
-        private void loadInfoToWydzialy()
+        private void PopulateWydzialy()
         {
             comboWydzial.Items.Clear();
-
             foreach (var wydzial in wydzialy)
             {
                 comboWydzial.Items.Add(wydzial.nazwa);
             }
-            loadInfoToKierunki();
         }
-        private void loadInfoToKierunki()
+
+        private void PopulateKierunki(int? selectedWydzialId = null)
         {
-            comboKierunek.SelectedIndex = -1;
             comboKierunek.Items.Clear();
+            filtredKierunki.Clear();
 
-            // zaden wydzial do filtrowania nie jest zaznaczony
-            if (comboWydzial.SelectedIndex == -1)
+            // odfiltrowanie kierunkow straszna metoda, ale niestety dzialajaca za dobrze zeby unikac ze nie istnieje
+            // filtruje kierunki po idwydzialu jaki jest zaznaczony
+            var filteredKierunki = selectedWydzialId.HasValue
+                ? kierunki.Where(k => k.id_wydzialu == selectedWydzialId.Value)
+                : kierunki;
+
+            filtredKierunki.AddRange(filteredKierunki);
+
+            foreach (var kierunek in filtredKierunki)
             {
-                foreach (var kierunek in kierunki)
-                {
-                    comboKierunek.Items.Add(kierunek.nazwa_kierunku + " " + kierunek.specjalizacja);
-                }
+                comboKierunek.Items.Add($"{kierunek.nazwa_kierunku} {kierunek.specjalizacja}");
             }
-            // jakis wydzial jest zaznaczony
-            else
-            {
-                Wydzial zaznWydzial = wydzialy[comboWydzial.SelectedIndex];
+        }
 
-                foreach (var kierunek in kierunki)
+        private void PopulateGrupy(int kierunekID)
+        {
+            comboGrupa.Items.Clear();
+
+            List<BlokLekcjiHolder> wszystkieLekcje = planMenager.loadAllInfo(kierunekID);
+            var uniqeGrupyKierunku = planMenager.loadGrupsInfo(filtredKierunki[comboKierunek.SelectedIndex].id_kierunku);
+
+            foreach (int grupaId in uniqeGrupyKierunku)
+            {
+                foreach (var lekcja in wszystkieLekcje)
                 {
-                    if (kierunek.id_wydzialu == zaznWydzial.id_wydzialu)
+                    if (lekcja.id_grupy == grupaId)
                     {
-                        comboKierunek.Items.Add(kierunek.nazwa_kierunku + " " + kierunek.specjalizacja);
+                        comboGrupa.Items.Add(lekcja.numer_grupy + ": " + lekcja.typ_grupy);
+                        break; // zakładamy, że chcesz dodać tylko raz dla danej grupy
                     }
                 }
             }
+
+
         }
 
-        private void loadInfoVisually()
+        private void comboWydzial_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboKierunek.SelectedIndex == -1)
-            {
-                MessageBox.Show("Trzeba zaznaczyc jakis kierunek!!!");
+            if (isInitializing || comboWydzial.SelectedIndex == -1)
                 return;
+
+            planMenager.clearPanels();
+
+            // Pobierz ID wybranego wydziału
+            int wydzialId = wydzialy[comboWydzial.SelectedIndex].id_wydzialu;
+
+            // Zapamiętaj aktualnie wybrany kierunek (jeśli jest)
+            string currentKierunek = comboKierunek.SelectedItem?.ToString();
+
+            // Odśwież listę kierunków
+            PopulateKierunki(wydzialId);
+
+            // Przywróć poprzedni wybór jeśli istnieje
+            if (!string.IsNullOrEmpty(currentKierunek))
+            {
+                int index = comboKierunek.Items.IndexOf(currentKierunek);
+                if (index >= 0) comboKierunek.SelectedIndex = index;
+            }
+        }
+
+        private void comboKierunek_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            planMenager.clearPanels();
+
+            if (!isInitializing && comboKierunek.SelectedIndex != -1)
+            {
+
+                var selectedKierunek = filtredKierunki[comboKierunek.SelectedIndex];
+
+                // szuka indexu wydzialu w liście wydziałów
+                int wydzialIndex = wydzialy.FindIndex(w => w.id_wydzialu == selectedKierunek.id_wydzialu);
+                comboWydzial.SelectedIndex = wydzialIndex;
+
+                // Aktualizacja widoku planu
+                UpdatePlanLekcji(selectedKierunek.id_kierunku, true);
+            }
+        }
+
+        private void UpdatePlanLekcji(int kierunekId, bool changeGroups)
+        {
+            if (changeGroups)
+                PopulateGrupy(kierunekId);
+
+            // jezeli nie ma zadnych grup
+            if (comboGrupa.Items.Count == 0)
+            {
+                comboGrupa.SelectedIndex = -1;
+                return;
+            }
+
+            // jezeli sa jakies grupy to ustaw domyslnie pierwsza
+            if (comboGrupa.SelectedIndex == -1)
+            {
+                comboGrupa.SelectedIndex = 0;
+            }
+
+            if (kierunekId > 0 && comboGrupa.SelectedIndex != -1)
+            {
+                isInitializing = true;
+                int groupID = planMenager.uniqeGrupyKierunku[comboGrupa.SelectedIndex];
+                planMenager.loadFinalInfo(kierunekId, groupID);
+                planMenager.loadVisually();
+                isInitializing = false;
             }
             else
             {
-                planMenager.loadAllInfo(comboKierunek.SelectedIndex);
+                MessageBox.Show("Wybierz kierunek aby wyświetlić plan zajęć.");
             }
         }
 
-        private void btnChange_Click(object sender, EventArgs e)
+        private void comboGrupa_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // zmiana formy aby zmienic rozne rzeczy idk zaraz to napisze i tak to usune
+            UpdatePlanLekcji(filtredKierunki[comboKierunek.SelectedIndex].id_kierunku, false);
         }
     }
 
@@ -158,13 +212,15 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
     {
         SqlMenager sqlMenager;
 
-        private List<BlokLekcjiHolder> wszystkieLekcje = new List<BlokLekcjiHolder>();
+        public List<BlokLekcjiHolder> wszystkieLekcje = new List<BlokLekcjiHolder>();
 
         private Panel panelPoniedzialek;
         private Panel panelWtorek;
         private Panel panelSroda;
         private Panel panelCzwartek;
         private Panel panelPiatek;
+
+        public List<Int32> uniqeGrupyKierunku;
 
         public PlanLekcjiMenager(Panel panelPoniedzialek, Panel panelWtorek, Panel panelSroda, Panel panelCzwartek, Panel panelPiatek)
         {
@@ -175,6 +231,8 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             this.panelSroda = panelSroda;
             this.panelCzwartek = panelCzwartek;
             this.panelPiatek = panelPiatek;
+
+            clearPanels();
         }
 
         // klasa przechowujace aktualne przesuniecie wobec kazdego dnia xdxdxd
@@ -189,28 +247,73 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
 
         // trzeba przerobic querry i klase BlokLekcjiHolder ale teraz nie mam pomyslu
         // ukradniete z planu lekcji dla studenta kod hehehe
-        public void loadAllInfo(int kierunekID)
+
+        // funkcja ktora tylko laduje informacje z bazy danych i przekazuje je do loadVisually
+        public List<BlokLekcjiHolder> loadAllInfo(int kierunekID)
         {
             try
             {
-                string querry = "SELECT * FROM plan_lekcji\r\nWHERE id_kierunku = @idKierunku";
+                string querry = "SELECT pl.id_zajecia, pl.id_prowadzacego, pl.id_grupy, g.typ_grupy, g.numer_grupy, pl.id_kierunku, p.imie, p.nazwisko, p.stopien_naukowy, pl.sala, pl.dzien, pl.godzina_startu, pl.godzina_konca, przed.nazwa AS przedmiot, pl.rodzaj, pl.notatki FROM plan_lekcji pl JOIN pracownicy p ON pl.id_prowadzacego = p.userID JOIN przedmioty przed ON pl.id_przedmiotu = przed.id_przedmiotu JOIN grupy g ON pl.id_grupy = g.id_grupy WHERE pl.id_kierunku = @idKierunku ORDER BY pl.godzina_startu ASC";
 
                 var cmd = new MySqlCommand(querry);
+
                 cmd.Parameters.AddWithValue("@idKierunku", kierunekID);
-
-                wszystkieLekcje = sqlMenager.loadDataToList<BlokLekcjiHolder>(cmd, safeDebugMsgOff: true);
-
-                loadVisually();
+                wszystkieLekcje = sqlMenager.loadDataToList<BlokLekcjiHolder>(cmd);
+                return wszystkieLekcje;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Blad podczas ladowania planu lekcji z bazy danych");
                 MessageBox.Show(ex.Message);
+                return null;
+            }
+        }
+        public List<Int32> loadGrupsInfo(int kierunekID)
+        {
+            string querry = "SELECT DISTINCT id_grupy FROM plan_lekcji WHERE id_kierunku = @idKierunku";
+
+            var cmd = new MySqlCommand(querry);
+            cmd.Parameters.AddWithValue("@idKierunku", kierunekID);
+
+            uniqeGrupyKierunku = sqlMenager.loadDataToList<Int32>(cmd);
+
+            return uniqeGrupyKierunku;
+        }
+
+        public List<BlokLekcjiHolder> loadFinalInfo(int kierunekID, int idGrupy)
+        {
+            try
+            {
+                string querry = "SELECT pl.id_zajecia, pl.id_prowadzacego, pl.id_grupy, g.typ_grupy, g.numer_grupy, pl.id_kierunku, p.imie, p.nazwisko, p.stopien_naukowy, pl.sala, pl.dzien, pl.godzina_startu, pl.godzina_konca, przed.nazwa AS przedmiot, pl.rodzaj, pl.notatki FROM plan_lekcji pl JOIN pracownicy p ON pl.id_prowadzacego = p.userID JOIN przedmioty przed ON pl.id_przedmiotu = przed.id_przedmiotu JOIN grupy g ON pl.id_grupy = g.id_grupy WHERE pl.id_kierunku = @idKierunku AND pl.id_grupy = @idGrupy ORDER BY pl.godzina_startu ASC";
+
+                var cmd = new MySqlCommand(querry);
+                cmd.Parameters.AddWithValue("@idKierunku", kierunekID);
+                cmd.Parameters.AddWithValue("@idGrupy", idGrupy);
+
+                wszystkieLekcje = sqlMenager.loadDataToList<BlokLekcjiHolder>(cmd);
+
+                return wszystkieLekcje;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Blad podczas ladowania planu lekcji z bazy danych");
+                MessageBox.Show(ex.Message);
+                return null;
             }
 
         }
 
-        private void loadVisually()
+        public void clearPanels()
+        {
+            panelPoniedzialek.Controls.Clear();
+            panelWtorek.Controls.Clear();
+            panelSroda.Controls.Clear();
+            panelCzwartek.Controls.Clear();
+            panelPiatek.Controls.Clear();
+        }
+
+        public void loadVisually()
         {
             ShiftMenager shift = new ShiftMenager();
             int przesuniecieStale = 200;
@@ -226,7 +329,8 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
 
 
                 PlanLekcjiUserControl planLekcjiHolder = new PlanLekcjiUserControl();
-                planLekcjiHolder.initalizeControls(sala, godziny, przedmiot, prowadzacy);
+                planLekcjiHolder.initalizeControlsEditable(sala, godziny, przedmiot, prowadzacy, item);
+                planLekcjiHolder.OnClicked += PlanLekcjiHolderUserClicked;
 
                 switch (item.dzien.DayOfWeek)
                 {
@@ -259,20 +363,28 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             }
         }
 
-        private class BlokLekcjiHolder
+        private void PlanLekcjiHolderUserClicked(BlokLekcjiHolder obj)
         {
-            public int id_prowadzacego { get; set; }
-            public string imie { get; set; } // imie prowadzacego
-            public string nazwisko { get; set; } // nazwisko prowadzacego
-            public string stopien_naukowy { get; set; }
-            public string sala { get; set; }
-            public DateTime dzien { get; set; }
-            public TimeSpan godzina_startu { get; set; }
-            public TimeSpan godzina_konca { get; set; }
-            public string przedmiot { get; set; }
-            public string rodzaj { get; set; }
-            public string notatki { get; set; }
+            //MessageBox.Show(obj.przedmiot);
         }
-
+    }
+    public class BlokLekcjiHolder
+    {
+        public int id_zajecia { get; set; }
+        public int id_prowadzacego { get; set; }
+        public int id_grupy { get; set; }
+        public string typ_grupy { get; set; }
+        public int numer_grupy { get; set; }
+        public int id_kierunku { get; set; }
+        public string imie { get; set; } // imie prowadzacego
+        public string nazwisko { get; set; } // nazwisko prowadzacego
+        public string stopien_naukowy { get; set; }
+        public string sala { get; set; }
+        public DateTime dzien { get; set; }
+        public TimeSpan godzina_startu { get; set; }
+        public TimeSpan godzina_konca { get; set; }
+        public string przedmiot { get; set; }
+        public string rodzaj { get; set; }
+        public string notatki { get; set; }
     }
 }

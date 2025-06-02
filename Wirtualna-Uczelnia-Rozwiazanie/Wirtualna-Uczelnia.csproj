@@ -18,6 +18,8 @@
   <ItemGroup>
     <Compile Include=".formy\AdminForms\AdminPanel.cs" />
     <Compile Include=".formy\AdminForms\AdminPanel.Designer.cs" />
+    <Compile Include=".formy\AdminForms\FormChangePlan.cs" />
+    <Compile Include=".formy\AdminForms\FormChangePlan.Designer.cs" />
     <Compile Include=".formy\AdminForms\FormEdytujPlanLekcji.cs" />
     <Compile Include=".formy\AdminForms\FormEdytujPlanLekcji.Designer.cs" />
     <Compile Include=".formy\AdminForms\RegisterUser.cs" />
@@ -73,6 +75,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include=".formy\AdminForms\AdminPanel.resx" />
+    <EmbeddedResource Include=".formy\AdminForms\FormChangePlan.resx" />
     <EmbeddedResource Include=".formy\AdminForms\FormEdytujPlanLekcji.resx" />
     <EmbeddedResource Include=".formy\AdminForms\RegisterUser.resx" />
     <EmbeddedResource Include=".formy\ChatForm.resx" />
