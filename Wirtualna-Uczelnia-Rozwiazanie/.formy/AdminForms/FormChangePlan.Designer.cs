@@ -13,7 +13,6 @@ partial class FormChangePlan
     private System.Windows.Forms.ComboBox comboPrzedmiot;
     private System.Windows.Forms.ComboBox comboRodzaj;
     private System.Windows.Forms.TextBox txtNotatki;
-    private System.Windows.Forms.TextBox txtTypGrupy;
     private System.Windows.Forms.NumericUpDown numericNumerGrupy;
     private System.Windows.Forms.Button btnZapisz;
 
@@ -32,7 +31,6 @@ partial class FormChangePlan
     private System.Windows.Forms.Label labelPrzedmiot;
     private System.Windows.Forms.Label labelRodzaj;
     private System.Windows.Forms.Label labelNotatki;
-    private System.Windows.Forms.Label labelTypGrupy;
     private System.Windows.Forms.Label labelNumerGrupy;
 
     private void InitializeComponent()
@@ -47,7 +45,6 @@ partial class FormChangePlan
         this.comboPrzedmiot = new System.Windows.Forms.ComboBox();
         this.comboRodzaj = new System.Windows.Forms.ComboBox();
         this.txtNotatki = new System.Windows.Forms.TextBox();
-        this.txtTypGrupy = new System.Windows.Forms.TextBox();
         this.numericNumerGrupy = new System.Windows.Forms.NumericUpDown();
         this.btnZapisz = new System.Windows.Forms.Button();
 
@@ -59,7 +56,6 @@ partial class FormChangePlan
         this.labelPrzedmiot = new System.Windows.Forms.Label();
         this.labelRodzaj = new System.Windows.Forms.Label();
         this.labelNotatki = new System.Windows.Forms.Label();
-        this.labelTypGrupy = new System.Windows.Forms.Label();
         this.labelNumerGrupy = new System.Windows.Forms.Label();
 
         ((System.ComponentModel.ISupportInitialize)(this.numericNumerGrupy)).BeginInit();
@@ -174,18 +170,6 @@ partial class FormChangePlan
         this.Controls.Add(this.txtNotatki);
         top += 70;
 
-        // ============ Typ grupy ============
-        this.labelTypGrupy.Text = "ID Grupy: ";
-        this.labelTypGrupy.Left = leftLabel;
-        this.labelTypGrupy.Top = top;
-        this.labelTypGrupy.AutoSize = true;
-        this.txtTypGrupy.Left = leftControl;
-        this.txtTypGrupy.Top = top;
-        this.txtTypGrupy.Width = 200;
-        this.Controls.Add(this.txtTypGrupy);
-        this.Controls.Add(this.labelTypGrupy);
-        top += spacing;
-
         // ============ Numer grupy ============
         this.labelNumerGrupy.Text = "Numer grupy";
         this.labelNumerGrupy.Left = leftLabel;
@@ -206,6 +190,7 @@ partial class FormChangePlan
         this.btnZapisz.Top = top + 10;
         this.btnZapisz.Width = 150;
         this.Controls.Add(this.btnZapisz);
+        btnZapisz.Click += btnZapisz_Click;
 
         // ============ Okno ============
         this.Text = "Edytor bloku lekcji";

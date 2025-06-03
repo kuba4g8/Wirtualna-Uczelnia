@@ -90,6 +90,7 @@ namespace Wirtualna_Uczelnia
 
         //wpisanie do bazy danych dynamicznego obiektu typu T, majac na uwadze ze nazwy tabel musza byc takie same jak nazwy wlasciwosci.
         // Zwraca osattni userID dodany jako int
+        // zmienna insertUSERID -> czy wpisac userID do bazy danych, jesli nie to pomija wpisywanie userID i robi to samemu
         public int loadObjectToDataBase<T>(T objToInsert, string tableName, bool insertUSERID) where T : new()
         {
             if (!tryConnect())

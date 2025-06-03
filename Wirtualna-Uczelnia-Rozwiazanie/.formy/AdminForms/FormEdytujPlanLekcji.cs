@@ -103,8 +103,8 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
                 {
                     if (lekcja.id_grupy == grupaId)
                     {
-                        comboGrupa.Items.Add(lekcja.numer_grupy + ": " + lekcja.typ_grupy);
-                        break; 
+                        comboGrupa.Items.Add(lekcja.numer_grupy + ": " + lekcja.typ_grupy + ": " + lekcja.id_grupy);
+                        break;
                     }
                 }
             }
@@ -188,6 +188,20 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         {
             UpdatePlanLekcji(filtredKierunki[comboKierunek.SelectedIndex].id_kierunku, false);
         }
+
+        private void btnAddBlok_Click(object sender, EventArgs e)
+        {
+            if (comboKierunek.SelectedIndex == -1)
+            {
+                MessageBox.Show("Wybiezr kierunek najpeirw");
+                return;
+            }
+
+            FormChangePlan frm = new FormChangePlan(filtredKierunki[comboKierunek.SelectedIndex].id_kierunku);
+            frm.ShowDialog();
+
+            UpdatePlanLekcji(filtredKierunki[comboKierunek.SelectedIndex].id_kierunku, true);
+        }
     }
 
     internal class Kierunek
@@ -251,7 +265,7 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         {
             try
             {
-                string querry = "SELECT pl.id_zajecia, pl.id_prowadzacego, pl.id_grupy, g.typ_grupy, g.numer_grupy, pl.id_kierunku, p.imie, p.nazwisko, p.stopien_naukowy, pl.sala, pl.dzien, pl.godzina_startu, pl.godzina_konca, przed.nazwa AS przedmiot, pl.rodzaj, pl.notatki FROM plan_lekcji pl JOIN pracownicy p ON pl.id_prowadzacego = p.userID JOIN przedmioty przed ON pl.id_przedmiotu = przed.id_przedmiotu JOIN grupy g ON pl.id_grupy = g.id_grupy WHERE pl.id_kierunku = @idKierunku ORDER BY pl.godzina_startu ASC";
+                string querry = "SELECT pl.id_zajecia, pl.id_prowadzacego, pl.id_grupy, g.typ_grupy, g.numer_grupy, pl.id_kierunku, p.imie, p.nazwisko, p.stopien_naukowy, pl.sala, pl.dzien, pl.godzina_startu, pl.godzina_konca, pl.id_przedmiotu, przed.nazwa AS przedmiot, pl.rodzaj, pl.notatki FROM plan_lekcji pl JOIN pracownicy p ON pl.id_prowadzacego = p.userID JOIN przedmioty przed ON pl.id_przedmiotu = przed.id_przedmiotu JOIN grupy g ON pl.id_grupy = g.id_grupy WHERE pl.id_kierunku = @idKierunku ORDER BY pl.godzina_startu ASC";
 
                 var cmd = new MySqlCommand(querry);
 
@@ -284,7 +298,30 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             {
                 wszystkieLekcje.Clear();
 
-                string querry = "SELECT pl.id_zajecia, pl.id_prowadzacego, pl.id_grupy, g.typ_grupy, g.numer_grupy, pl.id_kierunku, p.imie, p.nazwisko, p.stopien_naukowy, pl.sala, pl.dzien, pl.godzina_startu, pl.godzina_konca, przed.nazwa AS przedmiot, pl.rodzaj, pl.notatki FROM plan_lekcji pl JOIN pracownicy p ON pl.id_prowadzacego = p.userID JOIN przedmioty przed ON pl.id_przedmiotu = przed.id_przedmiotu JOIN grupy g ON pl.id_grupy = g.id_grupy WHERE pl.id_kierunku = @idKierunku AND pl.id_grupy = @idGrupy ORDER BY pl.godzina_startu ASC";
+                string querry =  @" SELECT 
+                                    pl.id_zajecia, 
+                                    pl.id_prowadzacego, 
+                                    pl.id_grupy, 
+                                    g.typ_grupy, 
+                                    g.numer_grupy, 
+                                    pl.id_kierunku, 
+                                    p.imie, 
+                                    p.nazwisko, 
+                                    p.stopien_naukowy, 
+                                    pl.sala, 
+                                    pl.dzien, 
+                                    pl.godzina_startu, 
+                                    pl.godzina_konca, 
+                                    pl.id_przedmiotu,
+                                    przed.nazwa AS przedmiot, 
+                                    pl.rodzaj, 
+                                    pl.notatki 
+                                    FROM plan_lekcji pl 
+                                    JOIN pracownicy p ON pl.id_prowadzacego = p.userID 
+                                    JOIN przedmioty przed ON pl.id_przedmiotu = przed.id_przedmiotu 
+                                    JOIN grupy g ON pl.id_grupy = g.id_grupy 
+                                    WHERE pl.id_kierunku = @idKierunku AND pl.id_grupy = @idGrupy 
+                                    ORDER BY pl.godzina_startu ASC";
 
                 var cmd = new MySqlCommand(querry);
                 cmd.Parameters.AddWithValue("@idKierunku", kierunekID);
@@ -366,6 +403,7 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
 
         private void PlanLekcjiHolderUserClicked(BlokLekcjiHolder obj)
         {
+            MessageBox.Show(obj.id_kierunku.ToString());
             FormChangePlan changePlan = new FormChangePlan(obj);
             changePlan.ShowDialog();
         }
@@ -385,6 +423,7 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         public DateTime dzien { get; set; }
         public TimeSpan godzina_startu { get; set; }
         public TimeSpan godzina_konca { get; set; }
+        public int id_przedmiotu { get; set; }
         public string przedmiot { get; set; }
         public string rodzaj { get; set; }
         public string notatki { get; set; }

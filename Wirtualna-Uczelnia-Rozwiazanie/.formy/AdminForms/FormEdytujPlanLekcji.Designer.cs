@@ -46,7 +46,7 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             panelPiatek = new FlowLayoutPanel();
             comboKierunek = new ComboBox();
             comboWydzial = new ComboBox();
-            btnChange = new Button();
+            btnAddBlok = new Button();
             comboGrupa = new ComboBox();
             tabControl.SuspendLayout();
             tabPoniedzialek.SuspendLayout();
@@ -222,15 +222,16 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             comboWydzial.TabIndex = 2;
             comboWydzial.SelectedIndexChanged += comboWydzial_SelectedIndexChanged;
             // 
-            // btnChange
+            // btnAddBlok
             // 
-            btnChange.Font = new System.Drawing.Font("Segoe UI", 15F);
-            btnChange.Location = new Point(699, 599);
-            btnChange.Name = "btnChange";
-            btnChange.Size = new Size(338, 87);
-            btnChange.TabIndex = 3;
-            btnChange.Text = "Dodaj / Zmień";
-            btnChange.UseVisualStyleBackColor = true;
+            btnAddBlok.Font = new System.Drawing.Font("Segoe UI", 15F);
+            btnAddBlok.Location = new Point(699, 599);
+            btnAddBlok.Name = "btnAddBlok";
+            btnAddBlok.Size = new Size(338, 87);
+            btnAddBlok.TabIndex = 3;
+            btnAddBlok.Text = "Dodaj";
+            btnAddBlok.UseVisualStyleBackColor = true;
+            btnAddBlok.Click += btnAddBlok_Click;
             // 
             // comboGrupa
             // 
@@ -249,7 +250,7 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             BackColor = Color.White;
             ClientSize = new Size(1050, 703);
             Controls.Add(comboGrupa);
-            Controls.Add(btnChange);
+            Controls.Add(btnAddBlok);
             Controls.Add(comboWydzial);
             Controls.Add(comboKierunek);
             Controls.Add(tabControl);
@@ -283,7 +284,7 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         private ComboBox comboKierunek;
         private ComboBox comboWydzial;
         private UserControls.PlanLekcjiUserControl planLekcjiUserControl1;
-        private Button btnChange;
+        private Button btnAddBlok;
         private ComboBox comboGrupa;
     }
 }
