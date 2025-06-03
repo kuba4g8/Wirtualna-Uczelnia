@@ -156,6 +156,63 @@ namespace Wirtualna_Uczelnia
             }
           }
 
+        // funkcja updatujaca rekord w bazie danych.
+        // przyjmuje jako argumenty obiekt -> ktory podmieniamy (nazwy musza sie zgadzac)
+        // string tableName nazwa tabeli
+        // whereCond np id_prowadzacego = whereCondValue
+        // whereCondValue no chyba do domyslenia 
+        public int updateObjectRecordInDataBase<T>(T objToUpdate, string tableName, string whereCond, int whereCondValue) where T : new()
+        {
+            if (!tryConnect())
+            {
+                MessageBox.Show("Błąd podczas łączenia do bazy");
+                return -1;
+            }
+
+            try
+            {
+                var properties = typeof(T).GetProperties();
+                List<string> setClauses = new List<string>();
+
+                foreach (PropertyInfo prop in properties)
+                {
+                    if (prop.Name == whereCond) // pominiecie kolumny ktora ma where warunek
+                        continue;
+
+                    setClauses.Add($"{prop.Name} = @{prop.Name}");
+                }
+
+                string sqlCommand = $"UPDATE {tableName} SET {string.Join(", ", setClauses)} WHERE {whereCond} = @whereValue";
+
+                using (MySqlCommand cmd = new MySqlCommand(sqlCommand, _conn))
+                {
+                    foreach (PropertyInfo prop in properties)
+                    {
+                        if (prop.Name == whereCond)
+                            continue;
+
+                        object value = prop.GetValue(objToUpdate, null);
+                        cmd.Parameters.AddWithValue($"@{prop.Name}", value ?? DBNull.Value);
+                    }
+
+                    // dodaj parametr warunku WHERE
+                    cmd.Parameters.AddWithValue("@whereValue", whereCondValue);
+
+                    return cmd.ExecuteNonQuery(); // Zwraca liczbę zmienionych wierszy
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Błąd bazy danych: " + ex.Message);
+                return -1;
+            }
+            finally
+            {
+                tryDissconect();
+            }
+        }
+
+
         //zczytanie danych z bazy danych sql przy podaniu dokladnej komendy
         //szczytuje kazdy rekord jako jeden element dynamicznego typu T
         //Podajesz obiekt on sam sie sczyta lol

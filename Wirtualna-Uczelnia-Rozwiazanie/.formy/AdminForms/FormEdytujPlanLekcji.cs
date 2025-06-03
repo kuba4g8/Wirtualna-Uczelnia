@@ -366,7 +366,8 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
 
         private void PlanLekcjiHolderUserClicked(BlokLekcjiHolder obj)
         {
-            //MessageBox.Show(obj.przedmiot);
+            FormChangePlan changePlan = new FormChangePlan(obj);
+            changePlan.ShowDialog();
         }
     }
     public class BlokLekcjiHolder
