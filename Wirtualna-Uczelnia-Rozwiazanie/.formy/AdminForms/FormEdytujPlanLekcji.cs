@@ -104,12 +104,10 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
                     if (lekcja.id_grupy == grupaId)
                     {
                         comboGrupa.Items.Add(lekcja.numer_grupy + ": " + lekcja.typ_grupy);
-                        break; // zakładamy, że chcesz dodać tylko raz dla danej grupy
+                        break; 
                     }
                 }
             }
-
-
         }
 
         private void comboWydzial_SelectedIndexChanged(object sender, EventArgs e)
@@ -284,6 +282,8 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         {
             try
             {
+                wszystkieLekcje.Clear();
+
                 string querry = "SELECT pl.id_zajecia, pl.id_prowadzacego, pl.id_grupy, g.typ_grupy, g.numer_grupy, pl.id_kierunku, p.imie, p.nazwisko, p.stopien_naukowy, pl.sala, pl.dzien, pl.godzina_startu, pl.godzina_konca, przed.nazwa AS przedmiot, pl.rodzaj, pl.notatki FROM plan_lekcji pl JOIN pracownicy p ON pl.id_prowadzacego = p.userID JOIN przedmioty przed ON pl.id_przedmiotu = przed.id_przedmiotu JOIN grupy g ON pl.id_grupy = g.id_grupy WHERE pl.id_kierunku = @idKierunku AND pl.id_grupy = @idGrupy ORDER BY pl.godzina_startu ASC";
 
                 var cmd = new MySqlCommand(querry);
@@ -315,6 +315,7 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
 
         public void loadVisually()
         {
+            clearPanels();
             ShiftMenager shift = new ShiftMenager();
             int przesuniecieStale = 200;
 
