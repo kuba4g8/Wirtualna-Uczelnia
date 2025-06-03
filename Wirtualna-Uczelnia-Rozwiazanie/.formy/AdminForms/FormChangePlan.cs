@@ -17,7 +17,6 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         // zmienna mowiaca czy edytuje czy wstawia nowy blok
         private bool isEditing;
 
-
         // albo przekazuje obiekt editableBlok albo kierunekID
         BlokLekcjiHolder editableBlok;
         private int kierunekID;
@@ -26,6 +25,15 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         List<Pracownik> nauczyciele;
 
         SqlMenager sqlManager;
+
+        private static readonly Dictionary<string, DayOfWeek> dniTygodnia = new Dictionary<string, DayOfWeek>
+        {
+            {"Poniedziałek", DayOfWeek.Monday},
+            {"Wtorek", DayOfWeek.Tuesday},
+            {"Środa", DayOfWeek.Wednesday},
+            {"Czwartek", DayOfWeek.Thursday},
+            {"Piątek", DayOfWeek.Friday}
+        };
 
         public FormChangePlan(int kierunekID, bool isEditing = false)
         {
@@ -46,7 +54,6 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         public FormChangePlan(BlokLekcjiHolder blokPrzekazany, bool isEditing = true)
         {
             InitializeComponent();
-            MessageBox.Show(blokPrzekazany.id_kierunku.ToString());
             this.editableBlok = blokPrzekazany;
             this.isEditing = isEditing;
             sqlManager = new SqlMenager();
@@ -77,6 +84,9 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             if (string.IsNullOrWhiteSpace(comboRodzaj.Text))
                 throw new Exception("Wybierz rodzaj zajęć.");
 
+            if (pickerDzien.SelectedItem == null)
+                throw new Exception("Wybierz dzień tygodnia.");
+
             var prowadzacy = (ProwadzacyOption)comboProwadzacy.SelectedItem;
             var przedmiot = (PrzedmiotOption)comboPrzedmiot.SelectedItem;
 
@@ -90,7 +100,7 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
                 imie = prowadzacy.imie,
                 nazwisko = prowadzacy.nazwisko,
                 sala = txtSala.Text.Trim(),
-                dzien = pickerDzien.Value,
+                dzien = GetDateFromDayName(pickerDzien.SelectedItem.ToString()),
                 godzina_startu = pickerStart.Value.TimeOfDay,
                 godzina_konca = pickerKoniec.Value.TimeOfDay,
                 rodzaj = comboRodzaj.Text,
@@ -184,18 +194,15 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             }
         }
 
-
-
         private void updateVisualChanges(BlokLekcjiHolder blok)
         {
             if (blok == null)
                 return;
 
-
             // Ustawienie wartości w kontrolkach na podstawie obiektu
             comboProwadzacy.Text = $"{blok.stopien_naukowy} {blok.imie} {blok.nazwisko}";
             txtSala.Text = blok.sala;
-            pickerDzien.Value = blok.dzien;
+            pickerDzien.SelectedItem = GetDayNameFromDate(blok.dzien);
             pickerStart.Value = DateTime.Today.Add(blok.godzina_startu);
             pickerKoniec.Value = DateTime.Today.Add(blok.godzina_konca);
             comboPrzedmiot.Text = blok.przedmiot;
@@ -203,7 +210,6 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             txtNotatki.Text = blok.notatki;
             numericNumerGrupy.Value = blok.id_grupy;
         }
-
 
         // Metoda do ładowania grup
         private void LoadGrupy()
@@ -286,20 +292,6 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
                 MessageBox.Show($"Błąd podczas ładowania prowadzących: {ex.Message}");
             }
         }
-        private class ProwadzacyOption
-        {
-            public int id_prowadzacego { get; set; }
-            public string display_name { get; set; }
-            public string stopien_naukowy { get; set; }
-            public string imie { get; set; }
-            public string nazwisko { get; set; }
-        }
-        private class PrzedmiotOption
-        {
-            public int id_przedmiotu { get; set; }
-            public string nazwa { get; set; }
-        }
-
 
 
         // Metoda do ładowania przedmiotów dla wybranego prowadzącego
@@ -345,6 +337,8 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         // Modyfikacja zdarzenia zmiany prowadzącego
         private void comboProwadzacy_SelectedIndexChanged(object sender, EventArgs e)
         {
+
+
             if (comboProwadzacy.SelectedValue != null &&
                 comboProwadzacy.SelectedValue is int idProwadzacego)
             {
@@ -355,6 +349,43 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
                 comboPrzedmiot.DataSource = null;
                 comboPrzedmiot.Enabled = false;
             }
+        }
+
+        private DateTime GetDateFromDayName(string dayName)
+        {
+            if (!dniTygodnia.TryGetValue(dayName, out DayOfWeek dayOfWeek))
+                throw new ArgumentException("Nieprawidłowy dzień tygodnia");
+
+            DateTime now = DateTime.Now;
+            DateTime monday = now.Date.AddDays(-(int)now.DayOfWeek + 1); // Znajdź najbliższy poniedziałek
+            return monday.AddDays((int)dayOfWeek - 1);
+        }
+
+        private string GetDayNameFromDate(DateTime date)
+        {
+            return date.DayOfWeek switch
+            {
+                DayOfWeek.Monday => "Poniedziałek",
+                DayOfWeek.Tuesday => "Wtorek",
+                DayOfWeek.Wednesday => "Środa",
+                DayOfWeek.Thursday => "Czwartek",
+                DayOfWeek.Friday => "Piątek",
+                _ => throw new ArgumentException("Nieprawidłowy dzień tygodnia")
+            };
+        }
+
+        private class ProwadzacyOption
+        {
+            public int id_prowadzacego { get; set; }
+            public string display_name { get; set; }
+            public string stopien_naukowy { get; set; }
+            public string imie { get; set; }
+            public string nazwisko { get; set; }
+        }
+        private class PrzedmiotOption
+        {
+            public int id_przedmiotu { get; set; }
+            public string nazwa { get; set; }
         }
     }
 }

@@ -7,7 +7,7 @@ partial class FormChangePlan
     // Kontrolki
     private System.Windows.Forms.ComboBox comboProwadzacy;
     private System.Windows.Forms.TextBox txtSala;
-    private System.Windows.Forms.DateTimePicker pickerDzien;
+    private System.Windows.Forms.ComboBox pickerDzien;
     private System.Windows.Forms.DateTimePicker pickerStart;
     private System.Windows.Forms.DateTimePicker pickerKoniec;
     private System.Windows.Forms.ComboBox comboPrzedmiot;
@@ -39,7 +39,7 @@ partial class FormChangePlan
 
         this.comboProwadzacy = new System.Windows.Forms.ComboBox();
         this.txtSala = new System.Windows.Forms.TextBox();
-        this.pickerDzien = new System.Windows.Forms.DateTimePicker();
+        this.pickerDzien = new System.Windows.Forms.ComboBox();
         this.pickerStart = new System.Windows.Forms.DateTimePicker();
         this.pickerKoniec = new System.Windows.Forms.DateTimePicker();
         this.comboPrzedmiot = new System.Windows.Forms.ComboBox();
@@ -75,6 +75,7 @@ partial class FormChangePlan
         this.comboProwadzacy.Left = leftControl;
         this.comboProwadzacy.Top = top;
         this.comboProwadzacy.Width = 300;
+        this.comboProwadzacy.DropDownStyle = ComboBoxStyle.DropDownList;
         this.Controls.Add(this.labelProwadzacy);
         this.Controls.Add(this.comboProwadzacy);
         top += spacing;
@@ -99,6 +100,14 @@ partial class FormChangePlan
         this.pickerDzien.Left = leftControl;
         this.pickerDzien.Top = top;
         this.pickerDzien.Width = 200;
+        this.pickerDzien.DropDownStyle = ComboBoxStyle.DropDownList;
+        this.pickerDzien.Items.AddRange(new object[] { 
+            "Poniedziałek",
+            "Wtorek",
+            "Środa",
+            "Czwartek",
+            "Piątek"
+        });
         this.Controls.Add(this.labelDzien);
         this.Controls.Add(this.pickerDzien);
         top += spacing;
@@ -112,6 +121,7 @@ partial class FormChangePlan
         this.pickerStart.ShowUpDown = true;
         this.pickerStart.Left = leftControl;
         this.pickerStart.Top = top;
+        this.pickerStart.Value = DateTime.Today.AddHours(DateTime.Now.Hour);
         this.Controls.Add(this.labelStart);
         this.Controls.Add(this.pickerStart);
         top += spacing;
@@ -125,6 +135,7 @@ partial class FormChangePlan
         this.pickerKoniec.ShowUpDown = true;
         this.pickerKoniec.Left = leftControl;
         this.pickerKoniec.Top = top;
+        this.pickerKoniec.Value = DateTime.Today.AddHours(DateTime.Now.Hour + 2);
         this.Controls.Add(this.labelKoniec);
         this.Controls.Add(this.pickerKoniec);
         top += spacing;
@@ -138,6 +149,7 @@ partial class FormChangePlan
         this.comboPrzedmiot.Left = leftControl;
         this.comboPrzedmiot.Top = top;
         this.comboPrzedmiot.Width = 300;
+        this.comboPrzedmiot.DropDownStyle = ComboBoxStyle.DropDownList;
         this.Controls.Add(this.comboPrzedmiot);
         this.Controls.Add(this.labelPrzedmiot);
         top += spacing;
@@ -152,6 +164,7 @@ partial class FormChangePlan
         this.comboRodzaj.Top = top;
         this.comboRodzaj.Width = 200;
         this.comboRodzaj.Items.AddRange(new object[] { "wykład", "laboratoria", "ćwiczenia" });
+        this.comboRodzaj.DropDownStyle = ComboBoxStyle.DropDownList;
         this.Controls.Add(this.comboRodzaj);
         this.Controls.Add(this.labelRodzaj);
         top += spacing;

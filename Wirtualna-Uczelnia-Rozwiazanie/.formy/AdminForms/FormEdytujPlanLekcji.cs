@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -34,6 +35,15 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
 
             // Inicjalizacja menedżera
             planMenager = new PlanLekcjiMenager(panelPoniedzialek, panelWtorek, panelSroda, panelCzwartek, panelPiatek);
+
+
+            planMenager.OnPlanUpdated += () =>
+            {
+                if (comboKierunek.SelectedIndex != -1)
+                {
+                    UpdatePlanLekcji(filtredKierunki[comboKierunek.SelectedIndex].id_kierunku, false);
+                }
+            };
 
             // Wczytanie danych
             LoadInitialData();
@@ -152,7 +162,7 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             }
         }
 
-        private void UpdatePlanLekcji(int kierunekId, bool changeGroups)
+        public void UpdatePlanLekcji(int kierunekId, bool changeGroups)
         {
             if (changeGroups)
                 PopulateGrupy(kierunekId);
@@ -200,7 +210,7 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             FormChangePlan frm = new FormChangePlan(filtredKierunki[comboKierunek.SelectedIndex].id_kierunku);
             frm.ShowDialog();
 
-            UpdatePlanLekcji(filtredKierunki[comboKierunek.SelectedIndex].id_kierunku, true);
+            UpdatePlanLekcji(filtredKierunki[comboKierunek.SelectedIndex].id_kierunku, false);
         }
     }
 
@@ -233,6 +243,8 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         private Panel panelPiatek;
 
         public List<Int32> uniqeGrupyKierunku;
+
+        public event Action OnPlanUpdated; // Dodaj event
 
         public PlanLekcjiMenager(Panel panelPoniedzialek, Panel panelWtorek, Panel panelSroda, Panel panelCzwartek, Panel panelPiatek)
         {
@@ -403,9 +415,30 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
 
         private void PlanLekcjiHolderUserClicked(BlokLekcjiHolder obj)
         {
-            MessageBox.Show(obj.id_kierunku.ToString());
-            FormChangePlan changePlan = new FormChangePlan(obj);
-            changePlan.ShowDialog();
+            DialogResult wynik = MessageBox.Show("Czy chcesz zmodyfikować\nTak->Zmiana\nNie->usuń blok", "Modyfikacja",
+            MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
+            MessageBoxDefaultButton.Button1);
+            if (wynik == DialogResult.Cancel)
+            {
+                return; // anuluj
+            }
+            else if (wynik == DialogResult.No)
+            {
+                string querry = "DELETE FROM plan_lekcji WHERE id_zajecia = @id_zajecia";
+                var cmd = new MySqlCommand(querry);
+                cmd.Parameters.AddWithValue("@id_zajecia", obj.id_zajecia);
+
+                sqlMenager.executeRawCommand(cmd);
+                MessageBox.Show("Blok został usunięty z planu lekcji.");
+                OnPlanUpdated?.Invoke(); // wywolanie eventu
+                return;
+            }
+            else
+            {
+                FormChangePlan changePlan = new FormChangePlan(obj);
+                changePlan.ShowDialog();
+                OnPlanUpdated?.Invoke(); // wywolanie eventu
+            }
         }
     }
     public class BlokLekcjiHolder
