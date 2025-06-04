@@ -26,11 +26,11 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
             btnKalendarz = new Button();
             btnEdytujKalendarz = new Button();
             pictureBox5 = new PictureBox();
-            richTextBox1 = new RichTextBox();
-            richTextBox2 = new RichTextBox();
             wylogujnauczyciel = new Button();
             lblImie = new Label();
             lblEmail = new Label();
+            label1 = new Label();
+            label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             SuspendLayout();
             // 
@@ -94,34 +94,15 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
             pictureBox5.TabIndex = 11;
             pictureBox5.TabStop = false;
             // 
-            // richTextBox1
-            // 
-            richTextBox1.Enabled = false;
-            richTextBox1.Location = new Point(28, 152);
-            richTextBox1.Name = "richTextBox1";
-            richTextBox1.ReadOnly = true;
-            richTextBox1.Size = new Size(125, 45);
-            richTextBox1.TabIndex = 12;
-            richTextBox1.Text = "- Zarządzanie przedmiotami";
-            // 
-            // richTextBox2
-            // 
-            richTextBox2.Enabled = false;
-            richTextBox2.Location = new Point(28, 203);
-            richTextBox2.Name = "richTextBox2";
-            richTextBox2.ReadOnly = true;
-            richTextBox2.Size = new Size(125, 28);
-            richTextBox2.TabIndex = 13;
-            richTextBox2.TabStop = false;
-            richTextBox2.Text = "- Grupy zajęciowe";
-            // 
             // wylogujnauczyciel
             // 
-            wylogujnauczyciel.Location = new Point(159, 152);
+            wylogujnauczyciel.BackColor = Color.FromArgb(197, 226, 215);
+            wylogujnauczyciel.Location = new Point(76, 274);
             wylogujnauczyciel.Name = "wylogujnauczyciel";
             wylogujnauczyciel.Size = new Size(75, 45);
             wylogujnauczyciel.TabIndex = 0;
             wylogujnauczyciel.Text = "Wyloguj";
+            wylogujnauczyciel.UseVisualStyleBackColor = false;
             wylogujnauczyciel.Click += wylogujnauczyciel_Click;
             // 
             // lblImie
@@ -150,6 +131,30 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
             lblEmail.TabIndex = 15;
             lblEmail.Text = "Email";
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.BackColor = Color.FromArgb(197, 226, 215);
+            label1.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            label1.ForeColor = Color.FromArgb(64, 64, 64);
+            label1.Location = new Point(28, 160);
+            label1.Name = "label1";
+            label1.Size = new Size(168, 41);
+            label1.TabIndex = 16;
+            label1.Text = "- Plan zajęć";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.BackColor = Color.FromArgb(197, 226, 215);
+            label2.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            label2.ForeColor = Color.FromArgb(64, 64, 64);
+            label2.Location = new Point(23, 211);
+            label2.Name = "label2";
+            label2.Size = new Size(196, 31);
+            label2.TabIndex = 17;
+            label2.Text = "- Grupy zajęciowe";
+            // 
             // TeacherPanel
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -157,11 +162,11 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
             BackgroundImage = Properties.Resources.Bez_nazwy_15_202505260855_36185;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1216, 627);
+            Controls.Add(label2);
+            Controls.Add(label1);
             Controls.Add(lblEmail);
             Controls.Add(lblImie);
             Controls.Add(wylogujnauczyciel);
-            Controls.Add(richTextBox2);
-            Controls.Add(richTextBox1);
             Controls.Add(lblTitle);
             Controls.Add(btnOceny);
             Controls.Add(btnKalendarz);
@@ -184,10 +189,10 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
         private System.Windows.Forms.Button btnKalendarz;
         private System.Windows.Forms.Button btnEdytujKalendarz; // Dodana deklaracja przycisku
         private PictureBox pictureBox5;
-        private RichTextBox richTextBox1;
-        private RichTextBox richTextBox2;
         private Button wylogujnauczyciel;
         private Label lblImie;
         private Label lblEmail;
+        private Label label1;
+        private Label label2;
     }
 }
