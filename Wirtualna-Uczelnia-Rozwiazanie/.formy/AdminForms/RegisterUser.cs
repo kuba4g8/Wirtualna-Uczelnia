@@ -91,6 +91,8 @@ namespace Wirtualna_Uczelnia
                 txtPosition.Text = editingPracownik.stanowisko;
                 txtAcademicDegree.Text = editingPracownik.stopien_naukowy;
             }
+            // W metodzie updateVisualData() klasy RegisterUser, w sekcji dla studenta, po ustawieniu kierunku:
+
             else if (editingStudent != null) // wpisujemy dane studenta
             {
                 cmbAccountType.SelectedIndex = 1;
@@ -145,8 +147,17 @@ namespace Wirtualna_Uczelnia
                     }
 
                     comboKierunek.SelectedIndex = kierunekIndex;
+
+                    // Pobierz i wyświetl grupy studenta
+                    if (kierunekIndex != -1)
+                    {
+                        int idKierunku = editingStudent.id_kierunku;
+                        adminMenager.FilterGrupy(idKierunku, comboLabGroup, comboExerciseGroup);
+                        adminMenager.SetStudentGroups(editingStudent.userID, comboLabGroup, comboExerciseGroup);
+                    }
                 }
             }
+
 
             editMode = true;
         }
@@ -278,6 +289,8 @@ namespace Wirtualna_Uczelnia
 
                 czyUdalo = adminMenager.insertNewUser(userData, pracownik: pracownik);
             }
+            // W metodzie btnRegister_Click() klasy RegisterUser, po pomyślnej rejestracji studenta:
+
             else // Student
             {
                 int semestr;
@@ -303,13 +316,18 @@ namespace Wirtualna_Uczelnia
                     nr_indeksu = txtStudentId.Text,
                     semestr = semestr,
                     id_kierunku = idKierunku
-                    // Nie używamy id_grupy w tabeli studenci zgodnie z wymaganiami
                 };
 
                 czyUdalo = adminMenager.insertNewUser(userData, student: student);
 
                 if (czyUdalo)
                 {
+                    // Przypisz studenta do wybranych grup
+                    if (comboLabGroup.SelectedIndex != -1 || comboExerciseGroup.SelectedIndex != -1)
+                    {
+                        adminMenager.AssignStudentToGroups(student.userID, comboLabGroup, comboExerciseGroup);
+                    }
+
                     editMode = false;
                     updateVisualData();
                     MessageBox.Show("Student został pomyślnie zarejestrowany.", "Sukces", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -319,6 +337,7 @@ namespace Wirtualna_Uczelnia
                     MessageBox.Show("Wystąpił błąd podczas rejestracji studenta.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+
         }
 
         private void logoutUserAction(object sender, EventArgs e)
@@ -361,6 +380,7 @@ namespace Wirtualna_Uczelnia
         public List<Kierunki> kierunki; // lista kierunkow pobranych z bazy danych
         public List<Wydzialy> wydzialy; // lista wydzialow pobranych z bazy danych
         public List<Grupy> grupy; // lista wszystkich grup zajęciowych
+        public List<StudenciGrupy> studenciGrupy; // lista połączeń wszystkich studentów i ich grup zajęciowych
 
         private RegisterUser.UpdateVisualData updateVisualData; // utworzenie delegaty tego samego typu co w klasie AdminPanel
 
@@ -471,6 +491,106 @@ namespace Wirtualna_Uczelnia
                 comboWydzial.Items.Add(wydzial.nazwa);
             }
         }
+        public void SetStudentGroups(int studentId, ComboBox comboLabGroup, ComboBox comboExerciseGroup)
+        {
+            // Znajdź powiązania studenta z grupami
+            var studentGrupy = studenciGrupy.Where(sg => sg.userID == studentId).ToList();
+
+            if (studentGrupy.Count == 0)
+                return;
+
+            foreach (var studentGrupa in studentGrupy)
+            {
+                // Znajdź grupę w liście grup
+                var grupa = grupy.FirstOrDefault(g => g.id_grupy == studentGrupa.id_grupy);
+
+                if (grupa != null)
+                {
+                    string groupDisplay = $"grupa {grupa.numer_grupy}";
+
+                    // Ustaw odpowiednią grupę w comboboxie
+                    if (grupa.typ_grupy == "Laboratoryjna")
+                    {
+                        for (int i = 0; i < comboLabGroup.Items.Count; i++)
+                        {
+                            if (comboLabGroup.Items[i].ToString() == groupDisplay)
+                            {
+                                comboLabGroup.SelectedIndex = i;
+                                break;
+                            }
+                        }
+                    }
+                    else if (grupa.typ_grupy == "Ćwiczeniowa")
+                    {
+                        for (int i = 0; i < comboExerciseGroup.Items.Count; i++)
+                        {
+                            if (comboExerciseGroup.Items[i].ToString() == groupDisplay)
+                            {
+                                comboExerciseGroup.SelectedIndex = i;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
+        // Dodaj tę metodę do klasy AdminMenager
+        public void AssignStudentToGroups(int studentId, ComboBox comboLabGroup, ComboBox comboExerciseGroup)
+        {
+            // Usuń istniejące powiązania studenta z grupami
+            var existingGroups = studenciGrupy.Where(sg => sg.userID == studentId).ToList();
+            foreach (var group in existingGroups)
+            {
+                string deleteQuery = "DELETE FROM studenci_grupy WHERE userID = @userId AND id_grupy = @groupId";
+                var cmd = new MySqlCommand(deleteQuery);
+                cmd.Parameters.AddWithValue("@userId", studentId);
+                cmd.Parameters.AddWithValue("@groupId", group.id_grupy);
+                sqlMenager.executeRawCommand(cmd);
+            }
+
+            // Przypisz studenta do wybranej grupy laboratoryjnej
+            if (comboLabGroup.SelectedIndex != -1)
+            {
+                string labGroupName = comboLabGroup.SelectedItem.ToString();
+                int groupNumber = int.Parse(labGroupName.Replace("grupa ", ""));
+                var labGroup = grupy.FirstOrDefault(g => g.numer_grupy == groupNumber && g.typ_grupy == "Laboratoryjna");
+
+                if (labGroup != null)
+                {
+                    var studentGrupa = new StudenciGrupy
+                    {
+                        userID = studentId,
+                        id_grupy = labGroup.id_grupy
+                    };
+                    sqlMenager.loadObjectToDataBase(studentGrupa, "studenci_grupy", true);
+                }
+            }
+
+            // Przypisz studenta do wybranej grupy ćwiczeniowej
+            if (comboExerciseGroup.SelectedIndex != -1)
+            {
+                string exerciseGroupName = comboExerciseGroup.SelectedItem.ToString();
+                int groupNumber = int.Parse(exerciseGroupName.Replace("grupa ", ""));
+                var exerciseGroup = grupy.FirstOrDefault(g => g.numer_grupy == groupNumber && g.typ_grupy == "Ćwiczeniowa");
+
+                if (exerciseGroup != null)
+                {
+                    var studentGrupa = new StudenciGrupy
+                    {
+                        userID = studentId,
+                        id_grupy = exerciseGroup.id_grupy
+                    };
+                    sqlMenager.loadObjectToDataBase(studentGrupa, "studenci_grupy", true);
+                }
+            }
+
+            // Odśwież listę powiązań studentów z grupami
+            studenciGrupy = returnStudenciGrupy();
+        }
+
+
 
         //funkcja dodaje tylko do listy zaleznie od tego czy jest to nauczyciel czy student do wybranej listy. Widac ze ze mnie humanista to chujowy
         private bool addToLists()
@@ -482,6 +602,7 @@ namespace Wirtualna_Uczelnia
                 kierunki = returnKierunki();
                 wydzialy = returnWydzialy();
                 grupy = returnGrupy();
+                studenciGrupy = returnStudenciGrupy();
                 loginInfoData = returnLoginData("SELECT * FROM logowanie");
 
                 return true;
@@ -542,7 +663,13 @@ namespace Wirtualna_Uczelnia
             var grupyObj = sqlMenager.loadDataToList<Grupy>(sqlCommand);
             return grupyObj;
         }
-
+        private List<StudenciGrupy> returnStudenciGrupy()
+        {
+            string querry = "SELECT * FROM studenci_grupy";
+            var sqlCommand = new MySqlCommand(querry);
+            var studenciGrupyObj = sqlMenager.loadDataToList<StudenciGrupy>(sqlCommand);
+            return studenciGrupyObj;
+        }
 
         //laczenie z sqlMenager i pobranie danych z sql
         private List<Pracownik> returnPracownicy()
@@ -630,6 +757,12 @@ namespace Wirtualna_Uczelnia
             public int id_kierunku { get; set; }
             public string typ_grupy { get; set; }
             public int numer_grupy { get; set; }
+        }
+
+        internal class StudenciGrupy
+        {
+            public int id_grupy { get; set; }
+            public int userID { get; set; } 
         }
     }
 }
