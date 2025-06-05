@@ -55,7 +55,7 @@ namespace Wirtualna_Uczelnia.formy
         private void oceny_Click(object sender, EventArgs e)
         {
             Oceny oceny = new Oceny(); // Tworzenie nowego formularza
-            oceny.Show();              // Pokazanie nowego formularza
+            oceny.ShowDialog();              // Pokazanie nowego formularza
             //this.Hide();               // Ukrycie obecnego formularza
         }
 
@@ -63,21 +63,14 @@ namespace Wirtualna_Uczelnia.formy
         private void dokumenty_Click(object sender, EventArgs e)
         {
             Dokumenty dokumenty = new Dokumenty();
-            dokumenty.Show();
-            //this.Hide();
-        }
-
-        private void rejestracja_Click(object sender, EventArgs e)
-        {
-            Rejestracja rejestracja = new Rejestracja();
-            rejestracja.Show();
+            dokumenty.ShowDialog();
             //this.Hide();
         }
 
         private void kalendarz_Click(object sender, EventArgs e)
         {
             FormKalendarz kalendarz = new FormKalendarz();
-            kalendarz.Show();
+            kalendarz.ShowDialog();
             //this.Hide();
         }
 
@@ -89,21 +82,20 @@ namespace Wirtualna_Uczelnia.formy
         private void btnOpenChat_Click(object sender, EventArgs e)
         {
             ChatForm chat = new ChatForm();
-            chat.Show();
+            chat.ShowDialog();
         }
 
         private void lblPlanLekcji_Click(object sender, EventArgs e)
         {
             FormPlanLekcji planZajec = new FormPlanLekcji();
-            planZajec.Show();
+            planZajec.ShowDialog();
         }
 
         private void lblPracownicyClicked(object sender, EventArgs e)
         {
             FormKontaktPracownicy form = new FormKontaktPracownicy();
 
-            form.Show();
-            this.Hide();
+            form.ShowDialog();
         }
 
         public class grupyStudenci

@@ -31,9 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormStronaGlowna));
             pictureBox1 = new PictureBox();
             oceny = new Button();
-            sprawdziany = new Button();
             dokumenty = new Button();
-            rejestracja = new Button();
             kalendarz = new Button();
             imie_nazwisko = new Label();
             wydzial_kierunek = new Label();
@@ -42,7 +40,6 @@
             pracownicy = new Label();
             stypendia = new Label();
             lblPlanLekcji = new Label();
-            grupy_zajeciowe = new Label();
             wyloguj = new Button();
             btnOpenChat = new Button();
             labelCHuj = new Label();
@@ -64,7 +61,7 @@
             // oceny
             // 
             oceny.BackColor = Color.Transparent;
-            oceny.BackgroundImageLayout = ImageLayout.None;
+            oceny.BackgroundImageLayout = ImageLayout.Stretch;
             oceny.FlatAppearance.BorderColor = Color.White;
             oceny.FlatAppearance.BorderSize = 2;
             oceny.FlatStyle = FlatStyle.Flat;
@@ -76,19 +73,6 @@
             oceny.TabIndex = 1;
             oceny.UseVisualStyleBackColor = false;
             oceny.Click += oceny_Click;
-            // 
-            // sprawdziany
-            // 
-            sprawdziany.FlatAppearance.BorderColor = Color.White;
-            sprawdziany.FlatAppearance.BorderSize = 2;
-            sprawdziany.FlatStyle = FlatStyle.Flat;
-            sprawdziany.Image = (Image)resources.GetObject("sprawdziany.Image");
-            sprawdziany.Location = new Point(810, 257);
-            sprawdziany.Margin = new Padding(2);
-            sprawdziany.Name = "sprawdziany";
-            sprawdziany.Size = new Size(370, 166);
-            sprawdziany.TabIndex = 2;
-            sprawdziany.UseVisualStyleBackColor = true;
             // 
             // dokumenty
             // 
@@ -104,21 +88,6 @@
             dokumenty.UseVisualStyleBackColor = true;
             dokumenty.Click += dokumenty_Click;
             // 
-            // rejestracja
-            // 
-            rejestracja.BackgroundImageLayout = ImageLayout.None;
-            rejestracja.FlatAppearance.BorderColor = Color.White;
-            rejestracja.FlatAppearance.BorderSize = 2;
-            rejestracja.FlatStyle = FlatStyle.Flat;
-            rejestracja.Image = (Image)resources.GetObject("rejestracja.Image");
-            rejestracja.Location = new Point(810, 450);
-            rejestracja.Margin = new Padding(2);
-            rejestracja.Name = "rejestracja";
-            rejestracja.Size = new Size(370, 166);
-            rejestracja.TabIndex = 4;
-            rejestracja.UseVisualStyleBackColor = true;
-            rejestracja.Click += rejestracja_Click;
-            // 
             // kalendarz
             // 
             kalendarz.BackgroundImageLayout = ImageLayout.None;
@@ -126,7 +95,7 @@
             kalendarz.FlatAppearance.BorderSize = 2;
             kalendarz.FlatStyle = FlatStyle.Flat;
             kalendarz.Image = (Image)resources.GetObject("kalendarz.Image");
-            kalendarz.Location = new Point(370, 640);
+            kalendarz.Location = new Point(779, 260);
             kalendarz.Margin = new Padding(2);
             kalendarz.Name = "kalendarz";
             kalendarz.Size = new Size(370, 166);
@@ -222,19 +191,6 @@
             lblPlanLekcji.Text = "- Plan zajęć";
             lblPlanLekcji.Click += lblPlanLekcji_Click;
             // 
-            // grupy_zajeciowe
-            // 
-            grupy_zajeciowe.AutoSize = true;
-            grupy_zajeciowe.BackColor = Color.FromArgb(197, 226, 215);
-            grupy_zajeciowe.BorderStyle = BorderStyle.Fixed3D;
-            grupy_zajeciowe.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            grupy_zajeciowe.Location = new Point(19, 340);
-            grupy_zajeciowe.Margin = new Padding(2, 0, 2, 0);
-            grupy_zajeciowe.Name = "grupy_zajeciowe";
-            grupy_zajeciowe.Size = new Size(170, 30);
-            grupy_zajeciowe.TabIndex = 14;
-            grupy_zajeciowe.Text = "- Grupy zajęciowe";
-            // 
             // wyloguj
             // 
             wyloguj.Location = new Point(221, 202);
@@ -297,7 +253,6 @@
             Controls.Add(labelCHuj);
             Controls.Add(btnOpenChat);
             Controls.Add(wyloguj);
-            Controls.Add(grupy_zajeciowe);
             Controls.Add(lblPlanLekcji);
             Controls.Add(pracownicy);
             Controls.Add(pictureBox2);
@@ -305,9 +260,7 @@
             Controls.Add(wydzial_kierunek);
             Controls.Add(imie_nazwisko);
             Controls.Add(kalendarz);
-            Controls.Add(rejestracja);
             Controls.Add(dokumenty);
-            Controls.Add(sprawdziany);
             Controls.Add(oceny);
             Controls.Add(pictureBox1);
             FormBorderStyle = FormBorderStyle.SizableToolWindow;
@@ -326,9 +279,7 @@
 
         private PictureBox pictureBox1;
         private Button oceny;
-        private Button sprawdziany;
         private Button dokumenty;
-        private Button rejestracja;
         private Button kalendarz;
         private Label imie_nazwisko;
         private Label wydzial_kierunek;
@@ -337,7 +288,6 @@
         private Label pracownicy;
         private Label stypendia;
         private Label lblPlanLekcji;
-        private Label grupy_zajeciowe;
         private Button wyloguj;
         private Button btnOpenChat;
         private Label labelCHuj;

@@ -45,8 +45,7 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             comboPrzedmiot.Enabled = false;
             comboProwadzacy.SelectedIndexChanged += comboProwadzacy_SelectedIndexChanged;
 
-            LoadProwadzacy();
-            LoadGrupy();
+            InitializeForm();
 
             updateVisualChanges(null);
         }
@@ -61,8 +60,7 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             comboPrzedmiot.Enabled = false;
             comboProwadzacy.SelectedIndexChanged += comboProwadzacy_SelectedIndexChanged;
 
-            LoadProwadzacy();
-            LoadGrupy();
+            InitializeForm();
 
             updateVisualChanges(blokPrzekazany);
         }
