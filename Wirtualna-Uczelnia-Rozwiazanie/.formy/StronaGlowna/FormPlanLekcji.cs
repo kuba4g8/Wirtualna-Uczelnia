@@ -2,176 +2,144 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Wirtualna_Uczelnia.formy.UserControls;
+using Wirtualna_Uczelnia.klasy;
 
 namespace Wirtualna_Uczelnia.formy.StronaGlowna
 {
-    public partial class FormPlanZajec : Form
+    public partial class FormPlanLekcji : Form
     {
-        private Dictionary<string, FlowLayoutPanel> dniTygodniaPanele;
+        SqlMenager sqlMenager;
 
-        public FormPlanZajec()
+        private List<BlokLekcjiHolder> wszystkieLekcje = new List<BlokLekcjiHolder>();
+
+        public FormPlanLekcji()
         {
             InitializeComponent();
-            //panele ktore trzymaja dni 
-            dniTygodniaPanele = new Dictionary<string, FlowLayoutPanel>();
-
-            // poangielsku aby czcionka sie nie psula w kodzie (nie ufam)
-            string[] dni = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday "};
-            int y = 20;
-
-            // wygenerowanie kazdego dnia po koleii. Puste
-            foreach (var dzien in dni)
-            {
-                Label lbl = new Label() 
-                { 
-                    Text = dzien, Location = new Point(20, y), 
-                    Font = new Font("Segoe UI", 12, FontStyle.Bold), 
-                    AutoSize = true 
-                };
-
-                FlowLayoutPanel panel = new FlowLayoutPanel()
-                {
-                    Location = new Point(150, y),
-                    Size = new Size(600, 90),
-                    AutoScroll = true,
-                    BackColor = Color.FromArgb(230, 245, 255)
-                };
-
-                dniTygodniaPanele[dzien] = panel;
-                this.Controls.Add(lbl);
-                this.Controls.Add(panel);
-
-                y += 100;
-            }
-
-            refreshPlanLekcji(1, 1);
+            
+            sqlMenager = new SqlMenager();
+            loadInfoFromSql();
         }
 
-        public void refreshPlanLekcji(int idGrupy, int idKierunku)
+        private class IDholder
         {
-            sqlMenager sqlMenager = new sqlMenager();
+            public int id_grupy { get; set; }
+        }
 
-            //komenda sql pobierajaca dane z planu lekcjii
-            string command = "SELECT * FROM plan_lekcji WHERE id_grupy = @idGrupy AND id_kierunku = @idKierunku ORDER BY dzien ASC, godzina_startu ASC;";
+        // klasa przechowujace aktualne przesuniecie wobec kazdego dnia xdxdxd
+        private class ShiftMenager
+        {
+            public int pon = 0;
+            public int wt = 0;
+            public int sr = 0;
+            public int czw = 0;
+            public int pt = 0;
+        }
 
-            List<PlanLekcjiSqlHolder> planLekcji = new List<PlanLekcjiSqlHolder>();
+        private void sortujListe()
+        {
+            wszystkieLekcje = wszystkieLekcje
+                .OrderBy(lekcja => lekcja.godzina_startu)
+                .ToList();
+        }
 
+        private void loadInfoFromSql()
+        {
             try
             {
-                //laczenie sie z baza danych i szczytywanie tu moga byc bledy na chillku
-                MySqlCommand cmd = new MySqlCommand(command);
+                //znalezienie do jakich grup nalezy uzytkownik
+                string querry = "SELECT * FROM studenci_grupy\r\nWHERE userID = @userID";
+                MySqlCommand cmd = new MySqlCommand(querry);
+                cmd.Parameters.AddWithValue("@userID", SesionControl.loginMenager.studentData.userID);
+                
+                List<IDholder> grupy = sqlMenager.loadDataToList<IDholder>(cmd);
 
-                cmd.Parameters.AddWithValue("@idGrupy", idGrupy);
-                cmd.Parameters.AddWithValue("@idKierunku", idKierunku);
+                foreach (IDholder id_grupy in grupy)
+                {
+                    querry = "SELECT \r\n    p.id_prowadzacego, \r\n    p.sala, \r\n    p.dzien, \r\n    p.godzina_startu, \r\n    p.godzina_konca, \r\n    przed.nazwa AS przedmiot, \r\n    p.rodzaj, \r\n    p.notatki, \r\n    g.numer_grupy, \r\n    pr.imie, \r\n    pr.nazwisko, \r\n    pr.stopien_naukowy \r\nFROM \r\n    plan_lekcji p \r\nJOIN \r\n    grupy g ON p.id_grupy = g.id_grupy \r\nJOIN \r\n    pracownicy pr ON p.id_prowadzacego = pr.userID \r\nJOIN \r\n    przedmioty przed ON p.id_przedmiotu = przed.id_przedmiotu\r\nWHERE \r\n    p.id_grupy = @id_grupy;\r\n";
 
-                planLekcji = sqlMenager.loadDataToList<PlanLekcjiSqlHolder>(cmd);
+                    cmd = new MySqlCommand(querry);
+                    cmd.Parameters.AddWithValue("@id_grupy", id_grupy.id_grupy);
+
+                    List<BlokLekcjiHolder> tempLekcje = sqlMenager.loadDataToList<BlokLekcjiHolder>(cmd);
+
+                    wszystkieLekcje.AddRange(tempLekcje);
+                }
+
+                loadVisually();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Fatal Error");
+                MessageBox.Show("Blad podczas ladowania planu lekcji z bazy danych");
                 MessageBox.Show(ex.Message);
-                return;
             }
+            
+        }
 
-            // pzreiterowanie po kazdym planie lekcji i przypisanie go do dnia 
-            foreach (var zajecia in planLekcji)
+        private void loadVisually()
+        {
+            ShiftMenager shift = new ShiftMenager();
+            int przesuniecieStale = 200;
+            sortujListe();
+
+            foreach (BlokLekcjiHolder item in wszystkieLekcje)
             {
-                // Sprawdzenie dnia tygodnia
-                string dzienTygodnia = zajecia.dzien.DayOfWeek.ToString();
 
-                // Jeśli mamy panele dla dni tygodnia, dodajemy zajęcia
-                if (dniTygodniaPanele.ContainsKey(dzienTygodnia))
+                DayOfWeek day = item.dzien.DayOfWeek;
+                string sala = item.sala;
+                string przedmiot = item.przedmiot;
+                string prowadzacy = item.stopien_naukowy + " " + item.imie + " " + item.nazwisko;
+                string godziny = item.godzina_startu.ToString(@"hh\:mm") + "-" + item.godzina_konca.ToString(@"hh\:mm");
+
+
+                PlanLekcjiUserControl planLekcjiHolder = new PlanLekcjiUserControl();
+                planLekcjiHolder.initalizeControls(sala, godziny, przedmiot, prowadzacy);
+
+                switch (item.dzien.DayOfWeek)
                 {
-                    // Tworzenie nowego obiektu PlanLekcjiHolder do wyświetlenia zajęć
-                    var holder = new PlanLekcjiHolder(
-                        zajecia.sala,
-                        zajecia.godzina_startu.ToString(),
-                        zajecia.godzina_konca.ToString(),
-                        zajecia.przedmiot,
-                        zajecia.rodzaj,
-                        zajecia.notatki
-                    );
-
-                    // Dodanie do odpowiedniego panelu w zależności od dnia
-                    dniTygodniaPanele[dzienTygodnia].Controls.Add(holder);
+                    case DayOfWeek.Monday:
+                        panelPoniedzialek.Controls.Add(planLekcjiHolder);
+                        planLekcjiHolder.Location = new Point(0, shift.pon * przesuniecieStale);
+                        shift.pon++;
+                        break;
+                    case DayOfWeek.Tuesday:
+                        panelWtorek.Controls.Add(planLekcjiHolder);
+                        planLekcjiHolder.Location = new Point(0, shift.wt * przesuniecieStale);
+                        shift.wt++;
+                        break;
+                    case DayOfWeek.Wednesday:
+                        panelSroda.Controls.Add(planLekcjiHolder);
+                        planLekcjiHolder.Location = new Point(0, shift.sr * przesuniecieStale);
+                        shift.sr++;
+                        break;
+                    case DayOfWeek.Thursday:
+                        panelCzwartek.Controls.Add(planLekcjiHolder);
+                        planLekcjiHolder.Location = new Point(0, shift.czw * przesuniecieStale);
+                        shift.czw++;
+                        break;
+                    case DayOfWeek.Friday:
+                        panelPiatek.Controls.Add(planLekcjiHolder);
+                        planLekcjiHolder.Location = new Point(0, shift.pt * przesuniecieStale);
+                        shift.pt++;
+                        break;
                 }
             }
         }
 
-        // obiekt do ktorego szczytuje sie cala tabele z sqla. W teorii lista ma trzymac plan lekcjii dla klasy. W TEORII NIE DODAWAC WIECEJ PLSPLSPLSPLS MI JUZ TU ZMYSLY ODCHODZA
-        private class PlanLekcjiSqlHolder
+        private class BlokLekcjiHolder
         {
-            public int id_przedmiotu { get; set; }
             public int id_prowadzacego { get; set; }
-            public int id_grupy { get; set; }
-            public int id_kierunku { get; set; }
+            public string imie { get; set; } // imie prowadzacego
+            public string nazwisko { get; set; } // nazwisko prowadzacego
+            public string stopien_naukowy { get; set; }
             public string sala { get; set; }
-            public DateTime dzien { get; set; }
+            public DateTime dzien {  get; set; }
             public TimeSpan godzina_startu { get; set; }
             public TimeSpan godzina_konca { get; set; }
-            public string przedmiot { get; set; } // przedmiot np: analiza matemaatyczna
-            public string rodzaj { get; set; } // rodzaaj to znaczy labolatoria, cwiczenia, wyklady, seminaria itd.
+            public string przedmiot { get; set; }
+            public string rodzaj { get; set; }
             public string notatki { get; set; }
         }
+
     }
-    public class PlanLekcjiHolder : UserControl
-    {
-        // trzyma informacje o panelu w ktorym sa wszystkie labele
-        private FlowLayoutPanel holdPanel;
-
-        public string sala;
-        public string godziny; // godziny trzymane sa w formacie (godzina rozpaczecia - godzina zakonczenia)
-        public string przedmiot; // przedmiot np: analiza matemaatyczna
-        public string rodzaj; // rodzaaj to znaczy labolatoria, cwiczenia, wyklady, seminaria itd.
-        public string notatki;
-
-        public PlanLekcjiHolder(string sala, string godzinaStartu, string godzinaKonca, string przedmiot, string rodzaj, string notatki)
-        {
-            this.Size = new Size(270, 400);
-            this.BackColor = Color.Transparent;
-
-            holdPanel = new FlowLayoutPanel()
-            {
-                Size = new Size(260, 390),
-                Location = new Point(5, 5),
-                AutoScroll = true,
-                FlowDirection = FlowDirection.TopDown,
-                WrapContents = false,
-                BackColor = Color.FromArgb(180, Color.LightCyan)
-            };
-
-            this.Controls.Add(holdPanel);
-            this.godziny = $"{godzinaStartu} - {godzinaKonca}";
-            this.przedmiot = przedmiot;
-            this.rodzaj = rodzaj;
-            this.notatki = notatki;
-
-            DodajZajecia();
-        }
-
-
-        public void DodajZajecia()
-        {
-            var pojedynczeZajecia = new Panel()
-            {
-                Size = new Size(240, 75),
-                BackColor = Color.LightBlue,
-                Margin = new Padding(5)
-            };
-
-            Label lblPrzedmiot = new Label() { Text = przedmiot, Font = new Font("Segoe UI", 10, FontStyle.Bold), Location = new Point(5, 5), AutoSize = true };
-            Label lblGodziny = new Label() { Text = godziny, Location = new Point(5, 25), AutoSize = true };
-            Label lblSala = new Label() { Text = $"Sala: {sala}", Location = new Point(5, 45), AutoSize = true };
-            Label lblRodzaj = new Label() { Text = rodzaj, Location = new Point(150, 5), AutoSize = true };
-
-            pojedynczeZajecia.Controls.Add(lblPrzedmiot);
-            pojedynczeZajecia.Controls.Add(lblGodziny);
-            pojedynczeZajecia.Controls.Add(lblSala);
-            pojedynczeZajecia.Controls.Add(lblRodzaj);
-
-            holdPanel.Controls.Add(pojedynczeZajecia);
-        }
-    }
-
-
 }

@@ -2,7 +2,16 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
-    <Compile Update=".formy\AdminPanel.cs">
+    <Compile Update=".formy\AdminForms\AdminPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update=".formy\AdminForms\FormChangePlan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update=".formy\AdminForms\FormEdytujPlanLekcji.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update=".formy\AdminForms\RegisterUser.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update=".formy\ChatForm.cs">
@@ -19,6 +28,12 @@
     </Compile>
     <Compile Update=".formy\OcenyPanel.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Update=".formy\OcenyPanelEditSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update=".formy\PlanLekcjiUserControl.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Update=".formy\stareLogowanie.cs">
       <SubType>Form</SubType>
@@ -41,10 +56,10 @@
     <Compile Update=".formy\StronaGlowna\Rejestracja.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update=".formy\TeacherPanel.cs">
+    <Compile Update=".formy\TeacherCalendarEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update=".formy\TeacherCalendarEditor.cs">
+    <Compile Update=".formy\TeacherPanel.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update=".formy\UserControlBlank.cs">
@@ -54,6 +69,9 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update=".formy\UserControls\ContactUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update=".formy\UserControls\PlanLekcjiUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
   </ItemGroup>

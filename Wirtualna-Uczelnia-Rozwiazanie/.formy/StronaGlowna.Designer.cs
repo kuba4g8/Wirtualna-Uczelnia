@@ -45,6 +45,8 @@
             grupy_zajeciowe = new Label();
             wyloguj = new Button();
             btnOpenChat = new Button();
+            labelCHuj = new Label();
+            lblGrupyHolder = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
@@ -135,30 +137,38 @@
             // imie_nazwisko
             // 
             imie_nazwisko.AutoSize = true;
-            imie_nazwisko.Location = new Point(255, 32);
+            imie_nazwisko.BackColor = Color.FromArgb(203, 231, 229);
+            imie_nazwisko.BorderStyle = BorderStyle.Fixed3D;
+            imie_nazwisko.Location = new Point(255, 30);
             imie_nazwisko.Margin = new Padding(2, 0, 2, 0);
             imie_nazwisko.Name = "imie_nazwisko";
-            imie_nazwisko.Size = new Size(113, 20);
+            imie_nazwisko.Size = new Size(115, 22);
             imie_nazwisko.TabIndex = 7;
             imie_nazwisko.Text = "imię i nazwisko:";
             // 
             // wydzial_kierunek
             // 
             wydzial_kierunek.AutoSize = true;
-            wydzial_kierunek.Location = new Point(255, 78);
+            wydzial_kierunek.BackColor = Color.FromArgb(203, 231, 229);
+            wydzial_kierunek.BorderStyle = BorderStyle.Fixed3D;
+            wydzial_kierunek.FlatStyle = FlatStyle.Flat;
+            wydzial_kierunek.Location = new Point(255, 60);
             wydzial_kierunek.Margin = new Padding(2, 0, 2, 0);
             wydzial_kierunek.Name = "wydzial_kierunek";
-            wydzial_kierunek.Size = new Size(129, 20);
+            wydzial_kierunek.Size = new Size(131, 22);
             wydzial_kierunek.TabIndex = 8;
             wydzial_kierunek.Text = "wydział i kierunek:";
             // 
             // semestr
             // 
             semestr.AutoSize = true;
-            semestr.Location = new Point(255, 123);
+            semestr.BackColor = Color.FromArgb(203, 231, 229);
+            semestr.BorderStyle = BorderStyle.Fixed3D;
+            semestr.FlatStyle = FlatStyle.Flat;
+            semestr.Location = new Point(255, 90);
             semestr.Margin = new Padding(2, 0, 2, 0);
             semestr.Name = "semestr";
-            semestr.Size = new Size(157, 20);
+            semestr.Size = new Size(159, 22);
             semestr.TabIndex = 9;
             semestr.Text = "tryb studiów i semestr:";
             // 
@@ -176,11 +186,13 @@
             // pracownicy
             // 
             pracownicy.AutoSize = true;
+            pracownicy.BackColor = Color.FromArgb(197, 226, 215);
+            pracownicy.BorderStyle = BorderStyle.Fixed3D;
             pracownicy.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            pracownicy.Location = new Point(19, 270);
+            pracownicy.Location = new Point(19, 260);
             pracownicy.Margin = new Padding(2, 0, 2, 0);
             pracownicy.Name = "pracownicy";
-            pracownicy.Size = new Size(123, 28);
+            pracownicy.Size = new Size(125, 30);
             pracownicy.TabIndex = 11;
             pracownicy.Text = "- Pracownicy";
             pracownicy.Click += lblPracownicyClicked;
@@ -199,29 +211,33 @@
             // lblPlanLekcji
             // 
             lblPlanLekcji.AutoSize = true;
+            lblPlanLekcji.BackColor = Color.FromArgb(197, 226, 215);
+            lblPlanLekcji.BorderStyle = BorderStyle.Fixed3D;
             lblPlanLekcji.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            lblPlanLekcji.Location = new Point(19, 320);
+            lblPlanLekcji.Location = new Point(19, 300);
             lblPlanLekcji.Margin = new Padding(2, 0, 2, 0);
             lblPlanLekcji.Name = "lblPlanLekcji";
-            lblPlanLekcji.Size = new Size(224, 28);
+            lblPlanLekcji.Size = new Size(112, 30);
             lblPlanLekcji.TabIndex = 13;
-            lblPlanLekcji.Text = "- Plan zajęć (in progress)";
+            lblPlanLekcji.Text = "- Plan zajęć";
             lblPlanLekcji.Click += lblPlanLekcji_Click;
             // 
             // grupy_zajeciowe
             // 
             grupy_zajeciowe.AutoSize = true;
+            grupy_zajeciowe.BackColor = Color.FromArgb(197, 226, 215);
+            grupy_zajeciowe.BorderStyle = BorderStyle.Fixed3D;
             grupy_zajeciowe.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            grupy_zajeciowe.Location = new Point(19, 370);
+            grupy_zajeciowe.Location = new Point(19, 340);
             grupy_zajeciowe.Margin = new Padding(2, 0, 2, 0);
             grupy_zajeciowe.Name = "grupy_zajeciowe";
-            grupy_zajeciowe.Size = new Size(168, 28);
+            grupy_zajeciowe.Size = new Size(170, 30);
             grupy_zajeciowe.TabIndex = 14;
             grupy_zajeciowe.Text = "- Grupy zajęciowe";
             // 
             // wyloguj
             // 
-            wyloguj.Location = new Point(255, 168);
+            wyloguj.Location = new Point(221, 202);
             wyloguj.Margin = new Padding(2);
             wyloguj.Name = "wyloguj";
             wyloguj.Size = new Size(90, 27);
@@ -243,12 +259,42 @@
             btnOpenChat.UseVisualStyleBackColor = false;
             btnOpenChat.Click += btnOpenChat_Click;
             // 
+            // labelCHuj
+            // 
+            labelCHuj.AutoSize = true;
+            labelCHuj.BackColor = Color.FromArgb(203, 231, 229);
+            labelCHuj.BorderStyle = BorderStyle.Fixed3D;
+            labelCHuj.FlatStyle = FlatStyle.Flat;
+            labelCHuj.Font = new Font("Segoe UI", 9F);
+            labelCHuj.Location = new Point(255, 120);
+            labelCHuj.Margin = new Padding(2, 0, 2, 0);
+            labelCHuj.Name = "labelCHuj";
+            labelCHuj.Size = new Size(56, 22);
+            labelCHuj.TabIndex = 17;
+            labelCHuj.Text = "grupy: ";
+            // 
+            // lblGrupyHolder
+            // 
+            lblGrupyHolder.AutoSize = true;
+            lblGrupyHolder.BackColor = Color.FromArgb(203, 231, 229);
+            lblGrupyHolder.BorderStyle = BorderStyle.Fixed3D;
+            lblGrupyHolder.FlatStyle = FlatStyle.Flat;
+            lblGrupyHolder.Font = new Font("Segoe UI", 9F);
+            lblGrupyHolder.Location = new Point(315, 120);
+            lblGrupyHolder.Margin = new Padding(2, 0, 2, 0);
+            lblGrupyHolder.Name = "lblGrupyHolder";
+            lblGrupyHolder.Size = new Size(143, 62);
+            lblGrupyHolder.TabIndex = 18;
+            lblGrupyHolder.Text = "-typGrupy\r\n-nazwa kierunku\r\n-nazwa specjalizacji\r\n";
+            // 
             // FormStronaGlowna
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             ClientSize = new Size(1518, 819);
+            Controls.Add(lblGrupyHolder);
+            Controls.Add(labelCHuj);
             Controls.Add(btnOpenChat);
             Controls.Add(wyloguj);
             Controls.Add(grupy_zajeciowe);
@@ -294,5 +340,7 @@
         private Label grupy_zajeciowe;
         private Button wyloguj;
         private Button btnOpenChat;
+        private Label labelCHuj;
+        private Label lblGrupyHolder;
     }
 }

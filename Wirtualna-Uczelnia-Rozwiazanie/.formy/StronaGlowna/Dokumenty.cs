@@ -207,5 +207,26 @@ namespace Wirtualna_Uczelnia.formy
                 MessageBox.Show("Wystąpił błąd podczas otwierania linku: " + ex.Message);
             }
         }
+
+        private void linkLabel9_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+        
+            string sciezka = @"https://umg.edu.pl/stypendia";
+
+            try
+            {
+                var psi = new ProcessStartInfo
+                {
+                    FileName = sciezka,
+                    UseShellExecute = true
+                };
+
+                Process.Start(psi);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Wystąpił błąd podczas otwierania linku: " + ex.Message);
+            }
+        }
     }
 }

@@ -16,14 +16,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include=".formy\AdminPanel.cs" />
-    <Compile Include=".formy\AdminPanel.Designer.cs" />
+    <Compile Include=".formy\AdminForms\AdminPanel.cs" />
+    <Compile Include=".formy\AdminForms\AdminPanel.Designer.cs" />
+    <Compile Include=".formy\AdminForms\FormChangePlan.cs" />
+    <Compile Include=".formy\AdminForms\FormChangePlan.Designer.cs" />
+    <Compile Include=".formy\AdminForms\FormEdytujPlanLekcji.cs" />
+    <Compile Include=".formy\AdminForms\FormEdytujPlanLekcji.Designer.cs" />
+    <Compile Include=".formy\AdminForms\RegisterUser.cs" />
+    <Compile Include=".formy\AdminForms\RegisterUser.Designer.cs" />
     <Compile Include=".formy\ChatForm.cs" />
     <Compile Include=".formy\ChatForm.Designer.cs" />
     <Compile Include=".formy\FormKalendarz.cs" />
     <Compile Include=".formy\FormKalendarz.Designer.cs" />
     <Compile Include=".formy\OcenyPanel.cs" />
     <Compile Include=".formy\OcenyPanel.Designer.cs" />
+    <Compile Include=".formy\OcenyPanelEditSelector.cs" />
+    <Compile Include=".formy\OcenyPanelEditSelector.Designer.cs" />
     <Compile Include=".formy\StronaGlowna\Dokumenty.cs" />
     <Compile Include=".formy\StronaGlowna\Dokumenty.Designer.cs" />
     <Compile Include=".formy\StronaGlowna\FormKontaktPracownicy.cs" />
@@ -48,6 +56,8 @@
     <Compile Include=".formy\TeacherCalendarEditor.Designer.cs" />
     <Compile Include=".formy\UserControls\ContactUserControl.cs" />
     <Compile Include=".formy\UserControls\ContactUserControl.Designer.cs" />
+    <Compile Include=".formy\UserControls\PlanLekcjiUserControl.cs" />
+    <Compile Include=".formy\UserControls\PlanLekcjiUserControl.Designer.cs" />
     <Compile Include=".klasy\CalendarEvent.cs" />
     <Compile Include=".klasy\PrzezroczysteTlo.cs" />
     <Compile Include=".klasy\Hasher.cs" />
@@ -56,7 +66,7 @@
     <Compile Include=".translations\LangMenager.cs" />
     <Compile Include=".klasy\LoginMenager.cs" />
     <Compile Include=".klasy\SecMenager.cs" />
-    <Compile Include=".klasy\sqlMenager.cs" />
+    <Compile Include=".klasy\SqlMenager.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -64,10 +74,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include=".formy\AdminPanel.resx" />
+    <EmbeddedResource Include=".formy\AdminForms\AdminPanel.resx" />
+    <EmbeddedResource Include=".formy\AdminForms\FormChangePlan.resx" />
+    <EmbeddedResource Include=".formy\AdminForms\FormEdytujPlanLekcji.resx" />
+    <EmbeddedResource Include=".formy\AdminForms\RegisterUser.resx" />
     <EmbeddedResource Include=".formy\ChatForm.resx" />
     <EmbeddedResource Include=".formy\FormKalendarz.resx" />
     <EmbeddedResource Include=".formy\OcenyPanel.resx" />
+    <EmbeddedResource Include=".formy\OcenyPanelEditSelector.resx" />
     <EmbeddedResource Include=".formy\StronaGlowna\Dokumenty.resx" />
     <EmbeddedResource Include=".formy\StronaGlowna\FormKontaktPracownicy.resx" />
     <EmbeddedResource Include=".formy\StronaGlowna\FormPlanLekcji.resx" />
@@ -80,6 +94,7 @@
     <EmbeddedResource Include=".formy\TeacherPanel.resx" />
     <EmbeddedResource Include=".formy\TeacherCalendarEditor.resx" />
     <EmbeddedResource Include=".formy\UserControls\ContactUserControl.resx" />
+    <EmbeddedResource Include=".formy\UserControls\PlanLekcjiUserControl.resx" />
   </ItemGroup>
 
   <ItemGroup>

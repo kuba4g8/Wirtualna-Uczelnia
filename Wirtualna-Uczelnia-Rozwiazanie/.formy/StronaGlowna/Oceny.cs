@@ -16,7 +16,7 @@ namespace Wirtualna_Uczelnia.formy
 {
     public partial class Oceny : Form
     {
-        sqlMenager sqlMenager = new sqlMenager();
+        SqlMenager sqlMenager = new SqlMenager();
         public Oceny()
         {
             InitializeComponent();
@@ -36,7 +36,13 @@ namespace Wirtualna_Uczelnia.formy
             }
         }
 
-        private void Load_Grades_Click(object sender, EventArgs e)
+
+        private void IndexChanged(object sender, EventArgs e)
+        {
+            loadGrades();
+        }
+
+        private void loadGrades()
         {
             Tabela_Ocen.Rows.Clear();
             Tabela_Ocen.Refresh(); //Redundant(?), refreshuje tabele
@@ -74,6 +80,7 @@ namespace Wirtualna_Uczelnia.formy
         {
             public string nr_indeksu { get; set; }
         }
+
     }
 
 }

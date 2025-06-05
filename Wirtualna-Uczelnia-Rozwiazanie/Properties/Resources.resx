@@ -118,7 +118,49 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Bez nazwy 19_202505260912_55015 (5)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Bez nazwy 19_202505260912_55015 (5).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Bez nazwy 19_202505260912_550152" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Bez nazwy 19_202505260912_550152.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Bez nazwy 11_202505140850_07944" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Bez nazwy 11_202505140850_07944.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="EDYTUJKALENDARZ (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\EDYTUJKALENDARZ (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="EDYTUJKALENDARZ (2)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\EDYTUJKALENDARZ (2).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Bez nazwy 19_202505260912_550153" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Bez nazwy 19_202505260912_550153.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Bez nazwy 19_202505260912_55015 (4)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Bez nazwy 19_202505260912_55015 (4).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="EDYTUJKALENDARZ" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\EDYTUJKALENDARZ.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Bez nazwy 15_202505260855_36185" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Bez nazwy 15_202505260855_36185.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Bez nazwy 7_202505212012_55935" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Bez nazwy 7_202505212012_55935.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="79f71007-64cc-4bab-9a64-90fb1cb07f37" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\79f71007-64cc-4bab-9a64-90fb1cb07f37.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Bez nazwy 19_202505260912_550151" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Bez nazwy 19_202505260912_550151.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="EDYTUJKALENDARZ1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\EDYTUJKALENDARZ1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Bez nazwy 19_202505260912_55015" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Bez nazwy 19_202505260912_55015.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Bez nazwy 24_202505261058_58516" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Bez nazwy 24_202505261058_58516.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

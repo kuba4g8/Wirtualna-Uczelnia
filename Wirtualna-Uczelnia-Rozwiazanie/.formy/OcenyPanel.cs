@@ -10,42 +10,41 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Wirtualna_Uczelnia.formy.StronaGlowna;
+using Microsoft.VisualBasic;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
-//TODO       ↓
-//TODO: USUWANIE OCEN
-//TODO       ↑
+
 namespace Wirtualna_Uczelnia.formy
 {
     public partial class OcenyPanel : Form
     {
         private Pracownik loggedTeacher; // Przechowuje informacje o zalogowanym nauczycielu
-        sqlMenager sqlMenager = new sqlMenager(); //tbh nie wiem co robię ale nie pokazuje dzięki temu błędów :Fire:
-        
+        SqlMenager sqlMenager = new SqlMenager(); //tbh nie wiem co robię ale nie pokazuje dzięki temu błędów :Fire:
+
         public OcenyPanel(Pracownik loggedUser) //TODO: UWZGLĘDNIĆ W KOMENDZIE ID PROWADZĄCEGO BY POKAZAĆ OCENY TYLKO Z PRZEDMIOTÓW KTÓRE PROWADZI. UPD 13.05 -> wywołanie przydatne dla dodawania do bazy
         {
             InitializeComponent();
-            
+
             // Zapisanie referencji do zalogowanego nauczyciela
             this.loggedTeacher = loggedUser;
-            
-            // Dodanie przycisku powrotu
-            Button btnPowrot = new Button();
-            btnPowrot.Location = new Point(12, 280);
-            btnPowrot.Name = "btnPowrot";
-            btnPowrot.Size = new Size(136, 30);
-            btnPowrot.Text = "Powrót do panelu";
-            btnPowrot.UseVisualStyleBackColor = true;
-            btnPowrot.Click += BtnPowrot_Click;
-            this.Controls.Add(btnPowrot);
+
+            List<Przedmiot> FetchPrzedmioty = new List<Przedmiot>();
+            MySqlCommand FetchCommand = new MySqlCommand($"SELECT DISTINCT przedmioty.nazwa FROM plan_lekcji JOIN przedmioty ON plan_lekcji.id_przedmiotu = przedmioty.id_przedmiotu WHERE plan_lekcji.id_prowadzacego = '{loggedTeacher.userID}'"); //select as wynika z dziwnej budowy planu lekcji
+            FetchPrzedmioty = sqlMenager.loadDataToList<Przedmiot>(FetchCommand);
+
+            for (int i = 0; i < FetchPrzedmioty.Count; i++)
+            {
+                PrzedmiotInput.Items.Add(FetchPrzedmioty[i].nazwa);
+            }
+
         }
-        
-        // Metoda obsługująca kliknięcie przycisku powrotu
+
+        // Metoda obsługująca kliknięcie przycisku powrotu || Proszę, podpisujcie się gdy grzebiecie w czyimś kodzie albo przynajmniej moim -PG
         private void BtnPowrot_Click(object sender, EventArgs e)
         {
             // Zamknij ten formularz
             this.Close();
-            
+
             // Znajdź i pokaż formularz TeacherPanel
             Form teacherPanel = Application.OpenForms.OfType<TeacherPanel>().FirstOrDefault();
             if (teacherPanel != null)
@@ -53,18 +52,85 @@ namespace Wirtualna_Uczelnia.formy
                 teacherPanel.Show();
             }
         }
-
-        private void Tabela_Ocen_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        public int EditSelect { get; set; } = -1; //stoopid | Robie se wartość publiczną
+        private void Tabela_Ocen_CellContentClick(object sender, DataGridViewCellEventArgs e) //KLIKNIĘCIE ELEMENTU OCENY UMOŻLIWIA USUNIĘCIE CAŁEJ OCENY LUB EDYCJĘ
         {
-            //TODO: KLIKNIĘCIE ELEMENTU OCENY UMOŻLIWIA USUNIĘCIE CAŁEJ OCENY
+            //Odpalamy selektor co w ogóle chcemy zrobić
+            var selector = new OcenyPanelEditSelector(this);
+            selector.ShowDialog(); //Nie wiem jak to zrobić inaczej, nie chcę tego tak robić ale przede wszystkim nie che mi się myśleć o innym podejściu
+
+            //MessageBox.Show("Wybrana wartość: " + EditSelect); //debug
+
+            String indeks = IdInput.Text.ToString();
+            String przedmiot = PrzedmiotInput.Text.ToString();
+            String wartosc = Tabela_Ocen.Rows[Tabela_Ocen.CurrentCell.RowIndex].Cells[1].Value.ToString(); wartosc = wartosc.Replace(",", ".");
+            String kiedy = Tabela_Ocen.Rows[Tabela_Ocen.CurrentCell.RowIndex].Cells[2].Value.ToString(); //Zbieramy dane by znaleźć szukaną ocenę
+
+            List<OcenaID> FetchID = new List<OcenaID>();
+            MySqlCommand FetchCommand = new MySqlCommand($"SELECT oceny.id_oceny FROM oceny JOIN studenci ON oceny.userID = studenci.userID JOIN przedmioty ON oceny.id_przedmiotu = przedmioty.id_przedmiotu WHERE studenci.nr_indeksu = '{indeks}' AND przedmioty.nazwa = '{przedmiot}' AND oceny.ocena = {wartosc} AND oceny.data_wystawienia = '{kiedy}' LIMIT 1;");
+            FetchID = sqlMenager.loadDataToList<OcenaID>(FetchCommand); //Zebranie ID pasującego do oceny
+
+
+            if (EditSelect == 2) //edit ඞ
+            {
+                String nowaOcena = Interaction.InputBox($"Podaj nową ocenę dla oceny {wartosc}", "").ToString(); ; //funkcja z visualbasic
+                //kopia kodu z dodawania ocen
+                if (nowaOcena == "" || !decimal.TryParse(nowaOcena, out decimal ignore)) //sprawdź czy ocena jest wprowadzona i czy w ogóle jest oceną
+                {
+                    MessageBox.Show("Syntax Error, liczba nie jest liczbą lub wartośc jest null");
+                    return; //byebye
+                }
+
+                decimal ocenatest = decimal.Parse(nowaOcena);
+                if ((ocenatest > 5 || ocenatest < 2) && ocenatest != 0) //czy ocena jest większa niż 5 lub mniejsza od 2 a jeżeli tak sprawdź czy nie jest zerem
+                {
+                    MessageBox.Show("Ocena NIE JEST MOŻLIWA");
+                    return; //Jeżeli tak, to adios. nie będzie 6
+                }
+                String ocenaset = nowaOcena.Replace(",", "."); //podobno jakiś błąd z interpretacją stringów przez języki systemowe. Nie będziecie w stanie tego wytłumaczyć ani ja. W skrócie, decimal.parse na stringach działa tylko wtedy gdy liczba ma w sobie przecinek i zwraca przecinek, gdy operuje na [form].text działa tylko na przecinkach ale zwraca kropkę
+                sqlMenager.executeRawCommand(new MySqlCommand($"UPDATE oceny SET ocena = {ocenaset} WHERE id_oceny = {FetchID.First().id_oceny}")); //Edytujemy
+            }
+
+            if (EditSelect == 3) //usuwanko :3
+            {
+                DialogResult dialogResult = MessageBox.Show("Usunąć ocenę" + Tabela_Ocen.Rows[Tabela_Ocen.CurrentCell.RowIndex].Cells[1].Value.ToString(), "UWAGA", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+
+                    //MessageBox.Show($"SELECT oceny.id_oceny FROM oceny JOIN studenci ON oceny.userID = studenci.userID JOIN przedmioty ON oceny.id_przedmiotu = przedmioty.id_przedmiotu WHERE studenci.nr_indeksu = '{indeks}' AND przedmioty.nazwa = '{przedmiot}' AND oceny.ocena = {wartosc} AND oceny.data_wystawienia = '{kiedy}' LIMIT 1;"); //debug
+
+                    sqlMenager.executeRawCommand(new MySqlCommand($"DELETE FROM oceny WHERE id_oceny = {FetchID.First().id_oceny}")); //Usuwamy
+
+                }
+            }
+
+            Load_Data(sender, e); //refreshuje tablice
         }
 
-        private void IdInput_TextChanged(object sender, EventArgs e)
+
+
+        private void PrzedmiotInput_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //idk
+            IdInput.Items.Clear();
+            IdInput.ResetText(); //czyść, by prowadzący nie dodał oceny gdy ktoś nie jest nie zapisanemy
+            String przedmiot = PrzedmiotInput.Text.ToString();
+
+            List<Indeks> FetchIndeks = new List<Indeks>(); //(27.05.2025) W tym momencie chyba już każdy wie że to służy do przygotowania konkretnej listy do późniejszej obróbki/wprowadzenia
+            MySqlCommand FetchCommand = new MySqlCommand($"SELECT DISTINCT studenci.nr_indeksu FROM przedmioty JOIN plan_lekcji ON plan_lekcji.id_przedmiotu = przedmioty.id_przedmiotu JOIN studenci_grupy ON plan_lekcji.id_grupy = studenci_grupy.id_grupy JOIN studenci ON studenci.userID = studenci_grupy.userID WHERE przedmioty.nazwa = '{przedmiot}'");
+            FetchIndeks = sqlMenager.loadDataToList<Indeks>(FetchCommand);
+
+            for (int i = 0; i < FetchIndeks.Count; i++) //wypełniamy listę Id tych którzy chodzą
+            {
+                IdInput.Items.Add(FetchIndeks[i].nr_indeksu);
+            }
+            Load_Data(sender, e); //refreshuje tablice
+        }
+        private void IdInput_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Load_Data(sender, e); //refreshuje tablice, usuwając ostatecznie potrzebę używania przycisku
         }
 
-        private void Load_Student_Click(object sender, EventArgs e)
+        private void Load_Data(object sender, EventArgs e) //ładuje studentów, nazwa szczątkowa po czasach gdzie wymagane było kliknięcie przycisku
         {
             Tabela_Ocen.Rows.Clear();
             Tabela_Ocen.Refresh(); //Redundant(?), refreshuje tabele
@@ -89,13 +155,8 @@ namespace Wirtualna_Uczelnia.formy
 
             foreach (var ocena in FetchOceny)
             {
-                this.Tabela_Ocen.Rows.Add(ocena.nazwa, ocena.ocena, ocena.data_wystawienia);
+                this.Tabela_Ocen.Rows.Add(ocena.nazwa, ocena.ocena, ocena.data_wystawienia.ToString("yyyy-MM-dd"));
             }
-        }
-
-        private void PrzedmiotInput_TextChanged(object sender, EventArgs e)
-        {
-            //idk
         }
 
         private void Add_Grade_Click(object sender, EventArgs e)
@@ -118,14 +179,14 @@ namespace Wirtualna_Uczelnia.formy
                 return; //Jeżeli nie, to adios
             }
 
-            if(OcenaInput.Text == "" || !decimal.TryParse(OcenaInput.Text, out decimal ignore)) //sprawdź czy ocena jest wprowadzona i czy w ogóle jest oceną
+            if (OcenaInput.Text == "" || !decimal.TryParse(OcenaInput.Text, out decimal ignore)) //sprawdź czy ocena jest wprowadzona i czy w ogóle jest oceną
             {
                 MessageBox.Show("Syntax Error, liczba nie jest liczbą lub wartośc jest null");
                 return; //byebye
             }
 
             decimal ocena = decimal.Parse(OcenaInput.Text);
-            if ((ocena > 5 || ocena <2) && ocena!=0) //czy ocena jest większa niż 5 lub mniejsza od 2 a jeżeli tak sprawdź czy nie jest zerem
+            if ((ocena > 5 || ocena < 2) && ocena != 0) //czy ocena jest większa niż 5 lub mniejsza od 2 a jeżeli tak sprawdź czy nie jest zerem
             {
                 MessageBox.Show("Ocena NIE JEST MOŻLIWA");
                 return; //Jeżeli tak, to adios. nie będzie 6
@@ -146,10 +207,12 @@ namespace Wirtualna_Uczelnia.formy
 
 
             Ocena.userID = FetchUserID[0].userID; Ocena.id_przedmiotu = FetchSubID[0].id_przedmiotu; Ocena.ocena = ocena; Ocena.data_wystawienia = czas;
-            
-            MessageBox.Show(FetchUserID[0].userID + " " + FetchSubID[0].id_przedmiotu + " " + ocena + " " + czas); //debug
 
-            sqlMenager.loadObjectToDataBase<OcenaDod>(Ocena, "oceny", true); //coś powoduje błędy, do naprawy w sqlmeneger lub bazie danych
+            //MessageBox.Show(FetchUserID[0].userID + " " + FetchSubID[0].id_przedmiotu + " " + ocena + " " + czas); //debug
+
+            sqlMenager.loadObjectToDataBase<OcenaDod>(Ocena, "oceny", true); //dodaje ocenę do bazy danych
+
+            Load_Data(sender, e); //refreshuje tablice
         }
 
 
@@ -186,6 +249,15 @@ namespace Wirtualna_Uczelnia.formy
         {
             public Int32 id_przedmiotu { get; set; }
         }
+        public class OcenaID
+        {
+            public Int32 id_oceny { get; set; }
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
-    
+
 }

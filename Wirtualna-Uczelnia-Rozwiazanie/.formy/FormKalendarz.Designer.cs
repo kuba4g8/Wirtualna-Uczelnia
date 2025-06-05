@@ -28,341 +28,385 @@ namespace Wirtualna_Uczelnia.formy
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.btnDzisiaj = new System.Windows.Forms.Button();
-            this.btnNastepnyMiesiac = new System.Windows.Forms.Button();
-            this.btnPoprzedniMiesiac = new System.Windows.Forms.Button();
-            this.lblMiesiacRok = new System.Windows.Forms.Label();
-            this.panelNaglowki = new System.Windows.Forms.Panel();
-            this.lblNiedziela = new System.Windows.Forms.Label();
-            this.lblSobota = new System.Windows.Forms.Label();
-            this.lblPiatek = new System.Windows.Forms.Label();
-            this.lblCzwartek = new System.Windows.Forms.Label();
-            this.lblSroda = new System.Windows.Forms.Label();
-            this.lblWtorek = new System.Windows.Forms.Label();
-            this.lblPoniedzialek = new System.Windows.Forms.Label();
-            this.panelDni = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.listBoxWydarzenia = new System.Windows.Forms.ListBox();
-            this.lblWybranaDzien = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.panelLegenda = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.panel1.SuspendLayout();
-            this.panelNaglowki.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.panelLegenda.SuspendLayout();
-            this.SuspendLayout();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormKalendarz));
+            panel1 = new Panel();
+            btnDzisiaj = new Button();
+            btnNastepnyMiesiac = new Button();
+            btnPoprzedniMiesiac = new Button();
+            lblMiesiacRok = new Label();
+            panelNaglowki = new Panel();
+            lblNiedziela = new Label();
+            lblSobota = new Label();
+            lblPiatek = new Label();
+            lblCzwartek = new Label();
+            lblSroda = new Label();
+            lblWtorek = new Label();
+            lblPoniedzialek = new Label();
+            panelDni = new Panel();
+            panel2 = new Panel();
+            listBoxWydarzenia = new ListBox();
+            lblWybranaDzien = new Label();
+            label1 = new Label();
+            panelLegenda = new Panel();
+            label5 = new Label();
+            panel6 = new Panel();
+            label4 = new Label();
+            panel5 = new Panel();
+            label3 = new Label();
+            panel4 = new Panel();
+            label2 = new Label();
+            panel3 = new Panel();
+            pictureBox1 = new PictureBox();
+            panel1.SuspendLayout();
+            panelNaglowki.SuspendLayout();
+            panel2.SuspendLayout();
+            panelLegenda.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            SuspendLayout();
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.Controls.Add(this.btnDzisiaj);
-            this.panel1.Controls.Add(this.btnNastepnyMiesiac);
-            this.panel1.Controls.Add(this.btnPoprzedniMiesiac);
-            this.panel1.Controls.Add(this.lblMiesiacRok);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1200, 60);
-            this.panel1.TabIndex = 0;
+            panel1.BackColor = Color.Khaki;
+            panel1.Controls.Add(btnDzisiaj);
+            panel1.Controls.Add(btnNastepnyMiesiac);
+            panel1.Controls.Add(btnPoprzedniMiesiac);
+            panel1.Controls.Add(lblMiesiacRok);
+            panel1.Dock = DockStyle.Top;
+            panel1.Location = new Point(0, 0);
+            panel1.Margin = new Padding(4, 2, 4, 2);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(1500, 75);
+            panel1.TabIndex = 0;
             // 
             // btnDzisiaj
             // 
-            this.btnDzisiaj.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnDzisiaj.FlatAppearance.BorderSize = 2;
-            this.btnDzisiaj.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDzisiaj.Location = new System.Drawing.Point(279, 15);
-            this.btnDzisiaj.Name = "btnDzisiaj";
-            this.btnDzisiaj.Size = new System.Drawing.Size(94, 29);
-            this.btnDzisiaj.TabIndex = 3;
-            this.btnDzisiaj.Text = "Dzisiaj";
-            this.btnDzisiaj.UseVisualStyleBackColor = true;
-            this.btnDzisiaj.Click += new System.EventHandler(this.btnDzisiaj_Click);
+            btnDzisiaj.BackColor = Color.YellowGreen;
+            btnDzisiaj.FlatAppearance.BorderColor = Color.White;
+            btnDzisiaj.FlatAppearance.BorderSize = 2;
+            btnDzisiaj.FlatStyle = FlatStyle.Flat;
+            btnDzisiaj.Location = new Point(349, 19);
+            btnDzisiaj.Margin = new Padding(4, 4, 4, 4);
+            btnDzisiaj.Name = "btnDzisiaj";
+            btnDzisiaj.Size = new Size(118, 36);
+            btnDzisiaj.TabIndex = 3;
+            btnDzisiaj.Text = "Dzisiaj";
+            btnDzisiaj.UseVisualStyleBackColor = false;
+            btnDzisiaj.Click += btnDzisiaj_Click;
             // 
             // btnNastepnyMiesiac
             // 
-            this.btnNastepnyMiesiac.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnNastepnyMiesiac.FlatAppearance.BorderSize = 2;
-            this.btnNastepnyMiesiac.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNastepnyMiesiac.Location = new System.Drawing.Point(208, 15);
-            this.btnNastepnyMiesiac.Name = "btnNastepnyMiesiac";
-            this.btnNastepnyMiesiac.Size = new System.Drawing.Size(50, 29);
-            this.btnNastepnyMiesiac.TabIndex = 2;
-            this.btnNastepnyMiesiac.Text = ">";
-            this.btnNastepnyMiesiac.UseVisualStyleBackColor = true;
-            this.btnNastepnyMiesiac.Click += new System.EventHandler(this.btnNastepnyMiesiac_Click);
+            btnNastepnyMiesiac.FlatAppearance.BorderColor = Color.White;
+            btnNastepnyMiesiac.FlatAppearance.BorderSize = 2;
+            btnNastepnyMiesiac.FlatStyle = FlatStyle.Flat;
+            btnNastepnyMiesiac.Location = new Point(260, 19);
+            btnNastepnyMiesiac.Margin = new Padding(4, 4, 4, 4);
+            btnNastepnyMiesiac.Name = "btnNastepnyMiesiac";
+            btnNastepnyMiesiac.Size = new Size(62, 36);
+            btnNastepnyMiesiac.TabIndex = 2;
+            btnNastepnyMiesiac.Text = ">";
+            btnNastepnyMiesiac.UseVisualStyleBackColor = true;
+            btnNastepnyMiesiac.Click += btnNastepnyMiesiac_Click;
             // 
             // btnPoprzedniMiesiac
             // 
-            this.btnPoprzedniMiesiac.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnPoprzedniMiesiac.FlatAppearance.BorderSize = 2;
-            this.btnPoprzedniMiesiac.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPoprzedniMiesiac.Location = new System.Drawing.Point(152, 15);
-            this.btnPoprzedniMiesiac.Name = "btnPoprzedniMiesiac";
-            this.btnPoprzedniMiesiac.Size = new System.Drawing.Size(50, 29);
-            this.btnPoprzedniMiesiac.TabIndex = 1;
-            this.btnPoprzedniMiesiac.Text = "<";
-            this.btnPoprzedniMiesiac.UseVisualStyleBackColor = true;
-            this.btnPoprzedniMiesiac.Click += new System.EventHandler(this.btnPoprzedniMiesiac_Click);
+            btnPoprzedniMiesiac.FlatAppearance.BorderColor = Color.White;
+            btnPoprzedniMiesiac.FlatAppearance.BorderSize = 2;
+            btnPoprzedniMiesiac.FlatStyle = FlatStyle.Flat;
+            btnPoprzedniMiesiac.Location = new Point(190, 19);
+            btnPoprzedniMiesiac.Margin = new Padding(4, 4, 4, 4);
+            btnPoprzedniMiesiac.Name = "btnPoprzedniMiesiac";
+            btnPoprzedniMiesiac.Size = new Size(62, 36);
+            btnPoprzedniMiesiac.TabIndex = 1;
+            btnPoprzedniMiesiac.Text = "<";
+            btnPoprzedniMiesiac.UseVisualStyleBackColor = true;
+            btnPoprzedniMiesiac.Click += btnPoprzedniMiesiac_Click;
             // 
             // lblMiesiacRok
             // 
-            this.lblMiesiacRok.AutoSize = true;
-            this.lblMiesiacRok.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblMiesiacRok.Location = new System.Drawing.Point(20, 16);
-            this.lblMiesiacRok.Name = "lblMiesiacRok";
-            this.lblMiesiacRok.Size = new System.Drawing.Size(126, 28);
-            this.lblMiesiacRok.TabIndex = 0;
-            this.lblMiesiacRok.Text = "Miesi¹c Rok";
+            lblMiesiacRok.AutoSize = true;
+            lblMiesiacRok.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            lblMiesiacRok.Location = new Point(25, 20);
+            lblMiesiacRok.Margin = new Padding(4, 0, 4, 0);
+            lblMiesiacRok.Name = "lblMiesiacRok";
+            lblMiesiacRok.Size = new Size(150, 32);
+            lblMiesiacRok.TabIndex = 0;
+            lblMiesiacRok.Text = "Miesi¹c Rok";
             // 
             // panelNaglowki
             // 
-            this.panelNaglowki.BackColor = System.Drawing.Color.White;
-            this.panelNaglowki.Controls.Add(this.lblNiedziela);
-            this.panelNaglowki.Controls.Add(this.lblSobota);
-            this.panelNaglowki.Controls.Add(this.lblPiatek);
-            this.panelNaglowki.Controls.Add(this.lblCzwartek);
-            this.panelNaglowki.Controls.Add(this.lblSroda);
-            this.panelNaglowki.Controls.Add(this.lblWtorek);
-            this.panelNaglowki.Controls.Add(this.lblPoniedzialek);
-            this.panelNaglowki.Location = new System.Drawing.Point(20, 70);
-            this.panelNaglowki.Name = "panelNaglowki";
-            this.panelNaglowki.Size = new System.Drawing.Size(504, 30);
-            this.panelNaglowki.TabIndex = 1;
+            panelNaglowki.BackColor = Color.White;
+            panelNaglowki.Controls.Add(pictureBox1);
+            panelNaglowki.Controls.Add(lblNiedziela);
+            panelNaglowki.Controls.Add(lblSobota);
+            panelNaglowki.Controls.Add(lblPiatek);
+            panelNaglowki.Controls.Add(lblCzwartek);
+            panelNaglowki.Controls.Add(lblSroda);
+            panelNaglowki.Controls.Add(lblWtorek);
+            panelNaglowki.Controls.Add(lblPoniedzialek);
+            panelNaglowki.Location = new Point(25, 88);
+            panelNaglowki.Margin = new Padding(4, 4, 4, 4);
+            panelNaglowki.Name = "panelNaglowki";
+            panelNaglowki.Size = new Size(630, 38);
+            panelNaglowki.TabIndex = 1;
             // 
             // lblNiedziela
             // 
-            this.lblNiedziela.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblNiedziela.ForeColor = System.Drawing.Color.Red;
-            this.lblNiedziela.Location = new System.Drawing.Point(432, 0);
-            this.lblNiedziela.Name = "lblNiedziela";
-            this.lblNiedziela.Size = new System.Drawing.Size(72, 30);
-            this.lblNiedziela.TabIndex = 6;
-            this.lblNiedziela.Text = "Nd";
-            this.lblNiedziela.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            lblNiedziela.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblNiedziela.ForeColor = Color.Red;
+            lblNiedziela.Location = new Point(540, 0);
+            lblNiedziela.Margin = new Padding(4, 0, 4, 0);
+            lblNiedziela.Name = "lblNiedziela";
+            lblNiedziela.Size = new Size(90, 38);
+            lblNiedziela.TabIndex = 6;
+            lblNiedziela.Text = "Nd";
+            lblNiedziela.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblSobota
             // 
-            this.lblSobota.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblSobota.Location = new System.Drawing.Point(360, 0);
-            this.lblSobota.Name = "lblSobota";
-            this.lblSobota.Size = new System.Drawing.Size(72, 30);
-            this.lblSobota.TabIndex = 5;
-            this.lblSobota.Text = "Sb";
-            this.lblSobota.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            lblSobota.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblSobota.Location = new Point(450, 0);
+            lblSobota.Margin = new Padding(4, 0, 4, 0);
+            lblSobota.Name = "lblSobota";
+            lblSobota.Size = new Size(90, 38);
+            lblSobota.TabIndex = 5;
+            lblSobota.Text = "Sb";
+            lblSobota.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblPiatek
             // 
-            this.lblPiatek.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblPiatek.Location = new System.Drawing.Point(288, 0);
-            this.lblPiatek.Name = "lblPiatek";
-            this.lblPiatek.Size = new System.Drawing.Size(72, 30);
-            this.lblPiatek.TabIndex = 4;
-            this.lblPiatek.Text = "Pt";
-            this.lblPiatek.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            lblPiatek.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblPiatek.Location = new Point(360, 0);
+            lblPiatek.Margin = new Padding(4, 0, 4, 0);
+            lblPiatek.Name = "lblPiatek";
+            lblPiatek.Size = new Size(90, 38);
+            lblPiatek.TabIndex = 4;
+            lblPiatek.Text = "Pt";
+            lblPiatek.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblCzwartek
             // 
-            this.lblCzwartek.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblCzwartek.Location = new System.Drawing.Point(216, 0);
-            this.lblCzwartek.Name = "lblCzwartek";
-            this.lblCzwartek.Size = new System.Drawing.Size(72, 30);
-            this.lblCzwartek.TabIndex = 3;
-            this.lblCzwartek.Text = "Czw";
-            this.lblCzwartek.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            lblCzwartek.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblCzwartek.Location = new Point(270, 0);
+            lblCzwartek.Margin = new Padding(4, 0, 4, 0);
+            lblCzwartek.Name = "lblCzwartek";
+            lblCzwartek.Size = new Size(90, 38);
+            lblCzwartek.TabIndex = 3;
+            lblCzwartek.Text = "Czw";
+            lblCzwartek.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblSroda
             // 
-            this.lblSroda.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblSroda.Location = new System.Drawing.Point(144, 0);
-            this.lblSroda.Name = "lblSroda";
-            this.lblSroda.Size = new System.Drawing.Size(72, 30);
-            this.lblSroda.TabIndex = 2;
-            this.lblSroda.Text = "Œr";
-            this.lblSroda.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            lblSroda.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblSroda.Location = new Point(180, 0);
+            lblSroda.Margin = new Padding(4, 0, 4, 0);
+            lblSroda.Name = "lblSroda";
+            lblSroda.Size = new Size(90, 38);
+            lblSroda.TabIndex = 2;
+            lblSroda.Text = "Œr";
+            lblSroda.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblWtorek
             // 
-            this.lblWtorek.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblWtorek.Location = new System.Drawing.Point(72, 0);
-            this.lblWtorek.Name = "lblWtorek";
-            this.lblWtorek.Size = new System.Drawing.Size(72, 30);
-            this.lblWtorek.TabIndex = 1;
-            this.lblWtorek.Text = "Wt";
-            this.lblWtorek.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            lblWtorek.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblWtorek.Location = new Point(90, 0);
+            lblWtorek.Margin = new Padding(4, 0, 4, 0);
+            lblWtorek.Name = "lblWtorek";
+            lblWtorek.Size = new Size(90, 38);
+            lblWtorek.TabIndex = 1;
+            lblWtorek.Text = "Wt";
+            lblWtorek.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblPoniedzialek
             // 
-            this.lblPoniedzialek.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblPoniedzialek.Location = new System.Drawing.Point(0, 0);
-            this.lblPoniedzialek.Name = "lblPoniedzialek";
-            this.lblPoniedzialek.Size = new System.Drawing.Size(72, 30);
-            this.lblPoniedzialek.TabIndex = 0;
-            this.lblPoniedzialek.Text = "Pn";
-            this.lblPoniedzialek.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            lblPoniedzialek.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblPoniedzialek.Location = new Point(0, 0);
+            lblPoniedzialek.Margin = new Padding(4, 0, 4, 0);
+            lblPoniedzialek.Name = "lblPoniedzialek";
+            lblPoniedzialek.Size = new Size(90, 38);
+            lblPoniedzialek.TabIndex = 0;
+            lblPoniedzialek.Text = "Pn";
+            lblPoniedzialek.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // panelDni
             // 
-            this.panelDni.BackColor = System.Drawing.Color.White;
-            this.panelDni.Location = new System.Drawing.Point(20, 106);
-            this.panelDni.Name = "panelDni";
-            this.panelDni.Size = new System.Drawing.Size(504, 372);
-            this.panelDni.TabIndex = 2;
+            panelDni.BackColor = Color.White;
+            panelDni.Location = new Point(25, 132);
+            panelDni.Margin = new Padding(4, 4, 4, 4);
+            panelDni.Name = "panelDni";
+            panelDni.Size = new Size(630, 465);
+            panelDni.TabIndex = 2;
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.Color.White;
-            this.panel2.Controls.Add(this.listBoxWydarzenia);
-            this.panel2.Controls.Add(this.lblWybranaDzien);
-            this.panel2.Controls.Add(this.label1);
-            this.panel2.Location = new System.Drawing.Point(540, 70);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(648, 300);
-            this.panel2.TabIndex = 3;
+            panel2.BackColor = Color.White;
+            panel2.Controls.Add(listBoxWydarzenia);
+            panel2.Controls.Add(lblWybranaDzien);
+            panel2.Controls.Add(label1);
+            panel2.Location = new Point(675, 88);
+            panel2.Margin = new Padding(4, 4, 4, 4);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(810, 375);
+            panel2.TabIndex = 3;
             // 
             // listBoxWydarzenia
             // 
-            this.listBoxWydarzenia.FormattingEnabled = true;
-            this.listBoxWydarzenia.ItemHeight = 20;
-            this.listBoxWydarzenia.Location = new System.Drawing.Point(18, 60);
-            this.listBoxWydarzenia.Name = "listBoxWydarzenia";
-            this.listBoxWydarzenia.Size = new System.Drawing.Size(614, 224);
-            this.listBoxWydarzenia.TabIndex = 2;
+            listBoxWydarzenia.FormattingEnabled = true;
+            listBoxWydarzenia.ItemHeight = 25;
+            listBoxWydarzenia.Location = new Point(22, 75);
+            listBoxWydarzenia.Margin = new Padding(4, 4, 4, 4);
+            listBoxWydarzenia.Name = "listBoxWydarzenia";
+            listBoxWydarzenia.Size = new Size(766, 279);
+            listBoxWydarzenia.TabIndex = 2;
             // 
             // lblWybranaDzien
             // 
-            this.lblWybranaDzien.AutoSize = true;
-            this.lblWybranaDzien.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblWybranaDzien.Location = new System.Drawing.Point(18, 28);
-            this.lblWybranaDzien.Name = "lblWybranaDzien";
-            this.lblWybranaDzien.Size = new System.Drawing.Size(112, 23);
-            this.lblWybranaDzien.TabIndex = 1;
-            this.lblWybranaDzien.Text = "Wybierz dzieñ";
+            lblWybranaDzien.AutoSize = true;
+            lblWybranaDzien.Font = new Font("Segoe UI", 10F);
+            lblWybranaDzien.Location = new Point(22, 42);
+            lblWybranaDzien.Margin = new Padding(4, 0, 4, 0);
+            lblWybranaDzien.Name = "lblWybranaDzien";
+            lblWybranaDzien.Size = new Size(136, 28);
+            lblWybranaDzien.TabIndex = 1;
+            lblWybranaDzien.Text = "Wybierz dzieñ";
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(18, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(120, 28);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Wydarzenia";
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label1.Location = new Point(22, 6);
+            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(149, 32);
+            label1.TabIndex = 0;
+            label1.Text = "Wydarzenia";
             // 
             // panelLegenda
             // 
-            this.panelLegenda.BackColor = System.Drawing.Color.White;
-            this.panelLegenda.Controls.Add(this.label5);
-            this.panelLegenda.Controls.Add(this.panel6);
-            this.panelLegenda.Controls.Add(this.label4);
-            this.panelLegenda.Controls.Add(this.panel5);
-            this.panelLegenda.Controls.Add(this.label3);
-            this.panelLegenda.Controls.Add(this.panel4);
-            this.panelLegenda.Controls.Add(this.label2);
-            this.panelLegenda.Controls.Add(this.panel3);
-            this.panelLegenda.Location = new System.Drawing.Point(540, 386);
-            this.panelLegenda.Name = "panelLegenda";
-            this.panelLegenda.Size = new System.Drawing.Size(648, 92);
-            this.panelLegenda.TabIndex = 4;
+            panelLegenda.BackColor = Color.White;
+            panelLegenda.Controls.Add(label5);
+            panelLegenda.Controls.Add(panel6);
+            panelLegenda.Controls.Add(label4);
+            panelLegenda.Controls.Add(panel5);
+            panelLegenda.Controls.Add(label3);
+            panelLegenda.Controls.Add(panel4);
+            panelLegenda.Controls.Add(label2);
+            panelLegenda.Controls.Add(panel3);
+            panelLegenda.Location = new Point(675, 482);
+            panelLegenda.Margin = new Padding(4, 4, 4, 4);
+            panelLegenda.Name = "panelLegenda";
+            panelLegenda.Size = new Size(810, 115);
+            panelLegenda.TabIndex = 4;
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(395, 55);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(87, 20);
-            this.label5.TabIndex = 7;
-            this.label5.Text = "Dzieñ wolny";
+            label5.AutoSize = true;
+            label5.Location = new Point(494, 69);
+            label5.Margin = new Padding(4, 0, 4, 0);
+            label5.Name = "label5";
+            label5.Size = new Size(108, 25);
+            label5.TabIndex = 7;
+            label5.Text = "Dzieñ wolny";
             // 
             // panel6
             // 
-            this.panel6.BackColor = System.Drawing.Color.LightGreen;
-            this.panel6.Location = new System.Drawing.Point(359, 55);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(30, 20);
-            this.panel6.TabIndex = 6;
+            panel6.BackColor = Color.LightGreen;
+            panel6.Location = new Point(449, 69);
+            panel6.Margin = new Padding(4, 4, 4, 4);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(38, 25);
+            panel6.TabIndex = 6;
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(54, 55);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(43, 20);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "Sesja";
+            label4.AutoSize = true;
+            label4.Location = new Point(68, 69);
+            label4.Margin = new Padding(4, 0, 4, 0);
+            label4.Name = "label4";
+            label4.Size = new Size(52, 25);
+            label4.TabIndex = 5;
+            label4.Text = "Sesja";
             // 
             // panel5
             // 
-            this.panel5.BackColor = System.Drawing.Color.LightGoldenrodYellow;
-            this.panel5.Location = new System.Drawing.Point(18, 55);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(30, 20);
-            this.panel5.TabIndex = 4;
+            panel5.BackColor = Color.LightGoldenrodYellow;
+            panel5.Location = new Point(22, 69);
+            panel5.Margin = new Padding(4, 4, 4, 4);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(38, 25);
+            panel5.TabIndex = 4;
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(395, 20);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(137, 20);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Godziny rektorskie";
+            label3.AutoSize = true;
+            label3.Location = new Point(494, 25);
+            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(159, 25);
+            label3.TabIndex = 3;
+            label3.Text = "Godziny rektorskie";
             // 
             // panel4
             // 
-            this.panel4.BackColor = System.Drawing.Color.LightBlue;
-            this.panel4.Location = new System.Drawing.Point(359, 20);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(30, 20);
-            this.panel4.TabIndex = 2;
+            panel4.BackColor = Color.LightBlue;
+            panel4.Location = new Point(449, 25);
+            panel4.Margin = new Padding(4, 4, 4, 4);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(38, 25);
+            panel4.TabIndex = 2;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(54, 20);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(83, 20);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Kolokwium";
+            label2.AutoSize = true;
+            label2.Location = new Point(68, 25);
+            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(100, 25);
+            label2.TabIndex = 1;
+            label2.Text = "Kolokwium";
             // 
             // panel3
             // 
-            this.panel3.BackColor = System.Drawing.Color.LightCoral;
-            this.panel3.Location = new System.Drawing.Point(18, 20);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(30, 20);
-            this.panel3.TabIndex = 0;
+            panel3.BackColor = Color.LightCoral;
+            panel3.Location = new Point(22, 25);
+            panel3.Margin = new Padding(4, 4, 4, 4);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(38, 25);
+            panel3.TabIndex = 0;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Location = new Point(-25, -13);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(1500, 553);
+            pictureBox1.TabIndex = 5;
+            pictureBox1.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click;
             // 
             // FormKalendarz
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1200, 500);
-            this.Controls.Add(this.panelLegenda);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panelDni);
-            this.Controls.Add(this.panelNaglowki);
-            this.Controls.Add(this.panel1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-            this.Name = "FormKalendarz";
-            this.Text = "Kalendarz akademicki";
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.panelNaglowki.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
-            this.panelLegenda.ResumeLayout(false);
-            this.panelLegenda.PerformLayout();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
+            BackgroundImageLayout = ImageLayout.Center;
+            ClientSize = new Size(1500, 625);
+            Controls.Add(panelLegenda);
+            Controls.Add(panel2);
+            Controls.Add(panelDni);
+            Controls.Add(panelNaglowki);
+            Controls.Add(panel1);
+            Margin = new Padding(4, 4, 4, 4);
+            Name = "FormKalendarz";
+            Text = "Kalendarz akademicki";
+            Load += FormKalendarz_Load;
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
+            panelNaglowki.ResumeLayout(false);
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
+            panelLegenda.ResumeLayout(false);
+            panelLegenda.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ResumeLayout(false);
 
         }
 
@@ -395,5 +439,6 @@ namespace Wirtualna_Uczelnia.formy
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel3;
+        private PictureBox pictureBox1;
     }
 }

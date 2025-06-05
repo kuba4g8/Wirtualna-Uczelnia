@@ -2,7 +2,7 @@
 
 namespace Wirtualna_Uczelnia
 {
-    partial class AdminPanel
+    partial class RegisterUser
     {
         /// <summary>
         /// Required designer variable.
@@ -32,10 +32,12 @@ namespace Wirtualna_Uczelnia
         private Label lblSemester;
         private TextBox txtSemester;
         private Label lblFaculty;
-        private TextBox txtWydzial;
         private Label lblFieldOfStudy;
-        private TextBox txtKierunek;
         private Button btnRegister;
+        private Label lblLabGroup;
+        private ComboBox comboLabGroup;
+        private Label lblExerciseGroup;
+        private ComboBox comboExerciseGroup;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -48,6 +50,7 @@ namespace Wirtualna_Uczelnia
                 components.Dispose();
             }
             base.Dispose(disposing);
+
         }
 
         #region Windows Form Designer generated code
@@ -58,7 +61,7 @@ namespace Wirtualna_Uczelnia
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminPanel));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RegisterUser));
             lblUserId = new Label();
             txtUserId = new TextBox();
             btnClear = new Button();
@@ -81,9 +84,7 @@ namespace Wirtualna_Uczelnia
             lblSemester = new Label();
             txtSemester = new TextBox();
             lblFaculty = new Label();
-            txtWydzial = new TextBox();
             lblFieldOfStudy = new Label();
-            txtKierunek = new TextBox();
             btnRegister = new Button();
             listStudenci = new ListBox();
             listPracownicy = new ListBox();
@@ -91,6 +92,13 @@ namespace Wirtualna_Uczelnia
             lblStudenci = new Label();
             btnLogout = new Button();
             pictureBox1 = new PictureBox();
+            comboWydzial = new ComboBox();
+            comboKierunek = new ComboBox();
+            // Nowe kontrolki dla grup
+            lblLabGroup = new Label();
+            comboLabGroup = new ComboBox();
+            lblExerciseGroup = new Label();
+            comboExerciseGroup = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -306,15 +314,6 @@ namespace Wirtualna_Uczelnia
             lblFaculty.TabIndex = 21;
             lblFaculty.Text = "Wydział:";
             // 
-            // txtWydzial
-            // 
-            txtWydzial.Location = new Point(160, 523);
-            txtWydzial.Margin = new Padding(4, 5, 4, 5);
-            txtWydzial.Name = "txtWydzial";
-            txtWydzial.Size = new Size(265, 27);
-            txtWydzial.TabIndex = 22;
-            txtWydzial.Visible = false;
-            // 
             // lblFieldOfStudy
             // 
             lblFieldOfStudy.AutoSize = true;
@@ -325,18 +324,9 @@ namespace Wirtualna_Uczelnia
             lblFieldOfStudy.TabIndex = 23;
             lblFieldOfStudy.Text = "Kierunek:";
             // 
-            // txtKierunek
-            // 
-            txtKierunek.Location = new Point(160, 585);
-            txtKierunek.Margin = new Padding(4, 5, 4, 5);
-            txtKierunek.Name = "txtKierunek";
-            txtKierunek.Size = new Size(265, 27);
-            txtKierunek.TabIndex = 24;
-            txtKierunek.Visible = false;
-            // 
             // btnRegister
             // 
-            btnRegister.Location = new Point(160, 646);
+            btnRegister.Location = new Point(160, 708);
             btnRegister.Margin = new Padding(4, 5, 4, 5);
             btnRegister.Name = "btnRegister";
             btnRegister.Size = new Size(267, 46);
@@ -401,16 +391,76 @@ namespace Wirtualna_Uczelnia
             pictureBox1.Location = new Point(0, 0);
             pictureBox1.Margin = new Padding(2);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(853, 725);
+            pictureBox1.Size = new Size(853, 773);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 31;
             pictureBox1.TabStop = false;
+            // 
+            // comboWydzial
+            // 
+            comboWydzial.FormattingEnabled = true;
+            comboWydzial.Location = new Point(160, 520);
+            comboWydzial.Name = "comboWydzial";
+            comboWydzial.Size = new Size(265, 28);
+            comboWydzial.TabIndex = 32;
+            comboWydzial.SelectedIndexChanged += comboWydzial_SelectedIndexChanged;
+            // 
+            // comboKierunek
+            // 
+            comboKierunek.FormattingEnabled = true;
+            comboKierunek.Location = new Point(160, 582);
+            comboKierunek.Name = "comboKierunek";
+            comboKierunek.Size = new Size(265, 28);
+            comboKierunek.TabIndex = 33;
+            comboKierunek.SelectedIndexChanged += comboKierunek_SelectedIndexChanged;
+            // 
+            // lblLabGroup
+            // 
+            lblLabGroup.AutoSize = true;
+            lblLabGroup.Location = new Point(27, 644);
+            lblLabGroup.Margin = new Padding(4, 0, 4, 0);
+            lblLabGroup.Name = "lblLabGroup";
+            lblLabGroup.Size = new Size(115, 20);
+            lblLabGroup.TabIndex = 34;
+            lblLabGroup.Text = "Gr. laboratoryjna:";
+            // 
+            // comboLabGroup
+            // 
+            comboLabGroup.FormattingEnabled = true;
+            comboLabGroup.Location = new Point(160, 644);
+            comboLabGroup.Name = "comboLabGroup";
+            comboLabGroup.Size = new Size(265, 28);
+            comboLabGroup.TabIndex = 35;
+            // 
+            // lblExerciseGroup
+            // 
+            lblExerciseGroup.AutoSize = true;
+            lblExerciseGroup.Location = new Point(27, 675);
+            lblExerciseGroup.Margin = new Padding(4, 0, 4, 0);
+            lblExerciseGroup.Name = "lblExerciseGroup";
+            lblExerciseGroup.Size = new Size(115, 20);
+            lblExerciseGroup.TabIndex = 36;
+            lblExerciseGroup.Text = "Gr. ćwiczeniowa:";
+            // 
+            // comboExerciseGroup
+            // 
+            comboExerciseGroup.FormattingEnabled = true;
+            comboExerciseGroup.Location = new Point(160, 675);
+            comboExerciseGroup.Name = "comboExerciseGroup";
+            comboExerciseGroup.Size = new Size(265, 28);
+            comboExerciseGroup.TabIndex = 37;
             // 
             // AdminPanel
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(853, 723);
+            ClientSize = new Size(853, 773);
+            Controls.Add(comboExerciseGroup);
+            Controls.Add(lblExerciseGroup);
+            Controls.Add(comboLabGroup);
+            Controls.Add(lblLabGroup);
+            Controls.Add(comboKierunek);
+            Controls.Add(comboWydzial);
             Controls.Add(btnLogout);
             Controls.Add(lblStudenci);
             Controls.Add(lblTeachers);
@@ -438,15 +488,15 @@ namespace Wirtualna_Uczelnia
             Controls.Add(lblSemester);
             Controls.Add(txtSemester);
             Controls.Add(lblFaculty);
-            Controls.Add(txtWydzial);
             Controls.Add(lblFieldOfStudy);
-            Controls.Add(txtKierunek);
             Controls.Add(btnRegister);
             Controls.Add(pictureBox1);
             Margin = new Padding(4, 5, 4, 5);
             Name = "AdminPanel";
             Text = "Panel Administracyjny";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            changeVisibility();
+
             ResumeLayout(false);
             PerformLayout();
         }
@@ -455,6 +505,11 @@ namespace Wirtualna_Uczelnia
 
         // Obsługa zdarzenia zmiany typu konta
         private void cmbAccountType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            changeVisibility();
+        }
+
+        public void changeVisibility()
         {
             bool isTeacher, isStudent;
 
@@ -469,7 +524,6 @@ namespace Wirtualna_Uczelnia
                 isStudent = cmbAccountType.SelectedItem.ToString() == "Student";
             }
 
-
             // Pokazuj/ukryj pola dla nauczyciela
             lblPosition.Visible = isTeacher;
             txtPosition.Visible = isTeacher;
@@ -482,19 +536,58 @@ namespace Wirtualna_Uczelnia
             lblSemester.Visible = isStudent;
             txtSemester.Visible = isStudent;
             lblFaculty.Visible = isStudent;
-            txtWydzial.Visible = isStudent;
             lblFieldOfStudy.Visible = isStudent;
-            txtKierunek.Visible = isStudent;
+            lblLabGroup.Visible = isStudent;
+            lblExerciseGroup.Visible = isStudent;
+
+            if (isStudent)
+            {
+                comboKierunek.Visible = true;
+                comboWydzial.Visible = true;
+                comboLabGroup.Visible = true;
+                comboExerciseGroup.Visible = true;
+            }
+            else
+            {
+                comboKierunek.Visible = false;
+                comboWydzial.Visible = false;
+                comboLabGroup.Visible = false;
+                comboExerciseGroup.Visible = false;
+            }
+        }
+
+        private void comboWydzial_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboWydzial.SelectedIndex != -1)
+            {
+                // Pobierz ID wydziału i filtruj kierunki
+                int wydzialId = adminMenager.wydzialy[comboWydzial.SelectedIndex].id_wydzialu;
+                adminMenager.FilterKierunki(wydzialId);
+
+                // Reset grup po zmianie wydziału
+                comboLabGroup.Items.Clear();
+                comboExerciseGroup.Items.Clear();
+            }
+        }
+
+        private void comboKierunek_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboKierunek.SelectedIndex != -1)
+            {
+                // Pobierz ID kierunku i filtruj grupy
+                int kierunekId = adminMenager.GetKierunekIdByIndex(comboKierunek.SelectedIndex);
+                adminMenager.FilterGrupy(kierunekId, comboLabGroup, comboExerciseGroup);
+            }
         }
 
         // Obsługa zdarzenia wczytywania użytkownika
-
-
         private ListBox listStudenci;
         private ListBox listPracownicy;
         private Label lblTeachers;
         private Label lblStudenci;
         private Button btnLogout;
         private PictureBox pictureBox1;
+        private ComboBox comboWydzial;
+        private ComboBox comboKierunek;
     }
 }
