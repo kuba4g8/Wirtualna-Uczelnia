@@ -22,8 +22,6 @@ namespace Wirtualna_Uczelnia
 
         private bool editMode = false;
 
-
-
         AdminMenager adminMenager;
         Pracownik loggedUser; // dane aktualnie zalogowanego uzytkownika
 
@@ -34,12 +32,15 @@ namespace Wirtualna_Uczelnia
             InitializeComponent();
             this.loggedUser = loggedUser;
 
-            UpdateVisualData funcDelegate = new UpdateVisualData(updateVisualData); // przypisanie utworzenia tej funkcji (delegaty) do zmiennej funcDelegate ktora potem trzeba przekazac w argumentach
-            adminMenager = new AdminMenager(loggedUser, listPracownicy, listStudenci, comboKierunek, comboWydzial, funcDelegate);
-
+            UpdateVisualData funcDelegate = new UpdateVisualData(updateVisualData);
+            adminMenager = new AdminMenager(loggedUser, listPracownicy, listStudenci,
+                                            comboKierunek, comboWydzial,
+                                            comboLabGroup, comboExerciseGroup,
+                                            funcDelegate);
 
             updateVisualData();
         }
+
 
         //funkcja updatuje visualne sprawy textboxow itd
         public void updateVisualData()
@@ -100,9 +101,51 @@ namespace Wirtualna_Uczelnia
                 txtStudentId.Text = editingStudent.nr_indeksu;
                 txtSemester.Text = editingStudent.semestr.ToString();
 
+                // Ustaw wydział na podstawie powiązania z kierunkiem studenta
+                int wydzialIndex = -1;
+                for (int i = 0; i < adminMenager.kierunki.Count; i++)
+                {
+                    if (adminMenager.kierunki[i].id_kierunku == editingStudent.id_kierunku)
+                    {
+                        int idWydzialu = adminMenager.kierunki[i].id_wydzialu;
 
-                comboKierunek.SelectedIndex = -1;
-                comboWydzial.SelectedIndex = -1;
+                        // Znajdź indeks wydziału w comboBox
+                        for (int j = 0; j < adminMenager.wydzialy.Count; j++)
+                        {
+                            if (adminMenager.wydzialy[j].id_wydzialu == idWydzialu)
+                            {
+                                wydzialIndex = j;
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+
+                comboWydzial.SelectedIndex = wydzialIndex;
+
+                // Filtruj kierunki na podstawie wybranego wydziału
+                if (wydzialIndex != -1)
+                {
+                    int idWydzialu = adminMenager.wydzialy[wydzialIndex].id_wydzialu;
+                    adminMenager.FilterKierunki(idWydzialu);
+
+                    // Znajdź indeks kierunku w przefiltrowanej liście
+                    int kierunekIndex = -1;
+                    for (int i = 0; i < comboKierunek.Items.Count; i++)
+                    {
+                        string itemText = comboKierunek.Items[i].ToString();
+                        int idKierunkuWCombo = adminMenager.GetKierunekIdByIndex(i);
+
+                        if (idKierunkuWCombo == editingStudent.id_kierunku)
+                        {
+                            kierunekIndex = i;
+                            break;
+                        }
+                    }
+
+                    comboKierunek.SelectedIndex = kierunekIndex;
+                }
             }
 
             editMode = true;
@@ -134,7 +177,7 @@ namespace Wirtualna_Uczelnia
                 if (!string.IsNullOrEmpty(txtFirstName.Text) &&
                     !string.IsNullOrEmpty(txtLastName.Text) &&
                     txtStudentId.Text.All(char.IsDigit) &&
-                    txtSemester.Text.All(char.IsDigit) &&
+                    !string.IsNullOrEmpty(txtSemester.Text) &&
                     comboKierunek.SelectedIndex != -1 &&
                     comboWydzial.SelectedIndex != -1)
                 {
@@ -180,7 +223,6 @@ namespace Wirtualna_Uczelnia
             listStudenci.SelectedIndex = -1;
             editingStudent = null;
 
-
             editingPracownik = adminMenager.findUserData<Pracownik>(listPracownicy.SelectedIndex, true);
             if (editingPracownik == null)
             {
@@ -203,14 +245,14 @@ namespace Wirtualna_Uczelnia
         // lysy jesli ty to pisales jestem mega dumny
         private void btnRegister_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("REJESTRACJA AKTUALNIE NIE DZIALA \nTODO: ZROBIC ABY DZIALALO");
-            MessageBox.Show("ale sokrates");
-
-            return;
+            // Usuń komunikaty debugowania
+            // MessageBox.Show("REJESTRACJA AKTUALNIE NIE DZIALA \nTODO: ZROBIC ABY DZIALALO");
+            // MessageBox.Show("ale sokrates");
+            // return;
 
             if (!checkIfAllTextBoxesAreNull())
             {
-                MessageBox.Show("Jakies dane nie wpisane");
+                MessageBox.Show("Jakieś dane nie zostały wypełnione", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             bool isTeacher = (cmbAccountType.SelectedIndex == 0);
@@ -221,7 +263,6 @@ namespace Wirtualna_Uczelnia
             // Tworzenie obiektu z danymi logowania
             var userData = new TempLoggedUser(0, txtEmail.Text, Hasher.ComputeSha256Hash(txtPassword.Text, salt), salt, isTeacher, false);
 
-
             bool czyUdalo = false;
 
             // Zapisz dane do odpowiedniej zmiennej a potem utworzyc z tego usera.
@@ -229,7 +270,6 @@ namespace Wirtualna_Uczelnia
             {
                 var pracownik = new Pracownik
                 {
-                    //userID = newUserId,
                     imie = txtFirstName.Text,
                     nazwisko = txtLastName.Text,
                     stanowisko = txtPosition.Text,
@@ -237,7 +277,6 @@ namespace Wirtualna_Uczelnia
                 };
 
                 czyUdalo = adminMenager.insertNewUser(userData, pracownik: pracownik);
-
             }
             else // Student
             {
@@ -248,15 +287,23 @@ namespace Wirtualna_Uczelnia
                     return;
                 }
 
+                if (comboWydzial.SelectedIndex == -1 || comboKierunek.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Proszę wybrać wydział i kierunek.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Pobierz ID wybranego kierunku
+                int idKierunku = adminMenager.kierunki[comboKierunek.SelectedIndex].id_kierunku;
+
                 var student = new Student
                 {
-                    //userID = newUserId,
                     imie = txtFirstName.Text,
                     nazwisko = txtLastName.Text,
                     nr_indeksu = txtStudentId.Text,
                     semestr = semestr,
-                    wydzial = "nie dziala", // TO DO naprawic rejestracje uzytkownikow
-                    kierunek = "nie dziala"
+                    id_kierunku = idKierunku
+                    // Nie używamy id_grupy w tabeli studenci zgodnie z wymaganiami
                 };
 
                 czyUdalo = adminMenager.insertNewUser(userData, student: student);
@@ -264,11 +311,12 @@ namespace Wirtualna_Uczelnia
                 if (czyUdalo)
                 {
                     editMode = false;
-
+                    updateVisualData();
+                    MessageBox.Show("Student został pomyślnie zarejestrowany.", "Sukces", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    MessageBox.Show("No cos sie wyjebało ale juz nie wiem co....");
+                    MessageBox.Show("Wystąpił błąd podczas rejestracji studenta.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -301,6 +349,8 @@ namespace Wirtualna_Uczelnia
 
         private ComboBox comboKierunek; // combo box z kierunkami
         private ComboBox comboWydzial; // combo box z wydzialami
+        private ComboBox comboLabGroup;
+        private ComboBox comboExerciseGroup;
 
         private SqlMenager sqlMenager; // klasa laczenia do sql
 
@@ -310,11 +360,14 @@ namespace Wirtualna_Uczelnia
 
         public List<Kierunki> kierunki; // lista kierunkow pobranych z bazy danych
         public List<Wydzialy> wydzialy; // lista wydzialow pobranych z bazy danych
-
+        public List<Grupy> grupy; // lista wszystkich grup zajęciowych
 
         private RegisterUser.UpdateVisualData updateVisualData; // utworzenie delegaty tego samego typu co w klasie AdminPanel
 
-        public AdminMenager(Pracownik loggedUser, ListBox listPracownicy, ListBox listStudenci, ComboBox comboKierunek, ComboBox comboWydzial, RegisterUser.UpdateVisualData updateVisualData)
+        public AdminMenager(Pracownik loggedUser, ListBox listPracownicy, ListBox listStudenci,
+                    ComboBox comboKierunek, ComboBox comboWydzial,
+                    ComboBox comboLabGroup, ComboBox comboExerciseGroup,
+                    RegisterUser.UpdateVisualData updateVisualData)
         {
             this.loggedUser = loggedUser;
             sqlMenager = new SqlMenager();
@@ -323,6 +376,8 @@ namespace Wirtualna_Uczelnia
             this.updateVisualData = updateVisualData;
             this.comboKierunek = comboKierunek;
             this.comboWydzial = comboWydzial;
+            this.comboLabGroup = comboLabGroup;
+            this.comboExerciseGroup = comboExerciseGroup;
 
             loadToListBoxes();
         }
@@ -426,6 +481,7 @@ namespace Wirtualna_Uczelnia
                 pracownicy = returnPracownicy();
                 kierunki = returnKierunki();
                 wydzialy = returnWydzialy();
+                grupy = returnGrupy();
                 loginInfoData = returnLoginData("SELECT * FROM logowanie");
 
                 return true;
@@ -465,14 +521,28 @@ namespace Wirtualna_Uczelnia
         }
         private List<Student> returnStudents()
         {
-            string querry = "SELECT s.userID, s.imie, s.nazwisko, s.nr_indeksu, s.semestr, w.nazwa AS wydzial, k.nazwa_kierunku AS kierunek, s.id_kierunku, s.id_grupy\r\nFROM studenci s\r\nLEFT JOIN kierunki k ON s.id_kierunku = k.id_kierunku\r\nLEFT JOIN wydzialy w ON k.id_wydzialu = w.id_wydzialu";
-
+            string querry = @"
+                SELECT 
+                    s.userID, s.imie, s.nazwisko, s.nr_indeksu, s.semestr, 
+                    w.nazwa AS wydzial, k.nazwa_kierunku AS kierunek, 
+                    k.specjalizacja, s.id_kierunku
+                FROM studenci s
+                LEFT JOIN kierunki k ON s.id_kierunku = k.id_kierunku
+                LEFT JOIN wydzialy w ON k.id_wydzialu = w.id_wydzialu";
 
             var sqlCommand = new MySqlCommand(querry);
-
             var studentObjs = sqlMenager.loadDataToList<Student>(sqlCommand);
             return studentObjs;
         }
+
+        private List<Grupy> returnGrupy()
+        {
+            string querry = "SELECT * FROM grupy";
+            var sqlCommand = new MySqlCommand(querry);
+            var grupyObj = sqlMenager.loadDataToList<Grupy>(sqlCommand);
+            return grupyObj;
+        }
+
 
         //laczenie z sqlMenager i pobranie danych z sql
         private List<Pracownik> returnPracownicy()
@@ -482,6 +552,60 @@ namespace Wirtualna_Uczelnia
             var pracownicyObj = sqlMenager.loadDataToList<Pracownik>(sqlCommand);
             return pracownicyObj;
         }
+
+        public void FilterKierunki(int idWydzialu)
+        {
+            comboKierunek.Items.Clear();
+            var filteredKierunki = kierunki.Where(k => k.id_wydzialu == idWydzialu).ToList();
+
+            foreach (var kierunek in filteredKierunki)
+            {
+                comboKierunek.Items.Add(kierunek.nazwa_kierunku + " " + kierunek.specjalizacja);
+            }
+        }
+
+        public int GetKierunekIdByIndex(int index)
+        {
+            if (index < 0 || index >= comboKierunek.Items.Count)
+                return -1;
+
+            string nazwaPelna = comboKierunek.Items[index].ToString();
+
+            // Znajdź kierunek o podanej nazwie
+            foreach (var kierunek in kierunki)
+            {
+                if ((kierunek.nazwa_kierunku + " " + kierunek.specjalizacja) == nazwaPelna)
+                {
+                    return kierunek.id_kierunku;
+                }
+            }
+
+            return -1;
+        }
+
+        public void FilterGrupy(int idKierunku, ComboBox comboLabGroup, ComboBox comboExerciseGroup)
+        {
+            // Wyczyść oba ComboBox-y
+            comboLabGroup.Items.Clear();
+            comboExerciseGroup.Items.Clear();
+
+            // Filtruj grupy dla wybranego kierunku
+            var filteredGrupy = grupy.Where(g => g.id_kierunku == idKierunku).ToList();
+
+            foreach (var grupa in filteredGrupy)
+            {
+                // Sprawdź typ grupy i dodaj do odpowiedniego ComboBox-a
+                if (grupa.typ_grupy == "Laboratoryjna")
+                {
+                    comboLabGroup.Items.Add($"grupa {grupa.numer_grupy}");
+                }
+                else if (grupa.typ_grupy == "Ćwiczeniowa")
+                {
+                    comboExerciseGroup.Items.Add($"grupa {grupa.numer_grupy}");
+                }
+            }
+        }
+
 
         internal class Wydzialy
         {
@@ -500,6 +624,12 @@ namespace Wirtualna_Uczelnia
             public string tytul { get; set; }
             public int id_wydzialu { get; set; }
         }
+        internal class Grupy
+        {
+            public int id_grupy { get; set; }
+            public int id_kierunku { get; set; }
+            public string typ_grupy { get; set; }
+            public int numer_grupy { get; set; }
+        }
     }
-
 }
