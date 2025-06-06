@@ -25,6 +25,8 @@ namespace Wirtualna_Uczelnia
         AdminMenager adminMenager;
         Pracownik loggedUser; // dane aktualnie zalogowanego uzytkownika
 
+        private SqlMenager sqlMenager; // Dodano tę linię
+
         public delegate void UpdateVisualData(); // utworzenie delegaty funkcji bo jakims chujem nie moge se uzyc funkcji z tej klasy w adminMenagerze ale spk
 
         public RegisterUser()
@@ -37,7 +39,8 @@ namespace Wirtualna_Uczelnia
                                             comboKierunek, comboWydzial,
                                             comboLabGroup, comboExerciseGroup,
                                             funcDelegate);
-
+            
+            sqlMenager = new SqlMenager(); // Dodano tę linię
             updateVisualData();
         }
 
@@ -262,90 +265,226 @@ namespace Wirtualna_Uczelnia
                 }
 
                 bool isTeacher = (cmbAccountType.SelectedIndex == 0);
-
-                // Generowanie salt i hashowanie hasła
-                string salt = Hasher.GenerateSalt();
-
-                // Tworzenie obiektu z danymi logowania
-                var userData = new TempLoggedUser(0, txtEmail.Text, Hasher.ComputeSha256Hash(txtPassword.Text, salt), salt, isTeacher, false);
-
                 bool czyUdalo = false;
 
-                // Zapisz dane do odpowiedniej zmiennej a potem utworzyc z tego usera.
-                if (isTeacher) // Nauczyciel/Pracownik
+                // Jeśli jesteśmy w trybie edycji, aktualizujemy istniejące dane
+                if (editMode)
                 {
-                    var pracownik = new Pracownik
+                    int userId = int.Parse(txtUserId.Text);
+                    
+                    if (isTeacher) // Aktualizacja pracownika
                     {
-                        imie = txtFirstName.Text,
-                        nazwisko = txtLastName.Text,
-                        stanowisko = txtPosition.Text,
-                        stopien_naukowy = txtAcademicDegree.Text
-                    };
-
-                    czyUdalo = adminMenager.insertNewUser(userData, pracownik: pracownik);
-                    if (czyUdalo)
-                    {
+                        Pracownik pracownik = new Pracownik
+                        {
+                            userID = userId,
+                            imie = txtFirstName.Text,
+                            nazwisko = txtLastName.Text,
+                            stanowisko = txtPosition.Text,
+                            stopien_naukowy = txtAcademicDegree.Text
+                        };
+                        
+                        // Aktualizuj dane pracownika
+                        sqlMenager.updateObjectRecordInDataBase(pracownik, "pracownicy", "userID", userId);
+                        
+                        // Aktualizuj dane logowania
+                        TempLoggedUser userLoginData = new TempLoggedUser
+                        {
+                            userID = userId,
+                            email = txtEmail.Text,
+                            haslo = txtPassword.Text,
+                            salt = editingLoginInfo.salt,
+                            isTeacher = true,
+                            isAdmin = editingLoginInfo.isAdmin
+                        };
+                        
+                        sqlMenager.updateObjectRecordInDataBase(userLoginData, "logowanie", "userID", userId);
+                        
+                        MessageBox.Show("Dane pracownika zostały zaktualizowane.", "Sukces", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         editMode = false;
                         updateVisualData();
-                        MessageBox.Show("Pracownik został pomyślnie zarejestrowany.", "Sukces", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                    else
+                    else // Aktualizacja studenta
                     {
-                        MessageBox.Show("Wystąpił błąd podczas rejestracji pracownika.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-                else // Student
-                {
-                    int semestr;
-                    if (!int.TryParse(txtSemester.Text, out semestr))
-                    {
-                        MessageBox.Show("Nieprawidłowa wartość semestru. Proszę podać liczbę.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
-                    if (comboWydzial.SelectedIndex == -1 || comboKierunek.SelectedIndex == -1)
-                    {
-                        MessageBox.Show("Proszę wybrać wydział i kierunek.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
-                    // Pobierz ID wybranego kierunku
-                    int idKierunku = adminMenager.GetKierunekIdByIndex(comboKierunek.SelectedIndex);
-
-                    var student = new Student
-                    {
-                        imie = txtFirstName.Text,
-                        nazwisko = txtLastName.Text,
-                        nr_indeksu = txtStudentId.Text,
-                        semestr = semestr,
-                        id_kierunku = idKierunku
-                    };
-
-                    czyUdalo = adminMenager.insertNewUser(userData, student: student);
-
-                    if (czyUdalo)
-                    {
-                        // Przypisz studenta do wybranych grup tylko jeśli wybrano grupy
-                        if (comboLabGroup.SelectedIndex != -1 || comboExerciseGroup.SelectedIndex != -1)
+                        if (!int.TryParse(txtSemester.Text, out int semestr))
                         {
+                            MessageBox.Show("Nieprawidłowa wartość semestru. Proszę podać liczbę.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+
+                        if (comboWydzial.SelectedIndex == -1 || comboKierunek.SelectedIndex == -1)
+                        {
+                            MessageBox.Show("Proszę wybrać wydział i kierunek.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+
+                        // Pobierz ID wybranego kierunku i wydziału
+                        int idKierunku = adminMenager.GetKierunekIdByIndex(comboKierunek.SelectedIndex);
+                        int idWydzialu = adminMenager.wydzialy[comboWydzial.SelectedIndex].id_wydzialu;
+                        
+                        // Użyj bezpośredniego zapytania SQL do aktualizacji danych studenta, w tym id_kierunku i id_wydzialu
+                        string updateStudentQuery = @"
+                            UPDATE studenci 
+                            SET imie = @imie, 
+                                nazwisko = @nazwisko, 
+                                nr_indeksu = @nrIndeksu, 
+                                semestr = @semestr, 
+                                id_kierunku = @idKierunku,
+                                id_wydzialu = @idWydzialu
+                            WHERE userID = @userID";
+                        
+                        var updateCommand = new MySqlCommand(updateStudentQuery);
+                        updateCommand.Parameters.AddWithValue("@imie", txtFirstName.Text);
+                        updateCommand.Parameters.AddWithValue("@nazwisko", txtLastName.Text);
+                        updateCommand.Parameters.AddWithValue("@nrIndeksu", txtStudentId.Text);
+                        updateCommand.Parameters.AddWithValue("@semestr", semestr);
+                        updateCommand.Parameters.AddWithValue("@idKierunku", idKierunku);
+                        updateCommand.Parameters.AddWithValue("@idWydzialu", idWydzialu);
+                        updateCommand.Parameters.AddWithValue("@userID", userId);
+                        
+                        bool updateSuccess = sqlMenager.executeRawCommand(updateCommand);
+                        
+                        // Aktualizuj dane logowania
+                        if (updateSuccess)
+                        {
+                            TempLoggedUser userLoginData = new TempLoggedUser
+                            {
+                                userID = userId,
+                                email = txtEmail.Text,
+                                haslo = txtPassword.Text,
+                                salt = editingLoginInfo.salt,
+                                isTeacher = false,
+                                isAdmin = editingLoginInfo.isAdmin
+                            };
+                            
+                            sqlMenager.updateObjectRecordInDataBase(userLoginData, "logowanie", "userID", userId);
+                            
+                            // Aktualizuj przypisanie do grup
                             try
                             {
-                                adminMenager.AssignStudentToGroups(student.userID, comboLabGroup, comboExerciseGroup);
+                                adminMenager.AssignStudentToGroups(userId, comboLabGroup, comboExerciseGroup);
                             }
                             catch (Exception ex)
                             {
-                                MessageBox.Show($"Ostrzeżenie: Wystąpił problem przy przypisywaniu grup: {ex.Message}",
+                                MessageBox.Show($"Ostrzeżenie: Wystąpił problem przy aktualizacji grup: {ex.Message}", 
                                     "Ostrzeżenie", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             }
+                            
+                            MessageBox.Show("Dane studenta zostały zaktualizowane.", "Sukces", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            editMode = false;
+                            updateVisualData();
+                            
+                            // Odśwież listy użytkowników po aktualizacji
+                            adminMenager.loadToListBoxes();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Wystąpił błąd podczas aktualizacji danych studenta.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+                else // Dodajemy nowego użytkownika
+                {
+                    // Generowanie salt i hashowanie hasła
+                    string salt = Hasher.GenerateSalt();
+
+                    // Tworzenie obiektu z danymi logowania
+                    var userData = new TempLoggedUser(0, txtEmail.Text, Hasher.ComputeSha256Hash(txtPassword.Text, salt), salt, isTeacher, false);
+
+                    if (isTeacher) // Nauczyciel/Pracownik
+                    {
+                        var pracownik = new Pracownik
+                        {
+                            imie = txtFirstName.Text,
+                            nazwisko = txtLastName.Text,
+                            stanowisko = txtPosition.Text,
+                            stopien_naukowy = txtAcademicDegree.Text
+                        };
+
+                        czyUdalo = adminMenager.insertNewUser(userData, pracownik: pracownik);
+                        if (czyUdalo)
+                        {
+                            editMode = false;
+                            updateVisualData();
+                            MessageBox.Show("Pracownik został pomyślnie zarejestrowany.", "Sukces", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Wystąpił błąd podczas rejestracji pracownika.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else // Student - dla nowego użytkownika
+                    {
+                        int semestr;
+                        if (!int.TryParse(txtSemester.Text, out semestr))
+                        {
+                            MessageBox.Show("Nieprawidłowa wartość semestru. Proszę podać liczbę.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
                         }
 
-                        editMode = false;
-                        updateVisualData();
-                        MessageBox.Show("Student został pomyślnie zarejestrowany.", "Sukces", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Wystąpił błąd podczas rejestracji studenta.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        if (comboWydzial.SelectedIndex == -1 || comboKierunek.SelectedIndex == -1)
+                        {
+                            MessageBox.Show("Proszę wybrać wydział i kierunek.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+
+                        // Pobierz ID wybranego kierunku i wydziału
+                        int idKierunku = adminMenager.GetKierunekIdByIndex(comboKierunek.SelectedIndex);
+                        int idWydzialu = adminMenager.wydzialy[comboWydzial.SelectedIndex].id_wydzialu;
+
+                        // Bezpośrednie zapytanie SQL do dodania nowego studenta
+                        string insertStudentQuery = @"
+                            INSERT INTO studenci (userID, imie, nazwisko, nr_indeksu, semestr, id_kierunku, id_wydzialu)
+                            VALUES (@userID, @imie, @nazwisko, @nrIndeksu, @semestr, @idKierunku, @idWydzialu)";
+
+                        // Najpierw dodajemy dane logowania i pobieramy nowy userID
+                        int newUserId = sqlMenager.loadObjectToDataBase(userData, "logowanie", false);
+                        
+                        if (newUserId == -1)
+                        {
+                            MessageBox.Show("Nie udało się dodać danych logowania.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+
+                        // Teraz dodajemy studenta z wszystkimi danymi
+                        var insertCommand = new MySqlCommand(insertStudentQuery);
+                        insertCommand.Parameters.AddWithValue("@userID", newUserId);
+                        insertCommand.Parameters.AddWithValue("@imie", txtFirstName.Text);
+                        insertCommand.Parameters.AddWithValue("@nazwisko", txtLastName.Text);
+                        insertCommand.Parameters.AddWithValue("@nrIndeksu", txtStudentId.Text);
+                        insertCommand.Parameters.AddWithValue("@semestr", semestr);
+                        insertCommand.Parameters.AddWithValue("@idKierunku", idKierunku);
+                        insertCommand.Parameters.AddWithValue("@idWydzialu", idWydzialu);
+                        
+                        bool insertSuccess = sqlMenager.executeRawCommand(insertCommand);
+
+                        if (insertSuccess)
+                        {
+                            // Przypisz studenta do wybranych grup
+                            if (comboLabGroup.SelectedIndex != -1 || comboExerciseGroup.SelectedIndex != -1)
+                            {
+                                try
+                                {
+                                    var student = new Student { userID = newUserId };
+                                    adminMenager.AssignStudentToGroups(newUserId, comboLabGroup, comboExerciseGroup);
+                                }
+                                catch (Exception ex)
+                                {
+                                    MessageBox.Show($"Ostrzeżenie: Wystąpił problem przy przypisywaniu grup: {ex.Message}",
+                                        "Ostrzeżenie", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                }
+                            }
+
+                            editMode = false;
+                            updateVisualData();
+                            MessageBox.Show("Student został pomyślnie zarejestrowany.", "Sukces", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            
+                            // Odśwież listy użytkowników
+                            adminMenager.loadToListBoxes();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Wystąpił błąd podczas rejestracji studenta.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                 }
             }
@@ -509,47 +648,53 @@ namespace Wirtualna_Uczelnia
         }
         public void SetStudentGroups(int studentId, ComboBox comboLabGroup, ComboBox comboExerciseGroup)
         {
-            // Znajdź powiązania studenta z grupami
-            var studentGrupy = studenciGrupy.Where(sg => sg.userID == studentId).ToList();
-
-            if (studentGrupy.Count == 0)
-                return;
-
-            foreach (var studentGrupa in studentGrupy)
+            try
             {
-                // Znajdź grupę w liście grup
-                var grupa = grupy.FirstOrDefault(g => g.id_grupy == studentGrupa.id_grupy);
+                // Znajdź powiązania studenta z grupami
+                var studentGrupy = studenciGrupy.Where(sg => sg.userID == studentId).ToList();
 
-                if (grupa != null)
+                if (studentGrupy.Count == 0)
+                    return;
+
+                foreach (var studentGrupa in studentGrupy)
                 {
-                    string groupDisplay = $"grupa {grupa.numer_grupy}";
+                    // Znajdź grupę w liście grup
+                    var grupa = grupy.FirstOrDefault(g => g.id_grupy == studentGrupa.id_grupy);
 
-                    // Ustaw odpowiednią grupę w comboboxie
-                    if (grupa.typ_grupy == "Laboratoryjna")
+                    if (grupa != null)
                     {
-                        for (int i = 0; i < comboLabGroup.Items.Count; i++)
+                        string groupDisplay = $"grupa {grupa.numer_grupy}";
+
+                        // Ustaw odpowiednią grupę w comboboxie
+                        if (grupa.typ_grupy == "Laboratoryjna")
                         {
-                            if (comboLabGroup.Items[i].ToString() == groupDisplay)
+                            for (int i = 0; i < comboLabGroup.Items.Count; i++)
                             {
-                                comboLabGroup.SelectedIndex = i;
-                                break;
+                                if (comboLabGroup.Items[i].ToString() == groupDisplay)
+                                {
+                                    comboLabGroup.SelectedIndex = i;
+                                    break;
+                                }
                             }
                         }
-                    }
-                    else if (grupa.typ_grupy == "Ćwiczeniowa")
-                    {
-                        for (int i = 0; i < comboExerciseGroup.Items.Count; i++)
+                        else if (grupa.typ_grupy == "Ćwiczeniowa")
                         {
-                            if (comboExerciseGroup.Items[i].ToString() == groupDisplay)
+                            for (int i = 0; i < comboExerciseGroup.Items.Count; i++)
                             {
-                                comboExerciseGroup.SelectedIndex = i;
-                                break;
+                                if (comboExerciseGroup.Items[i].ToString() == groupDisplay)
+                                {
+                                    comboExerciseGroup.SelectedIndex = i;
+                                    break;
+                                }
                             }
                         }
                     }
                 }
             }
-
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Wystąpił błąd podczas ustawiania grup studenta: {ex.Message}", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         // Dodaj tę metodę do klasy AdminMenager
