@@ -165,43 +165,40 @@ namespace Wirtualna_Uczelnia
         //comboBox index 0 - nauczyciel, 1 - student
         private bool checkIfAllTextBoxesAreNull()
         {
+            // Sprawdzenie wspólnych pól
             if (string.IsNullOrEmpty(txtEmail.Text) ||
                 string.IsNullOrEmpty(txtPassword.Text) ||
-                cmbAccountType.SelectedIndex == -1) return false;
-
-            if (cmbAccountType.SelectedIndex == 0) // Sprawdzamy pola dla nauczyciela
+                string.IsNullOrEmpty(txtFirstName.Text) ||
+                string.IsNullOrEmpty(txtLastName.Text) ||
+                cmbAccountType.SelectedIndex == -1)
             {
-                if (!string.IsNullOrWhiteSpace(txtFirstName.Text) &&
-                    !string.IsNullOrEmpty(txtLastName.Text) &&
-                    !string.IsNullOrEmpty(txtPosition.Text) &&
-                    !string.IsNullOrEmpty(txtAcademicDegree.Text))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return false;
             }
-            else if (cmbAccountType.SelectedIndex == 1) // Sprawdzamy pola dla studenta
+
+            if (cmbAccountType.SelectedIndex == 0) // Nauczyciel
             {
-                if (!string.IsNullOrEmpty(txtFirstName.Text) &&
-                    !string.IsNullOrEmpty(txtLastName.Text) &&
-                    txtStudentId.Text.All(char.IsDigit) &&
-                    !string.IsNullOrEmpty(txtSemester.Text) &&
-                    comboKierunek.SelectedIndex != -1 &&
-                    comboWydzial.SelectedIndex != -1)
-                {
-                    return true;
-                }
-                else
-                {
+                // Sprawdzenie pól nauczyciela
+                return !string.IsNullOrEmpty(txtPosition.Text) &&
+                       !string.IsNullOrEmpty(txtAcademicDegree.Text);
+            }
+            else if (cmbAccountType.SelectedIndex == 1) // Student
+            {
+                // Sprawdzenie pól studenta
+                if (string.IsNullOrEmpty(txtStudentId.Text))
                     return false;
-                }
+
+                // Sprawdzenie czy semestr jest liczbą
+                if (!int.TryParse(txtSemester.Text, out _))
+                    return false;
+
+                // Sprawdzenie czy wybrano wydział i kierunek
+                return comboWydzial.SelectedIndex != -1 &&
+                       comboKierunek.SelectedIndex != -1;
             }
 
             return false;
         }
+
 
         //funckja wywolujaca sie gdy INDEX sie zmieni, sam lub przez kod ---> STUDENCI
         private void listBoxStudenciItemChanged(object sender, EventArgs e)
@@ -256,89 +253,108 @@ namespace Wirtualna_Uczelnia
         // lysy jesli ty to pisales jestem mega dumny
         private void btnRegister_Click(object sender, EventArgs e)
         {
-            // Usuń komunikaty debugowania
-            // MessageBox.Show("REJESTRACJA AKTUALNIE NIE DZIALA \nTODO: ZROBIC ABY DZIALALO");
-            // MessageBox.Show("ale sokrates");
-            // return;
-
-            if (!checkIfAllTextBoxesAreNull())
+            try
             {
-                MessageBox.Show("Jakieś dane nie zostały wypełnione", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            bool isTeacher = (cmbAccountType.SelectedIndex == 0);
-
-            // Generowanie salt i hashowanie hasła
-            string salt = Hasher.GenerateSalt();
-
-            // Tworzenie obiektu z danymi logowania
-            var userData = new TempLoggedUser(0, txtEmail.Text, Hasher.ComputeSha256Hash(txtPassword.Text, salt), salt, isTeacher, false);
-
-            bool czyUdalo = false;
-
-            // Zapisz dane do odpowiedniej zmiennej a potem utworzyc z tego usera.
-            if (isTeacher) // Nauczyciel/Pracownik
-            {
-                var pracownik = new Pracownik
+                if (!checkIfAllTextBoxesAreNull())
                 {
-                    imie = txtFirstName.Text,
-                    nazwisko = txtLastName.Text,
-                    stanowisko = txtPosition.Text,
-                    stopien_naukowy = txtAcademicDegree.Text
-                };
-
-                czyUdalo = adminMenager.insertNewUser(userData, pracownik: pracownik);
-            }
-            // W metodzie btnRegister_Click() klasy RegisterUser, po pomyślnej rejestracji studenta:
-
-            else // Student
-            {
-                int semestr;
-                if (!int.TryParse(txtSemester.Text, out semestr))
-                {
-                    MessageBox.Show("Nieprawidłowa wartość semestru. Proszę podać liczbę.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Wszystkie wymagane pola muszą być wypełnione.", "Błąd walidacji", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                if (comboWydzial.SelectedIndex == -1 || comboKierunek.SelectedIndex == -1)
+                bool isTeacher = (cmbAccountType.SelectedIndex == 0);
+
+                // Generowanie salt i hashowanie hasła
+                string salt = Hasher.GenerateSalt();
+
+                // Tworzenie obiektu z danymi logowania
+                var userData = new TempLoggedUser(0, txtEmail.Text, Hasher.ComputeSha256Hash(txtPassword.Text, salt), salt, isTeacher, false);
+
+                bool czyUdalo = false;
+
+                // Zapisz dane do odpowiedniej zmiennej a potem utworzyc z tego usera.
+                if (isTeacher) // Nauczyciel/Pracownik
                 {
-                    MessageBox.Show("Proszę wybrać wydział i kierunek.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                // Pobierz ID wybranego kierunku
-                int idKierunku = adminMenager.kierunki[comboKierunek.SelectedIndex].id_kierunku;
-
-                var student = new Student
-                {
-                    imie = txtFirstName.Text,
-                    nazwisko = txtLastName.Text,
-                    nr_indeksu = txtStudentId.Text,
-                    semestr = semestr,
-                    id_kierunku = idKierunku
-                };
-
-                czyUdalo = adminMenager.insertNewUser(userData, student: student);
-
-                if (czyUdalo)
-                {
-                    // Przypisz studenta do wybranych grup
-                    if (comboLabGroup.SelectedIndex != -1 || comboExerciseGroup.SelectedIndex != -1)
+                    var pracownik = new Pracownik
                     {
-                        adminMenager.AssignStudentToGroups(student.userID, comboLabGroup, comboExerciseGroup);
+                        imie = txtFirstName.Text,
+                        nazwisko = txtLastName.Text,
+                        stanowisko = txtPosition.Text,
+                        stopien_naukowy = txtAcademicDegree.Text
+                    };
+
+                    czyUdalo = adminMenager.insertNewUser(userData, pracownik: pracownik);
+                    if (czyUdalo)
+                    {
+                        editMode = false;
+                        updateVisualData();
+                        MessageBox.Show("Pracownik został pomyślnie zarejestrowany.", "Sukces", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Wystąpił błąd podczas rejestracji pracownika.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else // Student
+                {
+                    int semestr;
+                    if (!int.TryParse(txtSemester.Text, out semestr))
+                    {
+                        MessageBox.Show("Nieprawidłowa wartość semestru. Proszę podać liczbę.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
                     }
 
-                    editMode = false;
-                    updateVisualData();
-                    MessageBox.Show("Student został pomyślnie zarejestrowany.", "Sukces", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    MessageBox.Show("Wystąpił błąd podczas rejestracji studenta.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (comboWydzial.SelectedIndex == -1 || comboKierunek.SelectedIndex == -1)
+                    {
+                        MessageBox.Show("Proszę wybrać wydział i kierunek.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    // Pobierz ID wybranego kierunku
+                    int idKierunku = adminMenager.GetKierunekIdByIndex(comboKierunek.SelectedIndex);
+
+                    var student = new Student
+                    {
+                        imie = txtFirstName.Text,
+                        nazwisko = txtLastName.Text,
+                        nr_indeksu = txtStudentId.Text,
+                        semestr = semestr,
+                        id_kierunku = idKierunku
+                    };
+
+                    czyUdalo = adminMenager.insertNewUser(userData, student: student);
+
+                    if (czyUdalo)
+                    {
+                        // Przypisz studenta do wybranych grup tylko jeśli wybrano grupy
+                        if (comboLabGroup.SelectedIndex != -1 || comboExerciseGroup.SelectedIndex != -1)
+                        {
+                            try
+                            {
+                                adminMenager.AssignStudentToGroups(student.userID, comboLabGroup, comboExerciseGroup);
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"Ostrzeżenie: Wystąpił problem przy przypisywaniu grup: {ex.Message}",
+                                    "Ostrzeżenie", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            }
+                        }
+
+                        editMode = false;
+                        updateVisualData();
+                        MessageBox.Show("Student został pomyślnie zarejestrowany.", "Sukces", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Wystąpił błąd podczas rejestracji studenta.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
-
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Wystąpił nieoczekiwany błąd: {ex.Message}", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
 
         private void logoutUserAction(object sender, EventArgs e)
         {
