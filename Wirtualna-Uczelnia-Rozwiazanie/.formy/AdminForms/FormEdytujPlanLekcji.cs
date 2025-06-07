@@ -277,7 +277,7 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         {
             try
             {
-                string querry = "SELECT pl.id_zajecia, pl.id_prowadzacego, pl.id_grupy, g.typ_grupy, g.numer_grupy, pl.id_kierunku, p.imie, p.nazwisko, p.stopien_naukowy, pl.sala, pl.dzien, pl.godzina_startu, pl.godzina_konca, pl.id_przedmiotu, przed.nazwa AS przedmiot, pl.rodzaj, pl.notatki FROM plan_lekcji pl JOIN pracownicy p ON pl.id_prowadzacego = p.userID JOIN przedmioty przed ON pl.id_przedmiotu = przed.id_przedmiotu JOIN grupy g ON pl.id_grupy = g.id_grupy WHERE pl.id_kierunku = @idKierunku ORDER BY pl.godzina_startu ASC";
+                string querry = "SELECT \r\n    pl.id_zajecia, \r\n    pl.id_prowadzacego, \r\n    g.id_grupy, \r\n    g.typ_grupy, \r\n    g.numer_grupy, \r\n    g.id_kierunku, \r\n    p.imie, \r\n    p.nazwisko, \r\n    p.stopien_naukowy, \r\n    pl.sala, \r\n    pl.dzien, \r\n    pl.godzina_startu, \r\n    pl.godzina_konca, \r\n    pl.id_przedmiotu,\r\n    przed.nazwa AS przedmiot, \r\n    pl.rodzaj, \r\n    pl.notatki \r\nFROM grupy g\r\nLEFT JOIN plan_lekcji pl ON pl.id_grupy = g.id_grupy\r\nLEFT JOIN pracownicy p ON pl.id_prowadzacego = p.userID\r\nLEFT JOIN przedmioty przed ON pl.id_przedmiotu = przed.id_przedmiotu\r\nWHERE g.id_kierunku = @idKierunku\r\nORDER BY pl.godzina_startu ASC;\r\n";
 
                 var cmd = new MySqlCommand(querry);
 
@@ -294,7 +294,7 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         }
         public List<Int32> loadGrupsInfo(int kierunekID)
         {
-            string querry = "SELECT DISTINCT id_grupy FROM plan_lekcji WHERE id_kierunku = @idKierunku";
+            string querry = "SELECT DISTINCT id_grupy FROM grupy WHERE id_kierunku = @idKierunku";
 
             var cmd = new MySqlCommand(querry);
             cmd.Parameters.AddWithValue("@idKierunku", kierunekID);
@@ -310,13 +310,13 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             {
                 wszystkieLekcje.Clear();
 
-                string querry =  @" SELECT 
+                string querry = @"SELECT 
                                     pl.id_zajecia, 
                                     pl.id_prowadzacego, 
-                                    pl.id_grupy, 
+                                    g.id_grupy, 
                                     g.typ_grupy, 
                                     g.numer_grupy, 
-                                    pl.id_kierunku, 
+                                    g.id_kierunku, 
                                     p.imie, 
                                     p.nazwisko, 
                                     p.stopien_naukowy, 
@@ -328,12 +328,13 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
                                     przed.nazwa AS przedmiot, 
                                     pl.rodzaj, 
                                     pl.notatki 
-                                    FROM plan_lekcji pl 
-                                    JOIN pracownicy p ON pl.id_prowadzacego = p.userID 
-                                    JOIN przedmioty przed ON pl.id_przedmiotu = przed.id_przedmiotu 
-                                    JOIN grupy g ON pl.id_grupy = g.id_grupy 
-                                    WHERE pl.id_kierunku = @idKierunku AND pl.id_grupy = @idGrupy 
-                                    ORDER BY pl.godzina_startu ASC";
+                                FROM grupy g
+                                LEFT JOIN plan_lekcji pl ON g.id_grupy = pl.id_grupy
+                                LEFT JOIN pracownicy p ON pl.id_prowadzacego = p.userID
+                                LEFT JOIN przedmioty przed ON pl.id_przedmiotu = przed.id_przedmiotu
+                                WHERE g.id_kierunku = @idKierunku AND g.id_grupy = @idGrupy
+                                ORDER BY pl.godzina_startu ASC;
+                                ";
 
                 var cmd = new MySqlCommand(querry);
                 cmd.Parameters.AddWithValue("@idKierunku", kierunekID);

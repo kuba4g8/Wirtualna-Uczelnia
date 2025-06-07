@@ -13,7 +13,7 @@ partial class FormChangePlan
     private System.Windows.Forms.ComboBox comboPrzedmiot;
     private System.Windows.Forms.ComboBox comboRodzaj;
     private System.Windows.Forms.TextBox txtNotatki;
-    private System.Windows.Forms.NumericUpDown numericNumerGrupy;
+    private System.Windows.Forms.ComboBox comboGrupy;
     private System.Windows.Forms.Button btnZapisz;
 
     protected override void Dispose(bool disposing)
@@ -45,7 +45,7 @@ partial class FormChangePlan
         this.comboPrzedmiot = new System.Windows.Forms.ComboBox();
         this.comboRodzaj = new System.Windows.Forms.ComboBox();
         this.txtNotatki = new System.Windows.Forms.TextBox();
-        this.numericNumerGrupy = new System.Windows.Forms.NumericUpDown();
+        this.comboGrupy = new System.Windows.Forms.ComboBox();
         this.btnZapisz = new System.Windows.Forms.Button();
 
         this.labelProwadzacy = new System.Windows.Forms.Label();
@@ -58,7 +58,7 @@ partial class FormChangePlan
         this.labelNotatki = new System.Windows.Forms.Label();
         this.labelNumerGrupy = new System.Windows.Forms.Label();
 
-        ((System.ComponentModel.ISupportInitialize)(this.numericNumerGrupy)).BeginInit();
+        //((System.ComponentModel.ISupportInitialize)(this.comboGrupy)).BeginInit();
         this.SuspendLayout();
 
         // Pozycje
@@ -188,13 +188,12 @@ partial class FormChangePlan
         this.labelNumerGrupy.Left = leftLabel;
         this.labelNumerGrupy.Top = top;
         this.labelNumerGrupy.AutoSize = true;
-        this.numericNumerGrupy.Left = leftControl;
-        this.numericNumerGrupy.Top = top;
-        this.numericNumerGrupy.Width = 60;
-        this.numericNumerGrupy.Minimum = 1;
-        this.numericNumerGrupy.Maximum = 99;
+        this.comboGrupy.Left = leftControl;
+        this.comboGrupy.Top = top;
+        this.comboGrupy.Width = 200;
+        this.comboGrupy.DropDownStyle = ComboBoxStyle.DropDownList;
         this.Controls.Add(this.labelNumerGrupy);
-        this.Controls.Add(this.numericNumerGrupy);
+        this.Controls.Add(this.comboGrupy);
         top += spacing;
 
         // ============ Zapisz ============
@@ -211,7 +210,7 @@ partial class FormChangePlan
         this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
         this.MaximizeBox = false;
 
-        ((System.ComponentModel.ISupportInitialize)(this.numericNumerGrupy)).EndInit();
+        //((System.ComponentModel.ISupportInitialize)(this.comboGrupy)).EndInit();
         this.ResumeLayout(false);
     }
 

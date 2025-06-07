@@ -35,7 +35,6 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             tabControl = new TabControl();
             tabPoniedzialek = new TabPage();
             panelPoniedzialek = new FlowLayoutPanel();
-            planLekcjiUserControl1 = new Wirtualna_Uczelnia.formy.UserControls.PlanLekcjiUserControl();
             tabWtorek = new TabPage();
             panelWtorek = new FlowLayoutPanel();
             tabSroda = new TabPage();
@@ -50,7 +49,6 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             comboGrupa = new ComboBox();
             tabControl.SuspendLayout();
             tabPoniedzialek.SuspendLayout();
-            panelPoniedzialek.SuspendLayout();
             tabWtorek.SuspendLayout();
             tabSroda.SuspendLayout();
             tabCzwartek.SuspendLayout();
@@ -88,7 +86,6 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             // 
             panelPoniedzialek.AutoScroll = true;
             panelPoniedzialek.BackColor = Color.White;
-            panelPoniedzialek.Controls.Add(planLekcjiUserControl1);
             panelPoniedzialek.Dock = DockStyle.Fill;
             panelPoniedzialek.FlowDirection = FlowDirection.TopDown;
             panelPoniedzialek.Location = new Point(3, 3);
@@ -97,17 +94,6 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             panelPoniedzialek.Size = new Size(669, 636);
             panelPoniedzialek.TabIndex = 0;
             panelPoniedzialek.WrapContents = false;
-            // 
-            // planLekcjiUserControl1
-            // 
-            planLekcjiUserControl1.actColor = Color.Transparent;
-            planLekcjiUserControl1.BackColor = Color.Transparent;
-            planLekcjiUserControl1.Location = new Point(15, 15);
-            planLekcjiUserControl1.Margin = new Padding(5);
-            planLekcjiUserControl1.Name = "planLekcjiUserControl1";
-            planLekcjiUserControl1.Padding = new Padding(5);
-            planLekcjiUserControl1.Size = new Size(633, 200);
-            planLekcjiUserControl1.TabIndex = 0;
             // 
             // tabWtorek
             // 
@@ -260,7 +246,6 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             Text = "Edytor planu zajęć - Administrator";
             tabControl.ResumeLayout(false);
             tabPoniedzialek.ResumeLayout(false);
-            panelPoniedzialek.ResumeLayout(false);
             tabWtorek.ResumeLayout(false);
             tabSroda.ResumeLayout(false);
             tabCzwartek.ResumeLayout(false);
@@ -283,7 +268,6 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         private System.Windows.Forms.FlowLayoutPanel panelPiatek;
         private ComboBox comboKierunek;
         private ComboBox comboWydzial;
-        private UserControls.PlanLekcjiUserControl planLekcjiUserControl1;
         private Button btnAddBlok;
         private ComboBox comboGrupa;
     }

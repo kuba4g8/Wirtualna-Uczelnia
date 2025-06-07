@@ -23,6 +23,7 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         // albo przekazuje obiekt editableBlok albo kierunekID
 
         List<Pracownik> nauczyciele;
+        List<Grupy> grupy;
 
         SqlMenager sqlManager;
 
@@ -45,7 +46,7 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             comboPrzedmiot.Enabled = false;
             comboProwadzacy.SelectedIndexChanged += comboProwadzacy_SelectedIndexChanged;
 
-            InitializeForm();
+            InitializeForm(kierunekID);
 
             updateVisualChanges(null);
         }
@@ -76,6 +77,9 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             if (string.IsNullOrWhiteSpace(txtSala.Text))
                 throw new Exception("Wprowadź numer sali.");
 
+            if (txtSala.Text.Length > 10)
+                throw new Exception("Prosze wprowadzic krotsza sale");
+
             if (pickerStart.Value >= pickerKoniec.Value)
                 throw new Exception("Godzina końca musi być po godzinie rozpoczęcia.");
 
@@ -103,7 +107,7 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
                 godzina_konca = pickerKoniec.Value.TimeOfDay,
                 rodzaj = comboRodzaj.Text,
                 notatki = txtNotatki.Text.Trim(),
-                id_grupy = (int)numericNumerGrupy.Value
+                id_grupy = grupy[comboGrupy.SelectedIndex].id_grupy
             };
         }
 
@@ -122,6 +126,8 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
 
                 if (isEditing)
                 {
+                    
+
                     string updateQuery = @"
                                             UPDATE plan_lekcji
                                             SET
@@ -206,26 +212,40 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             comboPrzedmiot.Text = blok.przedmiot;
             comboRodzaj.Text = blok.rodzaj;
             txtNotatki.Text = blok.notatki;
-            numericNumerGrupy.Value = blok.id_grupy;
+            //comboGrupy.SelectedIndex = blok.id_grupy;
         }
 
         // Metoda do ładowania grup
-        private void LoadGrupy()
+        private void LoadGrupy(int idKierunku = -1)
         {
             try
             {
-                string query = @"SELECT g.id_grupy, 
-                        CONCAT(g.typ_grupy, ' ', g.numer_grupy) as display_name,
-                        g.typ_grupy, g.numer_grupy
-                        FROM Grupy g
-                        ORDER BY g.typ_grupy, g.numer_grupy";
+                string query = @"SELECT 
+                                    g.id_grupy, 
+                                    CONCAT(g.typ_grupy, ' ', g.numer_grupy) AS display_name,
+                                    g.typ_grupy, 
+                                    g.numer_grupy
+                                FROM grupy g
+                                WHERE g.id_kierunku = @idKierunku
+                                ORDER BY g.typ_grupy, g.numer_grupy;
+                                ";
 
                 var cmd = new MySqlCommand(query, sqlManager.Connection);
-                var grupy = sqlManager.loadDataToList<dynamic>(cmd);
+                if (idKierunku == -1)
+                {
+                    cmd.Parameters.AddWithValue("@idKierunku", editableBlok.id_kierunku);
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@idKierunku", idKierunku);
+                }
+                grupy = sqlManager.loadDataToList<Grupy>(cmd);
 
-                // Możesz użyć dodatkowego ComboBoxa dla grup lub innej kontrolki
-                // W przykładzie używam txtTypGrupy i numericNumerGrupy
-                // Możesz dostosować do swoich potrzeb
+                comboGrupy.Items.Clear();
+                foreach (Grupy grupa in grupy)
+                {
+                    comboGrupy.Items.Add(grupa.display_name);
+                }
             }
             catch (Exception ex)
             {
@@ -234,10 +254,10 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         }
 
         // W konstruktorze lub metodzie Load formularza:
-        private void InitializeForm()
+        private void InitializeForm(int kierunekID = -1)
         {
             LoadProwadzacy();
-            LoadGrupy();
+            LoadGrupy(kierunekID);
 
             // Blokowanie przedmiotu dopóki nie wybrano prowadzącego
             comboPrzedmiot.Enabled = comboProwadzacy.SelectedIndex != -1;
@@ -384,6 +404,18 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         {
             public int id_przedmiotu { get; set; }
             public string nazwa { get; set; }
+        }
+        private class Grupy
+        {
+            public int id_grupy { get; set; }
+            public string display_name { get; set; }
+            public string typ_grupy { get; set; }
+            public int numer_grupy { get; set; }
+
+            public override string ToString()
+            {
+                return $"{display_name}";
+            }
         }
     }
 }

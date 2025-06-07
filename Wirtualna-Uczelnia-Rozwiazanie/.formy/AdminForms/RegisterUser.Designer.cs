@@ -399,6 +399,7 @@ namespace Wirtualna_Uczelnia
             // comboWydzial
             // 
             comboWydzial.FormattingEnabled = true;
+            comboWydzial.DropDownStyle = ComboBoxStyle.DropDownList;
             comboWydzial.Location = new Point(160, 520);
             comboWydzial.Name = "comboWydzial";
             comboWydzial.Size = new Size(265, 28);
@@ -408,6 +409,7 @@ namespace Wirtualna_Uczelnia
             // comboKierunek
             // 
             comboKierunek.FormattingEnabled = true;
+            comboKierunek.DropDownStyle = ComboBoxStyle.DropDownList;
             comboKierunek.Location = new Point(160, 582);
             comboKierunek.Name = "comboKierunek";
             comboKierunek.Size = new Size(265, 28);
@@ -427,6 +429,7 @@ namespace Wirtualna_Uczelnia
             // comboLabGroup
             // 
             comboLabGroup.FormattingEnabled = true;
+            comboLabGroup.DropDownStyle = ComboBoxStyle.DropDownList;
             comboLabGroup.Location = new Point(160, 644);
             comboLabGroup.Name = "comboLabGroup";
             comboLabGroup.Size = new Size(265, 28);
@@ -445,6 +448,7 @@ namespace Wirtualna_Uczelnia
             // comboExerciseGroup
             // 
             comboExerciseGroup.FormattingEnabled = true;
+            comboExerciseGroup.DropDownStyle = ComboBoxStyle.DropDownList;
             comboExerciseGroup.Location = new Point(160, 675);
             comboExerciseGroup.Name = "comboExerciseGroup";
             comboExerciseGroup.Size = new Size(265, 28);

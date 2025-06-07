@@ -20,6 +20,8 @@ namespace Wirtualna_Uczelnia.formy.UserControls
         private BlokLekcjiHolder _currentLesson;
         private System.Windows.Forms.Timer colorTimer;
 
+        private bool onlyColor = false;
+
         public Color actColor // przyjmuje tylko klor przezroczysty lub szary
         {
             get
@@ -91,6 +93,15 @@ namespace Wirtualna_Uczelnia.formy.UserControls
             lblGodziny.Text = godziny;
             lblPrzedmiot.Text = przedmiot;
             lblProwadzacy.Text = prowadzacy;
+            onlyColor = true;
+            colorTimer.Interval = 700;
+
+            // Dodaj obsługę kliknięcia dla wszystkich kontrolek
+            foreach (Control control in this.Controls)
+            {
+                control.Click += Control_Click;
+            }
+            this.Click += Control_Click;
         }
 
         public void initalizeControlsEditable(string sala, string godziny, string przedmiot, string prowadzacy, BlokLekcjiHolder blok)
@@ -112,7 +123,8 @@ namespace Wirtualna_Uczelnia.formy.UserControls
         private void Control_Click(object sender, EventArgs e)
         {
             ToggleSelection();
-            OnClicked?.Invoke(_currentLesson);
+            if (!onlyColor)
+                OnClicked?.Invoke(_currentLesson);
         }
     }
 }
