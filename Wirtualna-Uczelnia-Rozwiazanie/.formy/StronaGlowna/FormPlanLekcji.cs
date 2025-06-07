@@ -9,7 +9,7 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
 {
     public partial class FormPlanLekcji : Form
     {
-        sqlMenager sqlMenager;
+        SqlMenager sqlMenager;
 
         private List<BlokLekcjiHolder> wszystkieLekcje = new List<BlokLekcjiHolder>();
 
@@ -17,7 +17,7 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
         {
             InitializeComponent();
             
-            sqlMenager = new sqlMenager();
+            sqlMenager = new SqlMenager();
             loadInfoFromSql();
         }
 
@@ -92,7 +92,8 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
                 string godziny = item.godzina_startu.ToString(@"hh\:mm") + "-" + item.godzina_konca.ToString(@"hh\:mm");
 
 
-                PlanLekcjiUserControl planLekcjiHolder = new PlanLekcjiUserControl(sala, godziny, przedmiot, prowadzacy);
+                PlanLekcjiUserControl planLekcjiHolder = new PlanLekcjiUserControl();
+                planLekcjiHolder.initalizeControls(sala, godziny, przedmiot, prowadzacy);
 
                 switch (item.dzien.DayOfWeek)
                 {

@@ -13,7 +13,7 @@ namespace Wirtualna_Uczelnia.formy
         private DateTime currentDate = DateTime.Now;
         private List<CalendarEvent> events = new List<CalendarEvent>();
         private Pracownik loggedTeacher;
-        private sqlMenager sqlManager;
+        private SqlMenager sqlManager;
         private const int BUTTON_SIZE = 70;
         private const int BUTTON_MARGIN = 2;
         private Dictionary<int, string> availableGroups = new Dictionary<int, string>();
@@ -33,7 +33,7 @@ namespace Wirtualna_Uczelnia.formy
             
             // Dopiero po inicjalizacji komponentów możesz używać kontrolek
             loggedTeacher = teacher;
-            sqlManager = new sqlMenager();
+            sqlManager = new SqlMenager();
             this.Text = $"Edytor kalendarza - {teacher.imie} {teacher.nazwisko}";
 
             // Zwiększenie rozmiaru formularza dla lepszej czytelności
