@@ -41,7 +41,7 @@ namespace Wirtualna_Uczelnia.formy
             grupy = sqlMenager.loadDataToList<grupyStudenci>(cmd);
 
             lblGrupyHolder.Text = "";
-            foreach(var item in grupy)
+            foreach (var item in grupy)
             {
                 string writeString = $"{item.typ_grupy} - {item.numer_grupy}\n";
                 lblGrupyHolder.Text += writeString;
@@ -67,6 +67,12 @@ namespace Wirtualna_Uczelnia.formy
             //this.Hide();
         }
 
+        private void btnPlanLekcji_Click(object sender, EventArgs e)
+        {
+            FormPlanLekcji planZajec = new FormPlanLekcji();
+            planZajec.ShowDialog();
+        }
+
         private void kalendarz_Click(object sender, EventArgs e)
         {
             FormKalendarz kalendarz = new FormKalendarz();
@@ -83,12 +89,6 @@ namespace Wirtualna_Uczelnia.formy
         {
             ChatForm chat = new ChatForm();
             chat.ShowDialog();
-        }
-
-        private void lblPlanLekcji_Click(object sender, EventArgs e)
-        {
-            FormPlanLekcji planZajec = new FormPlanLekcji();
-            planZajec.ShowDialog();
         }
 
         private void lblPracownicyClicked(object sender, EventArgs e)

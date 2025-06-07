@@ -53,7 +53,7 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
             btnOceny.Margin = new Padding(3, 4, 3, 4);
             btnOceny.Name = "btnOceny";
             btnOceny.Size = new Size(345, 143);
-            btnOceny.TabIndex = 1;
+            btnOceny.TabIndex = 2;
             btnOceny.UseVisualStyleBackColor = true;
             btnOceny.Click += btnOceny_Click;
             // 
@@ -65,7 +65,7 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
             btnKalendarz.Margin = new Padding(3, 4, 3, 4);
             btnKalendarz.Name = "btnKalendarz";
             btnKalendarz.Size = new Size(340, 143);
-            btnKalendarz.TabIndex = 2;
+            btnKalendarz.TabIndex = 1;
             btnKalendarz.UseVisualStyleBackColor = true;
             btnKalendarz.Click += btnKalendarz_Click;
             // 
@@ -78,7 +78,7 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
             btnEdytujKalendarz.Name = "btnEdytujKalendarz";
             btnEdytujKalendarz.RightToLeft = RightToLeft.No;
             btnEdytujKalendarz.Size = new Size(340, 143);
-            btnEdytujKalendarz.TabIndex = 3;
+            btnEdytujKalendarz.TabIndex = 0;
             btnEdytujKalendarz.TextAlign = ContentAlignment.MiddleLeft;
             btnEdytujKalendarz.UseVisualStyleBackColor = true;
             btnEdytujKalendarz.Click += btnEdytujKalendarz_Click;
@@ -100,7 +100,7 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
             wylogujnauczyciel.Location = new Point(76, 274);
             wylogujnauczyciel.Name = "wylogujnauczyciel";
             wylogujnauczyciel.Size = new Size(75, 45);
-            wylogujnauczyciel.TabIndex = 0;
+            wylogujnauczyciel.TabIndex = 3;
             wylogujnauczyciel.Text = "Wyloguj";
             wylogujnauczyciel.UseVisualStyleBackColor = false;
             wylogujnauczyciel.Click += wylogujnauczyciel_Click;

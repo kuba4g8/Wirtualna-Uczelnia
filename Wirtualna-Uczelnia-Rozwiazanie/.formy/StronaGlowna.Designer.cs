@@ -39,11 +39,11 @@
             pictureBox2 = new PictureBox();
             pracownicy = new Label();
             stypendia = new Label();
-            lblPlanLekcji = new Label();
             wyloguj = new Button();
             btnOpenChat = new Button();
             labelCHuj = new Label();
             lblGrupyHolder = new Label();
+            btnPlanLekcji = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
@@ -70,7 +70,7 @@
             oceny.Margin = new Padding(0);
             oceny.Name = "oceny";
             oceny.Size = new Size(370, 166);
-            oceny.TabIndex = 1;
+            oceny.TabIndex = 0;
             oceny.UseVisualStyleBackColor = false;
             oceny.Click += oceny_Click;
             // 
@@ -80,11 +80,11 @@
             dokumenty.FlatAppearance.BorderSize = 2;
             dokumenty.FlatStyle = FlatStyle.Flat;
             dokumenty.Image = (Image)resources.GetObject("dokumenty.Image");
-            dokumenty.Location = new Point(370, 450);
+            dokumenty.Location = new Point(370, 556);
             dokumenty.Margin = new Padding(2);
             dokumenty.Name = "dokumenty";
             dokumenty.Size = new Size(370, 166);
-            dokumenty.TabIndex = 3;
+            dokumenty.TabIndex = 2;
             dokumenty.UseVisualStyleBackColor = true;
             dokumenty.Click += dokumenty_Click;
             // 
@@ -95,11 +95,11 @@
             kalendarz.FlatAppearance.BorderSize = 2;
             kalendarz.FlatStyle = FlatStyle.Flat;
             kalendarz.Image = (Image)resources.GetObject("kalendarz.Image");
-            kalendarz.Location = new Point(779, 260);
+            kalendarz.Location = new Point(1070, 260);
             kalendarz.Margin = new Padding(2);
             kalendarz.Name = "kalendarz";
             kalendarz.Size = new Size(370, 166);
-            kalendarz.TabIndex = 5;
+            kalendarz.TabIndex = 1;
             kalendarz.UseVisualStyleBackColor = true;
             kalendarz.Click += kalendarz_Click;
             // 
@@ -177,27 +177,13 @@
             stypendia.TabIndex = 12;
             stypendia.Text = "- Stypendia";
             // 
-            // lblPlanLekcji
-            // 
-            lblPlanLekcji.AutoSize = true;
-            lblPlanLekcji.BackColor = Color.FromArgb(197, 226, 215);
-            lblPlanLekcji.BorderStyle = BorderStyle.Fixed3D;
-            lblPlanLekcji.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            lblPlanLekcji.Location = new Point(19, 300);
-            lblPlanLekcji.Margin = new Padding(2, 0, 2, 0);
-            lblPlanLekcji.Name = "lblPlanLekcji";
-            lblPlanLekcji.Size = new Size(112, 30);
-            lblPlanLekcji.TabIndex = 13;
-            lblPlanLekcji.Text = "- Plan zajęć";
-            lblPlanLekcji.Click += lblPlanLekcji_Click;
-            // 
             // wyloguj
             // 
             wyloguj.Location = new Point(221, 202);
             wyloguj.Margin = new Padding(2);
             wyloguj.Name = "wyloguj";
             wyloguj.Size = new Size(90, 27);
-            wyloguj.TabIndex = 15;
+            wyloguj.TabIndex = 5;
             wyloguj.Text = "Wyloguj";
             wyloguj.UseVisualStyleBackColor = true;
             wyloguj.Click += wyloguj_Click;
@@ -210,7 +196,7 @@
             btnOpenChat.Margin = new Padding(2);
             btnOpenChat.Name = "btnOpenChat";
             btnOpenChat.Size = new Size(164, 61);
-            btnOpenChat.TabIndex = 16;
+            btnOpenChat.TabIndex = 4;
             btnOpenChat.Text = "Twój Asystent";
             btnOpenChat.UseVisualStyleBackColor = false;
             btnOpenChat.Click += btnOpenChat_Click;
@@ -243,17 +229,33 @@
             lblGrupyHolder.TabIndex = 18;
             lblGrupyHolder.Text = "-typGrupy\r\n-nazwa kierunku\r\n-nazwa specjalizacji\r\n";
             // 
+            // btnPlanLekcji
+            // 
+            btnPlanLekcji.BackColor = Color.Transparent;
+            btnPlanLekcji.BackgroundImageLayout = ImageLayout.None;
+            btnPlanLekcji.FlatAppearance.BorderColor = Color.White;
+            btnPlanLekcji.FlatAppearance.BorderSize = 2;
+            btnPlanLekcji.FlatStyle = FlatStyle.Flat;
+            btnPlanLekcji.Location = new Point(1070, 556);
+            btnPlanLekcji.Margin = new Padding(0);
+            btnPlanLekcji.Name = "btnPlanLekcji";
+            btnPlanLekcji.Size = new Size(370, 166);
+            btnPlanLekcji.TabIndex = 3;
+            btnPlanLekcji.Text = "Plan Lekcji\r\nZrobi ktos tutaj jakis ladny obrazek?\r\n\r\n\r\n\r\n";
+            btnPlanLekcji.UseVisualStyleBackColor = false;
+            btnPlanLekcji.Click += btnPlanLekcji_Click;
+            // 
             // FormStronaGlowna
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             ClientSize = new Size(1518, 819);
+            Controls.Add(btnPlanLekcji);
             Controls.Add(lblGrupyHolder);
             Controls.Add(labelCHuj);
             Controls.Add(btnOpenChat);
             Controls.Add(wyloguj);
-            Controls.Add(lblPlanLekcji);
             Controls.Add(pracownicy);
             Controls.Add(pictureBox2);
             Controls.Add(semestr);
@@ -287,10 +289,10 @@
         private PictureBox pictureBox2;
         private Label pracownicy;
         private Label stypendia;
-        private Label lblPlanLekcji;
         private Button wyloguj;
         private Button btnOpenChat;
         private Label labelCHuj;
         private Label lblGrupyHolder;
+        private Button btnPlanLekcji;
     }
 }
