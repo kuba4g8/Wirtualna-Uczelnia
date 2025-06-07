@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Wirtualna_Uczelnia.klasy;
 
 namespace Wirtualna_Uczelnia.formy.AdminForms
 {
@@ -30,6 +31,11 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             var frm = new RegisterUser();
 
             frm.Show();
+        }
+
+        private void btnWyloguj_Click(object sender, EventArgs e)
+        {
+            SesionControl.loginMenager.logOut();
         }
     }
 }
