@@ -41,7 +41,7 @@ namespace Wirtualna_Uczelnia.formy
             grupy = sqlMenager.loadDataToList<grupyStudenci>(cmd);
 
             lblGrupyHolder.Text = "";
-            foreach(var item in grupy)
+            foreach (var item in grupy)
             {
                 string writeString = $"{item.typ_grupy} - {item.numer_grupy}\n";
                 lblGrupyHolder.Text += writeString;
@@ -55,7 +55,7 @@ namespace Wirtualna_Uczelnia.formy
         private void oceny_Click(object sender, EventArgs e)
         {
             Oceny oceny = new Oceny(); // Tworzenie nowego formularza
-            oceny.Show();              // Pokazanie nowego formularza
+            oceny.ShowDialog();              // Pokazanie nowego formularza
             //this.Hide();               // Ukrycie obecnego formularza
         }
 
@@ -63,21 +63,20 @@ namespace Wirtualna_Uczelnia.formy
         private void dokumenty_Click(object sender, EventArgs e)
         {
             Dokumenty dokumenty = new Dokumenty();
-            dokumenty.Show();
+            dokumenty.ShowDialog();
             //this.Hide();
         }
 
-        private void rejestracja_Click(object sender, EventArgs e)
+        private void btnPlanLekcji_Click(object sender, EventArgs e)
         {
-            Rejestracja rejestracja = new Rejestracja();
-            rejestracja.Show();
-            //this.Hide();
+            FormPlanLekcji planZajec = new FormPlanLekcji();
+            planZajec.ShowDialog();
         }
 
         private void kalendarz_Click(object sender, EventArgs e)
         {
             FormKalendarz kalendarz = new FormKalendarz();
-            kalendarz.Show();
+            kalendarz.ShowDialog();
             //this.Hide();
         }
 
@@ -90,12 +89,6 @@ namespace Wirtualna_Uczelnia.formy
         {
             ChatForm chat = new ChatForm();
             chat.Show();
-        }
-
-        private void lblPlanLekcji_Click(object sender, EventArgs e)
-        {
-            FormPlanLekcji planZajec = new FormPlanLekcji();
-            planZajec.Show();
         }
 
         private void lblPracownicyClicked(object sender, EventArgs e)

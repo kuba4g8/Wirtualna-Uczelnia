@@ -492,21 +492,16 @@ namespace Wirtualna_Uczelnia
             {
                 MessageBox.Show($"Wystąpił nieoczekiwany błąd: {ex.Message}", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            finally
+            {
+                adminMenager.loadToListBoxes();
+            }
         }
 
 
         private void logoutUserAction(object sender, EventArgs e)
         {
-            // usuwanie danych z pamieci zalogowanego uzytkownika
-            adminMenager = null;
-            editingLoginInfo = null;
-            editingPracownik = null;
-            editingStudent = null;
-            loggedUser = null;
-            // usuwanie danych z pamieci zalogowanego uzytkownika
-
-            new FormLogowanie().Show(); // pokazanie ponowne logowania
-            this.Close();
+            SesionControl.loginMenager.logOut();
         }
     }
 
@@ -813,7 +808,8 @@ namespace Wirtualna_Uczelnia
                 LEFT JOIN wydzialy w ON k.id_wydzialu = w.id_wydzialu";
 
             var sqlCommand = new MySqlCommand(querry);
-            var studentObjs = sqlMenager.loadDataToList<Student>(sqlCommand);
+            // WYWALA BLAD ZWIAZANY ZE NIE MA ID GRUPY DLA STUDENTA. KIEDYS NAPRAWIC
+            var studentObjs = sqlMenager.loadDataToList<Student>(sqlCommand, true);
             return studentObjs;
         }
 
@@ -922,8 +918,8 @@ namespace Wirtualna_Uczelnia
 
         internal class StudenciGrupy
         {
-            public int id_grupy { get; set; }
             public int userID { get; set; } 
+            public int id_grupy { get; set; }
         }
     }
 }

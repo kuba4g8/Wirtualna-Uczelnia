@@ -101,7 +101,7 @@
             btnLogin.Location = new Point(333, 228);
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(126, 29);
-            btnLogin.TabIndex = 0;
+            btnLogin.TabIndex = 3;
             btnLogin.Text = "Zaloguj!";
             btnLogin.UseVisualStyleBackColor = false;
             btnLogin.Click += logIN;
@@ -116,7 +116,6 @@
             lblChangeLang.Name = "lblChangeLang";
             lblChangeLang.Size = new Size(56, 20);
             lblChangeLang.TabIndex = 8;
-            lblChangeLang.TabStop = true;
             lblChangeLang.Text = "English";
             lblChangeLang.VisitedLinkColor = Color.Black;
             lblChangeLang.LinkClicked += lblChangeLang_LinkClicked;
