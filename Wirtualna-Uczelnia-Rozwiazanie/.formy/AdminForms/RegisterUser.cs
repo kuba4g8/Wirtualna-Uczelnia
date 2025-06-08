@@ -695,58 +695,95 @@ namespace Wirtualna_Uczelnia
         // Dodaj tę metodę do klasy AdminMenager
         public void AssignStudentToGroups(int studentId, ComboBox comboLabGroup, ComboBox comboExerciseGroup)
         {
-            // Usuń istniejące powiązania studenta z grupami
-            var existingGroups = studenciGrupy.Where(sg => sg.userID == studentId).ToList();
-            foreach (var group in existingGroups)
+            try
             {
-                string deleteQuery = "DELETE FROM studenci_grupy WHERE userID = @userId AND id_grupy = @groupId";
-                var cmd = new MySqlCommand(deleteQuery);
-                cmd.Parameters.AddWithValue("@userId", studentId);
-                cmd.Parameters.AddWithValue("@groupId", group.id_grupy);
-                sqlMenager.executeRawCommand(cmd);
-            }
+                // Sprawdź czy student istnieje w bazie danych
+                Student student = studenci.FirstOrDefault(s => s.userID == studentId);
+                int idKierunku;
 
-            // Przypisz studenta do wybranej grupy laboratoryjnej
-            if (comboLabGroup.SelectedIndex != -1)
-            {
-                string labGroupName = comboLabGroup.SelectedItem.ToString();
-                int groupNumber = int.Parse(labGroupName.Replace("grupa ", ""));
-                var labGroup = grupy.FirstOrDefault(g => g.numer_grupy == groupNumber && g.typ_grupy == "Laboratoryjna");
-
-                if (labGroup != null)
+                // Jeśli student nie istnieje (nowy student), pobierz kierunek z comboBox
+                if (student == null)
                 {
-                    var studentGrupa = new StudenciGrupy
+                    // Dla nowego studenta pobierz kierunek z comboBox
+                    idKierunku = GetKierunekIdByIndex(comboKierunek.SelectedIndex);
+                    
+                    if (idKierunku == -1)
                     {
-                        userID = studentId,
-                        id_grupy = labGroup.id_grupy
-                    };
-                    sqlMenager.loadObjectToDataBase(studentGrupa, "studenci_grupy", true);
+                        MessageBox.Show("Nie wybrano kierunku dla studenta.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                 }
-            }
-
-            // Przypisz studenta do wybranej grupy ćwiczeniowej
-            if (comboExerciseGroup.SelectedIndex != -1)
-            {
-                string exerciseGroupName = comboExerciseGroup.SelectedItem.ToString();
-                int groupNumber = int.Parse(exerciseGroupName.Replace("grupa ", ""));
-                var exerciseGroup = grupy.FirstOrDefault(g => g.numer_grupy == groupNumber && g.typ_grupy == "Ćwiczeniowa");
-
-                if (exerciseGroup != null)
+                else
                 {
-                    var studentGrupa = new StudenciGrupy
-                    {
-                        userID = studentId,
-                        id_grupy = exerciseGroup.id_grupy
-                    };
-                    sqlMenager.loadObjectToDataBase(studentGrupa, "studenci_grupy", true);
+                    // Dla istniejącego studenta użyj jego kierunku
+                    idKierunku = student.id_kierunku;
                 }
-            }
 
-            // Odśwież listę powiązań studentów z grupami
-            studenciGrupy = returnStudenciGrupy();
+                // Usuń istniejące powiązania studenta z grupami
+                var existingGroups = studenciGrupy.Where(sg => sg.userID == studentId).ToList();
+                foreach (var group in existingGroups)
+                {
+                    string deleteQuery = "DELETE FROM studenci_grupy WHERE userID = @userId AND id_grupy = @groupId";
+                    var cmd = new MySqlCommand(deleteQuery);
+                    cmd.Parameters.AddWithValue("@userId", studentId);
+                    cmd.Parameters.AddWithValue("@groupId", group.id_grupy);
+                    sqlMenager.executeRawCommand(cmd);
+                }
+
+                // Przypisz studenta do wybranej grupy laboratoryjnej
+                if (comboLabGroup.SelectedIndex != -1)
+                {
+                    string labGroupName = comboLabGroup.SelectedItem.ToString();
+                    int groupNumber = int.Parse(labGroupName.Replace("grupa ", ""));
+
+                    // Użyj kierunku studenta przy wyszukiwaniu grupy
+                    var labGroup = grupy.FirstOrDefault(g => 
+                        g.numer_grupy == groupNumber && 
+                        g.typ_grupy == "Laboratoryjna" && 
+                        g.id_kierunku == idKierunku);
+
+                    if (labGroup != null)
+                    {
+                        var studentGrupa = new StudenciGrupy
+                        {
+                            userID = studentId,
+                            id_grupy = labGroup.id_grupy
+                        };
+                        sqlMenager.loadObjectToDataBase(studentGrupa, "studenci_grupy", true);
+                    }
+                }
+
+                // Przypisz studenta do wybranej grupy ćwiczeniowej
+                if (comboExerciseGroup.SelectedIndex != -1)
+                {
+                    string exerciseGroupName = comboExerciseGroup.SelectedItem.ToString();
+                    int groupNumber = int.Parse(exerciseGroupName.Replace("grupa ", ""));
+
+                    // Użyj kierunku studenta przy wyszukiwaniu grupy
+                    var exerciseGroup = grupy.FirstOrDefault(g => 
+                        g.numer_grupy == groupNumber && 
+                        g.typ_grupy == "Ćwiczeniowa" && 
+                        g.id_kierunku == idKierunku);
+
+                    if (exerciseGroup != null)
+                    {
+                        var studentGrupa = new StudenciGrupy
+                        {
+                            userID = studentId,
+                            id_grupy = exerciseGroup.id_grupy
+                        };
+                        sqlMenager.loadObjectToDataBase(studentGrupa, "studenci_grupy", true);
+                    }
+                }
+
+                // Odśwież listę powiązań studentów z grupami
+                studenciGrupy = returnStudenciGrupy();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Wystąpił błąd podczas przypisywania studenta do grup: {ex.Message}", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
-
-
 
         //funkcja dodaje tylko do listy zaleznie od tego czy jest to nauczyciel czy student do wybranej listy. Widac ze ze mnie humanista to chujowy
         private bool addToLists()
