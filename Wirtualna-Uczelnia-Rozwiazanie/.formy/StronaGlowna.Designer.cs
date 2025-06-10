@@ -54,7 +54,7 @@
             pictureBox1.Location = new Point(0, 0);
             pictureBox1.Margin = new Padding(2);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(1522, 864);
+            pictureBox1.Size = new Size(1902, 1080);
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
@@ -66,10 +66,10 @@
             oceny.FlatAppearance.BorderSize = 2;
             oceny.FlatStyle = FlatStyle.Flat;
             oceny.Image = (Image)resources.GetObject("oceny.Image");
-            oceny.Location = new Point(370, 260);
+            oceny.Location = new Point(462, 325);
             oceny.Margin = new Padding(0);
             oceny.Name = "oceny";
-            oceny.Size = new Size(370, 166);
+            oceny.Size = new Size(462, 208);
             oceny.TabIndex = 0;
             oceny.UseVisualStyleBackColor = false;
             oceny.Click += oceny_Click;
@@ -80,10 +80,10 @@
             dokumenty.FlatAppearance.BorderSize = 2;
             dokumenty.FlatStyle = FlatStyle.Flat;
             dokumenty.Image = (Image)resources.GetObject("dokumenty.Image");
-            dokumenty.Location = new Point(370, 556);
+            dokumenty.Location = new Point(462, 695);
             dokumenty.Margin = new Padding(2);
             dokumenty.Name = "dokumenty";
-            dokumenty.Size = new Size(370, 166);
+            dokumenty.Size = new Size(462, 208);
             dokumenty.TabIndex = 2;
             dokumenty.UseVisualStyleBackColor = true;
             dokumenty.Click += dokumenty_Click;
@@ -95,10 +95,10 @@
             kalendarz.FlatAppearance.BorderSize = 2;
             kalendarz.FlatStyle = FlatStyle.Flat;
             kalendarz.Image = (Image)resources.GetObject("kalendarz.Image");
-            kalendarz.Location = new Point(1070, 260);
+            kalendarz.Location = new Point(1338, 325);
             kalendarz.Margin = new Padding(2);
             kalendarz.Name = "kalendarz";
-            kalendarz.Size = new Size(370, 166);
+            kalendarz.Size = new Size(462, 208);
             kalendarz.TabIndex = 1;
             kalendarz.UseVisualStyleBackColor = true;
             kalendarz.Click += kalendarz_Click;
@@ -108,10 +108,10 @@
             imie_nazwisko.AutoSize = true;
             imie_nazwisko.BackColor = Color.FromArgb(203, 231, 229);
             imie_nazwisko.BorderStyle = BorderStyle.Fixed3D;
-            imie_nazwisko.Location = new Point(255, 30);
+            imie_nazwisko.Location = new Point(319, 38);
             imie_nazwisko.Margin = new Padding(2, 0, 2, 0);
             imie_nazwisko.Name = "imie_nazwisko";
-            imie_nazwisko.Size = new Size(115, 22);
+            imie_nazwisko.Size = new Size(137, 27);
             imie_nazwisko.TabIndex = 7;
             imie_nazwisko.Text = "imię i nazwisko:";
             // 
@@ -121,10 +121,10 @@
             wydzial_kierunek.BackColor = Color.FromArgb(203, 231, 229);
             wydzial_kierunek.BorderStyle = BorderStyle.Fixed3D;
             wydzial_kierunek.FlatStyle = FlatStyle.Flat;
-            wydzial_kierunek.Location = new Point(255, 60);
+            wydzial_kierunek.Location = new Point(319, 75);
             wydzial_kierunek.Margin = new Padding(2, 0, 2, 0);
             wydzial_kierunek.Name = "wydzial_kierunek";
-            wydzial_kierunek.Size = new Size(131, 22);
+            wydzial_kierunek.Size = new Size(157, 27);
             wydzial_kierunek.TabIndex = 8;
             wydzial_kierunek.Text = "wydział i kierunek:";
             // 
@@ -134,20 +134,20 @@
             semestr.BackColor = Color.FromArgb(203, 231, 229);
             semestr.BorderStyle = BorderStyle.Fixed3D;
             semestr.FlatStyle = FlatStyle.Flat;
-            semestr.Location = new Point(255, 90);
+            semestr.Location = new Point(319, 112);
             semestr.Margin = new Padding(2, 0, 2, 0);
             semestr.Name = "semestr";
-            semestr.Size = new Size(159, 22);
+            semestr.Size = new Size(194, 27);
             semestr.TabIndex = 9;
             semestr.Text = "tryb studiów i semestr:";
             // 
             // pictureBox2
             // 
             pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
-            pictureBox2.Location = new Point(0, 244);
+            pictureBox2.Location = new Point(0, 305);
             pictureBox2.Margin = new Padding(2);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(257, 599);
+            pictureBox2.Size = new Size(321, 749);
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox2.TabIndex = 10;
             pictureBox2.TabStop = false;
@@ -158,10 +158,10 @@
             pracownicy.BackColor = Color.FromArgb(197, 226, 215);
             pracownicy.BorderStyle = BorderStyle.Fixed3D;
             pracownicy.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            pracownicy.Location = new Point(19, 260);
+            pracownicy.Location = new Point(24, 325);
             pracownicy.Margin = new Padding(2, 0, 2, 0);
             pracownicy.Name = "pracownicy";
-            pracownicy.Size = new Size(125, 30);
+            pracownicy.Size = new Size(151, 34);
             pracownicy.TabIndex = 11;
             pracownicy.Text = "- Pracownicy";
             pracownicy.Click += lblPracownicyClicked;
@@ -179,10 +179,10 @@
             // 
             // wyloguj
             // 
-            wyloguj.Location = new Point(221, 202);
+            wyloguj.Location = new Point(276, 252);
             wyloguj.Margin = new Padding(2);
             wyloguj.Name = "wyloguj";
-            wyloguj.Size = new Size(90, 27);
+            wyloguj.Size = new Size(112, 34);
             wyloguj.TabIndex = 5;
             wyloguj.Text = "Wyloguj";
             wyloguj.UseVisualStyleBackColor = true;
@@ -192,10 +192,10 @@
             // 
             btnOpenChat.BackColor = Color.Khaki;
             btnOpenChat.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            btnOpenChat.Location = new Point(50, 747);
+            btnOpenChat.Location = new Point(62, 934);
             btnOpenChat.Margin = new Padding(2);
             btnOpenChat.Name = "btnOpenChat";
-            btnOpenChat.Size = new Size(164, 61);
+            btnOpenChat.Size = new Size(205, 76);
             btnOpenChat.TabIndex = 4;
             btnOpenChat.Text = "Twój Asystent";
             btnOpenChat.UseVisualStyleBackColor = false;
@@ -208,10 +208,10 @@
             labelCHuj.BorderStyle = BorderStyle.Fixed3D;
             labelCHuj.FlatStyle = FlatStyle.Flat;
             labelCHuj.Font = new Font("Segoe UI", 9F);
-            labelCHuj.Location = new Point(255, 120);
+            labelCHuj.Location = new Point(319, 150);
             labelCHuj.Margin = new Padding(2, 0, 2, 0);
             labelCHuj.Name = "labelCHuj";
-            labelCHuj.Size = new Size(56, 22);
+            labelCHuj.Size = new Size(70, 27);
             labelCHuj.TabIndex = 17;
             labelCHuj.Text = "grupy: ";
             // 
@@ -222,35 +222,35 @@
             lblGrupyHolder.BorderStyle = BorderStyle.Fixed3D;
             lblGrupyHolder.FlatStyle = FlatStyle.Flat;
             lblGrupyHolder.Font = new Font("Segoe UI", 9F);
-            lblGrupyHolder.Location = new Point(315, 120);
+            lblGrupyHolder.Location = new Point(394, 150);
             lblGrupyHolder.Margin = new Padding(2, 0, 2, 0);
             lblGrupyHolder.Name = "lblGrupyHolder";
-            lblGrupyHolder.Size = new Size(143, 62);
+            lblGrupyHolder.Size = new Size(165, 77);
             lblGrupyHolder.TabIndex = 18;
             lblGrupyHolder.Text = "-typGrupy\r\n-nazwa kierunku\r\n-nazwa specjalizacji\r\n";
             // 
             // btnPlanLekcji
             // 
-            btnPlanLekcji.BackColor = Color.Transparent;
+            btnPlanLekcji.BackColor = SystemColors.Control;
             btnPlanLekcji.BackgroundImageLayout = ImageLayout.None;
             btnPlanLekcji.FlatAppearance.BorderColor = Color.White;
             btnPlanLekcji.FlatAppearance.BorderSize = 2;
             btnPlanLekcji.FlatStyle = FlatStyle.Flat;
-            btnPlanLekcji.Location = new Point(1070, 556);
-            btnPlanLekcji.Margin = new Padding(0);
+            btnPlanLekcji.Image = (Image)resources.GetObject("btnPlanLekcji.Image");
+            btnPlanLekcji.Location = new Point(1338, 695);
+            btnPlanLekcji.Margin = new Padding(2);
             btnPlanLekcji.Name = "btnPlanLekcji";
-            btnPlanLekcji.Size = new Size(370, 166);
-            btnPlanLekcji.TabIndex = 3;
-            btnPlanLekcji.Text = "Plan Lekcji\r\nZrobi ktos tutaj jakis ladny obrazek?\r\n\r\n\r\n\r\n";
+            btnPlanLekcji.Size = new Size(462, 208);
+            btnPlanLekcji.TabIndex = 1;
             btnPlanLekcji.UseVisualStyleBackColor = false;
             btnPlanLekcji.Click += btnPlanLekcji_Click;
             // 
             // FormStronaGlowna
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
-            ClientSize = new Size(1518, 819);
+            ClientSize = new Size(1898, 1024);
             Controls.Add(btnPlanLekcji);
             Controls.Add(lblGrupyHolder);
             Controls.Add(labelCHuj);
