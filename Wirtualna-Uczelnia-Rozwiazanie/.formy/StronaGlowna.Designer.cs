@@ -232,12 +232,11 @@
             // btnPlanLekcji
             // 
             btnPlanLekcji.BackColor = SystemColors.Control;
-            btnPlanLekcji.BackgroundImageLayout = ImageLayout.None;
+            btnPlanLekcji.BackgroundImage = (Image)resources.GetObject("btnPlanLekcji.BackgroundImage");
+            btnPlanLekcji.BackgroundImageLayout = ImageLayout.Zoom;
             btnPlanLekcji.FlatAppearance.BorderColor = Color.White;
             btnPlanLekcji.FlatAppearance.BorderSize = 2;
             btnPlanLekcji.FlatStyle = FlatStyle.Flat;
-            btnPlanLekcji.Image = (Image)resources.GetObject("btnPlanLekcji.Image");
-            btnPlanLekcji.ImageAlign = ContentAlignment.MiddleLeft;
             btnPlanLekcji.Location = new Point(1070, 556);
             btnPlanLekcji.Margin = new Padding(2);
             btnPlanLekcji.Name = "btnPlanLekcji";
