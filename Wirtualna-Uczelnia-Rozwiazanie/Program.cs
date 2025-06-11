@@ -1,3 +1,4 @@
+using Wirtualna_Uczelnia.formy.AdminForms;
 using Wirtualna_Uczelnia.formy.StronaGlowna;
 
 namespace Wirtualna_Uczelnia

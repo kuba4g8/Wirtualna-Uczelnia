@@ -23,7 +23,8 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         // albo przekazuje obiekt editableBlok albo kierunekID
 
         List<Pracownik> nauczyciele;
-        List<Grupy> grupy;
+        private List<Grupy> grupyLabowe;
+        private List<Grupy> grupyCwiczeniowe;
 
         SqlMenager sqlManager;
 
@@ -39,6 +40,9 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         public FormChangePlan(int kierunekID, bool isEditing = false)
         {
             InitializeComponent();
+            grupyLabowe = new List<Grupy>();
+            grupyCwiczeniowe = new List<Grupy>();
+
             this.isEditing = isEditing;
             this.kierunekID = kierunekID;
             sqlManager = new SqlMenager();
@@ -54,6 +58,8 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         public FormChangePlan(BlokLekcjiHolder blokPrzekazany, bool isEditing = true)
         {
             InitializeComponent();
+            grupyLabowe = new List<Grupy>();
+            grupyCwiczeniowe = new List<Grupy>();
             this.editableBlok = blokPrzekazany;
             this.isEditing = isEditing;
             sqlManager = new SqlMenager();
@@ -61,12 +67,13 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             comboPrzedmiot.Enabled = false;
             comboProwadzacy.SelectedIndexChanged += comboProwadzacy_SelectedIndexChanged;
 
-            InitializeForm();
+            InitializeForm(blokPrzekazany.id_kierunku);
 
             updateVisualChanges(blokPrzekazany);
         }
 
-        private BlokLekcjiHolder GetDataFromForm()
+        // domyslnie bierze info z cwiczen
+        private BlokLekcjiHolder GetDataFromForm(ComboBox comboPicker)
         {
             if (comboProwadzacy.SelectedItem == null)
                 throw new Exception("Wybierz prowadzącego.");
@@ -86,11 +93,25 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             if (string.IsNullOrWhiteSpace(comboRodzaj.Text))
                 throw new Exception("Wybierz rodzaj zajęć.");
 
+            if (string.IsNullOrWhiteSpace(comboCwiczenia.Text))
+                throw new Exception("Prosze wybrać grupę ćwiczeniową");
+
             if (pickerDzien.SelectedItem == null)
                 throw new Exception("Wybierz dzień tygodnia.");
 
             var prowadzacy = (ProwadzacyOption)comboProwadzacy.SelectedItem;
             var przedmiot = (PrzedmiotOption)comboPrzedmiot.SelectedItem;
+            int id_grupy;
+
+            if (comboPicker.Name == "comboCwiczenia")
+            {
+                id_grupy = grupyCwiczeniowe[comboPicker.SelectedIndex].id_grupy;
+            }
+            else
+            {
+                id_grupy = grupyCwiczeniowe[comboPicker.SelectedIndex].id_grupy;
+            }
+
 
             return new BlokLekcjiHolder
             {
@@ -107,7 +128,7 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
                 godzina_konca = pickerKoniec.Value.TimeOfDay,
                 rodzaj = comboRodzaj.Text,
                 notatki = txtNotatki.Text.Trim(),
-                id_grupy = grupy[comboGrupy.SelectedIndex].id_grupy
+                id_grupy = id_grupy
             };
         }
 
@@ -115,7 +136,17 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         {
             try
             {
-                var blok = GetDataFromForm();
+
+
+                var blok = GetDataFromForm(comboCwiczenia);
+                List<int> grupy = new List<int>();
+                grupy.Add(blok.id_grupy);
+
+                if (comboLaby.SelectedIndex != -1)
+                {
+                    var blokLab = GetDataFromForm(comboLaby);
+                    grupy.Add(blokLab.id_grupy);
+                }
 
                 if (editableBlok == null)
                     blok.id_kierunku = kierunekID;
@@ -144,24 +175,29 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
                                             WHERE id_zajecia = @id_zajecia;
                                             ";
 
-                    var cmd = new MySqlCommand(updateQuery, sqlManager.Connection);
+                    for (int i = 0; i < grupy.Count; i++)
+                    {
+                        var cmd = new MySqlCommand(updateQuery, sqlManager.Connection);
 
-                    cmd.Parameters.AddWithValue("@id_zajecia", blok.id_zajecia);
-                    cmd.Parameters.AddWithValue("@id_prowadzacego", blok.id_prowadzacego);
-                    cmd.Parameters.AddWithValue("@id_grupy", blok.id_grupy);
-                    cmd.Parameters.AddWithValue("@id_kierunku", blok.id_kierunku);
-                    cmd.Parameters.AddWithValue("@sala", blok.sala);
-                    cmd.Parameters.AddWithValue("@dzien", blok.dzien.Date);
-                    cmd.Parameters.AddWithValue("@godzina_startu", blok.godzina_startu);
-                    cmd.Parameters.AddWithValue("@godzina_konca", blok.godzina_konca);
-                    cmd.Parameters.AddWithValue("@id_przedmiotu", blok.id_przedmiotu);
-                    cmd.Parameters.AddWithValue("@rodzaj", blok.rodzaj);
-                    cmd.Parameters.AddWithValue("@notatki", string.IsNullOrWhiteSpace(blok.notatki) ? DBNull.Value : blok.notatki);
+                        cmd.Parameters.AddWithValue("@id_zajecia", blok.id_zajecia);
+                        cmd.Parameters.AddWithValue("@id_prowadzacego", blok.id_prowadzacego);
+                        cmd.Parameters.AddWithValue("@id_grupy", blok.id_grupy);
+                        cmd.Parameters.AddWithValue("@id_kierunku", blok.id_kierunku);
+                        cmd.Parameters.AddWithValue("@sala", blok.sala);
+                        cmd.Parameters.AddWithValue("@dzien", blok.dzien.Date);
+                        cmd.Parameters.AddWithValue("@godzina_startu", blok.godzina_startu);
+                        cmd.Parameters.AddWithValue("@godzina_konca", blok.godzina_konca);
+                        cmd.Parameters.AddWithValue("@id_przedmiotu", blok.id_przedmiotu);
+                        cmd.Parameters.AddWithValue("@rodzaj", blok.rodzaj);
+                        cmd.Parameters.AddWithValue("@notatki", string.IsNullOrWhiteSpace(blok.notatki) ? DBNull.Value : blok.notatki);
 
-                    // wykonanie
-                    bool ok = sqlManager.executeRawCommand(cmd);
+                        // wykonanie
+                        bool ok = sqlManager.executeRawCommand(cmd);
+                        MessageBox.Show(ok ? "Zaktualizowano blok lekcji." : $"Nie udało się zaktualizować rekordu.\n Grupa: {grupy[i]}");
 
-                    MessageBox.Show(ok ? "Zaktualizowano blok lekcji." : "Nie udało się zaktualizować rekordu.");
+                    }
+
+
                 }
                 else
                 {
@@ -239,12 +275,27 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
                 {
                     cmd.Parameters.AddWithValue("@idKierunku", idKierunku);
                 }
-                grupy = sqlManager.loadDataToList<Grupy>(cmd);
+                List<Grupy> grupy = sqlManager.loadDataToList<Grupy>(cmd);
 
-                comboGrupy.Items.Clear();
                 foreach (Grupy grupa in grupy)
                 {
-                    comboGrupy.Items.Add(grupa.display_name);
+                    if (grupa.typ_grupy.Equals("Laboratoryjna"))
+                        grupyLabowe.Add(grupa);
+                    else if (grupa.typ_grupy.Equals("Ćwiczeniowa"))
+                        grupyCwiczeniowe.Add(grupa);
+                }
+
+                comboCwiczenia.Items.Clear();
+                comboLaby.Items.Clear();
+
+                foreach (Grupy grupaLab in grupyLabowe)
+                {
+                    comboCwiczenia.Items.Add(grupaLab.display_name);
+                }
+
+                foreach (Grupy grupaCw in grupyCwiczeniowe)
+                {
+                    comboLaby.Items.Add(grupaCw.display_name);
                 }
             }
             catch (Exception ex)

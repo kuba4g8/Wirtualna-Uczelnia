@@ -46,7 +46,8 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             comboKierunek = new ComboBox();
             comboWydzial = new ComboBox();
             btnAddBlok = new Button();
-            comboGrupa = new ComboBox();
+            comboCwiczenia = new ComboBox();
+            comboLaby = new ComboBox();
             tabControl.SuspendLayout();
             tabPoniedzialek.SuspendLayout();
             tabWtorek.SuspendLayout();
@@ -219,15 +220,23 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             btnAddBlok.UseVisualStyleBackColor = true;
             btnAddBlok.Click += btnAddBlok_Click;
             // 
-            // comboGrupa
+            // comboCwiczenia
             // 
-            comboGrupa.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboGrupa.FormattingEnabled = true;
-            comboGrupa.Location = new Point(699, 448);
-            comboGrupa.Name = "comboGrupa";
-            comboGrupa.Size = new Size(338, 28);
-            comboGrupa.TabIndex = 4;
-            comboGrupa.SelectedIndexChanged += comboGrupa_SelectedIndexChanged;
+            comboCwiczenia.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboCwiczenia.FormattingEnabled = true;
+            comboCwiczenia.Location = new Point(699, 438);
+            comboCwiczenia.Name = "comboCwiczenia";
+            comboCwiczenia.Size = new Size(338, 28);
+            comboCwiczenia.TabIndex = 4;
+            // 
+            // comboLaby
+            // 
+            comboLaby.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboLaby.FormattingEnabled = true;
+            comboLaby.Location = new Point(699, 503);
+            comboLaby.Name = "comboLaby";
+            comboLaby.Size = new Size(338, 28);
+            comboLaby.TabIndex = 5;
             // 
             // FormEdytujPlanLekcji
             // 
@@ -235,7 +244,8 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(1050, 703);
-            Controls.Add(comboGrupa);
+            Controls.Add(comboLaby);
+            Controls.Add(comboCwiczenia);
             Controls.Add(btnAddBlok);
             Controls.Add(comboWydzial);
             Controls.Add(comboKierunek);
@@ -269,6 +279,7 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         private ComboBox comboKierunek;
         private ComboBox comboWydzial;
         private Button btnAddBlok;
-        private ComboBox comboGrupa;
+        private ComboBox comboCwiczenia;
+        private ComboBox comboLaby;
     }
 }
