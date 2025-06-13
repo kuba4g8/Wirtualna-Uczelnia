@@ -228,6 +228,8 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             comboCwiczenia.Name = "comboCwiczenia";
             comboCwiczenia.Size = new Size(338, 28);
             comboCwiczenia.TabIndex = 4;
+            comboCwiczenia.SelectedIndexChanged += CwiczeniaSelectedIndexChanged;
+
             // 
             // comboLaby
             // 
@@ -237,6 +239,7 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             comboLaby.Name = "comboLaby";
             comboLaby.Size = new Size(338, 28);
             comboLaby.TabIndex = 5;
+            comboLaby.SelectedIndexChanged += LabySelectedIndexChanged;
             // 
             // FormEdytujPlanLekcji
             // 
@@ -262,6 +265,8 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             tabPiatek.ResumeLayout(false);
             ResumeLayout(false);
         }
+
+
 
         #endregion
 

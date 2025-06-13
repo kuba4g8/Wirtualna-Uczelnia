@@ -93,7 +93,7 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
 
 
                 PlanLekcjiUserControl planLekcjiHolder = new PlanLekcjiUserControl();
-                planLekcjiHolder.initalizeControls(sala, godziny, przedmiot, prowadzacy);
+                planLekcjiHolder.initalizeControls(sala, godziny, przedmiot, prowadzacy, item.rodzaj);
 
                 switch (item.dzien.DayOfWeek)
                 {

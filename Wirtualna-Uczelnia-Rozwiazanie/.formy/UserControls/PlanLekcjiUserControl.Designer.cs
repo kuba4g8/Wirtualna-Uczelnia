@@ -44,6 +44,7 @@
             lblSala = new Label();
             lblGodziny = new Label();
             lblPrzedmiot = new Label();
+            lblRodzaj = new Label();
             SuspendLayout();
             // 
             // lblProwadzacy
@@ -101,11 +102,25 @@
             lblPrzedmiot.Text = "Matematyka dyskretna";
             lblPrzedmiot.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // lblRodzaj
+            // 
+            lblRodzaj.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lblRodzaj.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            lblRodzaj.ForeColor = Color.Blue;
+            lblRodzaj.Location = new Point(420, 140);
+            lblRodzaj.Margin = new Padding(3, 10, 3, 0);
+            lblRodzaj.Name = "lblRodzaj";
+            lblRodzaj.Size = new Size(170, 20);
+            lblRodzaj.TabIndex = 4;
+            lblRodzaj.Text = "Wykład";
+            lblRodzaj.TextAlign = ContentAlignment.MiddleRight;
+            // 
             // PlanLekcjiUserControl
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Transparent;
+            Controls.Add(lblRodzaj);
             Controls.Add(lblPrzedmiot);
             Controls.Add(lblGodziny);
             Controls.Add(lblSala);
@@ -123,5 +138,6 @@
         private Label lblSala;
         private Label lblGodziny;
         private Label lblPrzedmiot;
+        private Label lblRodzaj;
     }
 }

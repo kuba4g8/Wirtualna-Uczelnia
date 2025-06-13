@@ -30,7 +30,8 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
 
             // Ustawienie menadżera planu i subskrypcja eventu
             planMenager = new PlanLekcjiMenager(panelPoniedzialek, panelWtorek, panelSroda, panelCzwartek, panelPiatek);
-            planMenager.OnPlanUpdated += RefreshPlan; // odświeża widok po zmianie planu
+            // akcja ktora sie wywoluje po kliknieciu w pojedynczy plan / aby edytowac
+            planMenager.OnPlanUpdated += RefreshPlan;
 
             LoadInitialData(); // ładuje wydziały, kierunki
             isInitializing = false; // od tego momentu reagujemy na zmiany
@@ -110,6 +111,22 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         }
 
         /// <summary>Zdarzenie: zmiana wydziału</summary>
+        /// 
+
+        private void CwiczeniaSelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateUIState();
+            if (IsFullySelected())
+                RefreshPlan();
+        }
+
+        private void LabySelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateUIState();
+            if (IsFullySelected())
+                RefreshPlan();
+        }
+
         private void comboWydzial_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (isInitializing)
@@ -164,14 +181,6 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             UpdateUIState();
         }
 
-        /// <summary>Zdarzenie: zmiana grupy</summary>
-        private void comboCwiczenia_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateUIState();
-            if (IsFullySelected())
-                RefreshPlan();
-        }
-
         /// <summary>Odświeża widok planu zajęć</summary>
         private void RefreshPlan()
         {
@@ -182,10 +191,8 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
 
             groupsID.Add(grupyCwiczeniowe[comboCwiczenia.SelectedIndex].id_grupy);
 
-            if (comboLaby.SelectedIndex != -1)
-            {
-                groupsID.Add(grupyLabowe[comboLaby.SelectedIndex].id_grupy);
-            }
+            groupsID.Add(grupyLabowe[comboLaby.SelectedIndex].id_grupy);
+
             planMenager.loadFinalInfo(kierunekID, groupsID);
             planMenager.loadVisually();
         }
@@ -193,7 +200,8 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         private bool IsFullySelected() =>
             comboWydzial.SelectedIndex >= 0 &&
             comboKierunek.SelectedIndex >= 0 &&
-            comboCwiczenia.SelectedIndex >= 0;
+            comboCwiczenia.SelectedIndex >= 0 &&
+            comboLaby.SelectedIndex >= 0;
 
         private void UpdateUIState()
         {
@@ -296,6 +304,7 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             try
             {
                 wszystkieLekcje.Clear();
+                clearPanels();
 
                 string querry = @"SELECT 
                                 pl.id_zajecia, 
@@ -316,12 +325,11 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
                                 pl.rodzaj, 
                                 pl.notatki 
                             FROM grupy g
-                            LEFT JOIN plan_lekcji pl ON g.id_grupy = pl.id_grupy
+                            INNER JOIN plan_lekcji pl ON g.id_grupy = pl.id_grupy
                             LEFT JOIN pracownicy p ON pl.id_prowadzacego = p.userID
                             LEFT JOIN przedmioty przed ON pl.id_przedmiotu = przed.id_przedmiotu
                             WHERE g.id_kierunku = @idKierunku AND g.id_grupy = @idGrupy
-                            ORDER BY pl.godzina_startu ASC;
-                            ";
+                            ORDER BY pl.godzina_startu ASC;";
 
                 for (int i = 0; i < idGrup.Count; i++)
                 {
@@ -368,10 +376,10 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
                 string przedmiot = item.przedmiot;
                 string prowadzacy = item.stopien_naukowy + " " + item.imie + " " + item.nazwisko;
                 string godziny = item.godzina_startu.ToString(@"hh\:mm") + "-" + item.godzina_konca.ToString(@"hh\:mm");
-
+                string rodzajGrupa = item.numer_grupy + ": " + item.rodzaj;
 
                 PlanLekcjiUserControl planLekcjiHolder = new PlanLekcjiUserControl();
-                planLekcjiHolder.initalizeControlsEditable(sala, godziny, przedmiot, prowadzacy, item);
+                planLekcjiHolder.initalizeControlsEditable(sala, godziny, przedmiot, prowadzacy, rodzajGrupa,  item);
                 planLekcjiHolder.OnClicked += PlanLekcjiHolderUserClicked;
 
                 switch (item.dzien.DayOfWeek)

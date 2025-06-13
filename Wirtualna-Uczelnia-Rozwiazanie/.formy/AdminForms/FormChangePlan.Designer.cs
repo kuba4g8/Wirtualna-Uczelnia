@@ -167,8 +167,9 @@ partial class FormChangePlan
         this.comboRodzaj.Left = leftControl;
         this.comboRodzaj.Top = top;
         this.comboRodzaj.Width = 200;
-        this.comboRodzaj.Items.AddRange(new object[] { "wykład", "laboratoria", "ćwiczenia" });
+        this.comboRodzaj.Items.AddRange(new object[] { "wykład", "ćwiczenia", "laboratoria" });
         this.comboRodzaj.DropDownStyle = ComboBoxStyle.DropDownList;
+        comboRodzaj.SelectedIndexChanged += ComboRodzaj_SelectedIndexChanged;
         this.Controls.Add(this.comboRodzaj);
         this.Controls.Add(this.labelRodzaj);
         top += spacing;
@@ -230,5 +231,6 @@ partial class FormChangePlan
         //((System.ComponentModel.ISupportInitialize)(this.comboGrupy)).EndInit();
         this.ResumeLayout(false);
     }
+
 
 }

@@ -87,12 +87,13 @@ namespace Wirtualna_Uczelnia.formy.UserControls
             colorTimer.Start();
         }
 
-        public void initalizeControls(string sala, string godziny, string przedmiot, string prowadzacy)
+        public void initalizeControls(string sala, string godziny, string przedmiot, string prowadzacy, string rodzaj)
         {
             lblSala.Text = sala;
             lblGodziny.Text = godziny;
             lblPrzedmiot.Text = przedmiot;
             lblProwadzacy.Text = prowadzacy;
+            lblRodzaj.Text = rodzaj;
             onlyColor = true;
             colorTimer.Interval = 700;
 
@@ -104,13 +105,14 @@ namespace Wirtualna_Uczelnia.formy.UserControls
             this.Click += Control_Click;
         }
 
-        public void initalizeControlsEditable(string sala, string godziny, string przedmiot, string prowadzacy, BlokLekcjiHolder blok)
+        public void initalizeControlsEditable(string sala, string godziny, string przedmiot, string prowadzacy, string rodzajGrupa, BlokLekcjiHolder blok)
         {
             _currentLesson = blok;
             lblSala.Text = sala;
             lblGodziny.Text = godziny;
             lblPrzedmiot.Text = przedmiot;
             lblProwadzacy.Text = prowadzacy;
+            lblRodzaj.Text = rodzajGrupa;
 
             // Dodaj obsługę kliknięcia dla wszystkich kontrolek
             foreach (Control control in this.Controls)
