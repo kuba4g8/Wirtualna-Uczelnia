@@ -279,30 +279,37 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         {
             if (blok == null)
                 return;
-
-            // Ustawienie wartości w kontrolkach na podstawie obiektu
-            comboProwadzacy.Text = $"{blok.stopien_naukowy} {blok.imie} {blok.nazwisko}";
-            txtSala.Text = blok.sala;
-            pickerDzien.SelectedItem = GetDayNameFromDate(blok.dzien);
-            pickerStart.Value = DateTime.Today.Add(blok.godzina_startu);
-            pickerKoniec.Value = DateTime.Today.Add(blok.godzina_konca);
-            comboPrzedmiot.Text = blok.przedmiot;
-            comboRodzaj.Text = blok.rodzaj;
-            txtNotatki.Text = blok.notatki;
-
-            if (blok.rodzaj.Equals("wykład"))
-                comboRodzaj.SelectedIndex = 0;
-
-            if (blok.rodzaj.Equals("ćwiczenia"))
+            try
             {
-                comboRodzaj.SelectedIndex = 1;
-                comboCwiczenia.SelectedIndex = blok.numer_grupy;
+                // Ustawienie wartości w kontrolkach na podstawie obiektu
+                comboProwadzacy.Text = $"{blok.stopien_naukowy} {blok.imie} {blok.nazwisko}";
+                txtSala.Text = blok.sala;
+                pickerDzien.SelectedItem = GetDayNameFromDate(blok.dzien);
+                pickerStart.Value = DateTime.Today.Add(blok.godzina_startu);
+                pickerKoniec.Value = DateTime.Today.Add(blok.godzina_konca);
+                comboPrzedmiot.Text = blok.przedmiot;
+                comboRodzaj.Text = blok.rodzaj;
+                txtNotatki.Text = blok.notatki;
+
+                if (blok.rodzaj.Equals("wykład"))
+                    comboRodzaj.SelectedIndex = 0;
+
+                if (blok.rodzaj.Equals("ćwiczenia"))
+                {
+                    comboRodzaj.SelectedIndex = 1;
+                    comboCwiczenia.SelectedIndex = blok.numer_grupy;
+                }
+                else
+                {
+                    comboRodzaj.SelectedIndex = 2;
+                    comboLaby.SelectedIndex = blok.numer_grupy;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                comboRodzaj.SelectedIndex = 2;
-                comboLaby.SelectedIndex = blok.numer_grupy;
+                MessageBox.Show(ex.Message);
             }
+            
         }
 
         // Metoda do ładowania grup
