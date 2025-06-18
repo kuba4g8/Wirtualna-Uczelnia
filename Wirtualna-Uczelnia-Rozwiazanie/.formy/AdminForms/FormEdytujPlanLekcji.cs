@@ -6,6 +6,10 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
 {
     public partial class FormEdytujPlanLekcji : Form
     {
+        public bool canEdit; // Zmienna flaga ktora przetrzymuje wartosc czy ktos to odpalil ta forme moze edytowac
+        // bo moze odpalic albo nauczyciel albo admin lol
+
+
         // Menadżer odpowiedzialny za wyświetlanie bloków zajęć
         private PlanLekcjiMenager planMenager;
         // Listy danych pobieranych z bazy
@@ -19,9 +23,12 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         private bool isInitializing = true;
         private SqlMenager sqlMenager;
 
-        public FormEdytujPlanLekcji()
+        public FormEdytujPlanLekcji(bool canEdit)
         {
             InitializeComponent();
+
+            this.canEdit = canEdit;
+
             // Inicjalizacja obiektów
             sqlMenager = new SqlMenager();
             filtredKierunki = new List<Kierunek>();
@@ -29,11 +36,21 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             grupyCwiczeniowe = new List<Grupy>();
 
             // Ustawienie menadżera planu i subskrypcja eventu
-            planMenager = new PlanLekcjiMenager(panelPoniedzialek, panelWtorek, panelSroda, panelCzwartek, panelPiatek);
+            planMenager = new PlanLekcjiMenager(canEdit, panelPoniedzialek, panelWtorek, panelSroda, panelCzwartek, panelPiatek);
             // akcja ktora sie wywoluje po kliknieciu w pojedynczy plan / aby edytowac
-            planMenager.OnPlanUpdated += RefreshPlan;
+            if (canEdit) // moze edytowac i przypisuje akcje
+            {
+                planMenager.OnPlanUpdated += RefreshPlan;
+                btnAddBlok.Enabled = true;
+                btnAddBlok.Visible = true;
+            }
+            else
+            {
+                btnAddBlok.Enabled = false;
+                btnAddBlok.Visible = false;
+            }
 
-            LoadInitialData(); // ładuje wydziały, kierunki
+                LoadInitialData(); // ładuje wydziały, kierunki
             isInitializing = false; // od tego momentu reagujemy na zmiany
             UpdateUIState(); // blokuj/odblokuj przyciski
         }
@@ -227,6 +244,8 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
 
     internal class PlanLekcjiMenager
     {
+        bool canEdit;
+
         SqlMenager sqlMenager;
 
         public List<BlokLekcjiHolder> wszystkieLekcje = new List<BlokLekcjiHolder>();
@@ -241,9 +260,10 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
 
         public event Action OnPlanUpdated; // Dodaj event
 
-        public PlanLekcjiMenager(Panel panelPoniedzialek, Panel panelWtorek, Panel panelSroda, Panel panelCzwartek, Panel panelPiatek)
+        public PlanLekcjiMenager(bool canEdit, Panel panelPoniedzialek, Panel panelWtorek, Panel panelSroda, Panel panelCzwartek, Panel panelPiatek)
         {
             sqlMenager = new SqlMenager();
+            this.canEdit = canEdit;
 
             this.panelPoniedzialek = panelPoniedzialek;
             this.panelWtorek = panelWtorek;
@@ -379,8 +399,10 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
                 string rodzajGrupa = item.numer_grupy + ": " + item.rodzaj;
 
                 PlanLekcjiUserControl planLekcjiHolder = new PlanLekcjiUserControl();
+
                 planLekcjiHolder.initalizeControlsEditable(sala, godziny, przedmiot, prowadzacy, rodzajGrupa,  item);
-                planLekcjiHolder.OnClicked += PlanLekcjiHolderUserClicked;
+                if (canEdit)
+                    planLekcjiHolder.OnClicked += PlanLekcjiHolderUserClicked;
 
                 switch (item.dzien.DayOfWeek)
                 {

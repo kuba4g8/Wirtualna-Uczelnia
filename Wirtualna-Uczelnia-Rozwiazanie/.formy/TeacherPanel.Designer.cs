@@ -31,6 +31,7 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
             lblEmail = new Label();
             label1 = new Label();
             label2 = new Label();
+            btnPlanLekcji = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             SuspendLayout();
             // 
@@ -155,6 +156,22 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
             label2.TabIndex = 17;
             label2.Text = "- Grupy zajęciowe";
             // 
+            // btnPlanLekcji
+            // 
+            btnPlanLekcji.BackColor = SystemColors.Control;
+            btnPlanLekcji.BackgroundImage = (Image)resources.GetObject("btnPlanLekcji.BackgroundImage");
+            btnPlanLekcji.BackgroundImageLayout = ImageLayout.Zoom;
+            btnPlanLekcji.FlatAppearance.BorderColor = Color.White;
+            btnPlanLekcji.FlatAppearance.BorderSize = 2;
+            btnPlanLekcji.FlatStyle = FlatStyle.Flat;
+            btnPlanLekcji.Location = new Point(744, 347);
+            btnPlanLekcji.Margin = new Padding(2);
+            btnPlanLekcji.Name = "btnPlanLekcji";
+            btnPlanLekcji.Size = new Size(345, 143);
+            btnPlanLekcji.TabIndex = 18;
+            btnPlanLekcji.UseVisualStyleBackColor = true;
+            btnPlanLekcji.Click += btnPlanLekcji_Click;
+            // 
             // TeacherPanel
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -162,6 +179,7 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
             BackgroundImage = Properties.Resources.Bez_nazwy_15_202505260855_36185;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1216, 627);
+            Controls.Add(btnPlanLekcji);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(lblEmail);
@@ -194,5 +212,6 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
         private Label lblEmail;
         private Label label1;
         private Label label2;
+        private Button btnPlanLekcji;
     }
 }

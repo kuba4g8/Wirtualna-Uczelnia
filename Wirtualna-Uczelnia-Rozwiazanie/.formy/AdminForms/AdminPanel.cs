@@ -21,7 +21,7 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
 
         private void btnPlanLekcji_Click(object sender, EventArgs e)
         {
-            FormEdytujPlanLekcji frm = new FormEdytujPlanLekcji();
+            FormEdytujPlanLekcji frm = new FormEdytujPlanLekcji(true);
 
             frm.Show();
         }

@@ -105,7 +105,7 @@ namespace Wirtualna_Uczelnia.formy.UserControls
             this.Click += Control_Click;
         }
 
-        public void initalizeControlsEditable(string sala, string godziny, string przedmiot, string prowadzacy, string rodzajGrupa, BlokLekcjiHolder blok)
+        public void initalizeControlsEditable(string sala, string godziny, string przedmiot, string prowadzacy, string rodzajGrupa, BlokLekcjiHolder blok, int timerTime = 0)
         {
             _currentLesson = blok;
             lblSala.Text = sala;
@@ -113,6 +113,10 @@ namespace Wirtualna_Uczelnia.formy.UserControls
             lblPrzedmiot.Text = przedmiot;
             lblProwadzacy.Text = prowadzacy;
             lblRodzaj.Text = rodzajGrupa;
+
+            // nie udany pomysl | bez tego kiedys dzialalo (nie wiem czy nie dziala)
+            if (timerTime != 0)
+                colorTimer.Interval = timerTime;
 
             // Dodaj obsługę kliknięcia dla wszystkich kontrolek
             foreach (Control control in this.Controls)
