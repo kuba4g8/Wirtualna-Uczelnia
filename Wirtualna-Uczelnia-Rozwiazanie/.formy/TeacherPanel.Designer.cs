@@ -29,8 +29,6 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
             wylogujnauczyciel = new Button();
             lblImie = new Label();
             lblEmail = new Label();
-            label1 = new Label();
-            label2 = new Label();
             btnPlanLekcji = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             SuspendLayout();
@@ -98,7 +96,7 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
             // wylogujnauczyciel
             // 
             wylogujnauczyciel.BackColor = Color.FromArgb(197, 226, 215);
-            wylogujnauczyciel.Location = new Point(76, 274);
+            wylogujnauczyciel.Location = new Point(73, 176);
             wylogujnauczyciel.Name = "wylogujnauczyciel";
             wylogujnauczyciel.Size = new Size(75, 45);
             wylogujnauczyciel.TabIndex = 3;
@@ -132,30 +130,6 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
             lblEmail.TabIndex = 15;
             lblEmail.Text = "Email";
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.BackColor = Color.FromArgb(197, 226, 215);
-            label1.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            label1.ForeColor = Color.FromArgb(64, 64, 64);
-            label1.Location = new Point(28, 160);
-            label1.Name = "label1";
-            label1.Size = new Size(168, 41);
-            label1.TabIndex = 16;
-            label1.Text = "- Plan zajęć";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.BackColor = Color.FromArgb(197, 226, 215);
-            label2.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            label2.ForeColor = Color.FromArgb(64, 64, 64);
-            label2.Location = new Point(23, 211);
-            label2.Name = "label2";
-            label2.Size = new Size(196, 31);
-            label2.TabIndex = 17;
-            label2.Text = "- Grupy zajęciowe";
-            // 
             // btnPlanLekcji
             // 
             btnPlanLekcji.BackColor = SystemColors.Control;
@@ -180,8 +154,6 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1216, 627);
             Controls.Add(btnPlanLekcji);
-            Controls.Add(label2);
-            Controls.Add(label1);
             Controls.Add(lblEmail);
             Controls.Add(lblImie);
             Controls.Add(wylogujnauczyciel);
@@ -210,8 +182,6 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
         private Button wylogujnauczyciel;
         private Label lblImie;
         private Label lblEmail;
-        private Label label1;
-        private Label label2;
         private Button btnPlanLekcji;
     }
 }
