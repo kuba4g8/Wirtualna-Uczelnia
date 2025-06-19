@@ -47,11 +47,10 @@
             // 
             Tabela_Ocen.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             Tabela_Ocen.Columns.AddRange(new DataGridViewColumn[] { Col1, Col2, Col3 });
-            Tabela_Ocen.Location = new Point(468, 177);
-            Tabela_Ocen.Margin = new Padding(3, 4, 3, 4);
+            Tabela_Ocen.Location = new Point(410, 133);
             Tabela_Ocen.Name = "Tabela_Ocen";
             Tabela_Ocen.RowHeadersWidth = 51;
-            Tabela_Ocen.Size = new Size(707, 541);
+            Tabela_Ocen.Size = new Size(619, 406);
             Tabela_Ocen.TabIndex = 0;
             Tabela_Ocen.CellContentClick += Tabela_Ocen_CellContentClick;
             // 
@@ -83,9 +82,9 @@
             // 
             Label_Id.AutoSize = true;
             Label_Id.ForeColor = Color.Black;
-            Label_Id.Location = new Point(301, 241);
+            Label_Id.Location = new Point(263, 181);
             Label_Id.Name = "Label_Id";
-            Label_Id.Size = new Size(117, 20);
+            Label_Id.Size = new Size(94, 15);
             Label_Id.TabIndex = 3;
             Label_Id.Text = "Indeks Studenta:";
             // 
@@ -93,36 +92,34 @@
             // 
             Label_Przedmiot.AutoSize = true;
             Label_Przedmiot.ForeColor = Color.Black;
-            Label_Przedmiot.Location = new Point(320, 185);
+            Label_Przedmiot.Location = new Point(280, 139);
             Label_Przedmiot.Name = "Label_Przedmiot";
-            Label_Przedmiot.Size = new Size(80, 20);
+            Label_Przedmiot.Size = new Size(64, 15);
             Label_Przedmiot.TabIndex = 4;
             Label_Przedmiot.Text = "Przedmiot:";
             // 
             // OcenaInput
             // 
-            OcenaInput.Location = new Point(279, 577);
-            OcenaInput.Margin = new Padding(3, 4, 3, 4);
+            OcenaInput.Location = new Point(244, 433);
             OcenaInput.Name = "OcenaInput";
-            OcenaInput.Size = new Size(155, 27);
+            OcenaInput.Size = new Size(136, 23);
             OcenaInput.TabIndex = 8;
             // 
             // OcenaIndicator
             // 
             OcenaIndicator.AutoSize = true;
             OcenaIndicator.ForeColor = Color.Black;
-            OcenaIndicator.Location = new Point(320, 553);
+            OcenaIndicator.Location = new Point(280, 415);
             OcenaIndicator.Name = "OcenaIndicator";
-            OcenaIndicator.Size = new Size(54, 20);
+            OcenaIndicator.Size = new Size(44, 15);
             OcenaIndicator.TabIndex = 7;
             OcenaIndicator.Text = "Ocena:";
             // 
             // Add_Grade
             // 
-            Add_Grade.Location = new Point(279, 626);
-            Add_Grade.Margin = new Padding(3, 4, 3, 4);
+            Add_Grade.Location = new Point(244, 470);
             Add_Grade.Name = "Add_Grade";
-            Add_Grade.Size = new Size(155, 31);
+            Add_Grade.Size = new Size(136, 23);
             Add_Grade.TabIndex = 6;
             Add_Grade.Text = "Dodaj Ocene";
             Add_Grade.UseVisualStyleBackColor = true;
@@ -130,10 +127,9 @@
             // 
             // btnPowrot
             // 
-            btnPowrot.Location = new Point(279, 494);
-            btnPowrot.Margin = new Padding(3, 4, 3, 4);
+            btnPowrot.Location = new Point(244, 370);
             btnPowrot.Name = "btnPowrot";
-            btnPowrot.Size = new Size(155, 40);
+            btnPowrot.Size = new Size(136, 30);
             btnPowrot.TabIndex = 9;
             btnPowrot.Text = "Powrót do panelu";
             btnPowrot.UseVisualStyleBackColor = true;
@@ -141,31 +137,31 @@
             // 
             // PrzedmiotInput
             // 
+            PrzedmiotInput.DropDownStyle = ComboBoxStyle.DropDownList;
             PrzedmiotInput.FormattingEnabled = true;
-            PrzedmiotInput.Location = new Point(279, 209);
-            PrzedmiotInput.Margin = new Padding(3, 4, 3, 4);
+            PrzedmiotInput.Location = new Point(244, 157);
             PrzedmiotInput.Name = "PrzedmiotInput";
-            PrzedmiotInput.Size = new Size(155, 28);
+            PrzedmiotInput.Size = new Size(136, 23);
             PrzedmiotInput.TabIndex = 10;
             PrzedmiotInput.SelectedIndexChanged += PrzedmiotInput_SelectedIndexChanged;
             // 
             // IdInput
             // 
+            IdInput.DropDownStyle = ComboBoxStyle.DropDownList;
             IdInput.FormattingEnabled = true;
-            IdInput.Location = new Point(279, 265);
-            IdInput.Margin = new Padding(3, 4, 3, 4);
+            IdInput.Location = new Point(244, 199);
             IdInput.Name = "IdInput";
-            IdInput.Size = new Size(155, 28);
+            IdInput.Size = new Size(136, 23);
             IdInput.TabIndex = 11;
             IdInput.SelectedIndexChanged += IdInput_SelectedIndexChanged;
             // 
             // OcenyPanel
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = Properties.Resources.Bez_nazwy_7_202505212012_55935;
             BackgroundImageLayout = ImageLayout.Stretch;
-            ClientSize = new Size(1178, 731);
+            ClientSize = new Size(1031, 548);
             Controls.Add(IdInput);
             Controls.Add(PrzedmiotInput);
             Controls.Add(btnPowrot);
@@ -176,7 +172,6 @@
             Controls.Add(Label_Id);
             Controls.Add(Tabela_Ocen);
             DoubleBuffered = true;
-            Margin = new Padding(3, 4, 3, 4);
             Name = "OcenyPanel";
             Text = "OcenyPanel";
             ((System.ComponentModel.ISupportInitialize)Tabela_Ocen).EndInit();

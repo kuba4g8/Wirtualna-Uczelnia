@@ -45,11 +45,10 @@
             // 
             Tabela_Ocen.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             Tabela_Ocen.Columns.AddRange(new DataGridViewColumn[] { Col1, Col2, Col3 });
-            Tabela_Ocen.Location = new Point(476, 166);
-            Tabela_Ocen.Margin = new Padding(3, 4, 3, 4);
+            Tabela_Ocen.Location = new Point(416, 124);
             Tabela_Ocen.Name = "Tabela_Ocen";
             Tabela_Ocen.RowHeadersWidth = 51;
-            Tabela_Ocen.Size = new Size(655, 502);
+            Tabela_Ocen.Size = new Size(573, 376);
             Tabela_Ocen.TabIndex = 1;
             // 
             // Col1
@@ -80,19 +79,19 @@
             // 
             Label_Przedmiot.AutoSize = true;
             Label_Przedmiot.ForeColor = Color.Black;
-            Label_Przedmiot.Location = new Point(298, 224);
+            Label_Przedmiot.Location = new Point(261, 168);
             Label_Przedmiot.Name = "Label_Przedmiot";
-            Label_Przedmiot.Size = new Size(80, 20);
+            Label_Przedmiot.Size = new Size(64, 15);
             Label_Przedmiot.TabIndex = 5;
             Label_Przedmiot.Text = "Przedmiot:";
             // 
             // PrzedmiotyCombo
             // 
+            PrzedmiotyCombo.DropDownStyle = ComboBoxStyle.DropDownList;
             PrzedmiotyCombo.FormattingEnabled = true;
-            PrzedmiotyCombo.Location = new Point(246, 248);
-            PrzedmiotyCombo.Margin = new Padding(3, 4, 3, 4);
+            PrzedmiotyCombo.Location = new Point(215, 186);
             PrzedmiotyCombo.Name = "PrzedmiotyCombo";
-            PrzedmiotyCombo.Size = new Size(192, 28);
+            PrzedmiotyCombo.Size = new Size(168, 23);
             PrzedmiotyCombo.TabIndex = 6;
             PrzedmiotyCombo.SelectedIndexChanged += IndexChanged;
             // 
@@ -106,9 +105,10 @@
             // pictureBox1
             // 
             pictureBox1.Image = Properties.Resources.Bez_nazwy_7_202505212012_55935;
-            pictureBox1.Location = new Point(-9, -2);
+            pictureBox1.Location = new Point(-8, -2);
+            pictureBox1.Margin = new Padding(3, 2, 3, 2);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(1140, 688);
+            pictureBox1.Size = new Size(998, 516);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 8;
             pictureBox1.TabStop = false;
@@ -117,23 +117,22 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            label1.Location = new Point(283, 166);
+            label1.Location = new Point(248, 124);
             label1.Name = "label1";
-            label1.Size = new Size(115, 46);
+            label1.Size = new Size(91, 37);
             label1.TabIndex = 9;
             label1.Text = "Oceny";
             // 
             // Oceny
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1130, 681);
+            ClientSize = new Size(989, 511);
             Controls.Add(label1);
             Controls.Add(PrzedmiotyCombo);
             Controls.Add(Label_Przedmiot);
             Controls.Add(Tabela_Ocen);
             Controls.Add(pictureBox1);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "Oceny";
             Text = "Oceny";
             Load += Oceny_Load;
