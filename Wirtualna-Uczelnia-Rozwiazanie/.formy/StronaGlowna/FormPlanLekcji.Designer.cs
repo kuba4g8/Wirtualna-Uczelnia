@@ -57,10 +57,11 @@
             tabControl.Controls.Add(tabPiatek);
             tabControl.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             tabControl.ItemSize = new Size(120, 30);
-            tabControl.Location = new Point(10, 10);
+            tabControl.Location = new Point(12, 12);
+            tabControl.Margin = new Padding(4, 4, 4, 4);
             tabControl.Name = "tabControl";
             tabControl.SelectedIndex = 0;
-            tabControl.Size = new Size(768, 683);
+            tabControl.Size = new Size(960, 854);
             tabControl.TabIndex = 0;
             // 
             // tabPoniedzialek
@@ -68,21 +69,23 @@
             tabPoniedzialek.BackColor = Color.WhiteSmoke;
             tabPoniedzialek.Controls.Add(panelPoniedzialek);
             tabPoniedzialek.Location = new Point(4, 34);
+            tabPoniedzialek.Margin = new Padding(4, 4, 4, 4);
             tabPoniedzialek.Name = "tabPoniedzialek";
-            tabPoniedzialek.Padding = new Padding(3);
-            tabPoniedzialek.Size = new Size(760, 645);
+            tabPoniedzialek.Padding = new Padding(4, 4, 4, 4);
+            tabPoniedzialek.Size = new Size(952, 816);
             tabPoniedzialek.TabIndex = 0;
             tabPoniedzialek.Text = "PONIEDZIAŁEK";
             // 
             // panelPoniedzialek
             // 
             panelPoniedzialek.AutoScroll = true;
-            panelPoniedzialek.BackColor = Color.White;
+            panelPoniedzialek.BackColor = Color.FromArgb(197, 226, 215);
             panelPoniedzialek.Dock = DockStyle.Fill;
-            panelPoniedzialek.Location = new Point(3, 3);
+            panelPoniedzialek.Location = new Point(4, 4);
+            panelPoniedzialek.Margin = new Padding(4, 4, 4, 4);
             panelPoniedzialek.Name = "panelPoniedzialek";
-            panelPoniedzialek.Padding = new Padding(10);
-            panelPoniedzialek.Size = new Size(754, 639);
+            panelPoniedzialek.Padding = new Padding(12, 12, 12, 12);
+            panelPoniedzialek.Size = new Size(944, 808);
             panelPoniedzialek.TabIndex = 0;
             // 
             // tabWtorek
@@ -90,21 +93,23 @@
             tabWtorek.BackColor = Color.WhiteSmoke;
             tabWtorek.Controls.Add(panelWtorek);
             tabWtorek.Location = new Point(4, 34);
+            tabWtorek.Margin = new Padding(4, 4, 4, 4);
             tabWtorek.Name = "tabWtorek";
-            tabWtorek.Padding = new Padding(3);
-            tabWtorek.Size = new Size(760, 645);
+            tabWtorek.Padding = new Padding(4, 4, 4, 4);
+            tabWtorek.Size = new Size(952, 816);
             tabWtorek.TabIndex = 1;
             tabWtorek.Text = "WTOREK";
             // 
             // panelWtorek
             // 
             panelWtorek.AutoScroll = true;
-            panelWtorek.BackColor = Color.White;
+            panelWtorek.BackColor = Color.FromArgb(197, 226, 215);
             panelWtorek.Dock = DockStyle.Fill;
-            panelWtorek.Location = new Point(3, 3);
+            panelWtorek.Location = new Point(4, 4);
+            panelWtorek.Margin = new Padding(4, 4, 4, 4);
             panelWtorek.Name = "panelWtorek";
-            panelWtorek.Padding = new Padding(10);
-            panelWtorek.Size = new Size(754, 639);
+            panelWtorek.Padding = new Padding(12, 12, 12, 12);
+            panelWtorek.Size = new Size(944, 808);
             panelWtorek.TabIndex = 1;
             // 
             // tabSroda
@@ -112,20 +117,22 @@
             tabSroda.BackColor = Color.WhiteSmoke;
             tabSroda.Controls.Add(panelSroda);
             tabSroda.Location = new Point(4, 34);
+            tabSroda.Margin = new Padding(4, 4, 4, 4);
             tabSroda.Name = "tabSroda";
-            tabSroda.Size = new Size(760, 645);
+            tabSroda.Size = new Size(952, 816);
             tabSroda.TabIndex = 2;
             tabSroda.Text = "ŚRODA";
             // 
             // panelSroda
             // 
             panelSroda.AutoScroll = true;
-            panelSroda.BackColor = Color.White;
+            panelSroda.BackColor = Color.FromArgb(197, 226, 215);
             panelSroda.Dock = DockStyle.Fill;
             panelSroda.Location = new Point(0, 0);
+            panelSroda.Margin = new Padding(4, 4, 4, 4);
             panelSroda.Name = "panelSroda";
-            panelSroda.Padding = new Padding(10);
-            panelSroda.Size = new Size(760, 645);
+            panelSroda.Padding = new Padding(12, 12, 12, 12);
+            panelSroda.Size = new Size(952, 816);
             panelSroda.TabIndex = 2;
             // 
             // tabCzwartek
@@ -133,20 +140,22 @@
             tabCzwartek.BackColor = Color.WhiteSmoke;
             tabCzwartek.Controls.Add(panelCzwartek);
             tabCzwartek.Location = new Point(4, 34);
+            tabCzwartek.Margin = new Padding(4, 4, 4, 4);
             tabCzwartek.Name = "tabCzwartek";
-            tabCzwartek.Size = new Size(760, 645);
+            tabCzwartek.Size = new Size(952, 816);
             tabCzwartek.TabIndex = 3;
             tabCzwartek.Text = "CZWARTEK";
             // 
             // panelCzwartek
             // 
             panelCzwartek.AutoScroll = true;
-            panelCzwartek.BackColor = Color.White;
+            panelCzwartek.BackColor = Color.FromArgb(197, 226, 215);
             panelCzwartek.Dock = DockStyle.Fill;
             panelCzwartek.Location = new Point(0, 0);
+            panelCzwartek.Margin = new Padding(4, 4, 4, 4);
             panelCzwartek.Name = "panelCzwartek";
-            panelCzwartek.Padding = new Padding(10);
-            panelCzwartek.Size = new Size(760, 645);
+            panelCzwartek.Padding = new Padding(12, 12, 12, 12);
+            panelCzwartek.Size = new Size(952, 816);
             panelCzwartek.TabIndex = 3;
             // 
             // tabPiatek
@@ -154,32 +163,35 @@
             tabPiatek.BackColor = Color.WhiteSmoke;
             tabPiatek.Controls.Add(panelPiatek);
             tabPiatek.Location = new Point(4, 34);
+            tabPiatek.Margin = new Padding(4, 4, 4, 4);
             tabPiatek.Name = "tabPiatek";
-            tabPiatek.Size = new Size(760, 645);
+            tabPiatek.Size = new Size(952, 816);
             tabPiatek.TabIndex = 4;
             tabPiatek.Text = "PIĄTEK";
             // 
             // panelPiatek
             // 
             panelPiatek.AutoScroll = true;
-            panelPiatek.BackColor = Color.White;
+            panelPiatek.BackColor = Color.FromArgb(197, 226, 215);
             panelPiatek.Dock = DockStyle.Fill;
             panelPiatek.Location = new Point(0, 0);
+            panelPiatek.Margin = new Padding(4, 4, 4, 4);
             panelPiatek.Name = "panelPiatek";
-            panelPiatek.Padding = new Padding(10);
-            panelPiatek.Size = new Size(760, 645);
+            panelPiatek.Padding = new Padding(12, 12, 12, 12);
+            panelPiatek.Size = new Size(952, 816);
             panelPiatek.TabIndex = 4;
             // 
             // FormPlanLekcji
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.White;
-            ClientSize = new Size(788, 703);
+            BackColor = Color.FromArgb(197, 226, 215);
+            ClientSize = new Size(985, 879);
             Controls.Add(tabControl);
-            MinimumSize = new Size(800, 600);
+            Margin = new Padding(4, 4, 4, 4);
+            MinimumSize = new Size(994, 736);
             Name = "FormPlanLekcji";
-            Padding = new Padding(10);
+            Padding = new Padding(12, 12, 12, 12);
             Text = "Plan zajęć - Informatyka I rok";
             tabControl.ResumeLayout(false);
             tabPoniedzialek.ResumeLayout(false);

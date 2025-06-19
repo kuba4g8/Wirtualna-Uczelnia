@@ -210,7 +210,7 @@ namespace Wirtualna_Uczelnia.formy
 
         private void linkLabel9_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
         {
-        
+
             string sciezka = @"https://umg.edu.pl/stypendia";
 
             try
@@ -228,5 +228,7 @@ namespace Wirtualna_Uczelnia.formy
                 MessageBox.Show("Wystąpił błąd podczas otwierania linku: " + ex.Message);
             }
         }
+
+        
     }
 }

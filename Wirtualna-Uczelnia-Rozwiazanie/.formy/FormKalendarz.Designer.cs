@@ -35,6 +35,7 @@ namespace Wirtualna_Uczelnia.formy
             btnPoprzedniMiesiac = new Button();
             lblMiesiacRok = new Label();
             panelNaglowki = new Panel();
+            pictureBox1 = new PictureBox();
             lblNiedziela = new Label();
             lblSobota = new Label();
             lblPiatek = new Label();
@@ -56,12 +57,11 @@ namespace Wirtualna_Uczelnia.formy
             panel4 = new Panel();
             label2 = new Label();
             panel3 = new Panel();
-            pictureBox1 = new PictureBox();
             panel1.SuspendLayout();
             panelNaglowki.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel2.SuspendLayout();
             panelLegenda.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panel1
@@ -84,8 +84,8 @@ namespace Wirtualna_Uczelnia.formy
             btnDzisiaj.FlatAppearance.BorderColor = Color.White;
             btnDzisiaj.FlatAppearance.BorderSize = 2;
             btnDzisiaj.FlatStyle = FlatStyle.Flat;
-            btnDzisiaj.Location = new Point(349, 19);
-            btnDzisiaj.Margin = new Padding(4, 4, 4, 4);
+            btnDzisiaj.Location = new Point(459, 19);
+            btnDzisiaj.Margin = new Padding(4);
             btnDzisiaj.Name = "btnDzisiaj";
             btnDzisiaj.Size = new Size(118, 36);
             btnDzisiaj.TabIndex = 3;
@@ -98,8 +98,8 @@ namespace Wirtualna_Uczelnia.formy
             btnNastepnyMiesiac.FlatAppearance.BorderColor = Color.White;
             btnNastepnyMiesiac.FlatAppearance.BorderSize = 2;
             btnNastepnyMiesiac.FlatStyle = FlatStyle.Flat;
-            btnNastepnyMiesiac.Location = new Point(260, 19);
-            btnNastepnyMiesiac.Margin = new Padding(4, 4, 4, 4);
+            btnNastepnyMiesiac.Location = new Point(363, 19);
+            btnNastepnyMiesiac.Margin = new Padding(4);
             btnNastepnyMiesiac.Name = "btnNastepnyMiesiac";
             btnNastepnyMiesiac.Size = new Size(62, 36);
             btnNastepnyMiesiac.TabIndex = 2;
@@ -112,8 +112,8 @@ namespace Wirtualna_Uczelnia.formy
             btnPoprzedniMiesiac.FlatAppearance.BorderColor = Color.White;
             btnPoprzedniMiesiac.FlatAppearance.BorderSize = 2;
             btnPoprzedniMiesiac.FlatStyle = FlatStyle.Flat;
-            btnPoprzedniMiesiac.Location = new Point(190, 19);
-            btnPoprzedniMiesiac.Margin = new Padding(4, 4, 4, 4);
+            btnPoprzedniMiesiac.Location = new Point(283, 19);
+            btnPoprzedniMiesiac.Margin = new Padding(4);
             btnPoprzedniMiesiac.Name = "btnPoprzedniMiesiac";
             btnPoprzedniMiesiac.Size = new Size(62, 36);
             btnPoprzedniMiesiac.TabIndex = 1;
@@ -144,10 +144,19 @@ namespace Wirtualna_Uczelnia.formy
             panelNaglowki.Controls.Add(lblWtorek);
             panelNaglowki.Controls.Add(lblPoniedzialek);
             panelNaglowki.Location = new Point(25, 88);
-            panelNaglowki.Margin = new Padding(4, 4, 4, 4);
+            panelNaglowki.Margin = new Padding(4);
             panelNaglowki.Name = "panelNaglowki";
             panelNaglowki.Size = new Size(630, 38);
             panelNaglowki.TabIndex = 1;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Location = new Point(-25, -13);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(1500, 553);
+            pictureBox1.TabIndex = 5;
+            pictureBox1.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click;
             // 
             // lblNiedziela
             // 
@@ -229,21 +238,21 @@ namespace Wirtualna_Uczelnia.formy
             // 
             // panelDni
             // 
-            panelDni.BackColor = Color.White;
+            panelDni.BackColor = Color.FromArgb(197, 226, 215);
             panelDni.Location = new Point(25, 132);
-            panelDni.Margin = new Padding(4, 4, 4, 4);
+            panelDni.Margin = new Padding(4);
             panelDni.Name = "panelDni";
             panelDni.Size = new Size(630, 465);
             panelDni.TabIndex = 2;
             // 
             // panel2
             // 
-            panel2.BackColor = Color.White;
+            panel2.BackColor = Color.Transparent;
             panel2.Controls.Add(listBoxWydarzenia);
             panel2.Controls.Add(lblWybranaDzien);
             panel2.Controls.Add(label1);
             panel2.Location = new Point(675, 88);
-            panel2.Margin = new Padding(4, 4, 4, 4);
+            panel2.Margin = new Padding(4);
             panel2.Name = "panel2";
             panel2.Size = new Size(810, 375);
             panel2.TabIndex = 3;
@@ -253,7 +262,7 @@ namespace Wirtualna_Uczelnia.formy
             listBoxWydarzenia.FormattingEnabled = true;
             listBoxWydarzenia.ItemHeight = 25;
             listBoxWydarzenia.Location = new Point(22, 75);
-            listBoxWydarzenia.Margin = new Padding(4, 4, 4, 4);
+            listBoxWydarzenia.Margin = new Padding(4);
             listBoxWydarzenia.Name = "listBoxWydarzenia";
             listBoxWydarzenia.Size = new Size(766, 279);
             listBoxWydarzenia.TabIndex = 2;
@@ -282,7 +291,7 @@ namespace Wirtualna_Uczelnia.formy
             // 
             // panelLegenda
             // 
-            panelLegenda.BackColor = Color.White;
+            panelLegenda.BackColor = Color.Transparent;
             panelLegenda.Controls.Add(label5);
             panelLegenda.Controls.Add(panel6);
             panelLegenda.Controls.Add(label4);
@@ -292,7 +301,7 @@ namespace Wirtualna_Uczelnia.formy
             panelLegenda.Controls.Add(label2);
             panelLegenda.Controls.Add(panel3);
             panelLegenda.Location = new Point(675, 482);
-            panelLegenda.Margin = new Padding(4, 4, 4, 4);
+            panelLegenda.Margin = new Padding(4);
             panelLegenda.Name = "panelLegenda";
             panelLegenda.Size = new Size(810, 115);
             panelLegenda.TabIndex = 4;
@@ -311,7 +320,7 @@ namespace Wirtualna_Uczelnia.formy
             // 
             panel6.BackColor = Color.LightGreen;
             panel6.Location = new Point(449, 69);
-            panel6.Margin = new Padding(4, 4, 4, 4);
+            panel6.Margin = new Padding(4);
             panel6.Name = "panel6";
             panel6.Size = new Size(38, 25);
             panel6.TabIndex = 6;
@@ -330,7 +339,7 @@ namespace Wirtualna_Uczelnia.formy
             // 
             panel5.BackColor = Color.LightGoldenrodYellow;
             panel5.Location = new Point(22, 69);
-            panel5.Margin = new Padding(4, 4, 4, 4);
+            panel5.Margin = new Padding(4);
             panel5.Name = "panel5";
             panel5.Size = new Size(38, 25);
             panel5.TabIndex = 4;
@@ -349,7 +358,7 @@ namespace Wirtualna_Uczelnia.formy
             // 
             panel4.BackColor = Color.LightBlue;
             panel4.Location = new Point(449, 25);
-            panel4.Margin = new Padding(4, 4, 4, 4);
+            panel4.Margin = new Padding(4);
             panel4.Name = "panel4";
             panel4.Size = new Size(38, 25);
             panel4.TabIndex = 2;
@@ -368,44 +377,35 @@ namespace Wirtualna_Uczelnia.formy
             // 
             panel3.BackColor = Color.LightCoral;
             panel3.Location = new Point(22, 25);
-            panel3.Margin = new Padding(4, 4, 4, 4);
+            panel3.Margin = new Padding(4);
             panel3.Name = "panel3";
             panel3.Size = new Size(38, 25);
             panel3.TabIndex = 0;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Location = new Point(-25, -13);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(1500, 553);
-            pictureBox1.TabIndex = 5;
-            pictureBox1.TabStop = false;
-            pictureBox1.Click += pictureBox1_Click;
             // 
             // FormKalendarz
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
-            BackgroundImageLayout = ImageLayout.Center;
+            BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1500, 625);
             Controls.Add(panelLegenda);
             Controls.Add(panel2);
             Controls.Add(panelDni);
             Controls.Add(panelNaglowki);
             Controls.Add(panel1);
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             Name = "FormKalendarz";
             Text = "Kalendarz akademicki";
             Load += FormKalendarz_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             panelNaglowki.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             panelLegenda.ResumeLayout(false);
             panelLegenda.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
 
         }
