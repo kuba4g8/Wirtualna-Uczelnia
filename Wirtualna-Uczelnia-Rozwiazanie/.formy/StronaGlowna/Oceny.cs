@@ -16,7 +16,7 @@ namespace Wirtualna_Uczelnia.formy
 {
     public partial class Oceny : Form
     {
-        sqlMenager sqlMenager = new sqlMenager();
+        SqlMenager sqlMenager = new SqlMenager();
         public Oceny()
         {
             InitializeComponent();
@@ -27,7 +27,7 @@ namespace Wirtualna_Uczelnia.formy
         private void Oceny_Load(object sender, EventArgs e)
         {
             List<Przedmiot> FetchPrzedmioty = new List<Przedmiot>();
-            MySqlCommand FetchCommand = new MySqlCommand($"SELECT nazwa FROM przedmioty");
+            MySqlCommand FetchCommand = new MySqlCommand($"SELECT DISTINCT przedmioty.nazwa FROM przedmioty JOIN plan_lekcji ON przedmioty.id_przedmiotu = plan_lekcji.id_przedmiotu JOIN studenci_grupy ON plan_lekcji.id_grupy = studenci_grupy.id_grupy WHERE studenci_grupy.userID = '{SesionControl.loginMenager.studentData.userID}'");
             FetchPrzedmioty = sqlMenager.loadDataToList<Przedmiot>(FetchCommand);
 
             for (int i = 0; i < FetchPrzedmioty.Count; i++)

@@ -12,15 +12,17 @@ using Wirtualna_Uczelnia.klasy;
 
 namespace Wirtualna_Uczelnia
 {
-    public class sqlMenager
+    public class SqlMenager
     {
         private MySqlConnection _conn; // obiekt klasy umozliwiajacy laczenie sie z baza danych.
+
+        private bool cloudConnect = true;
 
 
         public MySqlConnection Connection 
         { 
             get 
-            { 
+            {
                 return _conn; 
             } 
         }
@@ -30,8 +32,8 @@ namespace Wirtualna_Uczelnia
         {
             public static readonly string connIP = "sql.freedb.tech";
             public static readonly string dataBaseName = "freedb_wirtualna_uczelnia";
-            public static readonly string username = "freedb_KubaH";
-            public static readonly string PWD = "w6#csh$?cW!TDhz";
+            public static readonly string username = "freedb_lolix";
+            public static readonly string PWD = "a!Gz*5Hz4Ud8VeZ";
         }
         private static class remoteConnInfo
         {
@@ -48,7 +50,7 @@ namespace Wirtualna_Uczelnia
 
 
         //konstruktor klasy sqlMenager -> dzieje sie na poczatku stworzenia obiektu.
-        public sqlMenager()
+        public SqlMenager()
         {
             // zmienic jak wydupcy baze danych w chmurze aby moc pracowac dalej!
             
@@ -90,6 +92,7 @@ namespace Wirtualna_Uczelnia
 
         //wpisanie do bazy danych dynamicznego obiektu typu T, majac na uwadze ze nazwy tabel musza byc takie same jak nazwy wlasciwosci.
         // Zwraca osattni userID dodany jako int
+        // zmienna insertUSERID -> czy wpisac userID do bazy danych, jesli nie to pomija wpisywanie userID i robi to samemu
         public int loadObjectToDataBase<T>(T objToInsert, string tableName, bool insertUSERID) where T : new()
         {
             if (!tryConnect())
@@ -156,6 +159,63 @@ namespace Wirtualna_Uczelnia
             }
           }
 
+        // funkcja updatujaca rekord w bazie danych.
+        // przyjmuje jako argumenty obiekt -> ktory podmieniamy (nazwy musza sie zgadzac)
+        // string tableName nazwa tabeli
+        // whereCond np id_prowadzacego = whereCondValue
+        // whereCondValue no chyba do domyslenia 
+        public int updateObjectRecordInDataBase<T>(T objToUpdate, string tableName, string whereCond, int whereCondValue) where T : new()
+        {
+            if (!tryConnect())
+            {
+                MessageBox.Show("Błąd podczas łączenia do bazy");
+                return -1;
+            }
+
+            try
+            {
+                var properties = typeof(T).GetProperties();
+                List<string> setClauses = new List<string>();
+
+                foreach (PropertyInfo prop in properties)
+                {
+                    if (prop.Name == whereCond) // pominiecie kolumny ktora ma where warunek
+                        continue;
+
+                    setClauses.Add($"{prop.Name} = @{prop.Name}");
+                }
+
+                string sqlCommand = $"UPDATE {tableName} SET {string.Join(", ", setClauses)} WHERE {whereCond} = @whereValue";
+
+                using (MySqlCommand cmd = new MySqlCommand(sqlCommand, _conn))
+                {
+                    foreach (PropertyInfo prop in properties)
+                    {
+                        if (prop.Name == whereCond)
+                            continue;
+
+                        object value = prop.GetValue(objToUpdate, null);
+                        cmd.Parameters.AddWithValue($"@{prop.Name}", value ?? DBNull.Value);
+                    }
+
+                    // dodaj parametr warunku WHERE
+                    cmd.Parameters.AddWithValue("@whereValue", whereCondValue);
+
+                    return cmd.ExecuteNonQuery(); // Zwraca liczbę zmienionych wierszy
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Błąd bazy danych: " + ex.Message);
+                return -1;
+            }
+            finally
+            {
+                tryDissconect();
+            }
+        }
+
+
         //zczytanie danych z bazy danych sql przy podaniu dokladnej komendy
         //szczytuje kazdy rekord jako jeden element dynamicznego typu T
         //Podajesz obiekt on sam sie sczyta lol
@@ -169,7 +229,6 @@ namespace Wirtualna_Uczelnia
             {
                 return list;
             }
-
             try
             {
                 // MySqlCommand -> komenda do wysylania w sql
@@ -181,35 +240,45 @@ namespace Wirtualna_Uczelnia
 
                 while (reader.Read())
                 {
-                    //obiekt o wlasciwosciach T -> obiekt ktory zostnie podany
-                    T tempObj = new T();
-
-                    // przelatujemy przez kazdy property w obiekcie np:
-                    // student.id, student.imie, student.nazwisko itd
-                    // i przypisujemy te wlasciwosci do obiektu ktory ma te same wlasciowosci
-                    // nastepnie po kazdym foreachu kiedy wszystko bedzie przypisane dodajemy do listy
-                    // obiekt aby wszystkie byly trzymane w jednym miejscu
-                    foreach (PropertyInfo info in typeof(T).GetProperties())
+                    if (typeof(T).IsPrimitive || typeof(T) == typeof(string) || typeof(T) == typeof(decimal))
                     {
-                        try
+                        if (!reader.IsDBNull(0))
                         {
-                            //jezeli w bazie danych rekord bedzie null to pomijamy i nic nie przypisujemy
-                            if (reader[info.Name] != DBNull.Value)
-                            {
-                                //MessageBox.Show(info.Name + " " + info.PropertyType);
-                                info.SetValue(tempObj, reader[info.Name]);
-                            }
+                            list.Add((T)Convert.ChangeType(reader[0], typeof(T)));
                         }
-                        catch (Exception ex)
-                        {
-                            //MessageBox.Show("Generalnie jezeli czytasz ta wiadomosc to chujowow");
-                            if (!safeDebugMsgOff)
-                                MessageBox.Show(ex.Message);
-                        }
-                        
                     }
+                    else
+                    {
+                        //obiekt o wlasciwosciach T -> obiekt ktory zostnie podany
+                        T tempObj = new T();
 
-                    list.Add(tempObj);
+                        // przelatujemy przez kazdy property w obiekcie np:
+                        // student.id, student.imie, student.nazwisko itd
+                        // i przypisujemy te wlasciwosci do obiektu ktory ma te same wlasciowosci
+                        // nastepnie po kazdym foreachu kiedy wszystko bedzie przypisane dodajemy do listy
+                        // obiekt aby wszystkie byly trzymane w jednym miejscu
+                        foreach (PropertyInfo info in typeof(T).GetProperties())
+                        {
+                            try
+                            {
+                                //jezeli w bazie danych rekord bedzie null to pomijamy i nic nie przypisujemy
+                                if (reader[info.Name] != DBNull.Value)
+                                {
+                                    //MessageBox.Show(info.Name + " " + info.PropertyType);
+                                    info.SetValue(tempObj, reader[info.Name]);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                //MessageBox.Show("Generalnie jezeli czytasz ta wiadomosc to chujowow");
+                                if (!safeDebugMsgOff)
+                                    MessageBox.Show(ex.Message);
+                            }
+
+                        }
+
+                        list.Add(tempObj);
+                    }
                 }
                 tryDissconect();
 

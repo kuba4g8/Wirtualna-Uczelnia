@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Wirtualna_Uczelnia.formy.StronaGlowna;
+using Microsoft.VisualBasic;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 
@@ -18,7 +19,7 @@ namespace Wirtualna_Uczelnia.formy
     public partial class OcenyPanel : Form
     {
         private Pracownik loggedTeacher; // Przechowuje informacje o zalogowanym nauczycielu
-        sqlMenager sqlMenager = new sqlMenager(); //tbh nie wiem co robię ale nie pokazuje dzięki temu błędów :Fire:
+        SqlMenager sqlMenager = new SqlMenager(); //tbh nie wiem co robię ale nie pokazuje dzięki temu błędów :Fire:
 
         public OcenyPanel(Pracownik loggedUser) //TODO: UWZGLĘDNIĆ W KOMENDZIE ID PROWADZĄCEGO BY POKAZAĆ OCENY TYLKO Z PRZEDMIOTÓW KTÓRE PROWADZI. UPD 13.05 -> wywołanie przydatne dla dodawania do bazy
         {
@@ -51,29 +52,59 @@ namespace Wirtualna_Uczelnia.formy
                 teacherPanel.Show();
             }
         }
-
-        private void Tabela_Ocen_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        public int EditSelect { get; set; } = -1; //stoopid | Robie se wartość publiczną
+        private void Tabela_Ocen_CellContentClick(object sender, DataGridViewCellEventArgs e) //KLIKNIĘCIE ELEMENTU OCENY UMOŻLIWIA USUNIĘCIE CAŁEJ OCENY LUB EDYCJĘ
         {
-            //KLIKNIĘCIE ELEMENTU OCENY UMOŻLIWIA USUNIĘCIE CAŁEJ OCENY
+            //Odpalamy selektor co w ogóle chcemy zrobić
+            var selector = new OcenyPanelEditSelector(this);
+            selector.ShowDialog(); //Nie wiem jak to zrobić inaczej, nie chcę tego tak robić ale przede wszystkim nie che mi się myśleć o innym podejściu
 
-            DialogResult dialogResult = MessageBox.Show("Usunąć ocenę" + Tabela_Ocen.Rows[Tabela_Ocen.CurrentCell.RowIndex].Cells[1].Value.ToString(), "UWAGA", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
+            //MessageBox.Show("Wybrana wartość: " + EditSelect); //debug
+
+            String indeks = IdInput.Text.ToString();
+            String przedmiot = PrzedmiotInput.Text.ToString();
+            String wartosc = Tabela_Ocen.Rows[Tabela_Ocen.CurrentCell.RowIndex].Cells[1].Value.ToString(); wartosc = wartosc.Replace(",", ".");
+            String kiedy = Tabela_Ocen.Rows[Tabela_Ocen.CurrentCell.RowIndex].Cells[2].Value.ToString(); //Zbieramy dane by znaleźć szukaną ocenę
+
+            List<OcenaID> FetchID = new List<OcenaID>();
+            MySqlCommand FetchCommand = new MySqlCommand($"SELECT oceny.id_oceny FROM oceny JOIN studenci ON oceny.userID = studenci.userID JOIN przedmioty ON oceny.id_przedmiotu = przedmioty.id_przedmiotu WHERE studenci.nr_indeksu = '{indeks}' AND przedmioty.nazwa = '{przedmiot}' AND oceny.ocena = {wartosc} AND oceny.data_wystawienia = '{kiedy}' LIMIT 1;");
+            FetchID = sqlMenager.loadDataToList<OcenaID>(FetchCommand); //Zebranie ID pasującego do oceny
+
+
+            if (EditSelect == 2) //edit ඞ
             {
+                String nowaOcena = Interaction.InputBox($"Podaj nową ocenę dla oceny {wartosc}", "").ToString(); ; //funkcja z visualbasic
+                //kopia kodu z dodawania ocen
+                if (nowaOcena == "" || !decimal.TryParse(nowaOcena, out decimal ignore)) //sprawdź czy ocena jest wprowadzona i czy w ogóle jest oceną
+                {
+                    MessageBox.Show("Syntax Error, liczba nie jest liczbą lub wartośc jest null");
+                    return; //byebye
+                }
 
-                String indeks = IdInput.Text.ToString();
-                String przedmiot = PrzedmiotInput.Text.ToString();
-                String wartosc = Tabela_Ocen.Rows[Tabela_Ocen.CurrentCell.RowIndex].Cells[1].Value.ToString(); wartosc = wartosc.Replace(",", ".");
-                String kiedy = Tabela_Ocen.Rows[Tabela_Ocen.CurrentCell.RowIndex].Cells[2].Value.ToString();
-
-                //MessageBox.Show($"SELECT oceny.id_oceny FROM oceny JOIN studenci ON oceny.userID = studenci.userID JOIN przedmioty ON oceny.id_przedmiotu = przedmioty.id_przedmiotu WHERE studenci.nr_indeksu = '{indeks}' AND przedmioty.nazwa = '{przedmiot}' AND oceny.ocena = {wartosc} AND oceny.data_wystawienia = '{kiedy}' LIMIT 1;"); //debug
-
-                List<OcenaID> FetchID = new List<OcenaID>();
-                MySqlCommand FetchCommand = new MySqlCommand($"SELECT oceny.id_oceny FROM oceny JOIN studenci ON oceny.userID = studenci.userID JOIN przedmioty ON oceny.id_przedmiotu = przedmioty.id_przedmiotu WHERE studenci.nr_indeksu = '{indeks}' AND przedmioty.nazwa = '{przedmiot}' AND oceny.ocena = {wartosc} AND oceny.data_wystawienia = '{kiedy}' LIMIT 1;");
-                FetchID = sqlMenager.loadDataToList<OcenaID>(FetchCommand); //klasyk
-
-                sqlMenager.executeRawCommand(new MySqlCommand($"DELETE FROM oceny WHERE id_oceny = {FetchID.First().id_oceny}"));
-                Load_Student_Click(sender, e); //refreshuje tablice
+                decimal ocenatest = decimal.Parse(nowaOcena);
+                if ((ocenatest > 5 || ocenatest < 2) && ocenatest != 0) //czy ocena jest większa niż 5 lub mniejsza od 2 a jeżeli tak sprawdź czy nie jest zerem
+                {
+                    MessageBox.Show("Ocena NIE JEST MOŻLIWA");
+                    return; //Jeżeli tak, to adios. nie będzie 6
+                }
+                String ocenaset = nowaOcena.Replace(",", "."); //podobno jakiś błąd z interpretacją stringów przez języki systemowe. Nie będziecie w stanie tego wytłumaczyć ani ja. W skrócie, decimal.parse na stringach działa tylko wtedy gdy liczba ma w sobie przecinek i zwraca przecinek, gdy operuje na [form].text działa tylko na przecinkach ale zwraca kropkę
+                sqlMenager.executeRawCommand(new MySqlCommand($"UPDATE oceny SET ocena = {ocenaset} WHERE id_oceny = {FetchID.First().id_oceny}")); //Edytujemy
             }
+
+            if (EditSelect == 3) //usuwanko :3
+            {
+                DialogResult dialogResult = MessageBox.Show("Usunąć ocenę" + Tabela_Ocen.Rows[Tabela_Ocen.CurrentCell.RowIndex].Cells[1].Value.ToString(), "UWAGA", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+
+                    //MessageBox.Show($"SELECT oceny.id_oceny FROM oceny JOIN studenci ON oceny.userID = studenci.userID JOIN przedmioty ON oceny.id_przedmiotu = przedmioty.id_przedmiotu WHERE studenci.nr_indeksu = '{indeks}' AND przedmioty.nazwa = '{przedmiot}' AND oceny.ocena = {wartosc} AND oceny.data_wystawienia = '{kiedy}' LIMIT 1;"); //debug
+
+                    sqlMenager.executeRawCommand(new MySqlCommand($"DELETE FROM oceny WHERE id_oceny = {FetchID.First().id_oceny}")); //Usuwamy
+
+                }
+            }
+
+            Load_Data(sender, e); //refreshuje tablice
         }
 
 
@@ -92,9 +123,14 @@ namespace Wirtualna_Uczelnia.formy
             {
                 IdInput.Items.Add(FetchIndeks[i].nr_indeksu);
             }
+            Load_Data(sender, e); //refreshuje tablice
+        }
+        private void IdInput_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Load_Data(sender, e); //refreshuje tablice, usuwając ostatecznie potrzebę używania przycisku
         }
 
-        private void Load_Student_Click(object sender, EventArgs e)
+        private void Load_Data(object sender, EventArgs e) //ładuje studentów, nazwa szczątkowa po czasach gdzie wymagane było kliknięcie przycisku
         {
             Tabela_Ocen.Rows.Clear();
             Tabela_Ocen.Refresh(); //Redundant(?), refreshuje tabele
@@ -176,7 +212,7 @@ namespace Wirtualna_Uczelnia.formy
 
             sqlMenager.loadObjectToDataBase<OcenaDod>(Ocena, "oceny", true); //dodaje ocenę do bazy danych
 
-            Load_Student_Click(sender, e); //refreshuje tablice
+            Load_Data(sender, e); //refreshuje tablice
         }
 
 
@@ -216,6 +252,11 @@ namespace Wirtualna_Uczelnia.formy
         public class OcenaID
         {
             public Int32 id_oceny { get; set; }
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

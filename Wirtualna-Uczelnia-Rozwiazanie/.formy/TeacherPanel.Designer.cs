@@ -26,11 +26,10 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
             btnKalendarz = new Button();
             btnEdytujKalendarz = new Button();
             pictureBox5 = new PictureBox();
-            richTextBox1 = new RichTextBox();
-            richTextBox2 = new RichTextBox();
             wylogujnauczyciel = new Button();
             lblImie = new Label();
             lblEmail = new Label();
+            btnPlanLekcji = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             SuspendLayout();
             // 
@@ -53,7 +52,7 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
             btnOceny.Margin = new Padding(3, 4, 3, 4);
             btnOceny.Name = "btnOceny";
             btnOceny.Size = new Size(345, 143);
-            btnOceny.TabIndex = 1;
+            btnOceny.TabIndex = 2;
             btnOceny.UseVisualStyleBackColor = true;
             btnOceny.Click += btnOceny_Click;
             // 
@@ -65,7 +64,7 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
             btnKalendarz.Margin = new Padding(3, 4, 3, 4);
             btnKalendarz.Name = "btnKalendarz";
             btnKalendarz.Size = new Size(340, 143);
-            btnKalendarz.TabIndex = 2;
+            btnKalendarz.TabIndex = 1;
             btnKalendarz.UseVisualStyleBackColor = true;
             btnKalendarz.Click += btnKalendarz_Click;
             // 
@@ -78,7 +77,7 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
             btnEdytujKalendarz.Name = "btnEdytujKalendarz";
             btnEdytujKalendarz.RightToLeft = RightToLeft.No;
             btnEdytujKalendarz.Size = new Size(340, 143);
-            btnEdytujKalendarz.TabIndex = 3;
+            btnEdytujKalendarz.TabIndex = 0;
             btnEdytujKalendarz.TextAlign = ContentAlignment.MiddleLeft;
             btnEdytujKalendarz.UseVisualStyleBackColor = true;
             btnEdytujKalendarz.Click += btnEdytujKalendarz_Click;
@@ -94,34 +93,15 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
             pictureBox5.TabIndex = 11;
             pictureBox5.TabStop = false;
             // 
-            // richTextBox1
-            // 
-            richTextBox1.Enabled = false;
-            richTextBox1.Location = new Point(28, 152);
-            richTextBox1.Name = "richTextBox1";
-            richTextBox1.ReadOnly = true;
-            richTextBox1.Size = new Size(125, 45);
-            richTextBox1.TabIndex = 12;
-            richTextBox1.Text = "- Zarządzanie przedmiotami";
-            // 
-            // richTextBox2
-            // 
-            richTextBox2.Enabled = false;
-            richTextBox2.Location = new Point(28, 203);
-            richTextBox2.Name = "richTextBox2";
-            richTextBox2.ReadOnly = true;
-            richTextBox2.Size = new Size(125, 28);
-            richTextBox2.TabIndex = 13;
-            richTextBox2.TabStop = false;
-            richTextBox2.Text = "- Grupy zajęciowe";
-            // 
             // wylogujnauczyciel
             // 
-            wylogujnauczyciel.Location = new Point(159, 152);
+            wylogujnauczyciel.BackColor = Color.FromArgb(197, 226, 215);
+            wylogujnauczyciel.Location = new Point(73, 176);
             wylogujnauczyciel.Name = "wylogujnauczyciel";
             wylogujnauczyciel.Size = new Size(75, 45);
-            wylogujnauczyciel.TabIndex = 0;
+            wylogujnauczyciel.TabIndex = 3;
             wylogujnauczyciel.Text = "Wyloguj";
+            wylogujnauczyciel.UseVisualStyleBackColor = false;
             wylogujnauczyciel.Click += wylogujnauczyciel_Click;
             // 
             // lblImie
@@ -150,6 +130,22 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
             lblEmail.TabIndex = 15;
             lblEmail.Text = "Email";
             // 
+            // btnPlanLekcji
+            // 
+            btnPlanLekcji.BackColor = SystemColors.Control;
+            btnPlanLekcji.BackgroundImage = (Image)resources.GetObject("btnPlanLekcji.BackgroundImage");
+            btnPlanLekcji.BackgroundImageLayout = ImageLayout.Zoom;
+            btnPlanLekcji.FlatAppearance.BorderColor = Color.White;
+            btnPlanLekcji.FlatAppearance.BorderSize = 2;
+            btnPlanLekcji.FlatStyle = FlatStyle.Flat;
+            btnPlanLekcji.Location = new Point(744, 347);
+            btnPlanLekcji.Margin = new Padding(2);
+            btnPlanLekcji.Name = "btnPlanLekcji";
+            btnPlanLekcji.Size = new Size(345, 143);
+            btnPlanLekcji.TabIndex = 18;
+            btnPlanLekcji.UseVisualStyleBackColor = true;
+            btnPlanLekcji.Click += btnPlanLekcji_Click;
+            // 
             // TeacherPanel
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -157,11 +153,10 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
             BackgroundImage = Properties.Resources.Bez_nazwy_15_202505260855_36185;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1216, 627);
+            Controls.Add(btnPlanLekcji);
             Controls.Add(lblEmail);
             Controls.Add(lblImie);
             Controls.Add(wylogujnauczyciel);
-            Controls.Add(richTextBox2);
-            Controls.Add(richTextBox1);
             Controls.Add(lblTitle);
             Controls.Add(btnOceny);
             Controls.Add(btnKalendarz);
@@ -184,10 +179,9 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
         private System.Windows.Forms.Button btnKalendarz;
         private System.Windows.Forms.Button btnEdytujKalendarz; // Dodana deklaracja przycisku
         private PictureBox pictureBox5;
-        private RichTextBox richTextBox1;
-        private RichTextBox richTextBox2;
         private Button wylogujnauczyciel;
         private Label lblImie;
         private Label lblEmail;
+        private Button btnPlanLekcji;
     }
 }

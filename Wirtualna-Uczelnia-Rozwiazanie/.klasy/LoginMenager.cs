@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Wirtualna_Uczelnia.formy;
+using Wirtualna_Uczelnia.formy.AdminForms;
 using Wirtualna_Uczelnia.formy.StronaGlowna;
 using Wirtualna_Uczelnia.klasy;
 
@@ -13,7 +14,7 @@ namespace Wirtualna_Uczelnia
 {
     public class LoginMenager
     {
-        private sqlMenager sqlMenager;
+        private SqlMenager sqlMenager;
         private SecMenager secLogin;
 
         //trzymanie informacji personalnych itd.
@@ -30,7 +31,7 @@ namespace Wirtualna_Uczelnia
         public LoginMenager(bool debugMode)
         {
             this.debugMode = debugMode;
-            sqlMenager = new sqlMenager();
+            sqlMenager = new SqlMenager();
             secLogin = new SecMenager(debugMode);
 
         }
@@ -105,7 +106,7 @@ namespace Wirtualna_Uczelnia
                 isTeacher = true;
 
 
-                AdminPanel adminPanel = new AdminPanel(teacherData);
+                var adminPanel = new AdminPanel();
 
                 adminPanel.Show();
                 return true; //do usuenia potem jak beda inne formy!!!/////

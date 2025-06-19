@@ -11,7 +11,7 @@ namespace Wirtualna_Uczelnia.formy
     {
         private DateTime currentDate = DateTime.Now;
         private List<CalendarEvent> wydarzenia = new List<CalendarEvent>();
-        private sqlMenager sqlManager;
+        private SqlMenager sqlManager;
         private Student loggedStudent; // Referencja do zalogowanego studenta
 
         // Kolory dla ró¿nych typów wydarzeñ
@@ -28,7 +28,7 @@ namespace Wirtualna_Uczelnia.formy
             InitializeComponent();
 
             // Dopiero potem wykonuj inne operacje
-            sqlManager = new sqlMenager();
+            sqlManager = new SqlMenager();
 
             // Pobierz zalogowanego studenta z klasy SesionControl
             if (SesionControl.loginMenager != null && SesionControl.loginMenager.studentData != null)
