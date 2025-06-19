@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Wirtualna_Uczelnia.formy.AdminForms;
 using Wirtualna_Uczelnia.formy.UserControls;
 using Wirtualna_Uczelnia.klasy;
 
@@ -13,17 +14,15 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
 
         private List<BlokLekcjiHolder> wszystkieLekcje = new List<BlokLekcjiHolder>();
 
-        public FormPlanLekcji()
+        private List<grupyStudenci> grupy;
+
+        public FormPlanLekcji(List<grupyStudenci> grupy)
         {
             InitializeComponent();
+            this.grupy = grupy;
             
             sqlMenager = new SqlMenager();
             loadInfoFromSql();
-        }
-
-        private class IDholder
-        {
-            public int id_grupy { get; set; }
         }
 
         // klasa przechowujace aktualne przesuniecie wobec kazdego dnia xdxdxd
@@ -47,19 +46,12 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
         {
             try
             {
-                //znalezienie do jakich grup nalezy uzytkownik
-                string querry = "SELECT * FROM studenci_grupy\r\nWHERE userID = @userID";
-                MySqlCommand cmd = new MySqlCommand(querry);
-                cmd.Parameters.AddWithValue("@userID", SesionControl.loginMenager.studentData.userID);
-                
-                List<IDholder> grupy = sqlMenager.loadDataToList<IDholder>(cmd);
-
-                foreach (IDholder id_grupy in grupy)
+                foreach (grupyStudenci grupa in grupy)
                 {
-                    querry = "SELECT \r\n    p.id_prowadzacego, \r\n    p.sala, \r\n    p.dzien, \r\n    p.godzina_startu, \r\n    p.godzina_konca, \r\n    przed.nazwa AS przedmiot, \r\n    p.rodzaj, \r\n    p.notatki, \r\n    g.numer_grupy, \r\n    pr.imie, \r\n    pr.nazwisko, \r\n    pr.stopien_naukowy \r\nFROM \r\n    plan_lekcji p \r\nJOIN \r\n    grupy g ON p.id_grupy = g.id_grupy \r\nJOIN \r\n    pracownicy pr ON p.id_prowadzacego = pr.userID \r\nJOIN \r\n    przedmioty przed ON p.id_przedmiotu = przed.id_przedmiotu\r\nWHERE \r\n    p.id_grupy = @id_grupy;\r\n";
+                    string querry = "SELECT \r\n    p.id_prowadzacego, \r\n    p.sala, \r\n    p.dzien, \r\n    p.godzina_startu, \r\n    p.godzina_konca, \r\n    przed.nazwa AS przedmiot, \r\n    p.rodzaj, \r\n    p.notatki, \r\n    g.numer_grupy, \r\n    pr.imie, \r\n    pr.nazwisko, \r\n    pr.stopien_naukowy \r\nFROM \r\n    plan_lekcji p \r\nJOIN \r\n    grupy g ON p.id_grupy = g.id_grupy \r\nJOIN \r\n    pracownicy pr ON p.id_prowadzacego = pr.userID \r\nJOIN \r\n    przedmioty przed ON p.id_przedmiotu = przed.id_przedmiotu\r\nWHERE \r\n    p.id_grupy = @id_grupy;\r\n";
 
-                    cmd = new MySqlCommand(querry);
-                    cmd.Parameters.AddWithValue("@id_grupy", id_grupy.id_grupy);
+                    var cmd = new MySqlCommand(querry);
+                    cmd.Parameters.AddWithValue("@id_grupy", grupa.id_grupy);
 
                     List<BlokLekcjiHolder> tempLekcje = sqlMenager.loadDataToList<BlokLekcjiHolder>(cmd);
 

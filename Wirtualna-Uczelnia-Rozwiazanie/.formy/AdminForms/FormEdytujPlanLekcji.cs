@@ -38,9 +38,9 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             // Ustawienie menadżera planu i subskrypcja eventu
             planMenager = new PlanLekcjiMenager(canEdit, panelPoniedzialek, panelWtorek, panelSroda, panelCzwartek, panelPiatek);
             // akcja ktora sie wywoluje po kliknieciu w pojedynczy plan / aby edytowac
+            planMenager.OnPlanUpdated += RefreshPlan;
             if (canEdit) // moze edytowac i przypisuje akcje
             {
-                planMenager.OnPlanUpdated += RefreshPlan;
                 btnAddBlok.Enabled = true;
                 btnAddBlok.Visible = true;
             }
@@ -482,6 +482,11 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         public string przedmiot { get; set; }
         public string rodzaj { get; set; }
         public string notatki { get; set; }
+
+        public override string ToString()
+        {
+            return $"{numer_grupy}: {rodzaj}, id kierunku: {id_kierunku}, id grupy: {id_grupy}, {przedmiot}   {rodzaj}";
+        }
     }
     internal class Kierunek
     {

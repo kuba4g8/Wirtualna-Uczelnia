@@ -112,7 +112,7 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             // albo laby, albo cwiczenia. Na pewno pojedyncze wstawienie
             else
             {
-                if (comboPicker.Name == "comboCwiczenia")
+                if (comboPicker.Equals(comboCwiczenia))
                     selectedGroups.Add(grupyCwiczeniowe[comboPicker.SelectedIndex]);
                 else
                     selectedGroups.Add(grupyLabowe[comboPicker.SelectedIndex]);
@@ -140,7 +140,6 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
                     id_grupy = grupa.id_grupy
                 });
             }
-
             return bloki;
         }
 
@@ -307,7 +306,7 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                //MessageBox.Show(ex.Message);
             }
             
         }

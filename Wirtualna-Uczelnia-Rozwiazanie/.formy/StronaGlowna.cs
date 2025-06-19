@@ -20,7 +20,7 @@ namespace Wirtualna_Uczelnia.formy
     public partial class FormStronaGlowna : Form
     {
         SqlMenager sqlMenager;
-        private List<grupyStudenci> grupy;
+        public List<grupyStudenci> grupy;
         public FormStronaGlowna()
         {
             InitializeComponent();
@@ -69,7 +69,7 @@ namespace Wirtualna_Uczelnia.formy
 
         private void btnPlanLekcji_Click(object sender, EventArgs e)
         {
-            FormPlanLekcji planZajec = new FormPlanLekcji();
+            FormPlanLekcji planZajec = new FormPlanLekcji(grupy);
             planZajec.ShowDialog();
         }
 
@@ -97,14 +97,13 @@ namespace Wirtualna_Uczelnia.formy
 
             form.ShowDialog();
         }
-
-        public class grupyStudenci
-        {
-            public int id_grupy { get; set; }
-            public string typ_grupy { get; set; }
-            public int numer_grupy { get; set; }
-            public string nazwa_kierunku { get; set; }
-            public string specjalizacja { get; set; }
-        }
+    }
+    public class grupyStudenci
+    {
+        public int id_grupy { get; set; }
+        public string typ_grupy { get; set; }
+        public int numer_grupy { get; set; }
+        public string nazwa_kierunku { get; set; }
+        public string specjalizacja { get; set; }
     }
 }
