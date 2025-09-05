@@ -388,7 +388,7 @@ namespace Wirtualna_Uczelnia
                     string salt = Hasher.GenerateSalt();
 
                     // Tworzenie obiektu z danymi logowania
-                    var userData = new TempLoggedUser(0, txtEmail.Text, Hasher.ComputeSha256Hash(txtPassword.Text, salt), salt, isTeacher, false);
+                    TempLoggedUser userData = new TempLoggedUser(0, txtEmail.Text, Hasher.ComputeSha256Hash(txtPassword.Text, salt), salt, isTeacher, false);
 
                     if (isTeacher) // Nauczyciel/Pracownik
                     {
@@ -622,7 +622,7 @@ namespace Wirtualna_Uczelnia
 
             for (int i = 0; i < pracownicy.Count; i++)
             {
-                listPracownicy.Items.Add($"{pracownicy[i].userID} : {pracownicy[i].imie} , {pracownicy[i].nazwisko} , {pracownicy[i].stanowisko}");
+                listPracownicy.Items.Add($" {pracownicy[i].userID}: {pracownicy[i].stopien_naukowy} {pracownicy[i].imie}, {pracownicy[i].nazwisko}");
             }
 
             for (int i = 0; i < studenci.Count; i++)

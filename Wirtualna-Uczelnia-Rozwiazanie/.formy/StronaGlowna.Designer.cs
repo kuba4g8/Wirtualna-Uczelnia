@@ -61,7 +61,7 @@
             // oceny
             // 
             oceny.BackColor = Color.Transparent;
-            oceny.BackgroundImageLayout = ImageLayout.None;
+            oceny.BackgroundImageLayout = ImageLayout.Stretch;
             oceny.FlatAppearance.BorderColor = Color.White;
             oceny.FlatAppearance.BorderSize = 2;
             oceny.FlatStyle = FlatStyle.Flat;
@@ -231,25 +231,26 @@
             // 
             // btnPlanLekcji
             // 
-            btnPlanLekcji.BackColor = Color.Transparent;
-            btnPlanLekcji.BackgroundImageLayout = ImageLayout.None;
+            btnPlanLekcji.BackColor = SystemColors.Control;
+            btnPlanLekcji.BackgroundImage = (Image)resources.GetObject("btnPlanLekcji.BackgroundImage");
+            btnPlanLekcji.BackgroundImageLayout = ImageLayout.Zoom;
             btnPlanLekcji.FlatAppearance.BorderColor = Color.White;
             btnPlanLekcji.FlatAppearance.BorderSize = 2;
             btnPlanLekcji.FlatStyle = FlatStyle.Flat;
             btnPlanLekcji.Location = new Point(1070, 556);
-            btnPlanLekcji.Margin = new Padding(0);
+            btnPlanLekcji.Margin = new Padding(2);
             btnPlanLekcji.Name = "btnPlanLekcji";
             btnPlanLekcji.Size = new Size(370, 166);
-            btnPlanLekcji.TabIndex = 3;
-            btnPlanLekcji.Text = "Plan Lekcji\r\nZrobi ktos tutaj jakis ladny obrazek?\r\n\r\n\r\n\r\n";
-            btnPlanLekcji.UseVisualStyleBackColor = false;
+            btnPlanLekcji.TabIndex = 1;
+            btnPlanLekcji.UseVisualStyleBackColor = true;
             btnPlanLekcji.Click += btnPlanLekcji_Click;
             // 
             // FormStronaGlowna
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(120F, 120F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             AutoSize = true;
+            AutoSizeMode = AutoSizeMode.GrowAndShrink;
             ClientSize = new Size(1518, 819);
             Controls.Add(btnPlanLekcji);
             Controls.Add(lblGrupyHolder);

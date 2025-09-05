@@ -13,7 +13,8 @@ partial class FormChangePlan
     private System.Windows.Forms.ComboBox comboPrzedmiot;
     private System.Windows.Forms.ComboBox comboRodzaj;
     private System.Windows.Forms.TextBox txtNotatki;
-    private System.Windows.Forms.NumericUpDown numericNumerGrupy;
+    private System.Windows.Forms.ComboBox comboCwiczenia;
+    private System.Windows.Forms.ComboBox comboLaby;
     private System.Windows.Forms.Button btnZapisz;
 
     protected override void Dispose(bool disposing)
@@ -31,7 +32,8 @@ partial class FormChangePlan
     private System.Windows.Forms.Label labelPrzedmiot;
     private System.Windows.Forms.Label labelRodzaj;
     private System.Windows.Forms.Label labelNotatki;
-    private System.Windows.Forms.Label labelNumerGrupy;
+    private System.Windows.Forms.Label labelCwiczenia;
+    private System.Windows.Forms.Label labelLaby;
 
     private void InitializeComponent()
     {
@@ -45,7 +47,8 @@ partial class FormChangePlan
         this.comboPrzedmiot = new System.Windows.Forms.ComboBox();
         this.comboRodzaj = new System.Windows.Forms.ComboBox();
         this.txtNotatki = new System.Windows.Forms.TextBox();
-        this.numericNumerGrupy = new System.Windows.Forms.NumericUpDown();
+        this.comboCwiczenia = new System.Windows.Forms.ComboBox();
+        this.comboLaby = new System.Windows.Forms.ComboBox();
         this.btnZapisz = new System.Windows.Forms.Button();
 
         this.labelProwadzacy = new System.Windows.Forms.Label();
@@ -56,9 +59,10 @@ partial class FormChangePlan
         this.labelPrzedmiot = new System.Windows.Forms.Label();
         this.labelRodzaj = new System.Windows.Forms.Label();
         this.labelNotatki = new System.Windows.Forms.Label();
-        this.labelNumerGrupy = new System.Windows.Forms.Label();
+        this.labelCwiczenia = new System.Windows.Forms.Label();
+        this.labelLaby = new System.Windows.Forms.Label();
 
-        ((System.ComponentModel.ISupportInitialize)(this.numericNumerGrupy)).BeginInit();
+        //((System.ComponentModel.ISupportInitialize)(this.comboGrupy)).BeginInit();
         this.SuspendLayout();
 
         // Pozycje
@@ -163,8 +167,9 @@ partial class FormChangePlan
         this.comboRodzaj.Left = leftControl;
         this.comboRodzaj.Top = top;
         this.comboRodzaj.Width = 200;
-        this.comboRodzaj.Items.AddRange(new object[] { "wykład", "laboratoria", "ćwiczenia" });
+        this.comboRodzaj.Items.AddRange(new object[] { "wykład", "ćwiczenia", "laboratoria" });
         this.comboRodzaj.DropDownStyle = ComboBoxStyle.DropDownList;
+        comboRodzaj.SelectedIndexChanged += ComboRodzaj_SelectedIndexChanged;
         this.Controls.Add(this.comboRodzaj);
         this.Controls.Add(this.labelRodzaj);
         top += spacing;
@@ -183,18 +188,30 @@ partial class FormChangePlan
         this.Controls.Add(this.txtNotatki);
         top += 70;
 
-        // ============ Numer grupy ============
-        this.labelNumerGrupy.Text = "Numer grupy";
-        this.labelNumerGrupy.Left = leftLabel;
-        this.labelNumerGrupy.Top = top;
-        this.labelNumerGrupy.AutoSize = true;
-        this.numericNumerGrupy.Left = leftControl;
-        this.numericNumerGrupy.Top = top;
-        this.numericNumerGrupy.Width = 60;
-        this.numericNumerGrupy.Minimum = 1;
-        this.numericNumerGrupy.Maximum = 99;
-        this.Controls.Add(this.labelNumerGrupy);
-        this.Controls.Add(this.numericNumerGrupy);
+        // ============ Grupa ćwiczeniowa ============
+        this.labelCwiczenia.Text = "Grupa ćwiczeniowa";
+        this.labelCwiczenia.Left = leftLabel;
+        this.labelCwiczenia.Top = top;
+        this.labelCwiczenia.AutoSize = true;
+        this.comboCwiczenia.Left = leftControl;
+        this.comboCwiczenia.Top = top;
+        this.comboCwiczenia.Width = 200;
+        this.comboCwiczenia.DropDownStyle = ComboBoxStyle.DropDownList;
+        this.Controls.Add(this.labelCwiczenia);
+        this.Controls.Add(this.comboCwiczenia);
+        top += spacing;
+
+        // ============ Grupa laboratoryjna ============
+        this.labelLaby.Text = "Grupa laboratoryjna";
+        this.labelLaby.Left = leftLabel;
+        this.labelLaby.Top = top;
+        this.labelLaby.AutoSize = true;
+        this.comboLaby.Left = leftControl;
+        this.comboLaby.Top = top;
+        this.comboLaby.Width = 200;
+        this.comboLaby.DropDownStyle = ComboBoxStyle.DropDownList;
+        this.Controls.Add(this.labelLaby);
+        this.Controls.Add(this.comboLaby);
         top += spacing;
 
         // ============ Zapisz ============
@@ -211,8 +228,9 @@ partial class FormChangePlan
         this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
         this.MaximizeBox = false;
 
-        ((System.ComponentModel.ISupportInitialize)(this.numericNumerGrupy)).EndInit();
+        //((System.ComponentModel.ISupportInitialize)(this.comboGrupy)).EndInit();
         this.ResumeLayout(false);
     }
+
 
 }

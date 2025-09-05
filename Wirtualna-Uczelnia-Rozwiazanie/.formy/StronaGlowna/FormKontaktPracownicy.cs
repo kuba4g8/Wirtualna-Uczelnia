@@ -29,7 +29,7 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
         }
         private void btnReturn_Click(object sender, EventArgs e)
         {
-            new FormStronaGlowna().Show();
+            //new FormStronaGlowna().Show();
             this.Hide();
         }
 

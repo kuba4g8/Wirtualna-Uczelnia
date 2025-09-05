@@ -35,7 +35,6 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             tabControl = new TabControl();
             tabPoniedzialek = new TabPage();
             panelPoniedzialek = new FlowLayoutPanel();
-            planLekcjiUserControl1 = new Wirtualna_Uczelnia.formy.UserControls.PlanLekcjiUserControl();
             tabWtorek = new TabPage();
             panelWtorek = new FlowLayoutPanel();
             tabSroda = new TabPage();
@@ -47,10 +46,10 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             comboKierunek = new ComboBox();
             comboWydzial = new ComboBox();
             btnAddBlok = new Button();
-            comboGrupa = new ComboBox();
+            comboCwiczenia = new ComboBox();
+            comboLaby = new ComboBox();
             tabControl.SuspendLayout();
             tabPoniedzialek.SuspendLayout();
-            panelPoniedzialek.SuspendLayout();
             tabWtorek.SuspendLayout();
             tabSroda.SuspendLayout();
             tabCzwartek.SuspendLayout();
@@ -88,7 +87,6 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             // 
             panelPoniedzialek.AutoScroll = true;
             panelPoniedzialek.BackColor = Color.White;
-            panelPoniedzialek.Controls.Add(planLekcjiUserControl1);
             panelPoniedzialek.Dock = DockStyle.Fill;
             panelPoniedzialek.FlowDirection = FlowDirection.TopDown;
             panelPoniedzialek.Location = new Point(3, 3);
@@ -97,17 +95,6 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             panelPoniedzialek.Size = new Size(669, 636);
             panelPoniedzialek.TabIndex = 0;
             panelPoniedzialek.WrapContents = false;
-            // 
-            // planLekcjiUserControl1
-            // 
-            planLekcjiUserControl1.actColor = Color.Transparent;
-            planLekcjiUserControl1.BackColor = Color.Transparent;
-            planLekcjiUserControl1.Location = new Point(15, 15);
-            planLekcjiUserControl1.Margin = new Padding(5);
-            planLekcjiUserControl1.Name = "planLekcjiUserControl1";
-            planLekcjiUserControl1.Padding = new Padding(5);
-            planLekcjiUserControl1.Size = new Size(633, 200);
-            planLekcjiUserControl1.TabIndex = 0;
             // 
             // tabWtorek
             // 
@@ -233,15 +220,26 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             btnAddBlok.UseVisualStyleBackColor = true;
             btnAddBlok.Click += btnAddBlok_Click;
             // 
-            // comboGrupa
+            // comboCwiczenia
             // 
-            comboGrupa.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboGrupa.FormattingEnabled = true;
-            comboGrupa.Location = new Point(699, 448);
-            comboGrupa.Name = "comboGrupa";
-            comboGrupa.Size = new Size(338, 28);
-            comboGrupa.TabIndex = 4;
-            comboGrupa.SelectedIndexChanged += comboGrupa_SelectedIndexChanged;
+            comboCwiczenia.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboCwiczenia.FormattingEnabled = true;
+            comboCwiczenia.Location = new Point(699, 438);
+            comboCwiczenia.Name = "comboCwiczenia";
+            comboCwiczenia.Size = new Size(338, 28);
+            comboCwiczenia.TabIndex = 4;
+            comboCwiczenia.SelectedIndexChanged += CwiczeniaSelectedIndexChanged;
+
+            // 
+            // comboLaby
+            // 
+            comboLaby.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboLaby.FormattingEnabled = true;
+            comboLaby.Location = new Point(699, 503);
+            comboLaby.Name = "comboLaby";
+            comboLaby.Size = new Size(338, 28);
+            comboLaby.TabIndex = 5;
+            comboLaby.SelectedIndexChanged += LabySelectedIndexChanged;
             // 
             // FormEdytujPlanLekcji
             // 
@@ -249,7 +247,8 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(1050, 703);
-            Controls.Add(comboGrupa);
+            Controls.Add(comboLaby);
+            Controls.Add(comboCwiczenia);
             Controls.Add(btnAddBlok);
             Controls.Add(comboWydzial);
             Controls.Add(comboKierunek);
@@ -260,13 +259,14 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             Text = "Edytor planu zajęć - Administrator";
             tabControl.ResumeLayout(false);
             tabPoniedzialek.ResumeLayout(false);
-            panelPoniedzialek.ResumeLayout(false);
             tabWtorek.ResumeLayout(false);
             tabSroda.ResumeLayout(false);
             tabCzwartek.ResumeLayout(false);
             tabPiatek.ResumeLayout(false);
             ResumeLayout(false);
         }
+
+
 
         #endregion
 
@@ -283,8 +283,8 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         private System.Windows.Forms.FlowLayoutPanel panelPiatek;
         private ComboBox comboKierunek;
         private ComboBox comboWydzial;
-        private UserControls.PlanLekcjiUserControl planLekcjiUserControl1;
         private Button btnAddBlok;
-        private ComboBox comboGrupa;
+        private ComboBox comboCwiczenia;
+        private ComboBox comboLaby;
     }
 }

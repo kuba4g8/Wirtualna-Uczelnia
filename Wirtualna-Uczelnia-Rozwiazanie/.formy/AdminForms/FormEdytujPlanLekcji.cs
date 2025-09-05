@@ -1,237 +1,251 @@
 ﻿using MySql.Data.MySqlClient;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Security.AccessControl;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using Wirtualna_Uczelnia.formy.UserControls;
-using Wirtualna_Uczelnia.klasy;
 
 namespace Wirtualna_Uczelnia.formy.AdminForms
 {
     public partial class FormEdytujPlanLekcji : Form
     {
+        public bool canEdit; // Zmienna flaga ktora przetrzymuje wartosc czy ktos to odpalil ta forme moze edytowac
+        // bo moze odpalic albo nauczyciel albo admin lol
+
+
+        // Menadżer odpowiedzialny za wyświetlanie bloków zajęć
         private PlanLekcjiMenager planMenager;
+        // Listy danych pobieranych z bazy
         private List<Kierunek> kierunki;
         private List<Wydzial> wydzialy;
         private List<Kierunek> filtredKierunki;
+        private List<Grupy> grupyCwiczeniowe;
+        private List<Grupy> grupyLabowe;
 
-        // flaga ktora zabezpiecza przed jakims edytoaniem podczas inicjalizacji
+        // Flaga zabezpieczająca przed wywoływaniem eventów podczas init
         private bool isInitializing = true;
-
         private SqlMenager sqlMenager;
 
-        public FormEdytujPlanLekcji()
+        public FormEdytujPlanLekcji(bool canEdit)
         {
-            sqlMenager = new SqlMenager();
-            filtredKierunki = new List<Kierunek>();
-
             InitializeComponent();
 
-            // Inicjalizacja menedżera
-            planMenager = new PlanLekcjiMenager(panelPoniedzialek, panelWtorek, panelSroda, panelCzwartek, panelPiatek);
+            this.canEdit = canEdit;
 
+            // Inicjalizacja obiektów
+            sqlMenager = new SqlMenager();
+            filtredKierunki = new List<Kierunek>();
+            grupyLabowe = new List<Grupy>();
+            grupyCwiczeniowe = new List<Grupy>();
 
-            planMenager.OnPlanUpdated += () =>
+            // Ustawienie menadżera planu i subskrypcja eventu
+            planMenager = new PlanLekcjiMenager(canEdit, panelPoniedzialek, panelWtorek, panelSroda, panelCzwartek, panelPiatek);
+            // akcja ktora sie wywoluje po kliknieciu w pojedynczy plan / aby edytowac
+            planMenager.OnPlanUpdated += RefreshPlan;
+            if (canEdit) // moze edytowac i przypisuje akcje
             {
-                if (comboKierunek.SelectedIndex != -1)
-                {
-                    UpdatePlanLekcji(filtredKierunki[comboKierunek.SelectedIndex].id_kierunku, false);
-                }
-            };
+                btnAddBlok.Enabled = true;
+                btnAddBlok.Visible = true;
+            }
+            else
+            {
+                btnAddBlok.Enabled = false;
+                btnAddBlok.Visible = false;
+            }
 
-            // Wczytanie danych
-            LoadInitialData();
-
-            isInitializing = false;
+                LoadInitialData(); // ładuje wydziały, kierunki
+            isInitializing = false; // od tego momentu reagujemy na zmiany
+            UpdateUIState(); // blokuj/odblokuj przyciski
         }
 
-        // funkcja laduje WSZYSTKIE informacje z bazy danych i ustawia comboboxy
-        // where idKierunku = @idKierunku
+        /// <summary>Wczytuje dane z bazy i przygotowuje ComboBoxy</summary>
         private void LoadInitialData()
         {
-            // Wczytanie danych z bazy
-            LoadDataFromDatabase();
-
-            // Wypełnienie comboboxów
-            PopulateWydzialy();
-            PopulateKierunki();
+            comboCwiczenia.Items.Clear(); // reset grup
+            LoadDataFromDatabase();  // SELECT * FROM kierunki, wydzialy
+            PopulateWydzialy();      // wypelnij comboWydzial
+            PopulateKierunki();      // wypelnij comboKierunek wszystkimi kierunkami
         }
 
         private void LoadDataFromDatabase()
         {
-            string kierunkiQuery = "SELECT * FROM kierunki";
-            kierunki = sqlMenager.loadDataToList<Kierunek>(new MySqlCommand(kierunkiQuery));
-
-            string wydzialyQuery = "SELECT * FROM wydzialy";
-            wydzialy = sqlMenager.loadDataToList<Wydzial>(new MySqlCommand(wydzialyQuery));
+            // pobierz wszystkie kierunki i wydzialy
+            kierunki = sqlMenager.loadDataToList<Kierunek>(new MySqlCommand("SELECT * FROM kierunki"));
+            wydzialy = sqlMenager.loadDataToList<Wydzial>(new MySqlCommand("SELECT * FROM wydzialy"));
         }
 
+        /// <summary>Wypełnia comboWydzial nazwami wydziałów</summary>
         private void PopulateWydzialy()
         {
             comboWydzial.Items.Clear();
-            foreach (var wydzial in wydzialy)
-            {
+
+            foreach (Wydzial wydzial in wydzialy)
                 comboWydzial.Items.Add(wydzial.nazwa);
-            }
         }
 
-        private void PopulateKierunki(int? selectedWydzialId = null)
+        /// <summary>Wypełnia comboKierunek kierunkami; opcjonalnie filtr po wydziale</summary>
+        private void PopulateKierunki(int? wydzialId = null)
         {
             comboKierunek.Items.Clear();
             filtredKierunki.Clear();
 
-            // odfiltrowanie kierunkow straszna metoda, ale niestety dzialajaca za dobrze zeby unikac ze nie istnieje
-            // filtruje kierunki po idwydzialu jaki jest zaznaczony
-            var filteredKierunki = selectedWydzialId.HasValue
-                ? kierunki.Where(k => k.id_wydzialu == selectedWydzialId.Value)
+            // wybierz kierunki dla wydzialId lub wszystkie
+            // aka przefiltrowanie kierunkow od wydzial gdzie rowna sie ich kierunek id
+            var list = wydzialId.HasValue
+                ? kierunki.Where(k => k.id_wydzialu == wydzialId.Value)
                 : kierunki;
 
-            filtredKierunki.AddRange(filteredKierunki);
+            filtredKierunki.AddRange(list);
 
-            foreach (var kierunek in filtredKierunki)
-            {
+            foreach (Kierunek kierunek in filtredKierunki)
                 comboKierunek.Items.Add($"{kierunek.nazwa_kierunku} {kierunek.specjalizacja}");
-            }
         }
 
-        private void PopulateGrupy(int kierunekID)
+        /// <summary>Ładuje dostępne grupy dla wybranego kierunku</summary>
+        private void PopulateGrupy()
         {
-            comboGrupa.Items.Clear();
+            comboCwiczenia.Items.Clear();
+            comboLaby.Items.Clear();
+            grupyCwiczeniowe.Clear();
+            grupyLabowe.Clear();
 
-            List<BlokLekcjiHolder> wszystkieLekcje = planMenager.loadAllInfo(kierunekID);
-            var uniqeGrupyKierunku = planMenager.loadGrupsInfo(filtredKierunki[comboKierunek.SelectedIndex].id_kierunku);
-
-            foreach (int grupaId in uniqeGrupyKierunku)
+            // wymagane wybrane wydzial i kierunek
+            if (comboWydzial.SelectedIndex < 0 || comboKierunek.SelectedIndex < 0)
+                return;
+            Kierunek zaznaczonyKierunek = filtredKierunki[comboKierunek.SelectedIndex];
+            List<Grupy> listGrupyFull = planMenager.loadGrupsInfo(zaznaczonyKierunek.id_kierunku);
+            // rozdziel ćwiczeniowe vs laboratoryjne
+            foreach (Grupy grupa in listGrupyFull)
             {
-                foreach (var lekcja in wszystkieLekcje)
-                {
-                    if (lekcja.id_grupy == grupaId)
-                    {
-                        comboGrupa.Items.Add(lekcja.numer_grupy + ": " + lekcja.typ_grupy + ": " + lekcja.id_grupy);
-                        break;
-                    }
-                }
+                if (grupa.typ_grupy.Equals("Laboratoryjna"))
+                    grupyLabowe.Add(grupa);
+                else if (grupa.typ_grupy.Equals("Ćwiczeniowa"))
+                    grupyCwiczeniowe.Add(grupa);
             }
+
+            // dodaj z prefixami
+            foreach (var grupa in grupyCwiczeniowe)
+                comboCwiczenia.Items.Add($"Ćw {grupa.numer_grupy}");
+            foreach (var grupa in grupyLabowe)
+                comboLaby.Items.Add($"Lab {grupa.numer_grupy}");
+        }
+
+        /// <summary>Zdarzenie: zmiana wydziału</summary>
+        /// 
+
+        private void CwiczeniaSelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateUIState();
+            if (IsFullySelected())
+                RefreshPlan();
+        }
+
+        private void LabySelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateUIState();
+            if (IsFullySelected())
+                RefreshPlan();
         }
 
         private void comboWydzial_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (isInitializing || comboWydzial.SelectedIndex == -1)
+            if (isInitializing)
                 return;
 
             planMenager.clearPanels();
 
-            // Pobierz ID wybranego wydziału
-            int wydzialId = wydzialy[comboWydzial.SelectedIndex].id_wydzialu;
-
-            // Zapamiętaj aktualnie wybrany kierunek (jeśli jest)
-            string currentKierunek = comboKierunek.SelectedItem?.ToString();
-
-            // Odśwież listę kierunków
-            PopulateKierunki(wydzialId);
-
-            // Przywróć poprzedni wybór jeśli istnieje
-            if (!string.IsNullOrEmpty(currentKierunek))
+            // zachowaj poprzedni kierunek jeśli należy do nowego wydziału
+            int prevKierId = comboKierunek.SelectedIndex >= 0
+                ? filtredKierunki[comboKierunek.SelectedIndex].id_kierunku
+                : -1;
+            // ustaw filtr i przeladuj kierunki
+            PopulateKierunki(wydzialy[comboWydzial.SelectedIndex].id_wydzialu);
+            // przywróć wybór jeśli nadal pasuje
+            if (prevKierId > 0)
             {
-                int index = comboKierunek.Items.IndexOf(currentKierunek);
-                if (index >= 0) comboKierunek.SelectedIndex = index;
+                int idx = filtredKierunki.FindIndex(k => k.id_kierunku == prevKierId);
+                comboKierunek.SelectedIndex = (idx >= 0) ? idx : -1;
             }
+            comboCwiczenia.Items.Clear();
+            UpdateUIState();
         }
 
+        /// <summary>Zdarzenie: zmiana kierunku</summary>
         private void comboKierunek_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (isInitializing) 
+                return;
+
             planMenager.clearPanels();
 
-            if (!isInitializing && comboKierunek.SelectedIndex != -1)
-            {
-
-                var selectedKierunek = filtredKierunki[comboKierunek.SelectedIndex];
-
-                // szuka indexu wydzialu w liście wydziałów
-                int wydzialIndex = wydzialy.FindIndex(w => w.id_wydzialu == selectedKierunek.id_wydzialu);
-                comboWydzial.SelectedIndex = wydzialIndex;
-
-                // Aktualizacja widoku planu
-                UpdatePlanLekcji(selectedKierunek.id_kierunku, true);
-            }
-        }
-
-        public void UpdatePlanLekcji(int kierunekId, bool changeGroups)
-        {
-            if (changeGroups)
-                PopulateGrupy(kierunekId);
-
-            // jezeli nie ma zadnych grup
-            if (comboGrupa.Items.Count == 0)
-            {
-                comboGrupa.SelectedIndex = -1;
+            if (comboKierunek.SelectedIndex < 0) 
                 return;
-            }
 
-            // jezeli sa jakies grupy to ustaw domyslnie pierwsza
-            if (comboGrupa.SelectedIndex == -1)
-            {
-                comboGrupa.SelectedIndex = 0;
-            }
+            // synchronizuj wydział do wybranego kierunku
+            Kierunek wybranyKierunek = filtredKierunki[comboKierunek.SelectedIndex];
+            comboWydzial.SelectedIndex = wydzialy.FindIndex(wydzial => wydzial.id_wydzialu == wybranyKierunek.id_wydzialu);
+            PopulateGrupy();
 
-            if (kierunekId > 0 && comboGrupa.SelectedIndex != -1)
-            {
-                isInitializing = true;
-                int groupID = planMenager.uniqeGrupyKierunku[comboGrupa.SelectedIndex];
-                planMenager.loadFinalInfo(kierunekId, groupID);
-                planMenager.loadVisually();
-                isInitializing = false;
-            }
-            else
-            {
-                MessageBox.Show("Wybierz kierunek aby wyświetlić plan zajęć.");
-            }
+            bool refresh = true;
+
+            if (comboCwiczenia.Items.Count > 0)
+                comboCwiczenia.SelectedIndex = 0;
+            else refresh = false;
+
+            if (comboLaby.Items.Count > 0)
+                comboLaby.SelectedIndex = 0;
+            else refresh = false;
+
+            if (refresh)
+                RefreshPlan();
+            UpdateUIState();
         }
 
-        private void comboGrupa_SelectedIndexChanged(object sender, EventArgs e)
+        /// <summary>Odświeża widok planu zajęć</summary>
+        private void RefreshPlan()
         {
-            UpdatePlanLekcji(filtredKierunki[comboKierunek.SelectedIndex].id_kierunku, false);
+            if (!IsFullySelected())
+                return;
+            int kierunekID = filtredKierunki[comboKierunek.SelectedIndex].id_kierunku;
+            List<Int32> groupsID = new List<Int32>();
+
+            groupsID.Add(grupyCwiczeniowe[comboCwiczenia.SelectedIndex].id_grupy);
+
+            groupsID.Add(grupyLabowe[comboLaby.SelectedIndex].id_grupy);
+
+            planMenager.loadFinalInfo(kierunekID, groupsID);
+            planMenager.loadVisually();
         }
 
+        private bool IsFullySelected() =>
+            comboWydzial.SelectedIndex >= 0 &&
+            comboKierunek.SelectedIndex >= 0 &&
+            comboCwiczenia.SelectedIndex >= 0 &&
+            comboLaby.SelectedIndex >= 0;
+
+        private void UpdateUIState()
+        {
+            btnAddBlok.Enabled = IsFullySelected();
+        }
+
+        /// <summary>Dodaje nowy blok zajęć</summary>
         private void btnAddBlok_Click(object sender, EventArgs e)
         {
-            if (comboKierunek.SelectedIndex == -1)
+            if (!IsFullySelected())
             {
-                MessageBox.Show("Wybiezr kierunek najpeirw");
+                MessageBox.Show("Wybierz wydział, kierunek i grupę aby dodać blok.");
                 return;
             }
-
-            FormChangePlan frm = new FormChangePlan(filtredKierunki[comboKierunek.SelectedIndex].id_kierunku);
-            frm.ShowDialog();
-
-            UpdatePlanLekcji(filtredKierunki[comboKierunek.SelectedIndex].id_kierunku, false);
+            int kierId = filtredKierunki[comboKierunek.SelectedIndex].id_kierunku;
+            using (var frm = new FormChangePlan(kierId))
+            {
+                frm.ShowDialog();
+            }
+            RefreshPlan();
         }
-    }
-
-    internal class Kierunek
-    {
-        public int id_kierunku { get; set; }
-        public int id_opiekunaRoku { get; set; }
-        public int semestr { get; set; }
-        public string nazwa_kierunku { get; set; }
-        public string specjalizacja { get; set; }
-        public int id_wydzialu { get; set; }
-    }
-
-    internal class Wydzial
-    {
-        public int id_wydzialu { get; set; }
-        public string nazwa { get; set; }
     }
 
     internal class PlanLekcjiMenager
     {
+        bool canEdit;
+
         SqlMenager sqlMenager;
 
         public List<BlokLekcjiHolder> wszystkieLekcje = new List<BlokLekcjiHolder>();
@@ -246,9 +260,10 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
 
         public event Action OnPlanUpdated; // Dodaj event
 
-        public PlanLekcjiMenager(Panel panelPoniedzialek, Panel panelWtorek, Panel panelSroda, Panel panelCzwartek, Panel panelPiatek)
+        public PlanLekcjiMenager(bool canEdit, Panel panelPoniedzialek, Panel panelWtorek, Panel panelSroda, Panel panelCzwartek, Panel panelPiatek)
         {
             sqlMenager = new SqlMenager();
+            this.canEdit = canEdit;
 
             this.panelPoniedzialek = panelPoniedzialek;
             this.panelWtorek = panelWtorek;
@@ -277,7 +292,7 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         {
             try
             {
-                string querry = "SELECT pl.id_zajecia, pl.id_prowadzacego, pl.id_grupy, g.typ_grupy, g.numer_grupy, pl.id_kierunku, p.imie, p.nazwisko, p.stopien_naukowy, pl.sala, pl.dzien, pl.godzina_startu, pl.godzina_konca, pl.id_przedmiotu, przed.nazwa AS przedmiot, pl.rodzaj, pl.notatki FROM plan_lekcji pl JOIN pracownicy p ON pl.id_prowadzacego = p.userID JOIN przedmioty przed ON pl.id_przedmiotu = przed.id_przedmiotu JOIN grupy g ON pl.id_grupy = g.id_grupy WHERE pl.id_kierunku = @idKierunku ORDER BY pl.godzina_startu ASC";
+                string querry = "SELECT \r\n    pl.id_zajecia, \r\n    pl.id_prowadzacego, \r\n    g.id_grupy, \r\n    g.typ_grupy, \r\n    g.numer_grupy, \r\n    g.id_kierunku, \r\n    p.imie, \r\n    p.nazwisko, \r\n    p.stopien_naukowy, \r\n    pl.sala, \r\n    pl.dzien, \r\n    pl.godzina_startu, \r\n    pl.godzina_konca, \r\n    pl.id_przedmiotu,\r\n    przed.nazwa AS przedmiot, \r\n    pl.rodzaj, \r\n    pl.notatki \r\nFROM grupy g\r\nLEFT JOIN plan_lekcji pl ON pl.id_grupy = g.id_grupy\r\nLEFT JOIN pracownicy p ON pl.id_prowadzacego = p.userID\r\nLEFT JOIN przedmioty przed ON pl.id_przedmiotu = przed.id_przedmiotu\r\nWHERE g.id_kierunku = @idKierunku\r\nORDER BY pl.godzina_startu ASC;\r\n";
 
                 var cmd = new MySqlCommand(querry);
 
@@ -292,57 +307,62 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
                 return null;
             }
         }
-        public List<Int32> loadGrupsInfo(int kierunekID)
+        public List<Grupy> loadGrupsInfo(int kierunekID)
         {
-            string querry = "SELECT DISTINCT id_grupy FROM plan_lekcji WHERE id_kierunku = @idKierunku";
+            string querry = "SELECT * FROM grupy WHERE id_kierunku = @idKierunku";
 
             var cmd = new MySqlCommand(querry);
             cmd.Parameters.AddWithValue("@idKierunku", kierunekID);
 
-            uniqeGrupyKierunku = sqlMenager.loadDataToList<Int32>(cmd);
+            List<Grupy> grupy = sqlMenager.loadDataToList<Grupy>(cmd);
 
-            return uniqeGrupyKierunku;
+            return grupy;
         }
 
-        public List<BlokLekcjiHolder> loadFinalInfo(int kierunekID, int idGrupy)
+        public List<BlokLekcjiHolder> loadFinalInfo(int kierunekID, List<Int32> idGrup)
         {
             try
             {
                 wszystkieLekcje.Clear();
+                clearPanels();
 
-                string querry =  @" SELECT 
-                                    pl.id_zajecia, 
-                                    pl.id_prowadzacego, 
-                                    pl.id_grupy, 
-                                    g.typ_grupy, 
-                                    g.numer_grupy, 
-                                    pl.id_kierunku, 
-                                    p.imie, 
-                                    p.nazwisko, 
-                                    p.stopien_naukowy, 
-                                    pl.sala, 
-                                    pl.dzien, 
-                                    pl.godzina_startu, 
-                                    pl.godzina_konca, 
-                                    pl.id_przedmiotu,
-                                    przed.nazwa AS przedmiot, 
-                                    pl.rodzaj, 
-                                    pl.notatki 
-                                    FROM plan_lekcji pl 
-                                    JOIN pracownicy p ON pl.id_prowadzacego = p.userID 
-                                    JOIN przedmioty przed ON pl.id_przedmiotu = przed.id_przedmiotu 
-                                    JOIN grupy g ON pl.id_grupy = g.id_grupy 
-                                    WHERE pl.id_kierunku = @idKierunku AND pl.id_grupy = @idGrupy 
-                                    ORDER BY pl.godzina_startu ASC";
+                string querry = @"SELECT 
+                                pl.id_zajecia, 
+                                pl.id_prowadzacego, 
+                                g.id_grupy, 
+                                g.typ_grupy, 
+                                g.numer_grupy, 
+                                g.id_kierunku, 
+                                p.imie, 
+                                p.nazwisko, 
+                                p.stopien_naukowy, 
+                                pl.sala, 
+                                pl.dzien, 
+                                pl.godzina_startu, 
+                                pl.godzina_konca, 
+                                pl.id_przedmiotu,
+                                przed.nazwa AS przedmiot, 
+                                pl.rodzaj, 
+                                pl.notatki 
+                            FROM grupy g
+                            INNER JOIN plan_lekcji pl ON g.id_grupy = pl.id_grupy
+                            LEFT JOIN pracownicy p ON pl.id_prowadzacego = p.userID
+                            LEFT JOIN przedmioty przed ON pl.id_przedmiotu = przed.id_przedmiotu
+                            WHERE g.id_kierunku = @idKierunku AND g.id_grupy = @idGrupy
+                            ORDER BY pl.godzina_startu ASC;";
 
-                var cmd = new MySqlCommand(querry);
-                cmd.Parameters.AddWithValue("@idKierunku", kierunekID);
-                cmd.Parameters.AddWithValue("@idGrupy", idGrupy);
+                for (int i = 0; i < idGrup.Count; i++)
+                {
+                    var cmd = new MySqlCommand(querry);
+                    cmd.Parameters.AddWithValue("@idKierunku", kierunekID);
+                    cmd.Parameters.AddWithValue("@idGrupy", idGrup[i]);
 
-                wszystkieLekcje = sqlMenager.loadDataToList<BlokLekcjiHolder>(cmd);
+                    var tempLekcje = sqlMenager.loadDataToList<BlokLekcjiHolder>(cmd);
+                    wszystkieLekcje.AddRange(tempLekcje);
+                }
+                wszystkieLekcje = wszystkieLekcje.OrderBy(lekcja => lekcja.godzina_startu).ToList();
 
                 return wszystkieLekcje;
-
             }
             catch (Exception ex)
             {
@@ -376,11 +396,13 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
                 string przedmiot = item.przedmiot;
                 string prowadzacy = item.stopien_naukowy + " " + item.imie + " " + item.nazwisko;
                 string godziny = item.godzina_startu.ToString(@"hh\:mm") + "-" + item.godzina_konca.ToString(@"hh\:mm");
-
+                string rodzajGrupa = item.numer_grupy + ": " + item.rodzaj;
 
                 PlanLekcjiUserControl planLekcjiHolder = new PlanLekcjiUserControl();
-                planLekcjiHolder.initalizeControlsEditable(sala, godziny, przedmiot, prowadzacy, item);
-                planLekcjiHolder.OnClicked += PlanLekcjiHolderUserClicked;
+
+                planLekcjiHolder.initalizeControlsEditable(sala, godziny, przedmiot, prowadzacy, rodzajGrupa,  item);
+                if (canEdit)
+                    planLekcjiHolder.OnClicked += PlanLekcjiHolderUserClicked;
 
                 switch (item.dzien.DayOfWeek)
                 {
@@ -460,5 +482,33 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         public string przedmiot { get; set; }
         public string rodzaj { get; set; }
         public string notatki { get; set; }
+
+        public override string ToString()
+        {
+            return $"{numer_grupy}: {rodzaj}, id kierunku: {id_kierunku}, id grupy: {id_grupy}, {przedmiot}   {rodzaj}";
+        }
+    }
+    internal class Kierunek
+    {
+        public int id_kierunku { get; set; }
+        public int id_opiekunaRoku { get; set; }
+        public int semestr { get; set; }
+        public string nazwa_kierunku { get; set; }
+        public string specjalizacja { get; set; }
+        public int id_wydzialu { get; set; }
+    }
+
+    internal class Wydzial
+    {
+        public int id_wydzialu { get; set; }
+        public string nazwa { get; set; }
+    }
+
+    internal class Grupy
+    {
+        public int id_grupy { get; set; }
+        public int id_kierunku { get; set; }
+        public string typ_grupy { get; set; }
+        public int numer_grupy { get; set; }
     }
 }

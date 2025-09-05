@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using Wirtualna_Uczelnia.formy.AdminForms;
 using Wirtualna_Uczelnia.klasy;
 
 namespace Wirtualna_Uczelnia.formy.StronaGlowna
@@ -52,6 +53,13 @@ namespace Wirtualna_Uczelnia.formy.StronaGlowna
         private void wylogujnauczyciel_Click(object sender, EventArgs e)
         {
             SesionControl.loginMenager.logOut();
+        }
+
+        private void btnPlanLekcji_Click(object sender, EventArgs e)
+        {
+            FormEdytujPlanLekcji nieEdytowalny = new FormEdytujPlanLekcji(false);
+
+            nieEdytowalny.ShowDialog();
         }
     }
 }

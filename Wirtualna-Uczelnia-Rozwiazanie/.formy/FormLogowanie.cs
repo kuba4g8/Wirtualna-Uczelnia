@@ -63,6 +63,11 @@ namespace Wirtualna_Uczelnia
         {
 
         }
+
+        private void txtLogin_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 
 }

@@ -16,6 +16,8 @@ namespace Wirtualna_Uczelnia
     {
         private MySqlConnection _conn; // obiekt klasy umozliwiajacy laczenie sie z baza danych.
 
+        private bool cloudConnect = true;
+
 
         public MySqlConnection Connection 
         { 
@@ -30,8 +32,8 @@ namespace Wirtualna_Uczelnia
         {
             public static readonly string connIP = "sql.freedb.tech";
             public static readonly string dataBaseName = "freedb_wirtualna_uczelnia";
-            public static readonly string username = "freedb_KubaH";
-            public static readonly string PWD = "w6#csh$?cW!TDhz";
+            public static readonly string username = "freedb_lolix";
+            public static readonly string PWD = "a!Gz*5Hz4Ud8VeZ";
         }
         private static class remoteConnInfo
         {

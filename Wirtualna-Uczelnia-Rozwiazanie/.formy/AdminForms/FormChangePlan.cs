@@ -23,6 +23,8 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         // albo przekazuje obiekt editableBlok albo kierunekID
 
         List<Pracownik> nauczyciele;
+        private List<Grupy> grupyLabowe;
+        private List<Grupy> grupyCwiczeniowe;
 
         SqlMenager sqlManager;
 
@@ -38,6 +40,9 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         public FormChangePlan(int kierunekID, bool isEditing = false)
         {
             InitializeComponent();
+            grupyLabowe = new List<Grupy>();
+            grupyCwiczeniowe = new List<Grupy>();
+
             this.isEditing = isEditing;
             this.kierunekID = kierunekID;
             sqlManager = new SqlMenager();
@@ -45,15 +50,14 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             comboPrzedmiot.Enabled = false;
             comboProwadzacy.SelectedIndexChanged += comboProwadzacy_SelectedIndexChanged;
 
-            LoadProwadzacy();
-            LoadGrupy();
-
-            updateVisualChanges(null);
+            InitializeForm(kierunekID);
         }
 
         public FormChangePlan(BlokLekcjiHolder blokPrzekazany, bool isEditing = true)
         {
             InitializeComponent();
+            grupyLabowe = new List<Grupy>();
+            grupyCwiczeniowe = new List<Grupy>();
             this.editableBlok = blokPrzekazany;
             this.isEditing = isEditing;
             sqlManager = new SqlMenager();
@@ -61,13 +65,13 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             comboPrzedmiot.Enabled = false;
             comboProwadzacy.SelectedIndexChanged += comboProwadzacy_SelectedIndexChanged;
 
-            LoadProwadzacy();
-            LoadGrupy();
+            InitializeForm(blokPrzekazany.id_kierunku);
 
             updateVisualChanges(blokPrzekazany);
         }
 
-        private BlokLekcjiHolder GetDataFromForm()
+        // domyslnie bierze info z cwiczen
+        private List<BlokLekcjiHolder> GetDataFromForm(ComboBox comboPicker, bool allGroups = false)
         {
             if (comboProwadzacy.SelectedItem == null)
                 throw new Exception("Wybierz prowadzącego.");
@@ -78,11 +82,19 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             if (string.IsNullOrWhiteSpace(txtSala.Text))
                 throw new Exception("Wprowadź numer sali.");
 
+            if (txtSala.Text.Length > 10)
+                throw new Exception("Proszę wprowadzić krótszą nazwę sali.");
+
             if (pickerStart.Value >= pickerKoniec.Value)
                 throw new Exception("Godzina końca musi być po godzinie rozpoczęcia.");
 
             if (string.IsNullOrWhiteSpace(comboRodzaj.Text))
                 throw new Exception("Wybierz rodzaj zajęć.");
+
+            if (comboPicker.SelectedIndex == -1 && !allGroups)
+            {
+                throw new Exception("Prosze zaznaczyc jakas grupe");
+            }
 
             if (pickerDzien.SelectedItem == null)
                 throw new Exception("Wybierz dzień tygodnia.");
@@ -90,100 +102,166 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             var prowadzacy = (ProwadzacyOption)comboProwadzacy.SelectedItem;
             var przedmiot = (PrzedmiotOption)comboPrzedmiot.SelectedItem;
 
-            return new BlokLekcjiHolder
+            List<Grupy> selectedGroups = new();
+
+            // wszystkie grupy tzn wyklad
+            if (allGroups)
             {
-                id_zajecia = isEditing ? editableBlok.id_zajecia : 0,
-                id_prowadzacego = prowadzacy.id_prowadzacego,
-                przedmiot = przedmiot.nazwa,
-                id_przedmiotu = przedmiot.id_przedmiotu,
-                stopien_naukowy = prowadzacy.stopien_naukowy,
-                imie = prowadzacy.imie,
-                nazwisko = prowadzacy.nazwisko,
-                sala = txtSala.Text.Trim(),
-                dzien = GetDateFromDayName(pickerDzien.SelectedItem.ToString()),
-                godzina_startu = pickerStart.Value.TimeOfDay,
-                godzina_konca = pickerKoniec.Value.TimeOfDay,
-                rodzaj = comboRodzaj.Text,
-                notatki = txtNotatki.Text.Trim(),
-                id_grupy = (int)numericNumerGrupy.Value
-            };
+                selectedGroups = grupyCwiczeniowe;
+            }
+            // albo laby, albo cwiczenia. Na pewno pojedyncze wstawienie
+            else
+            {
+                if (comboPicker.Equals(comboCwiczenia))
+                    selectedGroups.Add(grupyCwiczeniowe[comboPicker.SelectedIndex]);
+                else
+                    selectedGroups.Add(grupyLabowe[comboPicker.SelectedIndex]);
+            }
+
+            List<BlokLekcjiHolder> bloki = new();
+
+            foreach (var grupa in selectedGroups)
+            {
+                bloki.Add(new BlokLekcjiHolder
+                {
+                    id_zajecia = isEditing ? editableBlok.id_zajecia : 0,
+                    id_prowadzacego = prowadzacy.id_prowadzacego,
+                    przedmiot = przedmiot.nazwa,
+                    id_przedmiotu = przedmiot.id_przedmiotu,
+                    stopien_naukowy = prowadzacy.stopien_naukowy,
+                    imie = prowadzacy.imie,
+                    nazwisko = prowadzacy.nazwisko,
+                    sala = txtSala.Text.Trim(),
+                    dzien = GetDateFromDayName(pickerDzien.SelectedItem.ToString()),
+                    godzina_startu = pickerStart.Value.TimeOfDay,
+                    godzina_konca = pickerKoniec.Value.TimeOfDay,
+                    rodzaj = comboRodzaj.Text,
+                    notatki = txtNotatki.Text.Trim(),
+                    id_grupy = grupa.id_grupy
+                });
+            }
+            return bloki;
+        }
+
+
+        private MySqlCommand parameterSetter(BlokLekcjiHolder blok, string querry)
+        {
+            var cmd = new MySqlCommand(querry);
+
+            cmd.Parameters.AddWithValue("@id_prowadzacego", blok.id_prowadzacego);
+            cmd.Parameters.AddWithValue("@id_grupy", blok.id_grupy);
+            cmd.Parameters.AddWithValue("@id_kierunku", blok.id_kierunku);
+            cmd.Parameters.AddWithValue("@sala", blok.sala);
+            cmd.Parameters.AddWithValue("@dzien", blok.dzien.Date);
+            cmd.Parameters.AddWithValue("@godzina_startu", blok.godzina_startu);
+            cmd.Parameters.AddWithValue("@godzina_konca", blok.godzina_konca);
+            cmd.Parameters.AddWithValue("@id_przedmiotu", blok.id_przedmiotu);
+            cmd.Parameters.AddWithValue("@rodzaj", blok.rodzaj);
+            cmd.Parameters.AddWithValue("@notatki", string.IsNullOrWhiteSpace(blok.notatki) ? DBNull.Value : blok.notatki);
+
+            return cmd;
+        }
+        // 0 -> wyklad
+        // 1 -> cwiczenia
+        // 2 -> laby
+        private void resetComboGrups()
+        {
+            comboLaby.Enabled = false;
+            comboCwiczenia.Enabled = false;
+
+            int selIndex = comboRodzaj.SelectedIndex;
+
+            // wyklad
+            if (selIndex == 0 || selIndex == -1)
+            {
+                return;
+            }
+            // cwiczenia
+            else if (selIndex == 1)
+            {
+                comboCwiczenia.Enabled = true;
+            }
+            // laby
+            else
+            {
+                comboLaby.Enabled = true;
+            }
+        }
+
+        private void ComboRodzaj_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            resetComboGrups();
         }
 
         private void btnZapisz_Click(object sender, EventArgs e)
         {
             try
             {
-                var blok = GetDataFromForm();
+                List<BlokLekcjiHolder> bloki = new List<BlokLekcjiHolder>();
 
-                if (editableBlok == null)
-                    blok.id_kierunku = kierunekID;
-                else
-                    blok.id_kierunku = editableBlok.id_kierunku;
-
-                int result = 0;
-
-                if (isEditing)
+                // analizowany wyklad, wiele blokow
+                if (comboRodzaj.SelectedIndex == 0) 
                 {
-                    string updateQuery = @"
-                                            UPDATE plan_lekcji
-                                            SET
-                                                id_prowadzacego = @id_prowadzacego,
-                                                id_grupy = @id_grupy,
-                                                id_kierunku = @id_kierunku,
-                                                sala = @sala,
-                                                dzien = @dzien,
-                                                notatki = @notatki,
-                                                godzina_startu = @godzina_startu,
-                                                godzina_konca = @godzina_konca,
-                                                id_przedmiotu = @id_przedmiotu,
-                                                rodzaj = @rodzaj
-                                            WHERE id_zajecia = @id_zajecia;
-                                            ";
-
-                    var cmd = new MySqlCommand(updateQuery, sqlManager.Connection);
-
-                    cmd.Parameters.AddWithValue("@id_zajecia", blok.id_zajecia);
-                    cmd.Parameters.AddWithValue("@id_prowadzacego", blok.id_prowadzacego);
-                    cmd.Parameters.AddWithValue("@id_grupy", blok.id_grupy);
-                    cmd.Parameters.AddWithValue("@id_kierunku", blok.id_kierunku);
-                    cmd.Parameters.AddWithValue("@sala", blok.sala);
-                    cmd.Parameters.AddWithValue("@dzien", blok.dzien.Date);
-                    cmd.Parameters.AddWithValue("@godzina_startu", blok.godzina_startu);
-                    cmd.Parameters.AddWithValue("@godzina_konca", blok.godzina_konca);
-                    cmd.Parameters.AddWithValue("@id_przedmiotu", blok.id_przedmiotu);
-                    cmd.Parameters.AddWithValue("@rodzaj", blok.rodzaj);
-                    cmd.Parameters.AddWithValue("@notatki", string.IsNullOrWhiteSpace(blok.notatki) ? DBNull.Value : blok.notatki);
-
-                    // wykonanie
-                    bool ok = sqlManager.executeRawCommand(cmd);
-
-                    MessageBox.Show(ok ? "Zaktualizowano blok lekcji." : "Nie udało się zaktualizować rekordu.");
+                    bloki = GetDataFromForm(comboCwiczenia, allGroups: true);
                 }
+                // cwiczenia lub laby -> jeden blok
                 else
                 {
-                    string insertQuery = @"
-                INSERT INTO plan_lekcji (
-                    id_prowadzacego, id_grupy, id_kierunku, sala, dzien,
-                    godzina_startu, godzina_konca, id_przedmiotu, rodzaj, notatki
-                ) VALUES (
-                    @id_prowadzacego, @id_grupy, @id_kierunku, @sala, @dzien,
-                    @godzina_startu, @godzina_konca, @id_przedmiotu, @rodzaj, @notatki
-                )";
+                    // sciagamy cwiczenia
+                    if (comboRodzaj.SelectedIndex == 1)
+                        bloki.AddRange(GetDataFromForm(comboCwiczenia));
 
-                    var cmd = new MySqlCommand(insertQuery);
-                    cmd.Parameters.AddWithValue("@id_prowadzacego", blok.id_prowadzacego);
-                    cmd.Parameters.AddWithValue("@id_grupy", blok.id_grupy);
-                    cmd.Parameters.AddWithValue("@id_kierunku", blok.id_kierunku);
-                    cmd.Parameters.AddWithValue("@sala", blok.sala);
-                    cmd.Parameters.AddWithValue("@dzien", blok.dzien.Date);
-                    cmd.Parameters.AddWithValue("@godzina_startu", blok.godzina_startu);
-                    cmd.Parameters.AddWithValue("@godzina_konca", blok.godzina_konca);
-                    cmd.Parameters.AddWithValue("@id_przedmiotu", blok.id_przedmiotu);
-                    cmd.Parameters.AddWithValue("@rodzaj", blok.rodzaj);
-                    cmd.Parameters.AddWithValue("@notatki", blok.notatki);
+                    // sciagamy laby
+                    if (comboRodzaj.SelectedIndex == 2) // Laboratoria
+                        bloki.AddRange(GetDataFromForm(comboLaby));
+                }
 
-                    bool ok = sqlManager.executeRawCommand(cmd);
-                    MessageBox.Show(ok ? "Dodano nowy blok lekcji." : "Nie udało się dodać rekordu.");
+                foreach (var blok in bloki)
+                {
+                    blok.id_kierunku = editableBlok == null ? kierunekID : editableBlok.id_kierunku;
+
+                    if (isEditing)
+                    {
+                        string updateQuery = @"
+                            UPDATE plan_lekcji
+                            SET
+                                id_prowadzacego = @id_prowadzacego,
+                                id_grupy = @id_grupy,
+                                id_kierunku = @id_kierunku,
+                                sala = @sala,
+                                dzien = @dzien,
+                                notatki = @notatki,
+                                godzina_startu = @godzina_startu,
+                                godzina_konca = @godzina_konca,
+                                id_przedmiotu = @id_przedmiotu,
+                                rodzaj = @rodzaj
+                            WHERE id_zajecia = @id_zajecia;
+                        ";
+
+                        blok.id_zajecia = editableBlok.id_zajecia;
+                        var cmd = parameterSetter(blok, updateQuery);
+                        cmd.Parameters.AddWithValue("@id_zajecia", blok.id_zajecia);
+
+                        bool ok = sqlManager.executeRawCommand(cmd);
+                        MessageBox.Show(ok ? $"Zaktualizowano blok lekcji (grupa ID: {blok.id_grupy})." :
+                                             $"Nie udało się zaktualizować rekordu (grupa: {blok.id_grupy}).");
+                    }
+                    else
+                    {
+                        string insertQuery = @"
+                        INSERT INTO plan_lekcji (
+                            id_prowadzacego, id_grupy, id_kierunku, sala, dzien,
+                            godzina_startu, godzina_konca, id_przedmiotu, rodzaj, notatki
+                        ) VALUES (
+                            @id_prowadzacego, @id_grupy, @id_kierunku, @sala, @dzien,
+                            @godzina_startu, @godzina_konca, @id_przedmiotu, @rodzaj, @notatki
+                        )";
+
+                        var cmd = parameterSetter(blok, insertQuery);
+                        bool ok = sqlManager.executeRawCommand(cmd);
+                        MessageBox.Show(ok ? $"Dodano blok lekcji (grupa ID: {blok.id_grupy})." :
+                                             $"Nie udało się dodać bloku dla grupy {blok.id_grupy}.");
+                    }
                 }
 
                 this.Close();
@@ -194,40 +272,91 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
             }
         }
 
+
+
         private void updateVisualChanges(BlokLekcjiHolder blok)
         {
             if (blok == null)
                 return;
+            try
+            {
+                // Ustawienie wartości w kontrolkach na podstawie obiektu
+                comboProwadzacy.Text = $"{blok.stopien_naukowy} {blok.imie} {blok.nazwisko}";
+                txtSala.Text = blok.sala;
+                pickerDzien.SelectedItem = GetDayNameFromDate(blok.dzien);
+                pickerStart.Value = DateTime.Today.Add(blok.godzina_startu);
+                pickerKoniec.Value = DateTime.Today.Add(blok.godzina_konca);
+                comboPrzedmiot.Text = blok.przedmiot;
+                comboRodzaj.Text = blok.rodzaj;
+                txtNotatki.Text = blok.notatki;
 
-            // Ustawienie wartości w kontrolkach na podstawie obiektu
-            comboProwadzacy.Text = $"{blok.stopien_naukowy} {blok.imie} {blok.nazwisko}";
-            txtSala.Text = blok.sala;
-            pickerDzien.SelectedItem = GetDayNameFromDate(blok.dzien);
-            pickerStart.Value = DateTime.Today.Add(blok.godzina_startu);
-            pickerKoniec.Value = DateTime.Today.Add(blok.godzina_konca);
-            comboPrzedmiot.Text = blok.przedmiot;
-            comboRodzaj.Text = blok.rodzaj;
-            txtNotatki.Text = blok.notatki;
-            numericNumerGrupy.Value = blok.id_grupy;
+                if (blok.rodzaj.Equals("wykład"))
+                    comboRodzaj.SelectedIndex = 0;
+
+                if (blok.rodzaj.Equals("ćwiczenia"))
+                {
+                    comboRodzaj.SelectedIndex = 1;
+                    comboCwiczenia.SelectedIndex = blok.numer_grupy;
+                }
+                else
+                {
+                    comboRodzaj.SelectedIndex = 2;
+                    comboLaby.SelectedIndex = blok.numer_grupy;
+                }
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message);
+            }
+            
         }
 
         // Metoda do ładowania grup
-        private void LoadGrupy()
+        private void LoadGrupy(int idKierunku = -1)
         {
             try
             {
-                string query = @"SELECT g.id_grupy, 
-                        CONCAT(g.typ_grupy, ' ', g.numer_grupy) as display_name,
-                        g.typ_grupy, g.numer_grupy
-                        FROM Grupy g
-                        ORDER BY g.typ_grupy, g.numer_grupy";
+                string query = @"SELECT 
+                                    g.id_grupy, 
+                                    CONCAT(g.typ_grupy, ' ', g.numer_grupy) AS display_name,
+                                    g.typ_grupy, 
+                                    g.numer_grupy
+                                FROM grupy g
+                                WHERE g.id_kierunku = @idKierunku
+                                ORDER BY g.typ_grupy, g.numer_grupy;
+                                ";
 
                 var cmd = new MySqlCommand(query, sqlManager.Connection);
-                var grupy = sqlManager.loadDataToList<dynamic>(cmd);
+                if (idKierunku == -1)
+                {
+                    cmd.Parameters.AddWithValue("@idKierunku", editableBlok.id_kierunku);
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@idKierunku", idKierunku);
+                }
+                List<Grupy> grupy = sqlManager.loadDataToList<Grupy>(cmd);
 
-                // Możesz użyć dodatkowego ComboBoxa dla grup lub innej kontrolki
-                // W przykładzie używam txtTypGrupy i numericNumerGrupy
-                // Możesz dostosować do swoich potrzeb
+                foreach (Grupy grupa in grupy)
+                {
+                    if (grupa.typ_grupy.Equals("Laboratoryjna"))
+                        grupyLabowe.Add(grupa);
+                    else if (grupa.typ_grupy.Equals("Ćwiczeniowa"))
+                        grupyCwiczeniowe.Add(grupa);
+                }
+
+                comboCwiczenia.Items.Clear();
+                comboLaby.Items.Clear();
+
+                foreach (Grupy grupaLab in grupyLabowe)
+                {
+                    comboLaby.Items.Add(grupaLab.display_name);
+                }
+
+                foreach (Grupy grupaCw in grupyCwiczeniowe)
+                {
+                    comboCwiczenia.Items.Add(grupaCw.display_name);
+                }
             }
             catch (Exception ex)
             {
@@ -236,10 +365,11 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         }
 
         // W konstruktorze lub metodzie Load formularza:
-        private void InitializeForm()
+        private void InitializeForm(int kierunekID = -1)
         {
+            resetComboGrups();
             LoadProwadzacy();
-            LoadGrupy();
+            LoadGrupy(kierunekID);
 
             // Blokowanie przedmiotu dopóki nie wybrano prowadzącego
             comboPrzedmiot.Enabled = comboProwadzacy.SelectedIndex != -1;
@@ -386,6 +516,18 @@ namespace Wirtualna_Uczelnia.formy.AdminForms
         {
             public int id_przedmiotu { get; set; }
             public string nazwa { get; set; }
+        }
+        private class Grupy
+        {
+            public int id_grupy { get; set; }
+            public string display_name { get; set; }
+            public string typ_grupy { get; set; }
+            public int numer_grupy { get; set; }
+
+            public override string ToString()
+            {
+                return $"{display_name}";
+            }
         }
     }
 }
